@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "aqua", "..\aqua\aqua.vcxproj", "{803E42F5-753C-480D-9EED-741F74B7AAD7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "game", "..\game\game.vcxproj", "{55BED679-FC95-467B-8E3B-EEB7A21A5661}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{803E42F5-753C-480D-9EED-741F74B7AAD7}.Debug|x64.ActiveCfg = Debug|x64
+		{803E42F5-753C-480D-9EED-741F74B7AAD7}.Debug|x64.Build.0 = Debug|x64
+		{803E42F5-753C-480D-9EED-741F74B7AAD7}.Debug|x86.ActiveCfg = Debug|x64
+		{803E42F5-753C-480D-9EED-741F74B7AAD7}.Release|x64.ActiveCfg = Release|x64
+		{803E42F5-753C-480D-9EED-741F74B7AAD7}.Release|x64.Build.0 = Release|x64
+		{803E42F5-753C-480D-9EED-741F74B7AAD7}.Release|x86.ActiveCfg = Release|x64
+		{55BED679-FC95-467B-8E3B-EEB7A21A5661}.Debug|x64.ActiveCfg = Debug|x64
+		{55BED679-FC95-467B-8E3B-EEB7A21A5661}.Debug|x64.Build.0 = Debug|x64
+		{55BED679-FC95-467B-8E3B-EEB7A21A5661}.Debug|x86.ActiveCfg = Debug|x64
+		{55BED679-FC95-467B-8E3B-EEB7A21A5661}.Release|x64.ActiveCfg = Release|x64
+		{55BED679-FC95-467B-8E3B-EEB7A21A5661}.Release|x64.Build.0 = Release|x64
+		{55BED679-FC95-467B-8E3B-EEB7A21A5661}.Release|x86.ActiveCfg = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B061225A-A9A8-429F-B8D9-092AA1565FEE}
+	EndGlobalSection
+EndGlobal

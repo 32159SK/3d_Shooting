@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\aqua.cpp" />
+    <ClCompile Include="src\controls\keyboard\keyboard.cpp" />
+    <ClCompile Include="src\controls\mouse\mouse.cpp" />
+    <ClCompile Include="src\controls\controller\controller.cpp" />
+    <ClCompile Include="src\debug\debug.cpp" />
+    <ClCompile Include="src\framework\framework.cpp" />
+    <ClCompile Include="src\game_object\game_object.cpp" />
+    <ClCompile Include="src\graphics\animation_sprite\animation_sprite.cpp" />
+    <ClCompile Include="src\graphics\camera\camera.cpp" />
+    <ClCompile Include="src\graphics\color\color.cpp" />
+    <ClCompile Include="src\graphics\draw_object\draw_object.cpp" />
+    <ClCompile Include="src\graphics\effect2D\effect2D.cpp" />
+    <ClCompile Include="src\graphics\effekseer\effekseer.cpp" />
+    <ClCompile Include="src\graphics\effekseer\effekseer_manager\effekseer_manager.cpp" />
+    <ClCompile Include="src\graphics\effekseer\effekseer_resource\effekseer_resource.cpp" />
+    <ClCompile Include="src\graphics\font\font.cpp" />
+    <ClCompile Include="src\graphics\font\font_manager\font_manager.cpp" />
+    <ClCompile Include="src\graphics\font\font_resource\font_resource.cpp" />
+    <ClCompile Include="src\graphics\label\label.cpp" />
+    <ClCompile Include="src\graphics\model\model.cpp" />
+    <ClCompile Include="src\graphics\model\model_manager\model_manager.cpp" />
+    <ClCompile Include="src\graphics\model\model_resource\model_resource.cpp" />
+    <ClCompile Include="src\graphics\primitive\3d_capsule_primitive\3d_capsule_primitive.cpp" />
+    <ClCompile Include="src\graphics\primitive\3d_cube_primitive\3d_cube_primitive.cpp" />
+    <ClCompile Include="src\graphics\primitive\3d_line_primitive\3d_line_primitive.cpp" />
+    <ClCompile Include="src\graphics\primitive\3d_sphere_primitive\3d_sphere_primitive.cpp" />
+    <ClCompile Include="src\graphics\primitive\box_primitive\box_primitive.cpp" />
+    <ClCompile Include="src\graphics\primitive\circle_primitive\circle_primitive.cpp" />
+    <ClCompile Include="src\graphics\primitive\line_primitive\line_primitive.cpp" />
+    <ClCompile Include="src\graphics\primitive\triangle_primitive\triangle_primitive.cpp" />
+    <ClCompile Include="src\graphics\shader\shader.cpp" />
+    <ClCompile Include="src\graphics\sprite\sprite.cpp" />
+    <ClCompile Include="src\graphics\surface\surface.cpp" />
+    <ClCompile Include="src\graphics\texture\texture.cpp" />
+    <ClCompile Include="src\graphics\texture\texture_manager\texture_manager.cpp" />
+    <ClCompile Include="src\graphics\texture\texture_resource\texture_resource.cpp" />
+    <ClCompile Include="src\mathematics\collision\collision.cpp" />
+    <ClCompile Include="src\mathematics\mathematics.cpp" />
+    <ClCompile Include="src\mathematics\matrix\matrix.cpp" />
+    <ClCompile Include="src\mathematics\vector\vector2\vector2.cpp" />
+    <ClCompile Include="src\mathematics\vector\vector3\vector3.cpp" />
+    <ClCompile Include="src\resources\resource_object\resource_object.cpp" />
+    <ClCompile Include="src\sounds\sound\sound.cpp" />
+    <ClCompile Include="src\sounds\sound\sound_manager\sound_manager.cpp" />
+    <ClCompile Include="src\sounds\sound\sound_resource\sound_resource.cpp" />
+    <ClCompile Include="src\sounds\sound_player\sound_player.cpp" />
+    <ClCompile Include="src\utility\csv_loader\csv_loader.cpp" />
+    <ClCompile Include="src\utility\easing\easing.cpp" />
+    <ClCompile Include="src\utility\fmf_loader\fmf_loader.cpp" />
+    <ClCompile Include="src\utility\point\point.cpp" />
+    <ClCompile Include="src\utility\rect\rect.cpp" />
+    <ClCompile Include="src\utility\thread\thread.cpp" />
+    <ClCompile Include="src\utility\timer\timer.cpp" />
+    <ClCompile Include="src\videos\video\video.cpp" />
+    <ClCompile Include="src\videos\video\video_manager\video_manager.cpp" />
+    <ClCompile Include="src\videos\video\video_resource\video_resource.cpp" />
+    <ClCompile Include="src\videos\video_player\video_player.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\aqua.h" />
+    <ClInclude Include="src\controls\controls.h" />
+    <ClInclude Include="src\controls\keyboard\keyboard.h" />
+    <ClInclude Include="src\controls\mouse\mouse.h" />
+    <ClInclude Include="src\controls\controller\controller.h" />
+    <ClInclude Include="src\debug\debug.h" />
+    <ClInclude Include="src\framework\framework.h" />
+    <ClInclude Include="src\game_object\game_object.h" />
+    <ClInclude Include="src\graphics\alphablend\alphablend.h" />
+    <ClInclude Include="src\graphics\animation_sprite\animation_sprite.h" />
+    <ClInclude Include="src\graphics\camera\camera.h" />
+    <ClInclude Include="src\graphics\color\color.h" />
+    <ClInclude Include="src\graphics\draw_object\draw_object.h" />
+    <ClInclude Include="src\graphics\effect2D\effect2D.h" />
+    <ClInclude Include="src\graphics\effekseer\effekseer.h" />
+    <ClInclude Include="src\graphics\effekseer\effekseer_manager\effekseer_manager.h" />
+    <ClInclude Include="src\graphics\effekseer\effekseer_resource\effekseer_resource.h" />
+    <ClInclude Include="src\graphics\font\font.h" />
+    <ClInclude Include="src\graphics\font\font_manager\font_manager.h" />
+    <ClInclude Include="src\graphics\font\font_resource\font_resource.h" />
+    <ClInclude Include="src\graphics\graphics.h" />
+    <ClInclude Include="src\graphics\graphic_filter\graphic_filter.h" />
+    <ClInclude Include="src\graphics\label\label.h" />
+    <ClInclude Include="src\graphics\model\model.h" />
+    <ClInclude Include="src\graphics\model\model_manager\model_manager.h" />
+    <ClInclude Include="src\graphics\model\model_resource\model_resource.h" />
+    <ClInclude Include="src\graphics\primitive\3d_capsule_primitive\3d_capsule_primitive.h" />
+    <ClInclude Include="src\graphics\primitive\3d_cube_primitive\3d_cube_primitive.h" />
+    <ClInclude Include="src\graphics\primitive\3d_line_primitive\3d_line_primitive.h" />
+    <ClInclude Include="src\graphics\primitive\3d_sphere_primitive\3d_sphere_primitive.h" />
+    <ClInclude Include="src\graphics\primitive\box_primitive\box_primitive.h" />
+    <ClInclude Include="src\graphics\primitive\circle_primitive\circle_primitive.h" />
+    <ClInclude Include="src\graphics\primitive\line_primitive\line_primitive.h" />
+    <ClInclude Include="src\graphics\primitive\primitive.h" />
+    <ClInclude Include="src\graphics\primitive\triangle_primitive\triangle_primitive.h" />
+    <ClInclude Include="src\graphics\shader\shader.h" />
+    <ClInclude Include="src\graphics\sprite\sprite.h" />
+    <ClInclude Include="src\graphics\surface\surface.h" />
+    <ClInclude Include="src\graphics\texture\texture.h" />
+    <ClInclude Include="src\graphics\texture\texture_manager\texture_manager.h" />
+    <ClInclude Include="src\graphics\texture\texture_resource\texture_resource.h" />
+    <ClInclude Include="src\mathematics\collision\collision.h" />
+    <ClInclude Include="src\mathematics\mathematics.h" />
+    <ClInclude Include="src\mathematics\matrix\matrix.h" />
+    <ClInclude Include="src\mathematics\vector\vector.h" />
+    <ClInclude Include="src\mathematics\vector\vector2\vector2.h" />
+    <ClInclude Include="src\mathematics\vector\vector3\vector3.h" />
+    <ClInclude Include="src\resources\resources.h" />
+    <ClInclude Include="src\resources\resource_object\resource_object.h" />
+    <ClInclude Include="src\sounds\sounds.h" />
+    <ClInclude Include="src\sounds\sound\sound.h" />
+    <ClInclude Include="src\sounds\sound\sound_manager\sound_manager.h" />
+    <ClInclude Include="src\sounds\sound\sound_resource\sound_resource.h" />
+    <ClInclude Include="src\sounds\sound_player\sound_player.h" />
+    <ClInclude Include="src\utility\csv_loader\csv_loader.h" />
+    <ClInclude Include="src\utility\easing\easing.h" />
+    <ClInclude Include="src\utility\flag\flag.h" />
+    <ClInclude Include="src\utility\fmf_loader\fmf_loader.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\allocators.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\cursorstreamwrapper.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\document.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\encodedstream.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\encodings.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\error\en.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\error\error.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\filereadstream.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\filewritestream.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\fwd.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\internal\biginteger.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\internal\diyfp.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\internal\dtoa.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\internal\ieee754.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\internal\itoa.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\internal\meta.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\internal\pow10.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\internal\regex.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\internal\stack.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\internal\strfunc.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\internal\strtod.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\internal\swap.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\istreamwrapper.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\memorybuffer.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\memorystream.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\msinttypes\inttypes.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\msinttypes\stdint.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\ostreamwrapper.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\pointer.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\prettywriter.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\rapidjson.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\reader.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\schema.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\stream.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\stringbuffer.h" />
+    <ClInclude Include="src\utility\json_loader\rapidjson\writer.h" />
+    <ClInclude Include="src\utility\memory\memory.h" />
+    <ClInclude Include="src\utility\point\point.h" />
+    <ClInclude Include="src\utility\rect\rect.h" />
+    <ClInclude Include="src\utility\thread\thread.h" />
+    <ClInclude Include="src\utility\timer\timer.h" />
+    <ClInclude Include="src\utility\utility.h" />
+    <ClInclude Include="src\videos\videos.h" />
+    <ClInclude Include="src\videos\video\video.h" />
+    <ClInclude Include="src\videos\video\video_manager\video_manager.h" />
+    <ClInclude Include="src\videos\video\video_resource\video_resource.h" />
+    <ClInclude Include="src\videos\video_player\video_player.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\controls\controls.cpp">
+      <FileType>Document</FileType>
+    </ClCompile>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{803E42F5-753C-480D-9EED-741F74B7AAD7}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>aqua</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\dxlib;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LibraryPath>C:\dxlib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>C:\dxlib;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LibraryPath>C:\dxlib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4099;4100;26812;6386;26451;6385;26495;</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>legacy_stdio_definitions.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4099;4100;26812;6386;26451;6385;26495;</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

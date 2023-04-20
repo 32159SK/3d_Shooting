@@ -66,12 +66,12 @@ namespace aqua
          *
          *  @param[in]  position    中心座標
          *  @param[in]  r           半径
-         *  @param[in]  divnum      ポリゴンの細かさ
          *  @param[in]  color       色
          *  @param[in]  spc_color   反射光色
+         *  @param[in]  divnum      ポリゴンの細かさ
          *  @param[in]  fill        塗り潰しフラグ
          */
-        void    Setup(const aqua::CVector3& position_, float r, int divnum , const aqua::CColor& color_, const aqua::CColor& spc_color_, bool fill_ = true);
+        void    Setup(const aqua::CVector3& position_, float r,  const aqua::CColor& color_ = aqua::CColor::WHITE, const aqua::CColor& spc_color_ = aqua::CColor::WHITE,int divnum = 10 , bool fill_ = true);
 
         /*!
          *  @brief      描画

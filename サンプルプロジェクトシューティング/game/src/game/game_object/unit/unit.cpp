@@ -44,6 +44,7 @@ void IUnit::Move(void)
 
 void IUnit::Damage(void)
 {
+
 }
 
 void IUnit::Dead(void)

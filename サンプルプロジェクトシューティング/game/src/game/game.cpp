@@ -10,8 +10,7 @@
  */
 
 #include "game.h"
-
-#include "game_object/sample_scene/sample_scene.h"
+#include "game_object/game_object.h"
 
 const unsigned int CGame::m_clear_color = 0xff7f7f7f;
 
@@ -33,7 +32,9 @@ Initialize(void)
 {
     // 最初に作るオブジェクト群
 
-    aqua::CreateGameObject<CSmpleScene>(this);
+    aqua::CreateGameObject<CSceneManager>(this);
+
+
 
     IGameObject::Initialize();
 }

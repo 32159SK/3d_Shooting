@@ -9,9 +9,10 @@
  */
 #pragma once
 #include "aqua.h"
-#include "../../unit/unit.h"
+#include "../bullet.h"
 
-class CEnemy : public IUnit
+
+class CNomalBullet : public IBullet
 {
 public:
     /*
@@ -20,17 +21,13 @@ public:
      *  @param[in]  parent          親オブジェクト
      *  @param[in]  object_name     オブジェクト名
      */
-    CEnemy(aqua::IGameObject* parent);
+    CNomalBullet(aqua::IGameObject* parent);
 
     /*
      *  @brief      デストラクタ
      */
-    virtual ~CEnemy(void) = default;
+    virtual ~CNomalBullet(void) = default;
 
-    /*
-     *  @brief      初期化
-     */
-    void    Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color);
 
     /*
      *  @brief      更新
@@ -39,12 +36,4 @@ public:
 
 private:
 
-    void            Shot(void)override;
-
-    void            Move(void)override;
-
-    /*
-     *  @brief      死亡
-     */
-    void            Dead(void)override;
 };

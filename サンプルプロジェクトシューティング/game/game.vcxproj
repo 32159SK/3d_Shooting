@@ -102,25 +102,37 @@
   <ItemGroup>
     <ClCompile Include="src\game\game.cpp" />
     <ClCompile Include="src\game\game_object\bullet_manager\bullet\bullet.cpp" />
+    <ClCompile Include="src\game\game_object\bullet_manager\bullet\nomal_bullet\nomal_bullet.cpp" />
     <ClCompile Include="src\game\game_object\bullet_manager\bullet_manager.cpp" />
     <ClCompile Include="src\game\game_object\camera_control\camera_control.cpp" />
     <ClCompile Include="src\game\game_object\enemy_manager\enemy\enemy.cpp" />
     <ClCompile Include="src\game\game_object\enemy_manager\enemy_manager.cpp" />
     <ClCompile Include="src\game\game_object\player\player.cpp" />
-    <ClCompile Include="src\game\game_object\sample_scene\sample_scene.cpp" />
+    <ClCompile Include="src\game\game_object\scene_manager\scene\game_main\game_main.cpp" />
+    <ClCompile Include="src\game\game_object\scene_manager\scene\result\result.cpp" />
+    <ClCompile Include="src\game\game_object\scene_manager\scene\scene.cpp" />
+    <ClCompile Include="src\game\game_object\scene_manager\scene\title\title.cpp" />
+    <ClCompile Include="src\game\game_object\scene_manager\scene_manager.cpp" />
     <ClCompile Include="src\game\game_object\unit\unit.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game\game.h" />
     <ClInclude Include="src\game\game_object\bullet_manager\bullet\bullet.h" />
+    <ClInclude Include="src\game\game_object\bullet_manager\bullet\bullet_type.h" />
+    <ClInclude Include="src\game\game_object\bullet_manager\bullet\nomal_bullet\nomal_bullet.h" />
     <ClInclude Include="src\game\game_object\bullet_manager\bullet_manager.h" />
     <ClInclude Include="src\game\game_object\camera_control\camera_control.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy\enemy.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy_manager.h" />
     <ClInclude Include="src\game\game_object\game_object.h" />
     <ClInclude Include="src\game\game_object\player\player.h" />
-    <ClInclude Include="src\game\game_object\sample_scene\sample_scene.h" />
+    <ClInclude Include="src\game\game_object\scene_manager\scene\game_main\game_main.h" />
+    <ClInclude Include="src\game\game_object\scene_manager\scene\result\result.h" />
+    <ClInclude Include="src\game\game_object\scene_manager\scene\scene.h" />
+    <ClInclude Include="src\game\game_object\scene_manager\scene\scene_id.h" />
+    <ClInclude Include="src\game\game_object\scene_manager\scene\title\title.h" />
+    <ClInclude Include="src\game\game_object\scene_manager\scene_manager.h" />
     <ClInclude Include="src\game\game_object\unit\unit.h" />
     <ClInclude Include="src\game\game_object\unit\unit_type.h" />
   </ItemGroup>

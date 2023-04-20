@@ -21,12 +21,6 @@ void CEnemy::Update(void)
 {
 }
 
-bool CEnemy::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive shot)
-{
-	//if()
-
-	return ;
-}
 
 void CEnemy::Shot(void)
 {

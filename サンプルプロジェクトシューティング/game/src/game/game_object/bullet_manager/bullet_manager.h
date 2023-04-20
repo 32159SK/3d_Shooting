@@ -1,1 +1,74 @@
+
+/*!
+ *  @file       enemy_manager.h
+ *  @brief      エネミー管理
+ *  @author     Kazuto Shimazaki
+ *  @date       2023/04/18
+ *  @version    1.0
+ *
+ *  Copyright (c) 2013-2021, Kazuya Maruyama. All rights reserved.
+ */
+
 #pragma once
+
+#include "aqua.h"
+#include "bullet/bullet.h"
+#include "bullet/bullet_type.h"
+ /*!
+  *  @class      CBulletManager
+  *
+  *  @brief      エネミー管理クラス
+  *
+  *  @author     Kazuto Shimazaki
+  *
+  *  @date       2023/04/18
+  *
+  *  @version    1.0
+  */
+
+
+class CBulletManager
+    : public aqua::IGameObject
+{
+public:
+    /*!
+     *  @brief      コンストラクタ
+     *
+     *  @param[in]  parent          親オブジェクト
+     */
+    CBulletManager(aqua::IGameObject* parent, const std::string& name);
+
+    /*!
+     *  @brief      デストラクタ
+     */
+    ~CBulletManager(void) = default;
+
+    /*!
+     *  @brief      初期化
+     */
+    void        Initialize(void) override;
+
+    /*!
+     *  @brief      更新
+     */
+    void        Update(void) override;
+
+    /*!
+     *  @brief      描画
+     */
+    void        Draw(void) override;
+
+    /*!
+     *  @brief      弾の生成
+     */
+    void        Create(aqua::CVector3 shot_pos,UNIT_TYPE unit_type, BULLET_TYPE bullet_type);
+
+    /*!
+     *  @brief      解放
+     */
+    void        Finalize(void) override;
+private:
+
+    BULLET_INFO     m_BulletInfo;
+
+};

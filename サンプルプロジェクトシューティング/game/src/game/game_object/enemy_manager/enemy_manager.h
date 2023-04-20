@@ -12,7 +12,7 @@
 #pragma once
 
 #include "aqua.h"
-
+#include "enemy/enemy.h"
 
  /*!
   *  @class      CEnemyManager
@@ -65,5 +65,8 @@ public:
      *  @brief      ‰ð•ú
      */
     void        Finalize(void) override;
+private:
+
+
 
 };

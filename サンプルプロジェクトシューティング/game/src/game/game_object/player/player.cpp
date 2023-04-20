@@ -1,6 +1,7 @@
 #include "player.h"
 
 CPlayer::CPlayer(aqua::IGameObject* parent)
+	: IUnit(parent,"Player")
 {
 }
 

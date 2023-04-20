@@ -22,6 +22,7 @@ void IBullet::Draw(void)
 
 void IBullet::Update(void)
 {
+	m_Sphere.position.z -= 1.0f;
 }
 
 void IBullet::Hit(void)

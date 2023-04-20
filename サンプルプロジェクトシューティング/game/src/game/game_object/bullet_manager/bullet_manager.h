@@ -14,6 +14,7 @@
 #include "aqua.h"
 #include "bullet/bullet.h"
 #include "bullet/bullet_type.h"
+
  /*!
   *  @class      CBulletManager
   *
@@ -36,7 +37,7 @@ public:
      *
      *  @param[in]  parent          親オブジェクト
      */
-    CBulletManager(aqua::IGameObject* parent, const std::string& name);
+    CBulletManager(aqua::IGameObject* parent);
 
     /*!
      *  @brief      デストラクタ

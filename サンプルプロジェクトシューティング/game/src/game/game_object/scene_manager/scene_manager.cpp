@@ -37,7 +37,7 @@ void CSceneManager::Initialize(void)
     m_FadeSprite.color = aqua::CColor::BLACK;
 
     // スプラッシュシーンを始めに生成
-    Create(SCENE_ID::TITLE);
+    Create(SCENE_ID::GAMEMAIN);
 
     // シーンイン状態を設定
     m_State = STATE::SCENE_IN;

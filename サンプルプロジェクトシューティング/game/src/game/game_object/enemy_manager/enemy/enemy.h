@@ -10,6 +10,7 @@
 #pragma once
 #include "aqua.h"
 #include "../../unit/unit.h"
+//#include "../../bullet_manager/bullet_manager.h"
 
 class CEnemy : public IUnit
 {
@@ -47,4 +48,6 @@ private:
      *  @brief      Ž€–S
      */
     void            Dead(void)override;
+
+    aqua::CTimer    m_ShotTimer;
 };

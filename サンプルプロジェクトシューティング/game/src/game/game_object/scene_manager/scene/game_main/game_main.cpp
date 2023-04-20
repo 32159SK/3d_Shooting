@@ -9,13 +9,14 @@
  *  Copyright (c) 2013-2019, Kazuya Maruyama. All rights reserved.
  */
 
-#include "game_main.h"
 #include "../../../game_object.h"
+#include "game_main.h"
 
 
 CGameMain::CGameMain(aqua::IGameObject* parent)
     : IScene(parent, "GameMainScene")
     , m_State(STATE::STATE_GAME_START)
+    , m_CamContorl(nullptr)
 {
 }
 
@@ -46,8 +47,8 @@ Initialize(void)
     // 敵管理クラスの初期化＆プレイヤー、弾管理クラスのセット
     em->Initialize(bm, player);
 
-    m_Camera.SetCamera();
-
+    m_Camera.SetCamera(0.1, 10000.0, aqua::CVector3(0, 0, -100), player->GetPosition());
+    m_CamContorl = new CCameraControl(&m_Camera);
 }
 
 /*
@@ -88,6 +89,7 @@ void
 CGameMain::
 GamePlay(void)
 {
+    m_CamContorl->Move();
 }
 
 void CGameMain::GameFinish(void)

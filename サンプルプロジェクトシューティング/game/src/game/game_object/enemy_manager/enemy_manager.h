@@ -16,6 +16,7 @@
 
 class CPlayer;
 
+
  /*!
   *  @class      CEnemyManager
   *
@@ -36,7 +37,7 @@ public:
      *
      *  @param[in]  parent          親オブジェクト
      */
-    CEnemyManager(aqua::IGameObject* parent, const std::string& name);
+    CEnemyManager(aqua::IGameObject* parent);
 
     /*!
      *  @brief      デストラクタ

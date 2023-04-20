@@ -14,6 +14,7 @@
 #include "aqua.h"
 #include"..\scene.h"
 
+
  /*
   *  @class      CGameMain
   *
@@ -84,4 +85,5 @@ private:
 
     STATE               m_State;        //! èÛë‘ID
     aqua::CCamera       m_Camera;
+    CCameraControl*     m_CamContorl;
 };

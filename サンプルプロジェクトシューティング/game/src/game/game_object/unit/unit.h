@@ -32,7 +32,7 @@ public:
     /*
      *  @brief      èâä˙âª
      */
-    virtual void            Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CBulletManager* bm);
+    virtual void    Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CBulletManager* bm);
 
     /*
      *  @brief      ï`âÊ
@@ -48,6 +48,8 @@ public:
      *  @brief      îÌíeîªíË
      */
     virtual bool    CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive shot);
+
+    aqua::CVector3  GetPosition(void) { return m_Position; }
 
 protected:
 

@@ -1,5 +1,5 @@
-#include "unit.h"
 #include "../game_object.h"
+#include "unit.h"
 
 const int IUnit::m_max_life = 5;
 

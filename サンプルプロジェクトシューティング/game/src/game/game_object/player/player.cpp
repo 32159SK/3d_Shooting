@@ -1,3 +1,4 @@
+#include "../game_object.h"
 #include "player.h"
 
 CPlayer::CPlayer(aqua::IGameObject* parent)
@@ -22,7 +23,8 @@ bool CPlayer::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive shot)
 
 void CPlayer::Shot(void)
 {
-	
+	if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::Z));
+	m_BulletManager->Create(m_Position, m_UnitType, BULLET_TYPE::NOMAL);
 }
 
 void CPlayer::Move(void)

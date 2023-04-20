@@ -7,4 +7,5 @@ CNomalBullet::CNomalBullet(aqua::IGameObject* parent)
 
 void CNomalBullet::Update(void)
 {
+	IBullet::Update();
 }

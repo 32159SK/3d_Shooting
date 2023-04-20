@@ -83,5 +83,5 @@ private:
     };
 
     STATE               m_State;        //! ó‘ÔID
-
+    aqua::CCamera       m_Camera;
 };

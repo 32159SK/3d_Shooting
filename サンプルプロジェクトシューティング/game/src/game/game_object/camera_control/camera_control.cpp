@@ -48,6 +48,7 @@ void CCameraControl::Move(void)
 
 	aqua::CMatrix rot_mat;
 
+	// ƒJƒƒ‰Šp“x‚Ì‘€ì
 	if (key_left || key_right || key_up || key_down)
 	{
 		float yaw = key_right ? yaw_pitch_speed : 0.0f;

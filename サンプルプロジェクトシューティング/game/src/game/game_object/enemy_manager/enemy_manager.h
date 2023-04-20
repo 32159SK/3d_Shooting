@@ -14,6 +14,8 @@
 #include "aqua.h"
 #include "enemy/enemy.h"
 
+class CPlayer;
+
  /*!
   *  @class      CEnemyManager
   *
@@ -44,7 +46,7 @@ public:
     /*!
      *  @brief      ‰Šú‰»
      */
-    void        Initialize(void) override;
+    void        Initialize(CBulletManager* bm,CPlayer* player);
 
     /*!
      *  @brief      XV
@@ -65,8 +67,9 @@ public:
      *  @brief      ‰ğ•ú
      */
     void        Finalize(void) override;
+
 private:
 
-
-
+    CPlayer*        m_Player;
+    CBulletManager* m_BulletManagar;
 };

@@ -4,7 +4,7 @@ aqua::CSpherePrimitive::CSpherePrimitive(void)
 {
 }
 
-void aqua::CSpherePrimitive::Setup(const aqua::CVector3& position_, float r, int divnum, const aqua::CColor& color_, const aqua::CColor& spc_color_, bool fill_)
+void aqua::CSpherePrimitive::Setup(const aqua::CVector3& position_, float r, const aqua::CColor& color_, const aqua::CColor& spc_color_, int divnum, bool fill_)
 {
 	position = position_;
 	radius = r;

@@ -9,8 +9,9 @@
  */
 #pragma once
 #include "aqua.h"
-
 #include"unit_type.h"
+
+class CBulletManager;
 
 class IUnit : public aqua::IGameObject
 {
@@ -31,7 +32,7 @@ public:
     /*
      *  @brief      èâä˙âª
      */
-    virtual void    Initialize(void) override;
+    virtual void            Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CBulletManager* bm);
 
     /*
      *  @brief      ï`âÊ
@@ -89,4 +90,6 @@ protected:
     aqua::CColor         m_Color;        // êF
 
     aqua::CCubePrimitive m_Cube;        // é©ã@
+
+    CBulletManager*      m_BulletManager;
 };

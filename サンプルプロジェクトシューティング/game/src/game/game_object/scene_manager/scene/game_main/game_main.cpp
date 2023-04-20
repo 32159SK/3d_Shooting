@@ -9,8 +9,8 @@
  *  Copyright (c) 2013-2019, Kazuya Maruyama. All rights reserved.
  */
 
-#include "../../../game_object.h"
 #include "game_main.h"
+#include "../../../game_object.h"
 
 
 CGameMain::CGameMain(aqua::IGameObject* parent)
@@ -34,9 +34,20 @@ void
 CGameMain::
 Initialize(void)
 {
+    // 弾管理クラスの生成
+    CBulletManager* bm = aqua::CreateGameObject<CBulletManager>(this);
+    // プレイヤーの生成
+    CPlayer* player = aqua::CreateGameObject<CPlayer>(this);
+    // 敵管理クラスの生成
+    CEnemyManager* em = aqua::CreateGameObject<CEnemyManager>(this);
+    
+    // プレイヤーの初期化＆弾管理クラスのセット
+    player->Initialize(aqua::CVector3(0.0f, 0.0f, -50.0f), 10.0f, 10.0f, 10.0f, aqua::CColor::BLUE, bm);
+    // 敵管理クラスの初期化＆プレイヤー、弾管理クラスのセット
+    em->Initialize(bm, player);
 
+    m_Camera.SetCamera();
 
-    IGameObject::Initialize();
 }
 
 /*

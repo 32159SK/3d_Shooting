@@ -7,14 +7,10 @@ CEnemy::CEnemy(aqua::IGameObject* parent)
 
 void 
 CEnemy::
-Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color)
+Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color,CBulletManager* bm)
 {
-	m_Position = pop_pos;
-	m_Width = wid;
-	m_Height = hei;
-	m_Depth = dep;
-	m_Color = color;
-	IUnit::Initialize();
+	IUnit::Initialize(pop_pos, wid, hei, dep, color, bm);
+	m_UnitType = UNIT_TYPE::ENEMY;
 }
 
 void CEnemy::Update(void)

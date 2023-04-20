@@ -1,7 +1,9 @@
 #include "bullet_manager.h"
 #include "bullet/nomal_bullet/nomal_bullet.h"
 
+
 CBulletManager::CBulletManager(aqua::IGameObject* parent, const std::string& name)
+	: IGameObject(parent,"BulletManager")
 {
 }
 

@@ -31,7 +31,7 @@ public:
     /*
      *  @brief      初期化
      */
-    void    Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri,aqua::CVector3 pop_pos);
+    void    Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri,aqua::CVector3 pop_pos,IUnit* user);
 
     /*
      *  @brief      描画
@@ -43,19 +43,27 @@ public:
      */
     virtual void    Update(void)override;
 
-    /*
-     *  @brief      ユニットセッター
-     */
-    void            SetUnit(IUnit* unit) { m_Unit = unit; }
 
     /*
      *  @brief      属性取得
      */
     UNIT_TYPE       GetAttri(void) { return m_Attri; }
 
-protected:
+    /*
+     *  @brief      ダメージ取得
+     */
+    int             GetDamage(void) { return m_Damage; }
+
+    /*
+     *  @brief      弾の球取得
+     */
+    aqua::CSpherePrimitive GetSphere(void) { return m_Sphere; }
+
+    aqua::CVector3  GetPosition(void) { return m_Position; }
 
     void            Hit(void);
+
+protected:
 
     int                     m_Damage;       // ダメージ量
 

@@ -10,21 +10,30 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep
 {
 	IUnit::Initialize(pop_pos, wid, hei, dep, color, bm);
 	m_UnitType = UNIT_TYPE::PLAYER;
+	m_BulletManager->SetPlayer(this);
+	m_ShotCT.Setup(0.5f);
 }
 
 void CPlayer::Update(void)
 {
+	Shot();
+	IGameObject::Update();
 }
 
-bool CPlayer::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive shot)
+bool CPlayer::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, int damage)
 {
-	return false;
+	return IUnit::CheckHitBullet(type,sphere,damage);
 }
+
 
 void CPlayer::Shot(void)
 {
-	if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::Z));
-	m_BulletManager->Create(m_Position, m_UnitType, BULLET_TYPE::NOMAL);
+	m_ShotCT.Update();
+	if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::Z) && m_ShotCT.Finished())
+	{
+		m_BulletManager->Create(m_Position, m_UnitType, BULLET_TYPE::NOMAL,this);
+		m_ShotCT.Reset();
+	}
 }
 
 void CPlayer::Move(void)

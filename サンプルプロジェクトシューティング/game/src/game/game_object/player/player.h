@@ -12,6 +12,8 @@
 #include "../unit/unit.h"
 //#include "../bullet_manager/bullet_manager.h"
 
+class CEnemyManager;
+
 class CPlayer : public IUnit
 {
 public:
@@ -41,7 +43,7 @@ public:
     /*
      *  @brief      çXêV
      */
-    bool            CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive shot)override;
+    bool            CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, int damage)override;
 
 private:
 
@@ -59,4 +61,6 @@ private:
      *  @brief      éÄñS
      */
     void            Dead(void)override;
+
+    CEnemyManager*  m_EnemyManager;
 };

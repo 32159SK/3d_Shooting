@@ -12,6 +12,7 @@
 #include"unit_type.h"
 
 class CBulletManager;
+class IBullet;
 
 class IUnit : public aqua::IGameObject
 {
@@ -47,9 +48,11 @@ public:
     /*
      *  @brief      被弾判定
      */
-    virtual bool    CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive shot);
+    virtual bool    CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere,int damage);
 
     aqua::CVector3  GetPosition(void) { return m_Position; }
+
+    bool            GetDead(void) { return m_DeadFlag; }
 
 protected:
 
@@ -66,7 +69,7 @@ protected:
     /*
      *  @brief      ダメージ
      */
-    void            Damage(void);
+    void            Damage(int damage);
 
      /*
       *  @brief      死亡
@@ -92,6 +95,8 @@ protected:
     aqua::CColor         m_Color;        // 色
 
     aqua::CCubePrimitive m_Cube;        // 自機
+
+    aqua::CTimer         m_ShotCT;
 
     CBulletManager*      m_BulletManager;
 };

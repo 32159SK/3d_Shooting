@@ -49,5 +49,4 @@ private:
      */
     void            Dead(void)override;
 
-    aqua::CTimer    m_ShotTimer;
 };

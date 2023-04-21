@@ -62,14 +62,28 @@ public:
     /*!
      *  @brief      弾の生成
      */
-    void        Create(aqua::CVector3 shot_pos,UNIT_TYPE unit_type, BULLET_TYPE bullet_type);
+    void        Create(aqua::CVector3 shot_pos, UNIT_TYPE unit_type, BULLET_TYPE bullet_type, IUnit* user);
 
     /*!
      *  @brief      解放
      */
     void        Finalize(void) override;
+
+    /*!
+     *  @brief      敵セッター
+     */
+    void        SetEnemy(CEnemy* enemy) { m_Enemy.push_back(enemy); }
+
+    /*!
+     *  @brief      自機セッター
+     */
+    void        SetPlayer(CPlayer* player) { m_Player = player; }
 private:
 
-    BULLET_INFO     m_BulletInfo;
+    void        CheakHit(void);
 
+    BULLET_INFO             m_BulletInfo;
+    CPlayer*                m_Player;
+    std::vector<CEnemy*>    m_Enemy;
+    std::vector<IBullet*>    m_Bullet;
 };

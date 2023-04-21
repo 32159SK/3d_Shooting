@@ -8,7 +8,7 @@ enum class BULLET_TYPE
 
 struct BULLET_INFO
 {
-    int     damage = 1;
+    int     damage = 999;
     float   radius = 5;
     aqua::CColor color = aqua::CColor::RED;
 };

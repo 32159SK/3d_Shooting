@@ -29,14 +29,22 @@ void IUnit::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, 
 void IUnit::Draw(void)
 {
 	m_Cube.Draw();
+	IGameObject::Draw();
 }
 
 void IUnit::Update(void)
 {
 }
 
-bool IUnit::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive shot)
+bool IUnit::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere,int damage)
 {
+	if (m_UnitType == type)
+		return false;
+	if (m_Cube.CheckCollision(sphere.position, sphere.radius))
+	{
+		Damage(damage);
+		return true;
+	}
 	return false;
 }
 
@@ -48,11 +56,15 @@ void IUnit::Move(void)
 {
 }
 
-void IUnit::Damage(void)
+void IUnit::Damage(int damage)
 {
-
+	m_Life -= damage;
+	if (m_Life <= 0)
+		Dead();
 }
-
 void IUnit::Dead(void)
 {
+	m_DeadFlag = true;
+	m_Cube.visible = false;
+	//DeleteObject();
 }

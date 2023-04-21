@@ -69,7 +69,11 @@ public:
      */
     void        Finalize(void) override;
 
+
+
 private:
+
+    int             m_EnemyCount;
 
     CPlayer*        m_Player;
     CBulletManager* m_BulletManagar;

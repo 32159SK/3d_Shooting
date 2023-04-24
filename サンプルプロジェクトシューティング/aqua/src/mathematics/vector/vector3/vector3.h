@@ -306,6 +306,8 @@ namespace aqua
             return *this;
         }
 
+        friend CVector3 operator*(const _Vector3& v, const _Matrix& mat) { return VTransform(v ,mat); }
+
         /*!
          *  @brief      デバッグログに値を表示する
          */

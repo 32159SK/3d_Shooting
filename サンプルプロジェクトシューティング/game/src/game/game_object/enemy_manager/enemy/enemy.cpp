@@ -29,7 +29,12 @@ void CEnemy::Update(void)
 
 void CEnemy::Shot(void)
 {
-	m_BulletManager->Create(m_Position, m_UnitType, BULLET_TYPE::NOMAL,this);
+	aqua::CVector3 front;
+
+	front.x = sin(aqua::DegToRad(m_Rotate + 90));
+	front.z = cos(aqua::DegToRad(m_Rotate + 90));
+
+	m_BulletManager->Create(m_Position,front, m_UnitType, BULLET_TYPE::NOMAL,this);
 }
 
 void CEnemy::Move(void)

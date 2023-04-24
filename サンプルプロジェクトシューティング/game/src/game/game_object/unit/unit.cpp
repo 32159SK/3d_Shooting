@@ -11,6 +11,7 @@ IUnit(aqua::IGameObject* parent, const std::string& object_name)
 	, m_Depth(0.0f)
 	, m_Life(0)
 	, m_DeadFlag(false)
+	, m_Rotate(0.0f)
 {
 }
 

@@ -23,14 +23,14 @@ void CBulletManager::Draw(void)
 	IGameObject::Draw();
 }
 
-void CBulletManager::Create(aqua::CVector3 shot_pos, UNIT_TYPE unit_type, BULLET_TYPE bullet_type, IUnit* user)
+void CBulletManager::Create(aqua::CVector3 shot_pos, aqua::CVector3 shot_front, UNIT_TYPE unit_type, BULLET_TYPE bullet_type, IUnit* user)
 {
 	IBullet* bullet = nullptr;
 	switch (bullet_type)
 	{
 	case BULLET_TYPE::NOMAL:
 		bullet = aqua::CreateGameObject<CNomalBullet>(this);
-		bullet->Initialize(m_BulletInfo, unit_type, shot_pos, user);
+		bullet->Initialize(m_BulletInfo, unit_type, shot_pos, shot_front, user);
 		break;
 	}
 	m_Bullet.push_back(bullet);

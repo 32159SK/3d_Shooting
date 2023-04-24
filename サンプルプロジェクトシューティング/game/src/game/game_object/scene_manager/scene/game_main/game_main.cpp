@@ -43,7 +43,7 @@ Initialize(void)
     CEnemyManager* em = aqua::CreateGameObject<CEnemyManager>(this);
     
     // プレイヤーの初期化＆弾管理クラスのセット
-    player->Initialize(aqua::CVector3(0.0f, 0.0f, -50.0f), 10.0f, 10.0f, 10.0f, aqua::CColor::BLUE, bm);
+    player->Initialize(aqua::CVector3(0.0f, 10.0f, -50.0f), 10.0f, 10.0f, 10.0f, aqua::CColor::BLUE, bm);
     // 敵管理クラスの初期化＆プレイヤー、弾管理クラスのセット
     em->Initialize(bm, player);
 

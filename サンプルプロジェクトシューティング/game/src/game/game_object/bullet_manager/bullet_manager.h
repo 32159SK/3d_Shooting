@@ -62,7 +62,7 @@ public:
     /*!
      *  @brief      íeÇÃê∂ê¨
      */
-    void        Create(aqua::CVector3 shot_pos, UNIT_TYPE unit_type, BULLET_TYPE bullet_type, IUnit* user);
+    void        Create(aqua::CVector3 shot_pos, aqua::CVector3 shot_front, UNIT_TYPE unit_type, BULLET_TYPE bullet_type, IUnit* user);
 
     /*!
      *  @brief      âï˙

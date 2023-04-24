@@ -46,6 +46,13 @@ namespace aqua
         float               height;
         //! ‰œs
         float               depth;
+        //! ‚’¼‰ñ“]Šp“x
+        float           m_VRotate;
+        //! …•½‰ñ“]Šp“x
+        float           m_HRotate;
+        //! ”P‚è‰ñ“]Šp“x
+        float           m_TRotate;
+
         //! F
         aqua::CColor        color;
         //! ”½ËŒõF

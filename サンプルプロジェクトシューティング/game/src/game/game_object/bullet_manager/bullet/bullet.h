@@ -31,7 +31,7 @@ public:
     /*
      *  @brief      èâä˙âª
      */
-    void    Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri,aqua::CVector3 pop_pos,IUnit* user);
+    void    Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri,aqua::CVector3 pop_pos,aqua::CVector3 front,IUnit* user);
 
     /*
      *  @brief      ï`âÊ
@@ -68,6 +68,12 @@ protected:
     int                     m_Damage;       // É_ÉÅÅ[ÉWó 
 
     float                   m_Radius;       // îºåa
+
+    aqua::CVector3          m_Dir;
+
+    aqua::CVector3          m_Velocity;     // íeÇÃë¨ìx
+
+    float                   m_Speed;        // íeÇÃë¨Ç≥
 
     UNIT_TYPE               m_Attri;        // ëÆê´
 

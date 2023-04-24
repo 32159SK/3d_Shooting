@@ -24,6 +24,9 @@ CCubePrimitive(void)
     , width(0.0f)
     , height(0.0f)
     , depth(0.0f)
+    , m_HRotate(0.0f)
+    , m_VRotate(0.0f)
+    , m_TRotate(0.0f)
     , color(aqua::CColor::WHITE)
     , spc_color(aqua::CColor::WHITE)
     , fill(false)
@@ -100,6 +103,15 @@ void aqua::CCubePrimitive::Setup(const aqua::CVector3& center_pos, float width_,
 
 void aqua::CCubePrimitive::Transform(void)
 {
+    aqua::CMatrix mat;
+
+    mat.RotationZ(aqua::DegToRad(m_TRotate));
+
+    mat.RotationX(aqua::DegToRad(m_VRotate));
+
+    mat.RotationY(aqua::DegToRad(m_HRotate));
+
+    mat.Translate(position);
 
     float wid = width / 2;
     float hei = height / 2;
@@ -107,33 +119,34 @@ void aqua::CCubePrimitive::Transform(void)
     COLOR_U8 dif_ = GetColorU8(color.red, color.green, color.blue, color.alpha);
     COLOR_U8 spc_ = GetColorU8(spc_color.red, spc_color.green, spc_color.blue, spc_color.alpha);
 
-    vertex[0].pos = position + aqua::CVector3(wid, hei, -dep);       // 手前右上
+    vertex[0].pos = aqua::CVector3(wid, hei, -dep);       // 手前右上
     vertex[0].norm = aqua::CVector3(1.0f, 1.0f, -1.0f);
 
-    vertex[1].pos = position + aqua::CVector3(wid, -hei, -dep);      // 手前右下
+    vertex[1].pos = aqua::CVector3(wid, -hei, -dep);      // 手前右下
     vertex[1].norm = aqua::CVector3(1.0f, -1.0f, -1.0f);
 
-    vertex[2].pos = position + aqua::CVector3(-wid, hei, -dep);      // 手前左上
+    vertex[2].pos = aqua::CVector3(-wid, hei, -dep);      // 手前左上
     vertex[2].norm = aqua::CVector3(-1.0f, 1.0f, -1.0f);
 
-    vertex[3].pos = position + aqua::CVector3(-wid, -hei, -dep);     // 手前左下
+    vertex[3].pos = aqua::CVector3(-wid, -hei, -dep);     // 手前左下
     vertex[3].norm = aqua::CVector3(-1.0f, -1.0f, -1.0f);
 
 
-    vertex[4].pos = position + aqua::CVector3(wid, hei, dep);        // 奥右上
+    vertex[4].pos =   aqua::CVector3(wid, hei, dep);        // 奥右上
     vertex[4].norm = aqua::CVector3(1.0f, 1.0f, 1.0f);
 
-    vertex[5].pos = position + aqua::CVector3(wid, -hei, dep);       // 奥右下
+    vertex[5].pos =  aqua::CVector3(wid, -hei, dep);       // 奥右下
     vertex[5].norm = aqua::CVector3(1.0f, -1.0f, 1.0f);
 
-    vertex[6].pos = position + aqua::CVector3(-wid, hei, dep);       // 奥左上
+    vertex[6].pos =  aqua::CVector3(-wid, hei, dep);       // 奥左上
     vertex[6].norm = aqua::CVector3(-1.0f, 1.0f, 1.0f);
 
-    vertex[7].pos = position + aqua::CVector3(-wid, -hei, dep);      // 奥左下
+    vertex[7].pos = aqua::CVector3(-wid, -hei, dep);      // 奥左下
     vertex[7].norm = aqua::CVector3(-1.0f, -1.0f, 1.0f);
 
     for (int i = 0; i < 8; i++)
     {
+        vertex[i].pos = aqua::CVector3(vertex[i].pos) * mat;
         vertex[i].dif = dif_;
         vertex[i].spc = spc_;
         vertex[i].u = 0.0f;

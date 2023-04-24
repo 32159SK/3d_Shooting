@@ -88,6 +88,9 @@ protected:
 
     float                m_Depth;        // 奥行
 
+    //! 水平回転角度
+    float                m_Rotate;
+
     UNIT_TYPE            m_UnitType;     // ユニット属性
 
     aqua::CVector3       m_Position;     // 座標
@@ -95,6 +98,9 @@ protected:
     aqua::CColor         m_Color;        // 色
 
     aqua::CCubePrimitive m_Cube;        // 自機
+
+    aqua::CLinePrimitive3D m_Line;
+
 
     aqua::CTimer         m_ShotCT;
 

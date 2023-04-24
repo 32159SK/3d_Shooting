@@ -40,6 +40,8 @@ public:
      */
     virtual void    Update(void)override;
 
+    void Draw(void) override;
+
     /*
      *  @brief      XV
      */

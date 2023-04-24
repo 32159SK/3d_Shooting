@@ -34,7 +34,6 @@ void CCameraControl::Move(void)
 	if (Button(KEY_ID::A)) m_Velocity += cam_left;
 	if (Button(KEY_ID::D)) m_Velocity -= cam_left;
 
-
 	m_Velocity = m_Velocity.Normalize();
 	m_Velocity *= (m_CamSpeed * to_delta);
 

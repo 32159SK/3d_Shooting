@@ -16,7 +16,7 @@
 CGameMain::CGameMain(aqua::IGameObject* parent)
     : IScene(parent, "GameMainScene")
     , m_State(STATE::STATE_GAME_START)
-    , m_CamContorl(nullptr)
+    , m_Player(nullptr)
 {
 }
 
@@ -38,17 +38,16 @@ Initialize(void)
     // 弾管理クラスの生成
     CBulletManager* bm = aqua::CreateGameObject<CBulletManager>(this);
     // プレイヤーの生成
-    CPlayer* player = aqua::CreateGameObject<CPlayer>(this);
+    m_Player = aqua::CreateGameObject<CPlayer>(this);
     // 敵管理クラスの生成
     CEnemyManager* em = aqua::CreateGameObject<CEnemyManager>(this);
     
     // プレイヤーの初期化＆弾管理クラスのセット
-    player->Initialize(aqua::CVector3(0.0f, 10.0f, -50.0f), 10.0f, 10.0f, 10.0f, aqua::CColor::BLUE, bm);
+    m_Player->Initialize(aqua::CVector3(0.0f, 0.0f, -50.0f), 10.0f, 10.0f, 10.0f, aqua::CColor::BLUE, bm);
     // 敵管理クラスの初期化＆プレイヤー、弾管理クラスのセット
-    em->Initialize(bm, player);
+    em->Initialize(bm, m_Player);
 
-    m_Camera.SetCamera(0.1, 10000.0, aqua::CVector3(0, 0, -100), player->GetPosition());
-    m_CamContorl = new CCameraControl(&m_Camera);
+    m_Camera.SetCamera(0.1, 10000.0, aqua::CVector3(0, 100.0f, -50.0f), m_Player->GetPosition());
 }
 
 /*
@@ -89,7 +88,10 @@ void
 CGameMain::
 GamePlay(void)
 {
-    m_CamContorl->Move();
+    //m_CamContorl->Move();
+    m_Camera.m_Target = m_Player->GetPosition();
+    m_Camera.m_Position = m_Camera.m_Target + aqua::CVector3(0.0f, 100.0f, -50.0f);
+    m_Camera.SetCamera();
 }
 
 void CGameMain::GameFinish(void)

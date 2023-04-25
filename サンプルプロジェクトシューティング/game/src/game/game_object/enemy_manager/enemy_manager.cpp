@@ -15,8 +15,8 @@ void CEnemyManager::Initialize(CBulletManager* bm, CPlayer* player)
 	m_Player = player;
 	m_BulletManagar = bm;
 
-	Create(aqua::CVector3(0.0f, 0.0f, 50.0f), 5.0f, 5.0f, 5.0f, aqua::CColor::WHITE);
-	Create(aqua::CVector3::ZERO, 5.0, 5.0f, 5.0f, aqua::CColor::BLACK);
+	Create(aqua::CVector3(0.0f, 0.0f, 50.0f), 15.0f, 15.0f, 15.0f, aqua::CColor::WHITE);
+	Create(aqua::CVector3::ZERO, 15.0, 15.0f, 15.0f, aqua::CColor::BLACK);
 
 }
 

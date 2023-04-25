@@ -69,9 +69,13 @@ protected:
 
     float                   m_Radius;       // ”¼Œa
 
+    float                   m_Range;        // ŽË’ö‹——£“à‚É“ü‚Á‚½‚º...‹g—Ç‹g‰e
+
     aqua::CVector3          m_Dir;
 
     aqua::CVector3          m_Velocity;     // ’e‚Ì‘¬“x
+
+    aqua::CVector3          m_StartPos;
 
     float                   m_Speed;        // ’e‚Ì‘¬‚³
 

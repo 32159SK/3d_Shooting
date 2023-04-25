@@ -9,9 +9,12 @@ IUnit(aqua::IGameObject* parent, const std::string& object_name)
 	, m_Height(0.0f)
 	, m_Width(0.0f)
 	, m_Depth(0.0f)
+	, m_Speed(0.0f)
 	, m_Life(0)
 	, m_DeadFlag(false)
 	, m_Rotate(0.0f)
+	, m_Position(aqua::CVector3::ZERO)
+	, m_Velocity(aqua::CVector3::ZERO)
 {
 }
 
@@ -35,6 +38,8 @@ void IUnit::Draw(void)
 
 void IUnit::Update(void)
 {
+	Move();
+	m_Cube.position = m_Position;
 }
 
 bool IUnit::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere,int damage)
@@ -67,5 +72,5 @@ void IUnit::Dead(void)
 {
 	m_DeadFlag = true;
 	m_Cube.visible = false;
-	//DeleteObject();
+	DeleteObject();
 }

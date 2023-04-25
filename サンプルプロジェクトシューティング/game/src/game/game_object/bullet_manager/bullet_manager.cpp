@@ -52,13 +52,21 @@ void CBulletManager::CheakHit(void)
 	int e_count = m_Enemy.size();
 
 	for (int s = 0; s < s_count; ++s)
+		if(m_Bullet[s])
 		for (int e = 0; e < e_count; ++e)
-			if (m_Enemy[e]&&!m_Enemy[e]->GetDead() && m_Enemy[e]->CheckHitBullet(m_Bullet[s]->GetAttri(), m_Bullet[s]->GetSphere(), m_Bullet[s]->GetDamage()))
+			if (m_Enemy[e] && !m_Enemy[e]->GetDead() && m_Enemy[e]->CheckHitBullet(m_Bullet[s]->GetAttri(), m_Bullet[s]->GetSphere(), m_Bullet[s]->GetDamage()))
+			{
 				m_Bullet[s]->Hit();
+				return;
+			}
 
 	for (int s = 0; s < s_count; ++s)
-		if (m_Player && m_Player->GetDead(), m_Player->CheckHitBullet(m_Bullet[s]->GetAttri(), m_Bullet[s]->GetSphere(), m_Bullet[s]->GetDamage()))
-			m_Bullet[s]->Hit();
+		if (m_Bullet[s])
+			if (m_Player && m_Player->GetDead(), m_Player->CheckHitBullet(m_Bullet[s]->GetAttri(), m_Bullet[s]->GetSphere(), m_Bullet[s]->GetDamage()))
+			{
+				m_Bullet[s]->Hit();
+				return;
+			}
 }
 
 

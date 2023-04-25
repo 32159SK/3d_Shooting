@@ -15,6 +15,9 @@ void IBullet::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector
 	m_Speed = bullet_info.speed;
 	m_Color = bullet_info.color;
 	m_Unit = user;
+
+
+	m_StartPos = m_Position;
 	m_Sphere.Setup(m_Position, m_Radius, m_Color);
 }
 
@@ -34,6 +37,9 @@ void IBullet::Update(void)
 	m_Velocity *= (m_Speed * to_delta);
 
 	m_Position += m_Velocity;
+
+	if (aqua::CVector3::Length(m_StartPos-m_Position) > abs(700.0f))
+		Hit();
 
 	m_Sphere.position = m_Position;
 }

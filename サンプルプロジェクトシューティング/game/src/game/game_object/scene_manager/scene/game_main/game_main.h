@@ -85,5 +85,6 @@ private:
 
     STATE               m_State;        //! èÛë‘ID
     aqua::CCamera       m_Camera;
-    CCameraControl*     m_CamContorl;
+    CPlayer*            m_Player;
+
 };

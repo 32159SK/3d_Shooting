@@ -95,9 +95,13 @@ protected:
 
     aqua::CVector3       m_Position;     // 座標
 
+    aqua::CVector3       m_Velocity;     // 移動速度
+    
+    float                m_Speed;        // 速さ
+
     aqua::CColor         m_Color;        // 色
 
-    aqua::CCubePrimitive m_Cube;        // 自機
+    aqua::CCubePrimitive m_Cube;         // 自機
 
     aqua::CLinePrimitive3D m_Line;
 

@@ -13,7 +13,6 @@
 
 #include "aqua.h"
 #include "bullet/bullet.h"
-#include "bullet/bullet_type.h"
 
  /*!
   *  @class      CBulletManager
@@ -85,5 +84,5 @@ private:
     BULLET_INFO             m_BulletInfo;
     CPlayer*                m_Player;
     std::vector<CEnemy*>    m_Enemy;
-    std::vector<IBullet*>    m_Bullet;
+    std::vector<IBullet*>   m_Bullet;
 };

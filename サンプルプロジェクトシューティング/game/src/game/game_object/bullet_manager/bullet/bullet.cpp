@@ -1,5 +1,6 @@
 #include "bullet.h"
 
+
 IBullet::IBullet(aqua::IGameObject* parent, const std::string& object_name)
 {
 }
@@ -16,6 +17,7 @@ void IBullet::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector
 	m_Color = bullet_info.color;
 	m_Unit = user;
 
+	m_Range = 700.0f;
 
 	m_StartPos = m_Position;
 	m_Sphere.Setup(m_Position, m_Radius, m_Color);
@@ -38,7 +40,7 @@ void IBullet::Update(void)
 
 	m_Position += m_Velocity;
 
-	if (aqua::CVector3::Length(m_StartPos-m_Position) > abs(700.0f))
+	if (aqua::CVector3::Length(m_StartPos-m_Position) > abs(m_Range))
 		Hit();
 
 	m_Sphere.position = m_Position;

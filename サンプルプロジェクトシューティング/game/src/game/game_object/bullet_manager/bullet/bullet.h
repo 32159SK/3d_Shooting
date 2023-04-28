@@ -9,8 +9,8 @@
  */
 #pragma once
 #include "aqua.h"
+#include "../../game_object.h"
 #include "../../unit/unit.h"
-#include "bullet_type.h"
 
 class IBullet : public aqua::IGameObject
 {

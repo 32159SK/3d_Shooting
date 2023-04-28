@@ -12,6 +12,8 @@
 #include "../../unit/unit.h"
 //#include "../../bullet_manager/bullet_manager.h"
 
+class CPlayer;
+
 class CEnemy : public IUnit
 {
 public:
@@ -38,6 +40,8 @@ public:
      */
     virtual void    Update(void)override;
 
+    void    SetPlayer(CPlayer* player) { m_Player = player; }
+
 private:
 
     void            Shot(void)override;
@@ -49,4 +53,6 @@ private:
      */
     void            Dead(void)override;
 
+    float           m_Angle;
+    CPlayer*        m_Player;
 };

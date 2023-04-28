@@ -46,6 +46,7 @@ public:
      */
     bool            CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, int damage)override;
 
+    aqua::CVector3  GetAgoPos(void) { return m_AgoPosition; }
 private:
 
     /*
@@ -64,4 +65,6 @@ private:
     void            Dead(void)override;
 
     CEnemyManager*  m_EnemyManager;
+
+    aqua::CVector3 m_AgoPosition;
 };

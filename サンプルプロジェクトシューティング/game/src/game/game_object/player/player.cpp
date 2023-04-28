@@ -2,7 +2,8 @@
 #include "player.h"
 
 CPlayer::CPlayer(aqua::IGameObject* parent)
-	: IUnit(parent,"Player")
+	: IUnit(parent, "Player")
+	, m_AgoPosition(aqua::CVector3::ZERO)
 {
 }
 
@@ -17,8 +18,6 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep
 
 void CPlayer::Update(void)
 {
-
-
 	m_Cube.m_HRotate = m_Rotate;
 	Shot();
 	IUnit::Update();
@@ -54,11 +53,15 @@ void CPlayer::Shot(void)
 	front.x = sin(aqua::DegToRad(m_Rotate));
 	front.z = cos(aqua::DegToRad(m_Rotate));
 
-
-	if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::SPACE) && m_ShotCT.Finished())
+	if (m_ShotCT.Finished())
 	{
-		m_BulletManager->Create(m_Position,front, m_UnitType, BULLET_TYPE::NOMAL,this);
-		m_ShotCT.Reset();
+		// ここでついでに敵が追尾する用のポジションを取っておく
+		m_AgoPosition = m_Position;
+		if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::SPACE))
+		{
+			m_BulletManager->Create(m_Position+front, front*1.5, m_UnitType, BULLET_TYPE::NOMAL, this);
+			m_ShotCT.Reset();
+		}
 	}
 }
 
@@ -75,8 +78,8 @@ void CPlayer::Move(void)
 	if (Button(KEY_ID::A)) m_Velocity -= aqua::CVector3(1.0f, 0.0f, 0.0f);
 	if (Button(KEY_ID::D)) m_Velocity += aqua::CVector3(1.0f, 0.0f, 0.0f);
 
-	if (Button(KEY_ID::RIGHT)) m_Rotate += 1.0f;
-	if (Button(KEY_ID::LEFT)) m_Rotate -= 1.0f;
+	if (Button(KEY_ID::RIGHT)) m_Rotate += 2.0f;
+	if (Button(KEY_ID::LEFT)) m_Rotate -= 2.0f;
 
 	m_Velocity = m_Velocity.Normalize();
 	m_Velocity *= (m_Speed * to_delta);

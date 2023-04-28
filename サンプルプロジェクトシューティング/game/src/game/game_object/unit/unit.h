@@ -54,6 +54,16 @@ public:
 
     bool            GetDead(void) { return m_DeadFlag; }
 
+    /*
+     *  @brief      •½–ÊÀ•W‚Ìæ“¾
+     */
+    aqua::CVector2  GetPosVector2(void) { return aqua::CVector2(m_Position.x, m_Position.z); }
+
+    /*
+     *  @brief      ‰ñ“]’l‚Ìæ“¾
+     */
+    float           GetRotate(void) { return m_Rotate; }
+
 protected:
 
     /*

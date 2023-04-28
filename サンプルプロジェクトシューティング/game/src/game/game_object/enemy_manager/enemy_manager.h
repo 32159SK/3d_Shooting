@@ -13,9 +13,10 @@
 
 #include "aqua.h"
 #include "enemy/enemy.h"
+#include "../ui_component/rader/rader.h"
 
 class CPlayer;
-
+class CRader;
 
  /*!
   *  @class      CEnemyManager
@@ -47,7 +48,7 @@ public:
     /*!
      *  @brief      ‰Šú‰»
      */
-    void        Initialize(CBulletManager* bm,CPlayer* player);
+    void        Initialize(CBulletManager* bm, CPlayer* player, CRader* rader);
 
     /*!
      *  @brief      XV
@@ -77,4 +78,5 @@ private:
 
     CPlayer*        m_Player;
     CBulletManager* m_BulletManagar;
+    CRader*         m_Rader;
 };

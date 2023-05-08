@@ -10,7 +10,8 @@
 enum class FILE_TYPE
 {
     ENEMY_INFO,
-    POP_LIST,
+    BULLET_INFO,
+    POP_LIST
 };
 
 /*!
@@ -18,7 +19,7 @@ enum class FILE_TYPE
  */
 struct ENEMY_POP_LIST
 {
-    float pop_time = 0.0f;
+    int   wave  = 1;
     float pos_x = 0.0f;
     float pos_z = 0.0f;
 };
@@ -40,16 +41,19 @@ struct ENEMY_INFO
 enum class BULLET_TYPE
 {
     NOMAL,
+    SLOW,
+    FAST,
+    MINE,
     MAX
 };
 
 struct BULLET_INFO
 {
+    BULLET_TYPE bullet_type = BULLET_TYPE::NOMAL;
     int     damage = 1;
     float   radius = 5;
     float   speed = 2.0f;
     aqua::CColor color = aqua::CColor::RED;
-    BULLET_TYPE bullet_type = BULLET_TYPE::NOMAL;
 };
 
 /*!
@@ -59,7 +63,7 @@ struct BULLET_INFO
  *
  *  @author     Kazuto Shimazaki
  *
- *  @date       2023/04/27
+ *  @date       2023/05/08
  *
  *  @version    1.0
  */
@@ -88,20 +92,40 @@ public:
     /*!
      *  @brief      ファイル行数取得
      */
-    int                    GetFileRow(void) { return m_FileRow; }
+    int                    GetFileRow(FILE_TYPE file_type) { return m_FileRow[(int)file_type]; }
 
     /*!
      *  @brief      解放
      */
     void                   Finalize(void)override;
+
+    /*!
+     *  @brief      エネミー情報取得
+     */
+    ENEMY_INFO             GetEneInfo(int i) { return m_EnemyInfo[i]; }
+
+    /*!
+     *  @brief      弾情報取得
+     */
+    BULLET_INFO            GetBullInfo(int i) { return m_BulletInfo[i]; }
+
+    /*!
+     *  @brief      ポップ情報取得
+     */
+    ENEMY_POP_LIST         GetPopList(int i) { return m_PopList[i]; }
+
 private:
 
     //! CSVファイルのデータをトークデータリストに変換する
-    void Parse(const std::string& file_name);
+    void                   Parse(const std::string& file_name);
 
+    int                             m_FileRow[3];
 
-    int                         m_FileRow;
+    FILE_TYPE                       m_FileType;
 
-    FILE_TYPE                   m_FileType;
+    std::vector<ENEMY_INFO>        m_EnemyInfo;
 
+    std::vector<BULLET_INFO>       m_BulletInfo;
+
+    std::vector<ENEMY_POP_LIST>    m_PopList;
 };

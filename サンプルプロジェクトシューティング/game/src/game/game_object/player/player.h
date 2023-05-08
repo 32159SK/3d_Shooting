@@ -37,16 +37,25 @@ public:
     /*
      *  @brief      更新
      */
-    virtual void    Update(void)override;
-
-    void Draw(void) override;
+    void            Update(void)override;
 
     /*
-     *  @brief      更新
+     *  @brief      描画
+     */
+    void            Draw(void) override;
+
+    void            Finalize(void)override;
+
+    /*
+     *  @brief      被弾確認
      */
     bool            CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, int damage)override;
 
+    /*
+     *  @brief      少し前の座標取得
+     */
     aqua::CVector3  GetAgoPos(void) { return m_AgoPosition; }
+
 private:
 
     /*
@@ -63,6 +72,12 @@ private:
      *  @brief      死亡
      */
     void            Dead(void)override;
+
+    static const float m_chage_shotCT;
+
+    aqua::CLabel    m_DrawBT;
+
+    aqua::CTimer    m_ChageCT;
 
     CEnemyManager*  m_EnemyManager;
 

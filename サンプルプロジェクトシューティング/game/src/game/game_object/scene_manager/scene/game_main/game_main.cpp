@@ -35,8 +35,11 @@ void
 CGameMain::
 Initialize(void)
 {
+    aqua::CreateGameObject<CCSVReader>(this);
+
     // 弾管理クラスの生成
     CBulletManager* bm = aqua::CreateGameObject<CBulletManager>(this);
+    bm->Initialize();
     // プレイヤーの生成
     m_Player = aqua::CreateGameObject<CPlayer>(this);
     // 敵管理クラスの生成

@@ -103,6 +103,8 @@ protected:
 
     UNIT_TYPE            m_UnitType;     // ユニット属性
 
+    BULLET_TYPE          m_ShotBullet;
+
     aqua::CVector3       m_Position;     // 座標
 
     aqua::CVector3       m_Velocity;     // 移動速度

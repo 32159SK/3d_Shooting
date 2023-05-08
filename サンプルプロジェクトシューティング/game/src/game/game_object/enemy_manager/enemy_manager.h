@@ -15,9 +15,6 @@
 #include "enemy/enemy.h"
 #include "../ui_component/rader/rader.h"
 
-class CPlayer;
-class CRader;
-
  /*!
   *  @class      CEnemyManager
   *
@@ -73,6 +70,7 @@ public:
 
 
 private:
+
 
     int             m_EnemyCount;
 

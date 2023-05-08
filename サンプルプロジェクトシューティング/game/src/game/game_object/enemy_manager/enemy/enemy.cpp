@@ -63,7 +63,6 @@ void CEnemy::Move(void)
 	// ˆÚ“®‘¬“x‚É‡‚í‚¹‚Ä‰ñ“]Šp“x‚ğZo
 	m_Rotate = aqua::RadToDeg(atan2(m_Velocity.x, m_Velocity.z));
 
-
 	m_Cube.m_HRotate = m_Rotate;
 	m_Cube.position = m_Position;
 }

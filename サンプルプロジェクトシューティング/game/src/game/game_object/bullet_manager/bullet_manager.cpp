@@ -5,11 +5,24 @@
 
 CBulletManager::CBulletManager(aqua::IGameObject* parent)
 	: IGameObject(parent,"BulletManager")
+	, m_CSVReader(nullptr)
+	, m_Player(nullptr)
+	, m_Enemy{nullptr}
+	, m_Bullet{nullptr}
 {
 }
 
 void CBulletManager::Initialize(void)
 {
+	m_CSVReader = (CCSVReader*)aqua::FindGameObject("CSVReader");
+
+	m_CSVReader->Initialize(FILE_TYPE::BULLET_INFO, "bullet_info");
+
+	// forï∂ópÇÃçsêîéÊìæ
+	int row = m_CSVReader->GetFileRow(FILE_TYPE::BULLET_INFO);
+	// íeèÓïÒÇÃäiî[
+	for (int i = 0; i < row; ++i)
+		m_BulletInfo.push_back(m_CSVReader->GetBullInfo(i));
 }
 
 void CBulletManager::Update(void)
@@ -25,14 +38,9 @@ void CBulletManager::Draw(void)
 
 void CBulletManager::Create(aqua::CVector3 shot_pos, aqua::CVector3 shot_front, UNIT_TYPE unit_type, BULLET_TYPE bullet_type, IUnit* user)
 {
-	IBullet* bullet = nullptr;
-	switch (bullet_type)
-	{
-	case BULLET_TYPE::NOMAL:
-		bullet = aqua::CreateGameObject<CNomalBullet>(this);
-		bullet->Initialize(m_BulletInfo, unit_type, shot_pos, shot_front, user);
-		break;
-	}
+ 	IBullet* bullet = nullptr;
+ 	bullet = aqua::CreateGameObject<CNomalBullet>(this);
+	bullet->Initialize(m_BulletInfo[(int)bullet_type], unit_type, shot_pos, shot_front, user);
 	m_Bullet.push_back(bullet);
 }
 

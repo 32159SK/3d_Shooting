@@ -40,7 +40,6 @@ void CRader::Update(void)
 		else
 			m_EnemySprite[i].position = SetRaderPos(aqua::CVector2(m_Enemy[i]->GetPosVector2().x - m_Player->GetPosVector2().x,
 				 m_Player->GetPosVector2().y-m_Enemy[i]->GetPosVector2().y))-m_EnemySprite[i].anchor;
-
 }
 
 void CRader::Draw(void)

@@ -81,8 +81,9 @@ private:
 
     void        CheakHit(void);
 
-    BULLET_INFO             m_BulletInfo;
+    CCSVReader*             m_CSVReader;
     CPlayer*                m_Player;
+    std::vector<BULLET_INFO> m_BulletInfo;
     std::vector<CEnemy*>    m_Enemy;
     std::vector<IBullet*>   m_Bullet;
 };

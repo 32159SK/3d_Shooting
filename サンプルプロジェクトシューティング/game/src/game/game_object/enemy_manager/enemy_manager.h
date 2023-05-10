@@ -61,20 +61,31 @@ public:
      *  @brief      エネミーの生成
      */
     void        Create(aqua::CVector3 pop_pos, float wid, float hei,float dep,aqua::CColor color);
+    
+    /*!
+     *  @brief      エネミーの生成
+     */
+    void        Create(aqua::CVector3 pop_pos ,ENEMY_INFO enemy_info);
 
     /*!
      *  @brief      解放
      */
     void        Finalize(void) override;
 
-
+    bool        GetFinish(void) { return m_Finish; }
 
 private:
 
+    void        WaveChange(void);
 
     int             m_EnemyCount;
+    int             m_WaveCount;
+    bool            m_Finish;
 
+    CCSVReader*     m_CSVReader;
     CPlayer*        m_Player;
     CBulletManager* m_BulletManagar;
     CRader*         m_Rader;
+    std::vector<ENEMY_POP_LIST> m_PopList;
+    std::vector<ENEMY_INFO> m_EnemyInfo;
 };

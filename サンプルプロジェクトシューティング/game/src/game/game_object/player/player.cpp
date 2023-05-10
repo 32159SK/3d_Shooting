@@ -48,7 +48,6 @@ void CPlayer::Draw(void)
 	switch (m_ShotBullet)
 	{
 	case BULLET_TYPE::NOMAL: m_DrawBT.text = "BULLET:NOMAL"; break;
-	case BULLET_TYPE::SLOW: m_DrawBT.text = "BULLET:SLOW"; break;
 	case BULLET_TYPE::FAST: m_DrawBT.text = "BULLET:FAST"; break;
 	case BULLET_TYPE::MINE: m_DrawBT.text = "BULLET:MINE"; break;
 	case BULLET_TYPE::MAX:
@@ -84,14 +83,14 @@ void CPlayer::Shot(void)
 
 		if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::UP) && m_ShotBullet != BULLET_TYPE::NOMAL)
 		{
-			// -1ÇÃíeÇ…ïœçX(ó·lowÅ®NOMAL)
+			// -1ÇÃíeÇ…ïœçX(ó·FASTÅ®NOMAL)
 			m_ShotBullet = (BULLET_TYPE)((int)m_ShotBullet - 1);
 			m_ChageCT.Reset();
 		}
 		// Å´ÉLÅ[
 		if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::DOWN) && (int)m_ShotBullet < (int)BULLET_TYPE::MAX - 1)
 		{
-			// +1ÇÃíeÇ…ïœçX(ó·NOMALÅ®low)
+			// +1ÇÃíeÇ…ïœçX(ó·NOMALÅ®FAST)
 			m_ShotBullet = (BULLET_TYPE)((int)m_ShotBullet + 1);
 			m_ChageCT.Reset();
 		}
@@ -138,4 +137,5 @@ void CPlayer::Move(void)
 
 void CPlayer::Dead(void)
 {
+	IUnit::Dead();
 }

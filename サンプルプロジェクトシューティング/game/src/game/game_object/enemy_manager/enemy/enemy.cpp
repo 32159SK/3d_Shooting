@@ -3,7 +3,7 @@
 
 CEnemy::CEnemy(aqua::IGameObject* parent)
 	: IUnit(parent,"Enemy")
-	, m_Angle(0.0f)
+	, m_Angle(180.0f)
 {
 }
 

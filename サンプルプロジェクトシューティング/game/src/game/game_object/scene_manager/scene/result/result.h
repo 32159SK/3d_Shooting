@@ -2,8 +2,8 @@
 /*
  *  @file       title_scene.h
  *  @brief      タイトルシーン
- *  @author     Miyu Hujita
- *  @date       2021/07/01
+ *  @author     
+ *  @date       
  *  @version    1.0
  *
  *  Copyright (c) 2013-2021, Kazuya Maruyama. All rights reserved.

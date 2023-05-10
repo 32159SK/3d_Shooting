@@ -8,7 +8,6 @@ CBulletManager::CBulletManager(aqua::IGameObject* parent)
 	, m_CSVReader(nullptr)
 	, m_Player(nullptr)
 	, m_Enemy{nullptr}
-	, m_Bullet{nullptr}
 {
 }
 
@@ -41,13 +40,12 @@ void CBulletManager::Create(aqua::CVector3 shot_pos, aqua::CVector3 shot_front, 
  	IBullet* bullet = nullptr;
  	bullet = aqua::CreateGameObject<CNomalBullet>(this);
 	bullet->Initialize(m_BulletInfo[(int)bullet_type], unit_type, shot_pos, shot_front, user);
-	m_Bullet.push_back(bullet);
 }
 
 void CBulletManager::Finalize(void)
 {
 	m_Enemy.clear();
-	m_Bullet.clear();
+	IGameObject::Finalize();
 }
 
 void CBulletManager::CheakHit(void)
@@ -56,25 +54,37 @@ void CBulletManager::CheakHit(void)
 		return;
 
 	
-	int s_count = m_Bullet.size();
+
 	int e_count = m_Enemy.size();
 
-	for (int s = 0; s < s_count; ++s)
-		if(m_Bullet[s])
+	// ‚±‚ÌƒŠƒXƒg‚ðŽg‚Á‚ÄŒJ‚è•Ô‚µˆ—‚ð‚·‚é
+	for (auto it : m_ChildObjectList)
+	{
+		IBullet* bullet = (IBullet*)it;
 		for (int e = 0; e < e_count; ++e)
-			if (m_Enemy[e] && !m_Enemy[e]->GetDead() && m_Enemy[e]->CheckHitBullet(m_Bullet[s]->GetAttri(), m_Bullet[s]->GetSphere(), m_Bullet[s]->GetDamage()))
+		{
+			if (m_Enemy[e] && !m_Enemy[e]->GetDead()
+				&& m_Enemy[e]->CheckHitBullet(bullet->GetAttri(), bullet->GetSphere(), bullet->GetDamage()))
 			{
-				m_Bullet[s]->Hit();
+				bullet->Hit();
 				return;
 			}
+		}
+		if (m_Player && !m_Player->GetDead() && m_Player->CheckHitBullet(bullet->GetAttri(), bullet->GetSphere(), bullet->GetDamage()))
+		{
+			bullet->Hit();
+			return;
+		}
 
-	for (int s = 0; s < s_count; ++s)
-		if (m_Bullet[s])
-			if (m_Player && m_Player->GetDead(), m_Player->CheckHitBullet(m_Bullet[s]->GetAttri(), m_Bullet[s]->GetSphere(), m_Bullet[s]->GetDamage()))
-			{
-				m_Bullet[s]->Hit();
-				return;
-			}
+		//for (auto k : m_ChildObjectList)
+		//{
+		//	IBullet* _bullet = (IBullet*)k;
+		//	if (_bullet == bullet);
+		//}
+
+	}
+
+
 }
 
 

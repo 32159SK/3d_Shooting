@@ -87,9 +87,11 @@ void CCSVReader::Parse(const std::string& file_name)
 			pop_list =
 			{
 				std::stoi(csv.GetString(i,0)),	// wave
-				std::stof(csv.GetString(i,1)),	// pos_x
-				std::stof(csv.GetString(i,2)),	// pos_z
+				aqua::CVector3( std::stof(csv.GetString(i,1)),	// pos_x
+				0.0f,
+				std::stof(csv.GetString(i,2)))	// pos_z
 			};
+			m_PopList.push_back(pop_list);
 		}
 		break;
 	default:

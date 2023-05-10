@@ -15,13 +15,22 @@ enum class FILE_TYPE
 };
 
 /*!
+ *  @brief      エネミーの
+ */
+enum class ENEMY_TYPE
+{
+    NOMAL,
+    TURRET,
+
+};
+
+/*!
  *  @brief      エネミーのポップテーブル
  */
 struct ENEMY_POP_LIST
 {
     int   wave  = 1;
-    float pos_x = 0.0f;
-    float pos_z = 0.0f;
+    aqua::CVector3 pop_pos = aqua::CVector3::ZERO;
 };
 
 /*!
@@ -29,7 +38,7 @@ struct ENEMY_POP_LIST
  */
 struct ENEMY_INFO
 {
-    int   life = 3;
+    int   life = 1;
     float width = 5.0f;
     float height = 5.0f;
     float depth = 5.0f;
@@ -41,7 +50,6 @@ struct ENEMY_INFO
 enum class BULLET_TYPE
 {
     NOMAL,
-    SLOW,
     FAST,
     MINE,
     MAX

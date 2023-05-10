@@ -40,18 +40,22 @@ Initialize(void)
     // 弾管理クラスの生成
     CBulletManager* bm = aqua::CreateGameObject<CBulletManager>(this);
     bm->Initialize();
+
     // プレイヤーの生成
     m_Player = aqua::CreateGameObject<CPlayer>(this);
+
     // 敵管理クラスの生成
-    CEnemyManager* em = aqua::CreateGameObject<CEnemyManager>(this);
+    m_EnemyManager = aqua::CreateGameObject<CEnemyManager>(this);
+
     // レーダークラスの生成
     CRader* rd = aqua::CreateGameObject<CRader>(this);
     rd->Initialize(m_Player);
 
     // プレイヤーの初期化＆弾管理クラスのセット
     m_Player->Initialize(aqua::CVector3(0.0f, 0.0f, -50.0f), 10.0f, 10.0f, 10.0f, aqua::CColor::BLUE, bm);
+
     // 敵管理クラスの初期化＆プレイヤー、弾管理クラスのセット
-    em->Initialize(bm, m_Player, rd);
+    m_EnemyManager->Initialize(bm, m_Player, rd);
 
     m_Camera.SetCamera(0.1, 10000.0, aqua::CVector3(0, 100.0f, -50.0f), m_Player->GetPosition());
 }
@@ -98,10 +102,14 @@ GamePlay(void)
     m_Camera.m_Target = m_Player->GetPosition();
     m_Camera.m_Position = m_Camera.m_Target + aqua::CVector3(0.0f, 100.0f, -50.0f);
     m_Camera.SetCamera();
+
+    if (m_Player->GetDead()||m_EnemyManager->GetFinish())
+        GameFinish();
 }
 
 void CGameMain::GameFinish(void)
 {
+    Change(SCENE_ID::RESULT);
 }
 
 

@@ -86,5 +86,6 @@ private:
     STATE               m_State;        //! ó‘ÔID
     aqua::CCamera       m_Camera;
     CPlayer*            m_Player;
+    CEnemyManager*      m_EnemyManager;
     aqua::CSprite       m_Sprite;
 };

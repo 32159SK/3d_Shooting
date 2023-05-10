@@ -27,6 +27,7 @@ void
 CTitleScene::
 Initialize(void)
 {
+    AQUA_DEBUG_LOG("タイトルシーン");
 }
 
 /*

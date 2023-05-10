@@ -102,9 +102,11 @@
   <ItemGroup>
     <ClCompile Include="src\game\game.cpp" />
     <ClCompile Include="src\game\game_object\bullet_manager\bullet\bullet.cpp" />
+    <ClCompile Include="src\game\game_object\bullet_manager\bullet\homing_bullet\homing_bullet.cpp" />
     <ClCompile Include="src\game\game_object\bullet_manager\bullet\nomal_bullet\nomal_bullet.cpp" />
     <ClCompile Include="src\game\game_object\bullet_manager\bullet_manager.cpp" />
     <ClCompile Include="src\game\game_object\csv_reader\csv_reader.cpp" />
+    <ClCompile Include="src\game\game_object\effect_manager\effect_manager.cpp" />
     <ClCompile Include="src\game\game_object\enemy_manager\enemy\enemy.cpp" />
     <ClCompile Include="src\game\game_object\enemy_manager\enemy_manager.cpp" />
     <ClCompile Include="src\game\game_object\player\player.cpp" />
@@ -121,9 +123,11 @@
   <ItemGroup>
     <ClInclude Include="src\game\game.h" />
     <ClInclude Include="src\game\game_object\bullet_manager\bullet\bullet.h" />
+    <ClInclude Include="src\game\game_object\bullet_manager\bullet\homing_bullet\homing_bullet.h" />
     <ClInclude Include="src\game\game_object\bullet_manager\bullet\nomal_bullet\nomal_bullet.h" />
     <ClInclude Include="src\game\game_object\bullet_manager\bullet_manager.h" />
     <ClInclude Include="src\game\game_object\csv_reader\csv_reader.h" />
+    <ClInclude Include="src\game\game_object\effect_manager\effect_manager.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy\enemy.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy_manager.h" />
     <ClInclude Include="src\game\game_object\game_object.h" />

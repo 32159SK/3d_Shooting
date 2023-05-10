@@ -27,6 +27,7 @@ void
 CResultScene::
 Initialize(void)
 {
+    AQUA_DEBUG_LOG("リザルトシーン");
 }
 
 /*
@@ -65,5 +66,5 @@ void CResultScene::Operation(void)
 {
     // Zキー  ( 決定 )
     if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::Z))
-        Change(SCENE_ID::GAMEMAIN);
+        Change(SCENE_ID::TITLE);
 }

@@ -77,6 +77,8 @@ public:
      *  @brief      自機セッター
      */
     void        SetPlayer(CPlayer* player) { m_Player = player; }
+
+    void        EnemyReset(void) { m_Enemy.clear(); }
 private:
 
     void        CheakHit(void);
@@ -85,5 +87,4 @@ private:
     CPlayer*                m_Player;
     std::vector<BULLET_INFO> m_BulletInfo;
     std::vector<CEnemy*>    m_Enemy;
-    std::vector<IBullet*>   m_Bullet;
 };

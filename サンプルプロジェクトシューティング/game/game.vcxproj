@@ -109,6 +109,7 @@
     <ClCompile Include="src\game\game_object\effect_manager\effect_manager.cpp" />
     <ClCompile Include="src\game\game_object\enemy_manager\enemy\enemy.cpp" />
     <ClCompile Include="src\game\game_object\enemy_manager\enemy_manager.cpp" />
+    <ClCompile Include="src\game\game_object\floor\floor.cpp" />
     <ClCompile Include="src\game\game_object\player\player.cpp" />
     <ClCompile Include="src\game\game_object\scene_manager\scene\game_main\game_main.cpp" />
     <ClCompile Include="src\game\game_object\scene_manager\scene\result\result.cpp" />
@@ -130,6 +131,7 @@
     <ClInclude Include="src\game\game_object\effect_manager\effect_manager.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy\enemy.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy_manager.h" />
+    <ClInclude Include="src\game\game_object\floor\floor.h" />
     <ClInclude Include="src\game\game_object\game_object.h" />
     <ClInclude Include="src\game\game_object\player\player.h" />
     <ClInclude Include="src\game\game_object\scene_manager\scene\game_main\game_main.h" />

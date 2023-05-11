@@ -36,10 +36,14 @@ CGameMain::
 Initialize(void)
 {
     aqua::CreateGameObject<CCSVReader>(this);
+    // 床
+    aqua::CreateGameObject<CFloor>(this);
 
     // 弾管理クラスの生成
     CBulletManager* bm = aqua::CreateGameObject<CBulletManager>(this);
-    bm->Initialize();
+
+    // 引数なしでInitializeできるものはここで
+    IGameObject::Initialize();
 
     // プレイヤーの生成
     m_Player = aqua::CreateGameObject<CPlayer>(this);
@@ -51,6 +55,7 @@ Initialize(void)
     CRader* rd = aqua::CreateGameObject<CRader>(this);
     rd->Initialize(m_Player);
 
+
     // プレイヤーの初期化＆弾管理クラスのセット
     m_Player->Initialize(aqua::CVector3(0.0f, 0.0f, -50.0f), 10.0f, 10.0f, 10.0f, aqua::CColor::BLUE, bm);
 
@@ -58,6 +63,7 @@ Initialize(void)
     m_EnemyManager->Initialize(bm, m_Player, rd);
 
     m_Camera.SetCamera(0.1, 10000.0, aqua::CVector3(0, 100.0f, -50.0f), m_Player->GetPosition());
+
 }
 
 /*

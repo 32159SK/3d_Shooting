@@ -79,7 +79,7 @@ protected:
     /*
      *  @brief      ƒ_ƒ[ƒW
      */
-    void            Damage(int damage);
+    virtual void    Damage(int damage);
 
      /*
       *  @brief      €–S

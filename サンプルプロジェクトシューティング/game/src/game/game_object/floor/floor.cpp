@@ -8,7 +8,9 @@ CFloor::CFloor(aqua::IGameObject* parent)
 void CFloor::Initialize(void)
 {
 	m_Floor.Load("data\\model\\Plane.mv1");
+	m_Floor.position = aqua::CVector3::ZERO;
 	m_Floor.position.y = -10.0f;
+
 }
 
 void CFloor::Update(void)

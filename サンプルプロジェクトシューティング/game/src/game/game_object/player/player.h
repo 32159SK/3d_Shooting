@@ -68,6 +68,8 @@ private:
      */
     void            Move(void)override;
 
+    void            Damage(int damage)override;
+
     /*
      *  @brief      Ž€–S
      */
@@ -75,9 +77,13 @@ private:
 
     static const float m_chage_shotCT;
 
+    bool            m_Invincible;
+
     aqua::CLabel    m_DrawBT;
 
     aqua::CTimer    m_ChageCT;
+
+    aqua::CTimer    m_InvincibleTimer;
 
     CEnemyManager*  m_EnemyManager;
 

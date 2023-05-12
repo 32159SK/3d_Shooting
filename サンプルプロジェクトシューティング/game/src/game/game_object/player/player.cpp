@@ -6,6 +6,7 @@ const float CPlayer::m_chage_shotCT = 0.5f;
 CPlayer::CPlayer(aqua::IGameObject* parent)
 	: IUnit(parent, "Player")
 	, m_AgoPosition(aqua::CVector3::ZERO)
+	, m_Invincible(false)
 {
 }
 
@@ -16,6 +17,9 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep
 	m_ShotBullet = BULLET_TYPE::NOMAL;
 	m_BulletManager->SetPlayer(this);
 	m_Speed = 1.0f;
+
+	// ñ≥ìGéûä‘ÇÃê›íË
+	m_InvincibleTimer.Setup(2.0f);
 
 	// åªç›ÇÃíeéÌÇÃâºï\é¶
 	m_DrawBT.Create(30.0f);
@@ -28,8 +32,18 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep
 
 void CPlayer::Update(void)
 {
+
 	m_Cube.m_HRotate = m_Rotate;
 	Shot();
+	
+	if (m_Invincible)
+		m_InvincibleTimer.Update();
+	if (m_InvincibleTimer.Finished())
+	{
+		m_Invincible = false;
+		m_InvincibleTimer.Reset();
+	}
+
 	IUnit::Update();
 	IGameObject::Update();
 }
@@ -50,8 +64,6 @@ void CPlayer::Draw(void)
 	case BULLET_TYPE::NOMAL: m_DrawBT.text = "BULLET:NOMAL"; break;
 	case BULLET_TYPE::FAST: m_DrawBT.text = "BULLET:FAST"; break;
 	case BULLET_TYPE::MINE: m_DrawBT.text = "BULLET:MINE"; break;
-	case BULLET_TYPE::MAX:
-		break;
 	default:
 		break;
 	}
@@ -68,7 +80,16 @@ void CPlayer::Finalize(void)
 
 bool CPlayer::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, int damage)
 {
-	return IUnit::CheckHitBullet(type,sphere,damage);
+	if (m_Invincible)
+		return false;
+
+	if (IUnit::CheckHitBullet(type, sphere, damage))
+	{
+		m_Invincible = true;
+		return true;
+	}
+	else
+		return false;
 }
 
 
@@ -132,7 +153,13 @@ void CPlayer::Move(void)
 	m_Velocity = m_Velocity.Normalize();
 	m_Velocity *= (m_Speed * to_delta);
 	m_Position += m_Velocity;
+	AQUA_DEBUG_LOG("X:" + std::to_string(m_Position.x) + ",Z" + std::to_string(m_Position.z));
+}
 
+void CPlayer::Damage(int damage)
+{
+	IUnit::Damage(damage);
+	m_Cube.color.alpha -= m_Cube.color.alpha / m_max_life;
 }
 
 void CPlayer::Dead(void)

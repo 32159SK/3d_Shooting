@@ -9,9 +9,9 @@ CEnemy::CEnemy(aqua::IGameObject* parent)
 
 void 
 CEnemy::
-Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color,CBulletManager* bm)
+Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m,CBulletManager* bm)
 {
-	IUnit::Initialize(pop_pos, wid, hei, dep, color, bm);
+	IUnit::Initialize(pop_pos, wid, hei, dep, color,st_m, bm);
 	m_UnitType = UNIT_TYPE::ENEMY;
 	m_ShotCT.Setup(10.0f);
 	m_Speed = 0.5f;

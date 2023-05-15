@@ -18,9 +18,9 @@
   *
   *  @brief      ステージオブジェクトクラス
   *
-  *  @author     Kazuya Maruyama
+  *  @author     
   *
-  *  @date       2019/11/16
+  *  @date       
   *
   *  @since      1.0
   */
@@ -39,14 +39,14 @@ public:
     /*
      *  @brief      デストラクタ
      */
-    virtual ~IStageObject(void);
+    ~IStageObject(void) = default;
 
     /*!
      *  @brief      初期化
      *
      *  @param[in]  id ステージ上のマップチップID
      */
-    virtual void        Initialize(const STAGE_OBJECT_ID& id, int x, int y);
+    virtual void        Initialize(const STAGE_OBJECT_ID& id, int x, int z);
 
     /*
      *  @brief      更新
@@ -100,7 +100,8 @@ public:
     void                SetActive(bool active);
 
 
-    
+    virtual bool        CollisionCheck(aqua::CVector3 position, aqua::CVector3 destination);
+
 protected:
 
     static const float            m_default_size;         //!< 標準サイズ
@@ -108,5 +109,4 @@ protected:
     aqua::CVector3                m_Position;             //!< 位置
     bool                          m_ActiveFlag;           //!< アクティブフラグ
     bool                          m_CollisionFlag;        //!< 衝突フラグ
-    aqua::CCubePrimitive          m_Cube;                 //!< 
 };

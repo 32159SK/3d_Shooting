@@ -45,7 +45,7 @@ public:
     /*!
      *  @brief      初期化
      */
-    void        Initialize(CBulletManager* bm, CPlayer* player, CRader* rader);
+    void        Initialize(CCSVReader* csv_r,CBulletManager* bm, CPlayer* player,CStageManager* st_m ,CRader* rader);
 
     /*!
      *  @brief      更新
@@ -57,11 +57,6 @@ public:
      */
     void        Draw(void) override;
 
-    /*!
-     *  @brief      エネミーの生成
-     */
-    void        Create(aqua::CVector3 pop_pos, float wid, float hei,float dep,aqua::CColor color);
-    
     /*!
      *  @brief      エネミーの生成
      */
@@ -78,6 +73,8 @@ private:
 
     void        WaveChange(void);
 
+    static const int m_max_wave;
+
     int             m_EnemyCount;
     int             m_WaveCount;
     bool            m_Finish;
@@ -85,6 +82,7 @@ private:
     CCSVReader*     m_CSVReader;
     CPlayer*        m_Player;
     CBulletManager* m_BulletManagar;
+    CStageManager*  m_StageManager;
     CRader*         m_Rader;
     std::vector<ENEMY_POP_LIST> m_PopList;
     std::vector<ENEMY_INFO> m_EnemyInfo;

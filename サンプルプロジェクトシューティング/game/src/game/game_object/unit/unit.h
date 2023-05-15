@@ -33,7 +33,7 @@ public:
     /*
      *  @brief      èâä˙âª
      */
-    virtual void    Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CBulletManager* bm);
+    virtual void    Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m, CBulletManager* bm);
 
     /*
      *  @brief      ï`âÊ
@@ -121,4 +121,6 @@ protected:
     aqua::CTimer         m_ShotCT;
 
     CBulletManager*      m_BulletManager;
+
+    CStageManager*       m_StageManager;
 };

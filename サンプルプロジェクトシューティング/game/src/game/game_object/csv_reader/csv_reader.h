@@ -11,7 +11,8 @@ enum class FILE_TYPE
 {
     ENEMY_INFO,
     BULLET_INFO,
-    POP_LIST
+    POP_LIST,
+    STAGE
 };
 
 /*!
@@ -21,7 +22,6 @@ enum class ENEMY_TYPE
 {
     NOMAL,
     TURRET,
-
 };
 
 /*!
@@ -122,18 +122,25 @@ public:
      */
     ENEMY_POP_LIST         GetPopList(int i) { return m_PopList[i]; }
 
+    /*!
+     *  @brief      ステージ配置取得
+     */
+    int                     GetStage(int i, int k) { return m_Stage[i][k]; }
+
 private:
 
     //! CSVファイルのデータをトークデータリストに変換する
     void                   Parse(const std::string& file_name);
 
-    int                             m_FileRow[3];
+    int                            m_FileRow[4];
 
-    FILE_TYPE                       m_FileType;
+    FILE_TYPE                      m_FileType;
 
     std::vector<ENEMY_INFO>        m_EnemyInfo;
 
     std::vector<BULLET_INFO>       m_BulletInfo;
 
     std::vector<ENEMY_POP_LIST>    m_PopList;
+
+    int                            m_Stage[21][21];    // ステージ配置
 };

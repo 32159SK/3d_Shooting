@@ -11,6 +11,8 @@
 #include "../../game_object.h"
 #include "stage_object.h"
 
+const float IStageObject::m_default_size = 25.0f;
+
 /*
  *  コンストラクタ
  */
@@ -20,14 +22,6 @@ IStageObject(aqua::IGameObject* parent, const std::string& name)
     , m_StageObjectID(NORMAL_BLOCK)
     , m_ActiveFlag(true)
     , m_CollisionFlag(false)
-{
-}
-
-/*
- *  デストラクタ
- */
-IStageObject::
-~IStageObject(void)
 {
 }
 
@@ -44,6 +38,9 @@ Initialize(const STAGE_OBJECT_ID& id, int x, int z)
     // コリジョンフラグをOFF
     m_CollisionFlag = false;
 
+    //	座標設定
+    m_Position = aqua::CVector3(x * m_default_size, 0.0f, z * m_default_size)
+        - aqua::CVector3(m_default_size / 2 * 20, 0.0f, m_default_size / 2 * 20);
 }
 
 /*
@@ -68,8 +65,6 @@ Draw(void)
     // アクティブフラグOFFなら終了
     if (!m_ActiveFlag)
         return;
-
-    m_Cube.Draw();
 }
 
 /*
@@ -104,16 +99,6 @@ SetStageObjectID(STAGE_OBJECT_ID id)
 }
 
 /*
- *  位置設定
- */
-void
-IStageObject::
-SetPosition(const aqua::CVector3& position)
-{
-    m_Position = position;
-}
-
-/*
  *  アクティブ状態チェック
  */
 bool
@@ -131,4 +116,9 @@ IStageObject::
 SetActive(bool active)
 {
     m_ActiveFlag = active;
+}
+
+bool IStageObject::CollisionCheck(aqua::CVector3 position, aqua::CVector3 destination)
+{
+    return false;
 }

@@ -11,9 +11,9 @@ CBulletManager::CBulletManager(aqua::IGameObject* parent)
 {
 }
 
-void CBulletManager::Initialize(void)
+void CBulletManager::Initialize(CCSVReader* csv_r)
 {
-	m_CSVReader = (CCSVReader*)aqua::FindGameObject("CSVReader");
+	m_CSVReader = csv_r;
 
 	m_CSVReader->Initialize(FILE_TYPE::BULLET_INFO, "bullet_info");
 

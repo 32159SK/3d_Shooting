@@ -43,7 +43,7 @@ public:
     /*
      *  @brief      èâä˙âª
      */
-    void        Initialize(void);
+    void        Initialize(CCSVReader* csv_reader);
 
     /*
      *  @brief      çXêV
@@ -61,8 +61,16 @@ public:
     void        Finalize(void);
 
 
+    void        WaveChange(int wave);
+
+    bool        StageObjectCollision(aqua::CVector3 position, aqua::CVector3 destination);
+
 private:
+    void        Create(void);
 
+    int         m_Stage[21][21];
 
+    int         m_WaveCount;
 
+    CCSVReader* m_CSVReader;
 };

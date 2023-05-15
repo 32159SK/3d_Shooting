@@ -8,6 +8,7 @@ CCSVReader(aqua::IGameObject* parent)
 	: aqua::IGameObject(parent, "CSVReader")
 	, m_FileRow{ 0 }
 	, m_FileType(FILE_TYPE::ENEMY_INFO)
+	, m_Stage{ 0 }
 {
 }
 
@@ -48,7 +49,6 @@ void CCSVReader::Parse(const std::string& file_name)
 	ENEMY_INFO e_info;
 	BULLET_INFO b_info;
 	ENEMY_POP_LIST pop_list;
-
 	switch (m_FileType)
 	{
 	case FILE_TYPE::ENEMY_INFO:
@@ -92,6 +92,22 @@ void CCSVReader::Parse(const std::string& file_name)
 				std::stof(csv.GetString(i,2)))	// pos_z
 			};
 			m_PopList.push_back(pop_list);
+		}
+		break;
+	case FILE_TYPE::STAGE:
+		// çs
+		for (int i = 0; i < 21; ++i)
+		{
+			// óÒ
+			for (int k = 0; k < 21; ++k)
+			{
+				if (i == 0 && k == 0)
+				{
+					m_Stage[i][k] = 1;
+					continue;
+				}
+				m_Stage[i][k] = std::stoi(csv.GetString(i, k));
+			}
 		}
 		break;
 	default:

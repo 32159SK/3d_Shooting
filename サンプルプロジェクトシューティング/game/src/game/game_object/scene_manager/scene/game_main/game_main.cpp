@@ -35,15 +35,21 @@ void
 CGameMain::
 Initialize(void)
 {
-    aqua::CreateGameObject<CCSVReader>(this);
+    // CSV読み取りクラスの生成
+    CCSVReader* csv_r = aqua::CreateGameObject<CCSVReader>(this);
     // 床
     aqua::CreateGameObject<CFloor>(this);
 
-    // 弾管理クラスの生成
-    CBulletManager* bm = aqua::CreateGameObject<CBulletManager>(this);
-
     // 引数なしでInitializeできるものはここで
     IGameObject::Initialize();
+
+    // 弾管理クラスの生成
+    CBulletManager* bm = aqua::CreateGameObject<CBulletManager>(this);
+    bm->Initialize(csv_r);
+
+    // ステージ管理の生成
+    CStageManager* st_m = aqua::CreateGameObject<CStageManager>(this);
+    st_m->Initialize(csv_r);
 
     // プレイヤーの生成
     m_Player = aqua::CreateGameObject<CPlayer>(this);
@@ -57,10 +63,10 @@ Initialize(void)
 
 
     // プレイヤーの初期化＆弾管理クラスのセット
-    m_Player->Initialize(aqua::CVector3(0.0f, 0.0f, -50.0f), 10.0f, 10.0f, 10.0f, aqua::CColor::BLUE, bm);
+    m_Player->Initialize(aqua::CVector3(0.0f, 0.0f, -50.0f), 10.0f, 10.0f, 10.0f, aqua::CColor::BLUE,st_m, bm);
 
     // 敵管理クラスの初期化＆プレイヤー、弾管理クラスのセット
-    m_EnemyManager->Initialize(bm, m_Player, rd);
+    m_EnemyManager->Initialize(csv_r, bm, m_Player, st_m, rd);
 
     m_Camera.SetCamera(0.1, 10000.0, aqua::CVector3(0, 100.0f, -50.0f), m_Player->GetPosition());
 
@@ -93,7 +99,6 @@ void
 CGameMain::
 GameStart(void)
 {
-
 
 }
 

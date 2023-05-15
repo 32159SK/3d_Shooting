@@ -10,9 +10,9 @@ CPlayer::CPlayer(aqua::IGameObject* parent)
 {
 }
 
-void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CBulletManager* bm)
+void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m, CBulletManager* bm)
 {
-	IUnit::Initialize(pop_pos, wid, hei, dep, color, bm);
+	IUnit::Initialize(pop_pos, wid, hei, dep, color, st_m, bm);
 	m_UnitType = UNIT_TYPE::PLAYER;
 	m_ShotBullet = BULLET_TYPE::NOMAL;
 	m_BulletManager->SetPlayer(this);
@@ -43,6 +43,8 @@ void CPlayer::Update(void)
 		m_Invincible = false;
 		m_InvincibleTimer.Reset();
 	}
+	
+	m_Invincible = true;
 
 	IUnit::Update();
 	IGameObject::Update();
@@ -152,6 +154,12 @@ void CPlayer::Move(void)
 
 	m_Velocity = m_Velocity.Normalize();
 	m_Velocity *= (m_Speed * to_delta);
+
+
+	// •Ç‚Æ“–‚½‚Á‚Ä‚½‚ç‚»‚±‚ÅŽ~‚Ü‚é
+	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity*100))
+		return;
+
 	m_Position += m_Velocity;
 	AQUA_DEBUG_LOG("X:" + std::to_string(m_Position.x) + ",Z" + std::to_string(m_Position.z));
 }

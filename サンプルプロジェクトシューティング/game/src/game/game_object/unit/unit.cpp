@@ -18,7 +18,7 @@ IUnit(aqua::IGameObject* parent, const std::string& object_name)
 {
 }
 
-void IUnit::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CBulletManager* bm)
+void IUnit::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m , CBulletManager* bm)
 {
 	m_Position = pop_pos;
 	m_Width = wid;
@@ -26,6 +26,7 @@ void IUnit::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, 
 	m_Depth = dep;
 	m_Color = color;
 	m_BulletManager = bm;
+	m_StageManager = st_m;
 	m_Life = m_max_life;
 	m_Cube.Setup(m_Position, m_Width, m_Height, m_Depth, m_Color);
 }

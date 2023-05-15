@@ -46,7 +46,7 @@ public:
     /*!
      *  @brief      ‰Šú‰»
      */
-    void        Initialize(void) override;
+    void        Initialize(CCSVReader* csv_r);
 
     /*!
      *  @brief      XV

@@ -2,11 +2,14 @@
 #include "player.h"
 
 const float CPlayer::m_chage_shotCT = 0.5f;
+const float CPlayer::m_the_world_time = 7.0f;
+const float CPlayer::m_the_world_CT = 10.0f;
 
 CPlayer::CPlayer(aqua::IGameObject* parent)
 	: IUnit(parent, "Player")
 	, m_AgoPosition(aqua::CVector3::ZERO)
 	, m_Invincible(false)
+	, m_TimeStop(false)
 {
 }
 
@@ -25,7 +28,10 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep
 	m_DrawBT.Create(30.0f);
 	m_DrawBT.position = aqua::CVector2(aqua::GetWindowWidth()/2,0.0f);
 
+	// 最初からザ・ワールドを使えるようにタイマーの初期設定は0秒にする
+	m_TheWorldTimer.Setup(0.0f);
 
+	//
 	m_ChageCT.Setup(m_chage_shotCT);
 	m_ShotCT.Setup(0.5f);
 }
@@ -36,6 +42,7 @@ void CPlayer::Update(void)
 	m_Cube.m_HRotate = m_Rotate;
 	Shot();
 	
+	// 被弾後の無敵時間
 	if (m_Invincible)
 		m_InvincibleTimer.Update();
 	if (m_InvincibleTimer.Finished())
@@ -44,7 +51,8 @@ void CPlayer::Update(void)
 		m_InvincibleTimer.Reset();
 	}
 	
-	m_Invincible = true;
+	// ザ・ワールド
+	TheWorld();
 
 	IUnit::Update();
 	IGameObject::Update();
@@ -126,13 +134,14 @@ void CPlayer::Shot(void)
 
 	if (m_ShotCT.Finished())
 	{
-		// ここでついでに敵が追尾する用のポジションを取っておく
-		m_AgoPosition = m_Position;
 		if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::SPACE))
 		{
 			m_BulletManager->Create(m_Position + front, front * 1.5, m_UnitType, m_ShotBullet, this);
 			m_ShotCT.Reset();
 		}
+		// ここでついでに敵が追尾する用のポジションを取っておく(時間停止していない場合)
+		if (!m_TimeStop)
+			m_AgoPosition = m_Position;
 	}
 }
 
@@ -157,7 +166,7 @@ void CPlayer::Move(void)
 
 
 	// 壁と当たってたらそこで止まる
-	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity*100))
+	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * (m_Width / 2.0f)))
 		return;
 
 	m_Position += m_Velocity;
@@ -173,4 +182,24 @@ void CPlayer::Damage(int damage)
 void CPlayer::Dead(void)
 {
 	IUnit::Dead();
+}
+
+void CPlayer::TheWorld(void)
+{
+	// ザ・ワールド用タイマー
+	m_TheWorldTimer.Update();
+	// 停止時間切れの時は時止めを解除してタイマーをクールタイムとして再設定
+	if (m_TimeStop&&m_TheWorldTimer.Finished())
+	{
+		m_TimeStop = false;
+		m_TheWorldTimer.Setup(m_the_world_CT);
+	}
+
+	// 時が止まっていないかつタイマー終了→クールタイム開けなのでザ・ワールド使用可能
+	if (!m_TimeStop && m_TheWorldTimer.Finished()&&
+		aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::Z))
+	{
+		m_TimeStop = true;
+		m_TheWorldTimer.Setup(m_the_world_time);
+	}
 }

@@ -58,12 +58,17 @@ void CEnemy::Move(void)
 	m_Velocity.x = (m_Speed * to_delta)*cos(m_Angle);
 	m_Velocity.z = (m_Speed * to_delta)*sin(m_Angle);
 
-	m_Position += m_Velocity;
-
 	// ˆÚ“®‘¬“x‚É‡‚í‚¹‚Ä‰ñ“]Šp“x‚ðŽZo
 	m_Rotate = aqua::RadToDeg(atan2(m_Velocity.x, m_Velocity.z));
 
 	m_Cube.m_HRotate = m_Rotate;
+
+	// •Ç‚Æ“–‚½‚Á‚Ä‚½‚ç‚»‚±‚ÅŽ~‚Ü‚é
+	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * m_Width))
+		return;
+
+	m_Position += m_Velocity;
+	
 	m_Cube.position = m_Position;
 }
 

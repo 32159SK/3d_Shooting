@@ -1,4 +1,5 @@
 #include "camera.h"
+#include "../../mathematics/matrix/matrix.h"
 
 /*
  *  コンストラクタ
@@ -11,6 +12,7 @@ CCamera(void)
 	, m_VRotate(0)
 	, m_HRotate(0)
 	, m_TRotate(0)
+	, m_Distace(100)
 	, m_Position(aqua::CVector3::ZERO)
 	, m_Target(aqua::CVector3::ZERO)
 	, m_CameraUp(aqua::CVector3::ZERO)
@@ -85,4 +87,21 @@ SetAngle(ANGLE angle, float rad)
 	}
 	// カメラの視点、垂直回転角度、水平回転角度、捻り回転角度を設定する
 	SetCameraPositionAndAngle(m_Position, m_VRotate, m_HRotate, m_TRotate);
+}
+
+void aqua::CCamera::Update(void)
+{
+	CMatrix mat;
+	CVector3 dir(0.0f, 0.0f, -m_Distace);
+	CVector3 right_axis(1.0f, 0.0f, 0.0f);
+	CVector3 up_axis(0.0f, 1.0f, 0.0f);
+
+	mat.RotationY(m_HRotate);
+	right_axis = right_axis * mat;
+	mat.RotationAxis(right_axis, m_VRotate);
+	dir = dir * mat;
+	up_axis = up_axis * mat;
+	m_Position = m_Target + dir;
+
+	SetCameraPositionAndTargetAndUpVec(m_Position, m_Target, up_axis);
 }

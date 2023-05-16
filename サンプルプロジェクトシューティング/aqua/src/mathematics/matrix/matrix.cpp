@@ -76,31 +76,34 @@ namespace aqua
 		return MTranspose(mat);
 	}
 
-	void CMatrix::Scale(const _Vector3& scale)
+	CMatrix& CMatrix::Scale(const _Vector3& scale)
 	{
 		(*this) *= MGetScale(scale);
+		return (*this);
 	}
 
-	void CMatrix::RotationX(float angle)
+	CMatrix& CMatrix::RotationX(float angle)
 	{
 		(*this) *= MGetRotX(angle);
+		return (*this);
 	}
 
-	void CMatrix::RotationY(float angle)
+	CMatrix& CMatrix::RotationY(float angle)
 	{
 		(*this) *= MGetRotY(angle);
-
+		return (*this);
 	}
 
-	void CMatrix::RotationZ(float angle)
+	CMatrix& CMatrix::RotationZ(float angle)
 	{
 		(*this) *= MGetRotZ(angle);
-
+		return (*this);
 	}
 
-	void CMatrix::RotationAxis(const _Vector3& axis, float angle)
+	CMatrix& CMatrix::RotationAxis(const _Vector3& axis, float angle)
 	{
 		(*this) *= MGetRotAxis(axis, angle);
+		return (*this);
 	}
 
 	CVector3 CMatrix::GetRotationXYZ(void)
@@ -114,9 +117,10 @@ namespace aqua
 		return v;
 	}
 
-	void CMatrix::Translate(const _Vector3& trans)
+	CMatrix& CMatrix::Translate(const _Vector3& trans)
 	{
 		(*this) *= MGetTranslate(trans);
+		return (*this);
 	}
 
 }

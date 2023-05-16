@@ -36,6 +36,9 @@ void CEnemyManager::Initialize(CCSVReader* csv_r, CBulletManager* bm, CPlayer* p
 
 void CEnemyManager::Update(void)
 {
+	if (m_Player->GetTimeStop())
+		return;
+
 	IGameObject::Update();
 
 

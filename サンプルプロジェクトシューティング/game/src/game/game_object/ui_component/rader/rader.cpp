@@ -18,14 +18,14 @@ void CRader::Initialize(CPlayer* player)
 	m_RaderSprite.Create("data\\texture\\rader.png");
 	m_RaderSprite.position = aqua::CVector2::ZERO;
 	// レーダー画像のサイズの取得
-	m_RaderSize.x = m_RaderSprite.GetTextureWidth();
-	m_RaderSize.y = m_RaderSprite.GetTextureHeight();
+	m_RaderSize.x = (float)m_RaderSprite.GetTextureWidth();
+	m_RaderSize.y = (float)m_RaderSprite.GetTextureHeight();
 
 
 	// プレイヤーの自機表示アイコンの生成
 	m_PlayerSprite.Create(m_unit_path);
 	m_PlayerSprite.color = aqua::CColor::BLUE;
-	m_PlayerSprite.anchor = aqua::CVector2(m_PlayerSprite.GetTextureWidth() / 2, m_PlayerSprite.GetTextureHeight() / 2);
+	m_PlayerSprite.anchor = aqua::CVector2(float(m_PlayerSprite.GetTextureWidth() / 2),float(m_PlayerSprite.GetTextureHeight() / 2));
 	m_PlayerSprite.position = SetRaderPos(m_Player->GetPosVector2())- m_PlayerSprite.anchor;
 
 	m_Enemy = new CEnemy * [100];
@@ -68,7 +68,7 @@ void CRader::SetEnemy(CEnemy* enemy)
 	// スプライトクラスのメンバ変数を新しく定義
 	aqua::CSprite ene_sp;
 	ene_sp.Create(m_unit_path);
-	ene_sp.anchor = aqua::CVector2(ene_sp.GetTextureWidth() / 2, ene_sp.GetTextureHeight() / 2);
+	ene_sp.anchor = aqua::CVector2(float(ene_sp.GetTextureWidth() / 2),float(ene_sp.GetTextureHeight() / 2));
 	ene_sp.color = aqua::CColor::RED;
 	// スプライトの末尾に追加
 	m_EnemySprite.push_back(ene_sp);

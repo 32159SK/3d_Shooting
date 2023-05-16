@@ -32,16 +32,16 @@ namespace aqua
 		CMatrix Transpose(void);
 		static CMatrix Transpose(const _Matrix& mat);
 
-		void Scale(const _Vector3& scale);
+		CMatrix& Scale(const _Vector3& scale);
 
-		void RotationX(float angle);
-		void RotationY(float angle);
-		void RotationZ(float angle);
-		void RotationAxis(const _Vector3& axis,float angle);
+		CMatrix& RotationX(float angle);
+		CMatrix& RotationY(float angle);
+		CMatrix& RotationZ(float angle);
+		CMatrix& RotationAxis(const _Vector3& axis,float angle);
 
 		CVector3 GetRotationXYZ(void);
 
-		void Translate(const _Vector3& trans);
+		CMatrix& Translate(const _Vector3& trans);
 
 		static const CMatrix	INDENT;
 

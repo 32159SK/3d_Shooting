@@ -40,16 +40,16 @@ Initialize(void)
     // 床
     aqua::CreateGameObject<CFloor>(this);
 
-    // 引数なしでInitializeできるものはここで
+    // 引数なしで初期化できるものはここで
     IGameObject::Initialize();
-
-    // 弾管理クラスの生成
-    CBulletManager* bm = aqua::CreateGameObject<CBulletManager>(this);
-    bm->Initialize(csv_r);
 
     // ステージ管理の生成
     CStageManager* st_m = aqua::CreateGameObject<CStageManager>(this);
     st_m->Initialize(csv_r);
+
+    // 弾管理クラスの生成
+    CBulletManager* bm = aqua::CreateGameObject<CBulletManager>(this);
+    bm->Initialize(csv_r,st_m);
 
     // プレイヤーの生成
     m_Player = aqua::CreateGameObject<CPlayer>(this);
@@ -68,7 +68,11 @@ Initialize(void)
     // 敵管理クラスの初期化＆プレイヤー、弾管理クラスのセット
     m_EnemyManager->Initialize(csv_r, bm, m_Player, st_m, rd);
 
-    m_Camera.SetCamera(0.1, 10000.0, aqua::CVector3(0, 100.0f, -50.0f), m_Player->GetPosition());
+//    m_Camera.SetCamera(0.1, 10000.0, aqua::CVector3(0, 500.0f, -50.0f), m_Player->GetPosition());
+    m_Camera.SetCamera(50.0, 10000.0);
+    m_Camera.m_Target = m_Player->GetPosition();
+    m_Camera.m_Distace = 100.0f;
+    m_Camera.m_VRotate = aqua::DegToRad(50.0f);
 
 }
 
@@ -111,8 +115,12 @@ GamePlay(void)
 {
     //m_CamContorl->Move();
     m_Camera.m_Target = m_Player->GetPosition();
-    m_Camera.m_Position = m_Camera.m_Target + aqua::CVector3(0.0f, 100.0f, -50.0f);
-    m_Camera.SetCamera();
+    //m_Camera.m_Position = m_Camera.m_Target + aqua::CVector3(0.0f, 500.0f, -30.0f);
+    //m_Camera.SetCamera();
+    float wheel_value = aqua::mouse::GetWheel();
+    if (wheel_value > 0) m_Camera.m_Distace -= 5.0f;
+    else if (wheel_value < 0) m_Camera.m_Distace += 5.0f;
+    m_Camera.Update();
 
     if (m_Player->GetDead()||m_EnemyManager->GetFinish())
         GameFinish();

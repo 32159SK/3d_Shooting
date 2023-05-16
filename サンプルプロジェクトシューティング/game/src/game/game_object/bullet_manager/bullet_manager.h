@@ -46,7 +46,7 @@ public:
     /*!
      *  @brief      初期化
      */
-    void        Initialize(CCSVReader* csv_r);
+    void        Initialize(CCSVReader* csv_r,CStageManager* st_m);
 
     /*!
      *  @brief      更新
@@ -83,8 +83,9 @@ private:
 
     void        CheakHit(void);
 
-    CCSVReader*             m_CSVReader;
-    CPlayer*                m_Player;
-    std::vector<BULLET_INFO> m_BulletInfo;
-    std::vector<CEnemy*>    m_Enemy;
+    CCSVReader*             m_CSVReader;        // CSV読み取りクラスのポインタ
+    CPlayer*                m_Player;           // プレイヤークラスの  ””
+    CStageManager*          m_StageManager;     // ステージ管理クラスの””
+    std::vector<BULLET_INFO> m_BulletInfo;      // 
+    std::vector<CEnemy*>    m_Enemy;            // 
 };

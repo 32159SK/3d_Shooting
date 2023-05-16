@@ -11,10 +11,10 @@ CBulletManager::CBulletManager(aqua::IGameObject* parent)
 {
 }
 
-void CBulletManager::Initialize(CCSVReader* csv_r)
+void CBulletManager::Initialize(CCSVReader* csv_r, CStageManager* st_m)
 {
 	m_CSVReader = csv_r;
-
+	m_StageManager = st_m;
 	m_CSVReader->Initialize(FILE_TYPE::BULLET_INFO, "bullet_info");
 
 	// for文用の行数取得
@@ -26,8 +26,10 @@ void CBulletManager::Initialize(CCSVReader* csv_r)
 
 void CBulletManager::Update(void)
 {
-	IGameObject::Update();
 	CheakHit();
+	if (m_Player->GetTimeStop())
+		return;
+	IGameObject::Update();
 }
 
 void CBulletManager::Draw(void)
@@ -53,8 +55,6 @@ void CBulletManager::CheakHit(void)
 	if (m_ChildObjectList.empty())
 		return;
 
-	
-
 	int e_count = m_Enemy.size();
 
 	// このリストを使って繰り返し処理をする
@@ -63,6 +63,7 @@ void CBulletManager::CheakHit(void)
 		IBullet* bullet = (IBullet*)it;
 		for (int e = 0; e < e_count; ++e)
 		{
+			// 死んでない敵と弾の衝突確認
 			if (m_Enemy[e] && !m_Enemy[e]->GetDead()
 				&& m_Enemy[e]->CheckHitBullet(bullet->GetAttri(), bullet->GetSphere(), bullet->GetDamage()))
 			{
@@ -70,18 +71,20 @@ void CBulletManager::CheakHit(void)
 				return;
 			}
 		}
+
+		// プレイヤーとの衝突確認
 		if (m_Player && !m_Player->GetDead() && m_Player->CheckHitBullet(bullet->GetAttri(), bullet->GetSphere(), bullet->GetDamage()))
 		{
 			bullet->Hit();
 			return;
 		}
 
-		//for (auto k : m_ChildObjectList)
-		//{
-		//	IBullet* _bullet = (IBullet*)k;
-		//	if (_bullet == bullet);
-		//}
-
+		// ステージオブジェクトとの衝突確認(ブロック等)
+		if (m_StageManager->StageObjectCollision(bullet->GetPosition(), bullet->GetDestination()))
+		{
+			bullet->Hit();
+			return;
+		}
 	}
 
 

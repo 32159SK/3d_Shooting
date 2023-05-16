@@ -56,6 +56,7 @@ public:
      */
     aqua::CVector3  GetAgoPos(void) { return m_AgoPosition; }
 
+    bool            GetTimeStop(void) { return m_TimeStop; }
 private:
 
     /*
@@ -68,6 +69,9 @@ private:
      */
     void            Move(void)override;
 
+    /*
+     *  @brief      死亡処理
+     */
     void            Damage(int damage)override;
 
     /*
@@ -75,17 +79,27 @@ private:
      */
     void            Dead(void)override;
 
-    static const float m_chage_shotCT;
+    /*
+     *  @brief      ザ・ワールド
+     */
+    void            TheWorld(void);
 
-    bool            m_Invincible;
+    static const float m_chage_shotCT;  //
+    static const float m_the_world_time;// 時を止めていられる時間
+    static const float m_the_world_CT;  //
 
-    aqua::CLabel    m_DrawBT;
+    bool            m_Invincible;       //
+    bool            m_TimeStop;
 
-    aqua::CTimer    m_ChageCT;
+    aqua::CLabel    m_DrawBT;           //
 
-    aqua::CTimer    m_InvincibleTimer;
+    aqua::CTimer    m_ChageCT;          //
 
-    CEnemyManager*  m_EnemyManager;
+    aqua::CTimer    m_InvincibleTimer;  //
 
-    aqua::CVector3 m_AgoPosition;
+    aqua::CTimer    m_TheWorldTimer;    // 
+
+    CEnemyManager*  m_EnemyManager;     //
+
+    aqua::CVector3 m_AgoPosition;       //
 };

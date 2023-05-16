@@ -79,13 +79,20 @@ void CStageManager::WaveChange(int wave)
 
 bool CStageManager::StageObjectCollision(aqua::CVector3 position, aqua::CVector3 destination)
 {
+    bool collision = false;
     // ‰¼(ˆ—d‚»‚¤)
     for (auto it : m_ChildObjectList)
     {
         IStageObject* stage_obj = (IStageObject*)it;
-        return stage_obj->CollisionCheck(position, destination);
+
+        // ‚Ç‚ê‚©‚É“–‚½‚Á‚Ä‚é‚±‚Æ‚ªŠm”F‚Å‚«ŽŸ‘æfor•¶‚ð”²‚¯‚é
+        if (stage_obj->CollisionCheck(position, destination))
+        {
+            collision = true;
+            break;
+        }
     }
-    return false;
+    return collision;
 }
 
 void CStageManager::Create(void)

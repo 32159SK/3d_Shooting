@@ -54,6 +54,8 @@ namespace aqua
         float           m_HRotate;
         //! 捻り回転角度
         float           m_TRotate;
+        //! 注視点からカメラまでの距離
+        float           m_Distace;
         //! カメラの位置
         aqua::CVector3  m_Position;
         //! カメラの注視点(見ている座標)
@@ -112,6 +114,9 @@ namespace aqua
          *  @param[in]  rad    角度の大きさ
          */
         void        SetAngle(ANGLE angle, float rad);
+
+
+        void        Update(void);
 
     };
 

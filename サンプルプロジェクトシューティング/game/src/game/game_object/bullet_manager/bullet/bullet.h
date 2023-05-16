@@ -59,8 +59,20 @@ public:
      */
     aqua::CSpherePrimitive GetSphere(void) { return m_Sphere; }
 
+    /*
+     *  @brief      弾の座標取得
+     */
     aqua::CVector3  GetPosition(void) { return m_Position; }
 
+    /*
+     *  @brief      弾の進行座標取得
+     */
+    aqua::CVector3  GetDestination(void) { return m_Position + m_Velocity; }
+
+
+    /*
+     *  @brief      ヒット処理
+     */
     void            Hit(void);
 
 protected:

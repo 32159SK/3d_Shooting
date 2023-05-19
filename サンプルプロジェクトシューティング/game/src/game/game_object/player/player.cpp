@@ -34,6 +34,10 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep
 	//
 	m_ChageCT.Setup(m_chage_shotCT);
 	m_ShotCT.Setup(0.5f);
+
+	m_Cube.visible = false;
+
+	m_Model.Load("data\\model\\player.mv1");
 }
 
 void CPlayer::Update(void)
@@ -56,6 +60,9 @@ void CPlayer::Update(void)
 
 	IUnit::Update();
 	IGameObject::Update();
+
+	m_Model.position = m_Cube.position;
+	m_Model.rotation.y = aqua::DegToRad(m_Rotate);
 }
 
 void CPlayer::Draw(void)
@@ -79,6 +86,7 @@ void CPlayer::Draw(void)
 	}
 
 	m_DrawBT.Draw();
+	m_Model.Draw();
 	IUnit::Draw();
 }
 
@@ -86,6 +94,7 @@ void CPlayer::Finalize(void)
 {
 	IUnit::Finalize();
 	m_DrawBT.Delete();
+	m_Model.Unload();
 }
 
 bool CPlayer::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, int damage)
@@ -136,7 +145,8 @@ void CPlayer::Shot(void)
 	{
 		if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::SPACE))
 		{
-			m_BulletManager->Create(m_Position + front, front * 1.5, m_UnitType, m_ShotBullet, this);
+			// 自機の正面から球を撃つ
+			m_BulletManager->Create(m_Position + front * 10, front * 10.5, m_UnitType, m_ShotBullet, this);
 			m_ShotCT.Reset();
 		}
 		// ここでついでに敵が追尾する用のポジションを取っておく(時間停止していない場合)

@@ -113,7 +113,7 @@ protected:
 
     aqua::CColor         m_Color;        // 色
 
-    aqua::CCubePrimitive m_Cube;         // 自機
+    aqua::CCubePrimitive m_Cube;         // ユニットのコライダー
 
     aqua::CLinePrimitive3D m_Line;
 

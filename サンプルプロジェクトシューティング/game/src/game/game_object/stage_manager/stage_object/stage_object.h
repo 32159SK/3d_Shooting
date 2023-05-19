@@ -77,12 +77,6 @@ public:
      *  @param[in]  stage_object_id     ステージオブジェクトID
      */
     void                SetStageObjectID(STAGE_OBJECT_ID stage_object_id);
-    /*
-     *  @brief      位置設定
-     *
-     *  @param[in]  position    位置
-     */
-    void                SetPosition(const aqua::CVector3& position);
 
     /*
      *  @brief      アクティブ状態チェック
@@ -104,9 +98,27 @@ public:
 
 protected:
 
+    virtual void        GoIn(void);
+
+    virtual void        GoOut(void);
+
+    // ステージオブジェクトの状態
+    enum OBJECT_STATE
+    {
+        GO_IN,
+        PLAY,
+        GO_OUT,
+        FINISH
+    };
+
     static const float            m_default_size;         //!< 標準サイズ
+    static const float            m_transition_time;      //!< オブジェクトの遷移時間
     STAGE_OBJECT_ID               m_StageObjectID;        //!< ステージオブジェクトID
+    OBJECT_STATE                  m_ObjectState;
     aqua::CVector3                m_Position;             //!< 位置
+    aqua::CTimer                  m_Timer;                //!< オブジェクトの遷移タイマー
     bool                          m_ActiveFlag;           //!< アクティブフラグ
     bool                          m_CollisionFlag;        //!< 衝突フラグ
+
+
 };

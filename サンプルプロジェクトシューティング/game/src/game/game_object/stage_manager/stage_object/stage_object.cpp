@@ -12,6 +12,7 @@
 #include "stage_object.h"
 
 const float IStageObject::m_default_size = 25.0f;
+const float IStageObject::m_transition_time = 3.0f;
 
 /*
  *  コンストラクタ
@@ -20,6 +21,7 @@ IStageObject::
 IStageObject(aqua::IGameObject* parent, const std::string& name)
     : IGameObject(parent, name)
     , m_StageObjectID(NORMAL_BLOCK)
+    , m_ObjectState(OBJECT_STATE::GO_IN)
     , m_ActiveFlag(true)
     , m_CollisionFlag(false)
 {
@@ -41,6 +43,8 @@ Initialize(const STAGE_OBJECT_ID& id, int x, int z)
     //	座標設定
     m_Position = aqua::CVector3(x * m_default_size, 0.0f, z * m_default_size)
         - aqua::CVector3(m_default_size / 2 * 20, 0.0f, m_default_size / 2 * 20);
+
+
 }
 
 /*
@@ -50,6 +54,15 @@ void
 IStageObject::
 Update(void)
 {
+    switch (m_ObjectState)
+    {
+    case IStageObject::GO_IN:   GoIn(); break;
+    case IStageObject::PLAY:    break;
+    case IStageObject::GO_OUT:  GoOut();break;
+    default:
+        break;
+    }
+
     // アクティブフラグOFFなら終了
     if (!m_ActiveFlag)
         return;
@@ -121,4 +134,12 @@ SetActive(bool active)
 bool IStageObject::CollisionCheck(aqua::CVector3 position, aqua::CVector3 destination)
 {
     return false;
+}
+
+void IStageObject::GoIn(void)
+{
+}
+
+void IStageObject::GoOut(void)
+{
 }

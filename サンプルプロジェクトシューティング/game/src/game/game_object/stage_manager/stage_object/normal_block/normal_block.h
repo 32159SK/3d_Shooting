@@ -65,7 +65,15 @@ public:
 
     bool        CollisionCheck(aqua::CVector3 position, aqua::CVector3 destination)override;
 
+
+    void        SetEdge(void) { m_StageEdge = true; }
 private:
 
-    aqua::CCubePrimitive          m_Cube;                 //!< 
+    void GoIn(void)override;
+    void GoOut(void)override;
+
+
+    bool                          m_StageEdge;
+    aqua::CCubePrimitive          m_Cube;                 //!< オブジェクトのコライダー
+    aqua::CModel                  m_Model;
 };

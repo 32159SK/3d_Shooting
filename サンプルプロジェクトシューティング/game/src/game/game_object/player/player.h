@@ -91,6 +91,8 @@ private:
     bool            m_Invincible;       //
     bool            m_TimeStop;
 
+    aqua::CModel    m_Model;            // Ž©‹@‚Ìƒ‚ƒfƒ‹
+
     aqua::CLabel    m_DrawBT;           //
 
     aqua::CTimer    m_ChageCT;          //

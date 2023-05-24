@@ -13,8 +13,8 @@ Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor
 {
 	IUnit::Initialize(pop_pos, wid, hei, dep, color,st_m, bm);
 	m_UnitType = UNIT_TYPE::ENEMY;
-	m_ShotCT.Setup(10.0f);
-	m_Speed = 0.5f;
+	m_ShotCT.Setup(5.0f);
+	m_Speed = 1.0f;
 }
 
 void CEnemy::Update(void)

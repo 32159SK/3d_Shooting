@@ -96,16 +96,11 @@ void CCSVReader::Parse(const std::string& file_name)
 		break;
 	case FILE_TYPE::STAGE:
 		// çs
-		for (int i = 0; i < 21; ++i)
+		for (int i = 0; i < 10; ++i)
 		{
 			// óÒ
-			for (int k = 0; k < 21; ++k)
+			for (int k = 0; k < 10; ++k)
 			{
-				if (i == 0 && k == 0)
-				{
-					m_Stage[i][k] = 1;
-					continue;
-				}
 				m_Stage[i][k] = std::stoi(csv.GetString(i, k));
 			}
 		}

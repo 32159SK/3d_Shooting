@@ -68,9 +68,19 @@ public:
 private:
     void        Create(void);
 
-    int         m_Stage[21][21];
+    static const float              m_default_size;         //!< 標準サイズ
 
-    int         m_WaveCount;
+    struct POS_NUMBER
+    {
+        int z = 0;
+        int x = 0;
+    };
+
+    int                             m_Stage[4][10][10];
+
+    int                             m_WaveCount;
+
+    POS_NUMBER                      m_SwichPoint[4];
 
     CCSVReader* m_CSVReader;
 };

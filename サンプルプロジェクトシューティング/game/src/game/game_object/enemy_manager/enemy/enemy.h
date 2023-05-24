@@ -33,7 +33,7 @@ public:
     /*
      *  @brief      ‰Šú‰»
      */
-    void    Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m,CBulletManager* bm)override;
+    virtual void    Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m,CBulletManager* bm)override;
 
     /*
      *  @brief      XV
@@ -42,11 +42,11 @@ public:
 
     void            SetPlayer(CPlayer* player) { m_Player = player; }
 
-private:
+protected:
 
-    void            Shot(void)override;
+    virtual void    Shot(void)override;
 
-    void            Move(void)override;
+    virtual void    Move(void)override;
 
     /*
      *  @brief      €–S

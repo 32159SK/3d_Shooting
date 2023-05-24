@@ -89,6 +89,7 @@ private:
     static const float m_the_world_CT;  //
 
     bool            m_Invincible;       //
+
     bool            m_TimeStop;
 
     aqua::CModel    m_Model;            // Ž©‹@‚Ìƒ‚ƒfƒ‹

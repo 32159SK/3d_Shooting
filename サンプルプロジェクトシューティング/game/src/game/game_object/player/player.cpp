@@ -55,6 +55,8 @@ void CPlayer::Update(void)
 		m_InvincibleTimer.Reset();
 	}
 	
+	m_Invincible = true;
+
 	// ƒUEƒ[ƒ‹ƒh
 	TheWorld();
 
@@ -71,10 +73,6 @@ void CPlayer::Draw(void)
 	
 	front.x = sin(aqua::DegToRad(m_Rotate));
 	front.z = cos(aqua::DegToRad(m_Rotate));
-
-	m_Line.pointA = m_Position;
-	m_Line.pointB = m_Position + (front * 20.0f);
-	m_Line.Draw();
 
 	switch (m_ShotBullet)
 	{
@@ -175,9 +173,9 @@ void CPlayer::Move(void)
 	m_Velocity *= (m_Speed * to_delta);
 
 
-	// •Ç‚Æ“–‚½‚Á‚Ä‚½‚ç‚»‚±‚ÅŽ~‚Ü‚é
-	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * (m_Width / 2.0f)))
-		return;
+	//// •Ç‚Æ“–‚½‚Á‚Ä‚½‚ç‚»‚±‚ÅŽ~‚Ü‚é
+	//if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * (m_Width / 2.0f)))
+	//	return;
 
 	m_Position += m_Velocity;
 	AQUA_DEBUG_LOG("X:" + std::to_string(m_Position.x) + ",Z" + std::to_string(m_Position.z));

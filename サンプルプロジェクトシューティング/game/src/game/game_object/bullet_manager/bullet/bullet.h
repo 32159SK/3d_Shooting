@@ -31,7 +31,7 @@ public:
     /*
      *  @brief      ‰Šú‰»
      */
-    void    Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri,aqua::CVector3 pop_pos,aqua::CVector3 front,IUnit* user);
+    virtual void    Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri,aqua::CVector3 pop_pos,aqua::CVector3 front,IUnit* user);
 
     /*
      *  @brief      •`‰æ
@@ -82,6 +82,9 @@ protected:
     float                   m_Radius;       // ”¼Œa
 
     float                   m_Range;        // Ë’ö‹——£“à‚É“ü‚Á‚½‚º...‹g—Ç‹g‰e
+
+        //! …•½‰ñ“]Šp“x
+    float                   m_Rotate;
 
     aqua::CVector3          m_Dir;
 

@@ -54,7 +54,7 @@ void CEnemyManager::Draw(void)
 void CEnemyManager::Create(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info)
 {
 	// 空のエネミークラスを用意
-	CEnemy* enemy = aqua::CreateGameObject<CEnemy>(this);
+	CAlongWallEnemy* enemy = aqua::CreateGameObject<CAlongWallEnemy>(this);
 
 	// 初期化とプレイヤーのポインタを渡す
 	enemy->Initialize(pop_pos, enemy_info.width, enemy_info.height, enemy_info.depth, enemy_info.color, m_StageManager, m_BulletManagar);

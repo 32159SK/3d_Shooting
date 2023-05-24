@@ -34,11 +34,18 @@ void CRader::Initialize(CPlayer* player)
 void CRader::Update(void)
 {
 	for (int i = 0; i < m_EnemyCount; ++i)
-		if (!m_Enemy[i]&&!m_Enemy[i]->GetDead())
+		if (!m_Enemy[i] && !m_Enemy[i]->GetDead())
 			m_EnemySprite[i].visible = false;
 		else
+		{
+			// レーダー上のエネミーの座標
 			m_EnemySprite[i].position = SetRaderPos(aqua::CVector2(m_Enemy[i]->GetPosVector2().x - m_Player->GetPosVector2().x,
-				 m_Player->GetPosVector2().y-m_Enemy[i]->GetPosVector2().y))-m_EnemySprite[i].anchor;
+				m_Player->GetPosVector2().y - m_Enemy[i]->GetPosVector2().y)) - m_EnemySprite[i].anchor;
+			// エネミーの向きに合わせて回転
+			m_EnemySprite[i].rotation = aqua::DegToRad(m_Enemy[i]->GetRotate());
+		}
+	// プレイヤーの向きに合わせて回転
+	m_PlayerSprite.rotation = aqua::DegToRad(m_Player->GetRotate());
 }
 
 void CRader::Draw(void)

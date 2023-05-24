@@ -115,9 +115,6 @@ protected:
 
     aqua::CCubePrimitive m_Cube;         // ユニットのコライダー
 
-    aqua::CLinePrimitive3D m_Line;
-
-
     aqua::CTimer         m_ShotCT;
 
     CBulletManager*      m_BulletManager;

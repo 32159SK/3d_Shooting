@@ -13,6 +13,7 @@
 
 #include "aqua.h"
 #include "enemy/enemy.h"
+#include "enemy/along_wall/along_wall.h"
 #include "../ui_component/rader/rader.h"
 
  /*!

@@ -24,6 +24,7 @@ IStageObject(aqua::IGameObject* parent, const std::string& name)
     , m_ObjectState(OBJECT_STATE::GO_IN)
     , m_ActiveFlag(true)
     , m_CollisionFlag(false)
+    , m_StageEdge(false)
 {
 }
 
@@ -41,10 +42,11 @@ Initialize(const STAGE_OBJECT_ID& id, int x, int z)
     m_CollisionFlag = false;
 
     //	ç¿ïWê›íË
-    m_Position = aqua::CVector3(x * m_default_size, 0.0f, z * m_default_size)
-        - aqua::CVector3(m_default_size / 2 * 20, 0.0f, m_default_size / 2 * 20);
+    m_Position = aqua::CVector3::ZERO;
 
+    m_Position.x = x * m_default_size - m_default_size / 2 * 20;
 
+    m_Position.z = (20 - z) * m_default_size - m_default_size / 2 * 20;
 }
 
 /*

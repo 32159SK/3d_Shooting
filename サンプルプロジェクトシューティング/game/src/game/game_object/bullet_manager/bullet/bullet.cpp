@@ -43,6 +43,9 @@ void IBullet::Update(void)
 	if (aqua::CVector3::Length(m_StartPos-m_Position) > abs(m_Range))
 		Hit();
 
+	// ˆÚ“®‘¬“x‚É‡‚í‚¹‚Ä‰ñ“]Šp“x‚ğZo
+	m_Rotate = aqua::RadToDeg(atan2(m_Velocity.x, m_Velocity.z));
+
 	m_Sphere.position = m_Position;
 }
 

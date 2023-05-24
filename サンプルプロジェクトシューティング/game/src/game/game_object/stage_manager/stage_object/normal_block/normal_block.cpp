@@ -2,8 +2,7 @@
 
 
 CNormalBlock::CNormalBlock(aqua::IGameObject* parent)
-	:IStageObject(parent, "")
-	, m_StageEdge(false)
+	:IStageObject(parent, "NormalBlock")
 {
 }
 
@@ -14,10 +13,9 @@ void CNormalBlock::Initialize(const STAGE_OBJECT_ID& id, int x, int z)
 	m_Cube.Setup(m_Position, m_default_size, m_default_size, m_default_size, aqua::CColor::WHITE);
 	m_Model.Load("data\\model\\nomal_block.mv1");
 	m_Model.position = m_Cube.position;
+
 	if (!m_StageEdge)
 		m_Model.position.y = -m_Cube.height;
-
-
 }
 
 void CNormalBlock::Update(void)

@@ -117,7 +117,7 @@ protected:
     static const float            m_default_size;         //!< 標準サイズ
     static const float            m_transition_time;      //!< オブジェクトの遷移時間
     STAGE_OBJECT_ID               m_StageObjectID;        //!< ステージオブジェクトID
-    OBJECT_STATE                  m_ObjectState;
+    OBJECT_STATE                  m_ObjectState;          
     aqua::CVector3                m_Position;             //!< 位置
     aqua::CTimer                  m_Timer;                //!< オブジェクトの遷移タイマー
     bool                          m_StageEdge;

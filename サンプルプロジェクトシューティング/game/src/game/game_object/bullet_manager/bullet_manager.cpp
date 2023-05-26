@@ -1,6 +1,6 @@
 #include "../../game_object/game_object.h"
 #include "bullet_manager.h"
-#include "bullet/nomal_bullet/nomal_bullet.h"
+#include "bullet/normal_bullet/normal_bullet.h"
 
 
 CBulletManager::CBulletManager(aqua::IGameObject* parent)
@@ -26,9 +26,9 @@ void CBulletManager::Initialize(CCSVReader* csv_r, CStageManager* st_m)
 
 void CBulletManager::Update(void)
 {
-	CheakHit();
 	if (m_Player->GetTimeStop())
 		return;
+	CheakHit();
 	IGameObject::Update();
 }
 
@@ -39,8 +39,10 @@ void CBulletManager::Draw(void)
 
 void CBulletManager::Create(aqua::CVector3 shot_pos, aqua::CVector3 shot_front, UNIT_TYPE unit_type, BULLET_TYPE bullet_type, IUnit* user)
 {
+	// V‚µ‚­¶¬‚·‚é’e‚Ì—eŠí
  	IBullet* bullet = nullptr;
- 	bullet = aqua::CreateGameObject<CNomalBullet>(this);
+	// ’e‚Ì¶¬ˆ—‚Æ‰Šú‰»
+ 	bullet = aqua::CreateGameObject<CNormalBullet>(this);
 	bullet->Initialize(m_BulletInfo[(int)bullet_type], unit_type, shot_pos, shot_front, user);
 }
 

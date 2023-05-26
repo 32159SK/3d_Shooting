@@ -68,7 +68,15 @@ public:
      */
     void        Finalize(void) override;
 
+    /*!
+     *  @brief      I—¹Šm”F
+     */
     bool        GetFinish(void) { return m_Finish; }
+
+    /*!
+     *  @brief      
+     */
+    CEnemy*     GetNearest(void);
 
 private:
 

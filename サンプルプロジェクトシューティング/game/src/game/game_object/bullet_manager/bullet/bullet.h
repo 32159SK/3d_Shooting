@@ -67,7 +67,7 @@ public:
     /*
      *  @brief      ’e‚ÌisÀ•Wæ“¾
      */
-    aqua::CVector3  GetDestination(void) { return m_Position + m_Velocity; }
+    aqua::CVector3  GetDestination(void) { return m_Position + m_Velocity*1.5f; }
 
 
     /*

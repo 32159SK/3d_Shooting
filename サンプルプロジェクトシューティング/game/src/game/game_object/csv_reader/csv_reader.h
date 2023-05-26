@@ -142,5 +142,5 @@ private:
 
     std::vector<ENEMY_POP_LIST>    m_PopList;
 
-    int                            m_Stage[10][10];    // ステージ配置
+    int                            m_Stage[21][21];    // ステージ配置
 };

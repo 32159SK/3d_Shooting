@@ -12,6 +12,7 @@
 #include "../unit/unit.h"
 
 class CEnemyManager;
+class CEnemy;
 
 class CPlayer : public IUnit
 {
@@ -57,6 +58,8 @@ public:
     aqua::CVector3  GetAgoPos(void) { return m_AgoPosition; }
 
     bool            GetTimeStop(void) { return m_TimeStop; }
+
+    void            SetEnemyManager(CEnemyManager* em) { m_EnemyManager = em; }
 private:
 
     /*
@@ -80,21 +83,30 @@ private:
     void            Dead(void)override;
 
     /*
+     *  @brief      ロックオン
+     */
+    void            LockON(void);
+
+    /*
      *  @brief      ザ・ワールド
      */
     void            TheWorld(void);
 
-    static const float m_chage_shotCT;  //
+    static const float m_chage_shotCT;  // 
     static const float m_the_world_time;// 時を止めていられる時間
-    static const float m_the_world_CT;  //
+    static const float m_the_world_CT;  // 再び時を止められるまでの時間
 
-    bool            m_Invincible;       //
+    bool            m_Invincible;       // 無敵
 
-    bool            m_TimeStop;
+    bool            m_TimeStop;         // 時止め確認
+
+    bool            m_LockON;           // ロックオン確認
+
+    aqua::CVector3 m_AgoPosition;       //
 
     aqua::CModel    m_Model;            // 自機のモデル
 
-    aqua::CLabel    m_DrawBT;           //
+    aqua::CLabel    m_DrawBT;           // 
 
     aqua::CTimer    m_ChageCT;          //
 
@@ -102,7 +114,9 @@ private:
 
     aqua::CTimer    m_TheWorldTimer;    // 
 
+    aqua::CTimer    m_LockonTimer;      // 連続でm_LockONが切り替わるのを防止
+
     CEnemyManager*  m_EnemyManager;     //
 
-    aqua::CVector3 m_AgoPosition;       //
+    CEnemy*         m_Enemy;
 };

@@ -2,6 +2,7 @@
 
 
 IBullet::IBullet(aqua::IGameObject* parent, const std::string& object_name)
+	: IGameObject(parent, object_name, "Bullet")
 {
 }
 

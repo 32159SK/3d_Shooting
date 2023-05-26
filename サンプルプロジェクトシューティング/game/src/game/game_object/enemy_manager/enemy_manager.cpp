@@ -54,7 +54,7 @@ void CEnemyManager::Draw(void)
 void CEnemyManager::Create(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info)
 {
 	// 空のエネミークラスを用意
-	CAlongWallEnemy* enemy = aqua::CreateGameObject<CAlongWallEnemy>(this);
+	CEnemy* enemy = aqua::CreateGameObject<CAlongWallEnemy>(this);
 
 	// 初期化とプレイヤーのポインタを渡す
 	enemy->Initialize(pop_pos, enemy_info.width, enemy_info.height, enemy_info.depth, enemy_info.color, m_StageManager, m_BulletManagar);
@@ -71,6 +71,22 @@ void CEnemyManager::Finalize(void)
 	IGameObject::Finalize();
 }
 
+CEnemy* CEnemyManager::GetNearest(void)
+{
+	if (m_ChildObjectList.empty())
+		return nullptr;
+	// 返り値のポインタ容器
+	CEnemy* enemy = nullptr;
+	for (auto it : m_ChildObjectList)
+	{
+		CEnemy* _enemy = (CEnemy*)it;
+		// 返り値のポインタがnullまたは、イテレーターのエネミーが返り値のエネミーよりプレイヤーに近い
+		if (!enemy || abs(aqua::CVector3::Length(_enemy->GetPosition() - m_Player->GetPosition()))
+			< abs(aqua::CVector3::Length(enemy->GetPosition() - m_Player->GetPosition())))
+			enemy = _enemy;
+	}
+	return enemy;
+}
 void CEnemyManager::WaveChange(void)
 {
 	if (m_WaveCount > m_max_wave)

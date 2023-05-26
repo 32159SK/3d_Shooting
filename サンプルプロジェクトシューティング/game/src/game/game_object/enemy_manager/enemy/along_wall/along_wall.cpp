@@ -3,15 +3,15 @@
 
 const aqua::CVector3 CAlongWallEnemy::m_surroundings[] =
 {
-	aqua::CVector3(0.0f,0.0f,1.0f),
 	aqua::CVector3(1.0f,0.0f,0.0f),
 	aqua::CVector3(0.0f,0.0f,-1.0f),
-	aqua::CVector3(-1.0f,0.0f,0.0f)
+	aqua::CVector3(-1.0f,0.0f,0.0f),
+	aqua::CVector3(0.0f,0.0f,1.0f),
 };
 
 CAlongWallEnemy::CAlongWallEnemy(aqua::IGameObject* parent)
 	: CEnemy(parent)
-	,m_AlongWall(false)
+	, m_AlongWall(false)
 	,m_WallDire(WALL_DIRE::UP)
 {
 }
@@ -43,18 +43,16 @@ void CAlongWallEnemy::Move(void)
 {
 	const float to_delta = 60.0f * aqua::GetDeltaTime();
 
-
 	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_surroundings[(int)m_WallDire] * m_Width))
 	{
 		m_AlongWall = true;
 
-		// ç∂Ç…Ç†ÇÍÇŒè„Ç…å¸Ç©Ç§
+		// ç∂Ç…Ç†ÇÍÇŒè„Ç…å¸Ç©Ç§ÅAÇªÇ§Ç≈Ç»ÇØÇÍÇŒéûåvâÒÇËÇ…
 		if (m_WallDire == WALL_DIRE::LEFT)
 			m_WallDire = WALL_DIRE::UP;
 		else
 			m_WallDire = (WALL_DIRE)((int)m_WallDire + 1);
 	}
-
 
 
 	m_Velocity.x = (m_Speed * to_delta) * m_surroundings[(int)m_WallDire].x;
@@ -68,5 +66,4 @@ void CAlongWallEnemy::Move(void)
 	m_Position += m_Velocity;
 
 	m_Cube.position = m_Position;
-
 }

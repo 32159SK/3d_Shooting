@@ -14,7 +14,7 @@ Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor
 	IUnit::Initialize(pop_pos, wid, hei, dep, color,st_m, bm);
 	m_UnitType = UNIT_TYPE::ENEMY;
 	m_ShotCT.Setup(5.0f);
-	m_Speed = 1.0f;
+	m_Speed = 0.5f;
 }
 
 void CEnemy::Update(void)
@@ -64,7 +64,7 @@ void CEnemy::Move(void)
 	m_Cube.m_HRotate = m_Rotate;
 
 	// •Ç‚Æ“–‚½‚Á‚Ä‚½‚ç‚»‚±‚ÅŽ~‚Ü‚é
-	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * m_Width))
+	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * m_Width*1.5f))
 		return;
 
 	m_Position += m_Velocity;

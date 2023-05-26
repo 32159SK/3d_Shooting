@@ -10,6 +10,9 @@ CPlayer::CPlayer(aqua::IGameObject* parent)
 	, m_AgoPosition(aqua::CVector3::ZERO)
 	, m_Invincible(false)
 	, m_TimeStop(false)
+	, m_LockON(false)
+	, m_EnemyManager(nullptr)
+	, m_Enemy(nullptr)
 {
 }
 
@@ -35,6 +38,8 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep
 	m_ChageCT.Setup(m_chage_shotCT);
 	m_ShotCT.Setup(0.5f);
 
+	m_LockonTimer.Setup(0.1f);
+
 	m_Cube.visible = false;
 
 	m_Model.Load("data\\model\\player.mv1");
@@ -56,9 +61,6 @@ void CPlayer::Update(void)
 	}
 	
 	m_Invincible = true;
-
-	// ザ・ワールド
-	TheWorld();
 
 	IUnit::Update();
 	IGameObject::Update();
@@ -158,6 +160,7 @@ void CPlayer::Move(void)
 	using namespace aqua::keyboard;
 	const float to_delta = 60.0f * aqua::GetDeltaTime();
 
+
 	m_Velocity = aqua::CVector3::ZERO;
 
 
@@ -172,10 +175,15 @@ void CPlayer::Move(void)
 	m_Velocity = m_Velocity.Normalize();
 	m_Velocity *= (m_Speed * to_delta);
 
+	LockON();
 
-	//// 壁と当たってたらそこで止まる
-	//if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * (m_Width / 2.0f)))
-	//	return;
+	// ザ・ワールド
+	TheWorld();
+	
+
+	// 壁と当たってたらそこで止まる
+	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * (m_Width / 2.0f)))
+		return;
 
 	m_Position += m_Velocity;
 	AQUA_DEBUG_LOG("X:" + std::to_string(m_Position.x) + ",Z" + std::to_string(m_Position.z));
@@ -190,6 +198,35 @@ void CPlayer::Damage(int damage)
 void CPlayer::Dead(void)
 {
 	IUnit::Dead();
+}
+
+void CPlayer::LockON(void)
+{
+	m_LockonTimer.Update();
+	// タイマーが終了しているかつ、キーが入力された
+	if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::X) && m_LockonTimer.Finished())
+	{
+		m_LockON = !m_LockON;
+		m_LockonTimer.Reset();
+	}
+
+	// そもそもロックオンしてない(余計な処理をしないようif文は分ける)
+	if (!m_LockON)
+		return;
+	// エネミーがnullまたは、取得したエネミーが死んでいる
+	if (!m_Enemy|| m_Enemy->GetDead())
+	{
+		m_Enemy = m_EnemyManager->GetNearest();
+		return;
+	}
+
+	// プレイヤーと自身の距離
+	aqua::CVector3 v = m_Enemy->GetPosition() - m_Position;
+
+	// ベクトルのノーマライズ
+	v.Normalize();
+
+	m_Rotate = aqua::RadToDeg(atan2(v.x, v.z));
 }
 
 void CPlayer::TheWorld(void)

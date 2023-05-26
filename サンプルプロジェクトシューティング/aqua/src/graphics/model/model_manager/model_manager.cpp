@@ -76,7 +76,7 @@ Unload(CModelResource* model)
 
     while (it != end)
     {
-        if ((*it)->GetResourceName() == model->GetResourceName())
+        if ((*it)->GetResourceHandle() == model->GetResourceHandle())
         {
             (*it)->Unload();
 

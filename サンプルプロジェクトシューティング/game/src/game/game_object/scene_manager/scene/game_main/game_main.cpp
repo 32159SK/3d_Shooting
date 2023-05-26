@@ -64,7 +64,7 @@ Initialize(void)
 
     // プレイヤーの初期化＆弾管理クラスのセット
     m_Player->Initialize(aqua::CVector3(0.0f, 0.0f, -50.0f), 10.0f, 10.0f, 10.0f, aqua::CColor::BLUE,st_m, bm);
-
+    m_Player->SetEnemyManager(m_EnemyManager);
     // 敵管理クラスの初期化＆プレイヤー、弾管理クラスのセット
     m_EnemyManager->Initialize(csv_r, bm, m_Player, st_m, rd);
 

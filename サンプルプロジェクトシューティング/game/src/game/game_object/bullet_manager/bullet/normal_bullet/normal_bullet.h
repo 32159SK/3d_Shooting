@@ -12,7 +12,7 @@
 #include "../bullet.h"
 
 
-class CNomalBullet : public IBullet
+class CNormalBullet : public IBullet
 {
 public:
     /*
@@ -21,12 +21,12 @@ public:
      *  @param[in]  parent          親オブジェクト
      *  @param[in]  object_name     オブジェクト名
      */
-    CNomalBullet(aqua::IGameObject* parent);
+    CNormalBullet(aqua::IGameObject* parent);
 
     /*
      *  @brief      デストラクタ
      */
-    virtual ~CNomalBullet(void) = default;
+    virtual ~CNormalBullet(void) = default;
 
     /*
      *  @brief      初期化

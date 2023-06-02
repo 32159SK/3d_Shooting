@@ -112,6 +112,7 @@
     <ClCompile Include="src\game\game_object\effect_manager\effect_manager.cpp" />
     <ClCompile Include="src\game\game_object\enemy_manager\enemy\along_wall\along_wall.cpp" />
     <ClCompile Include="src\game\game_object\enemy_manager\enemy\enemy.cpp" />
+    <ClCompile Include="src\game\game_object\enemy_manager\enemy\mob_normal\mob_enemy.cpp" />
     <ClCompile Include="src\game\game_object\enemy_manager\enemy_manager.cpp" />
     <ClCompile Include="src\game\game_object\floor\floor.cpp" />
     <ClCompile Include="src\game\game_object\player\player.cpp" />
@@ -124,6 +125,7 @@
     <ClCompile Include="src\game\game_object\stage_manager\stage_object\normal_block\normal_block.cpp" />
     <ClCompile Include="src\game\game_object\stage_manager\stage_object\stage_object.cpp" />
     <ClCompile Include="src\game\game_object\ui_component\rader\rader.cpp" />
+    <ClCompile Include="src\game\game_object\ui_component\skill_icon\skill_icon.cpp" />
     <ClCompile Include="src\game\game_object\ui_component\ui_component.cpp" />
     <ClCompile Include="src\game\game_object\unit\unit.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -142,6 +144,7 @@
     <ClInclude Include="src\game\game_object\effect_manager\effect_manager.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy\along_wall\along_wall.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy\enemy.h" />
+    <ClInclude Include="src\game\game_object\enemy_manager\enemy\mob_normal\mob_enemy.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy_manager.h" />
     <ClInclude Include="src\game\game_object\floor\floor.h" />
     <ClInclude Include="src\game\game_object\game_object.h" />
@@ -157,6 +160,7 @@
     <ClInclude Include="src\game\game_object\stage_manager\stage_object\stage_object.h" />
     <ClInclude Include="src\game\game_object\stage_manager\stage_object\stage_object_id.h" />
     <ClInclude Include="src\game\game_object\ui_component\rader\rader.h" />
+    <ClInclude Include="src\game\game_object\ui_component\skill_icon\skill_icon.h" />
     <ClInclude Include="src\game\game_object\ui_component\ui_component.h" />
     <ClInclude Include="src\game\game_object\unit\unit.h" />
     <ClInclude Include="src\game\game_object\unit\unit_type.h" />

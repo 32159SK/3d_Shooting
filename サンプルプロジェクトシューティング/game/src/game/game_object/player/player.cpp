@@ -4,6 +4,7 @@
 const float CPlayer::m_chage_shotCT = 0.5f;
 const float CPlayer::m_the_world_time = 7.0f;
 const float CPlayer::m_the_world_CT = 10.0f;
+const float CPlayer::m_lock_range = 200.0f;
 
 CPlayer::CPlayer(aqua::IGameObject* parent)
 	: IUnit(parent, "Player")
@@ -59,8 +60,6 @@ void CPlayer::Update(void)
 		m_Invincible = false;
 		m_InvincibleTimer.Reset();
 	}
-	
-	m_Invincible = true;
 
 	IUnit::Update();
 	IGameObject::Update();
@@ -136,6 +135,7 @@ void CPlayer::Shot(void)
 		}
 	}
 
+	// 正面座標
 	aqua::CVector3 front;
 
 	front.x = sin(aqua::DegToRad(m_Rotate));
@@ -146,7 +146,7 @@ void CPlayer::Shot(void)
 		if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::SPACE))
 		{
 			// 自機の正面から球を撃つ
-			m_BulletManager->Create(m_Position + front * 10, front * 10.5, m_UnitType, m_ShotBullet, this);
+			m_BulletManager->Create(m_Position + front * 10, front * 10.5f, m_UnitType, m_ShotBullet, this);
 			m_ShotCT.Reset();
 		}
 		// ここでついでに敵が追尾する用のポジションを取っておく(時間停止していない場合)
@@ -160,9 +160,7 @@ void CPlayer::Move(void)
 	using namespace aqua::keyboard;
 	const float to_delta = 60.0f * aqua::GetDeltaTime();
 
-
 	m_Velocity = aqua::CVector3::ZERO;
-
 
 	if (Button(KEY_ID::W)) m_Velocity += aqua::CVector3(0.0f, 0.0f, 1.0f);
 	if (Button(KEY_ID::S)) m_Velocity -= aqua::CVector3(0.0f, 0.0f, 1.0f);
@@ -175,12 +173,12 @@ void CPlayer::Move(void)
 	m_Velocity = m_Velocity.Normalize();
 	m_Velocity *= (m_Speed * to_delta);
 
+	// ロックオン
 	LockON();
 
 	// ザ・ワールド
 	TheWorld();
 	
-
 	// 壁と当たってたらそこで止まる
 	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * (m_Width / 2.0f)))
 		return;
@@ -192,7 +190,6 @@ void CPlayer::Move(void)
 void CPlayer::Damage(int damage)
 {
 	IUnit::Damage(damage);
-	m_Cube.color.alpha -= m_Cube.color.alpha / m_max_life;
 }
 
 void CPlayer::Dead(void)
@@ -203,29 +200,43 @@ void CPlayer::Dead(void)
 void CPlayer::LockON(void)
 {
 	m_LockonTimer.Update();
+
 	// タイマーが終了しているかつ、キーが入力された
 	if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::X) && m_LockonTimer.Finished())
 	{
 		m_LockON = !m_LockON;
+		// 一度ロックオンした同じ敵を近くないのに再度ロックオンしないようnullを与える
+		m_Enemy = nullptr;
 		m_LockonTimer.Reset();
 	}
 
 	// そもそもロックオンしてない(余計な処理をしないようif文は分ける)
 	if (!m_LockON)
 		return;
+
 	// エネミーがnullまたは、取得したエネミーが死んでいる
-	if (!m_Enemy|| m_Enemy->GetDead())
+	if (!m_Enemy || m_Enemy->GetDead()
+		|| m_lock_range < aqua::CVector3::Length(m_Enemy->GetPosition() - m_Position))
 	{
-		m_Enemy = m_EnemyManager->GetNearest();
+		m_Enemy = m_EnemyManager->GetNearest(m_Position);
 		return;
 	}
 
 	// プレイヤーと自身の距離
 	aqua::CVector3 v = m_Enemy->GetPosition() - m_Position;
 
+	// 範囲外ならロックオンを終了
+	if (m_lock_range < abs(aqua::CVector3::Length(v)))
+	{
+		m_Enemy = nullptr;
+		m_LockON = false;
+		return;
+	}
+
 	// ベクトルのノーマライズ
 	v.Normalize();
 
+	// 2点から回転角度を求める
 	m_Rotate = aqua::RadToDeg(atan2(v.x, v.z));
 }
 

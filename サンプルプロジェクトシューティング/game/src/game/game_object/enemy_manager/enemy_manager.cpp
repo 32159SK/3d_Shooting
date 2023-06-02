@@ -71,19 +71,34 @@ void CEnemyManager::Finalize(void)
 	IGameObject::Finalize();
 }
 
-CEnemy* CEnemyManager::GetNearest(void)
+CEnemy* CEnemyManager::GetNearest(aqua::CVector3 player_pos)
 {
 	if (m_ChildObjectList.empty())
 		return nullptr;
+
+
 	// 返り値のポインタ容器
 	CEnemy* enemy = nullptr;
 	for (auto it : m_ChildObjectList)
 	{
 		CEnemy* _enemy = (CEnemy*)it;
-		// 返り値のポインタがnullまたは、イテレーターのエネミーが返り値のエネミーよりプレイヤーに近い
-		if (!enemy || abs(aqua::CVector3::Length(_enemy->GetPosition() - m_Player->GetPosition()))
-			< abs(aqua::CVector3::Length(enemy->GetPosition() - m_Player->GetPosition())))
+
+		// 返り値のポインタがnull
+		if (!enemy)
 			enemy = _enemy;
+
+		// 敵座標
+		aqua::CVector3 e_pos = enemy->GetPosition();
+		aqua::CVector3 _e_pos = _enemy->GetPosition();
+
+		// イテレーターの敵クラスが返り値の敵クラスよりプレイヤーに近い
+		if (abs(aqua::CVector3::Length(_e_pos - player_pos)) < abs(aqua::CVector3::Length(e_pos - player_pos)))
+			enemy = _enemy;
+
+		// プレイヤーと敵の間に壁があればnull
+		if (m_StageManager->StageObjectCollision(_e_pos, player_pos))
+			enemy = nullptr;
+
 	}
 	return enemy;
 }

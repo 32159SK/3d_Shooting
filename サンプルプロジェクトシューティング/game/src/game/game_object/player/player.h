@@ -57,9 +57,16 @@ public:
      */
     aqua::CVector3  GetAgoPos(void) { return m_AgoPosition; }
 
+    /*
+     *  @brief      時止め確認
+     */
     bool            GetTimeStop(void) { return m_TimeStop; }
 
+    /*
+     *  @brief      敵管理クラスセッター
+     */
     void            SetEnemyManager(CEnemyManager* em) { m_EnemyManager = em; }
+
 private:
 
     /*
@@ -95,6 +102,7 @@ private:
     static const float m_chage_shotCT;  // 
     static const float m_the_world_time;// 時を止めていられる時間
     static const float m_the_world_CT;  // 再び時を止められるまでの時間
+    static const float m_lock_range;
 
     bool            m_Invincible;       // 無敵
 

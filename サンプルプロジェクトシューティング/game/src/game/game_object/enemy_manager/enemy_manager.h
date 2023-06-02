@@ -74,9 +74,9 @@ public:
     bool        GetFinish(void) { return m_Finish; }
 
     /*!
-     *  @brief      
+     *  @brief      “G‘Io
      */
-    CEnemy*     GetNearest(void);
+    CEnemy*     GetNearest(aqua::CVector3 player_pos);
 
 private:
 

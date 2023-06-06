@@ -44,13 +44,12 @@ private:
 
     void            Move(void)override;
 
-    static const aqua::CVector3 m_surroundings[];
 
     // •Ç‚ÆG‚ê‚Ä‚¢‚é‚©
     bool            m_AlongWall;
 
     // •Ç‚ÌŒü‚«
-    enum class WALL_DIRE
+    enum WALL_DIRE
     {
         UP,
         RIGHT,

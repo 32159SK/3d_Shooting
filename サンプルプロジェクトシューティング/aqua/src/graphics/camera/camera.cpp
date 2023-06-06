@@ -89,6 +89,16 @@ SetAngle(ANGLE angle, float rad)
 	SetCameraPositionAndAngle(m_Position, m_VRotate, m_HRotate, m_TRotate);
 }
 
+aqua::CMatrix aqua::CCamera::GetViewMatrix(void)
+{
+	return GetCameraViewMatrix();
+}
+
+aqua::CMatrix aqua::CCamera::GetProjectionMatrix(void)
+{
+	return GetCameraProjectionMatrix();
+}
+
 void aqua::CCamera::Update(void)
 {
 	CMatrix mat;

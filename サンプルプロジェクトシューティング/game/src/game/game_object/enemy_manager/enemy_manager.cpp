@@ -36,9 +36,6 @@ void CEnemyManager::Initialize(CCSVReader* csv_r, CBulletManager* bm, CPlayer* p
 
 void CEnemyManager::Update(void)
 {
-	if (m_Player->GetTimeStop())
-		return;
-
 	IGameObject::Update();
 
 
@@ -54,7 +51,7 @@ void CEnemyManager::Draw(void)
 void CEnemyManager::Create(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info)
 {
 	// 空のエネミークラスを用意
-	CEnemy* enemy = aqua::CreateGameObject<CAlongWallEnemy>(this);
+	CEnemy* enemy = aqua::CreateGameObject<CMobEnemy>(this);
 
 	// 初期化とプレイヤーのポインタを渡す
 	enemy->Initialize(pop_pos, enemy_info.width, enemy_info.height, enemy_info.depth, enemy_info.color, m_StageManager, m_BulletManagar);
@@ -77,30 +74,29 @@ CEnemy* CEnemyManager::GetNearest(aqua::CVector3 player_pos)
 		return nullptr;
 
 
-	// 返り値のポインタ容器
-	CEnemy* enemy = nullptr;
+	// 最も近い敵
+	CEnemy* nearestEnemy = nullptr;
+
 	for (auto it : m_ChildObjectList)
 	{
-		CEnemy* _enemy = (CEnemy*)it;
+		CEnemy* enemy = (CEnemy*)it;
 
-		// 返り値のポインタがnull
-		if (!enemy)
-			enemy = _enemy;
+		// 最も近い敵がまだ見つかっていない場合、仮で代入する
+		if (!nearestEnemy) nearestEnemy = enemy;
 
-		// 敵座標
-		aqua::CVector3 e_pos = enemy->GetPosition();
-		aqua::CVector3 _e_pos = _enemy->GetPosition();
+		// 敵とプレイヤーの距離
+		float nearestDistance = abs(aqua::CVector3::Length(nearestEnemy->GetPosition() - player_pos));
+		float itDistance = abs(aqua::CVector3::Length(enemy->GetPosition() - player_pos));
 
-		// イテレーターの敵クラスが返り値の敵クラスよりプレイヤーに近い
-		if (abs(aqua::CVector3::Length(_e_pos - player_pos)) < abs(aqua::CVector3::Length(e_pos - player_pos)))
-			enemy = _enemy;
+		// よりプレイヤーに近い敵をnearestEnemyにする
+		if (itDistance < nearestDistance) nearestEnemy = enemy;
 
 		// プレイヤーと敵の間に壁があればnull
-		if (m_StageManager->StageObjectCollision(_e_pos, player_pos))
-			enemy = nullptr;
+		if (m_StageManager->StageObjectCollision(enemy->GetPosition(), player_pos))
+			nearestEnemy = nullptr;
 
 	}
-	return enemy;
+	return nearestEnemy;
 }
 void CEnemyManager::WaveChange(void)
 {

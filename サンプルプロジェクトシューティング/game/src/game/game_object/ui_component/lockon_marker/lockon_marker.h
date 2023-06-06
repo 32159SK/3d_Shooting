@@ -1,7 +1,7 @@
 /*!
- *  @file       rader.h
- *  @brief      レーダークラス
- *  @brief      UIコンポーネント
+ *  @file       life_bar.h
+ *  @brief
+ *  @brief
  *  @author     Kazuto Shimazaki
  *  @version    1.0
  *
@@ -13,15 +13,15 @@
 #include "../ui_component.h"
 
  /*!
-  *  @class      CRader
+  *  @class      CLifeBar
   *
   *  @author     Kazuto Shimazaki
   *
-  *  @date       2023/06/02
+  *  @date       2023/06/05
   *
   *  @version    1.0
   */
-class CSkillIcon
+class CLockOnMarker
     : public IUIComponent
 {
 public:
@@ -30,18 +30,21 @@ public:
      *
      *  @param[in]  parent  親のオブジェクト
      */
-    CSkillIcon(aqua::IGameObject* parent);
+    CLockOnMarker(aqua::IGameObject* parent);
 
     /*!
      *  @brief      デストラクタ
      */
-    ~CSkillIcon(void) = default;
+    ~CLockOnMarker(void) = default;
 
     /*!
      *  @brief      初期化
      */
-    void        Initialize(CPlayer* player);
+    void        Initialize(void);
 
+    /*!
+     *  @brief      更新
+     */
     void        Update(void)override;
 
     /*!
@@ -54,10 +57,18 @@ public:
      */
     void        Finalize(void) override;
 
+    void        SetEnemy(CEnemy* enemy) { m_LockOnEnemy = enemy; }
+
 private:
 
-    aqua::CSprite                   m_RaderSprite;  // レーダー画像
-    std::vector<aqua::CSprite>      m_EnemySprite;  // ""のエネミー表示
 
-    CPlayer* m_Player;       // プレイヤー
+    aqua::CSprite  m_Sprite;   // 
+
+    aqua::CCamera* m_Camera;   // カメラのポインタ容器
+
+    CPlayer*       m_Player;
+
+    CEnemy*        m_LockOnEnemy;
+
+    CGameMain*     m_GameMain; // ゲームメインシーンのポインタ容器
 };

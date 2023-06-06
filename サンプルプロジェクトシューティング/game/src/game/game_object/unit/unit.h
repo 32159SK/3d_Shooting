@@ -48,7 +48,7 @@ public:
     /*
      *  @brief      被弾判定
      */
-    virtual bool    CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere,int damage);
+    virtual bool    CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, int damage);
 
     aqua::CVector3  GetPosition(void) { return m_Position; }
 
@@ -63,6 +63,10 @@ public:
      *  @brief      回転値の取得
      */
     float           GetRotate(void) { return m_Rotate; }
+
+    int             GetMaxLife(void) { return m_MaxLife; }
+
+    int             GetLife(void) { return m_Life; }
 
 protected:
 
@@ -86,7 +90,7 @@ protected:
       */
     virtual void    Dead(void);
 
-    static const int     m_max_life;     // ライフ上限
+    int                  m_MaxLife;
 
     int                  m_Life;         // ライフ
 

@@ -164,14 +164,12 @@ void
 aqua::CCubePrimitive::
 Draw(void)
 {
+    Transform();
+
     // ”ñ•\Ž¦‚ÌŽž‚Í•`‰æ‚µ‚È‚¢
     if (!visible) return;
 
-    Transform();
     DrawPolygonIndexed3D(vertex, vertex_count, index, polygon_count, DX_NONE_GRAPH, false);
-
-    // •`‰æ
-    //DrawCube3D(pointA, pointB, color.GetColor(),spc_color.GetColor(),fill);
 }
 
 bool aqua::CCubePrimitive::CheckCollision(CVector3& pointA, CVector3& pointB)

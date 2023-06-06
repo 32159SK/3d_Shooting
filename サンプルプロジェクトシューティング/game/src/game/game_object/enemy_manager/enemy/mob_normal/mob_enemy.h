@@ -52,11 +52,26 @@ private:
      *  @brief      死亡
      */
     void    Dead(void)override;
-    
+
+    /*
+     *  @brief      追跡
+     */
     void    Follow(void);
 
-    static const float   m_follow_range;
+    void    NotFollow(void);
 
-    bool            m_Follow;
+    /*
+     *  @brief      追跡確認
+     */
+    bool    FollowCheck(void);
 
+    static const float   m_follow_range;        // 追跡感知範囲
+
+    static const float   m_lose_sight_time;     // 見失うまでの時間
+
+    bool                 m_Follow;              // 追跡フラグ
+
+    aqua::CVector3       m_Dir;                 // 非追跡時の向き
+
+    aqua::CTimer         m_LoseSightTimer;      // 見失うまでのタイマー
 };

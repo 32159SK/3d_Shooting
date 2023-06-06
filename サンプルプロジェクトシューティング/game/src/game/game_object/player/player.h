@@ -13,6 +13,7 @@
 
 class CEnemyManager;
 class CEnemy;
+class CLockOnMarker;
 
 class CPlayer : public IUnit
 {
@@ -67,6 +68,8 @@ public:
      */
     void            SetEnemyManager(CEnemyManager* em) { m_EnemyManager = em; }
 
+    bool            GetLockOnFlag(void) { return m_LockON; }
+
 private:
 
     /*
@@ -92,7 +95,7 @@ private:
     /*
      *  @brief      ロックオン
      */
-    void            LockON(void);
+    void            LockOn(void);
 
     /*
      *  @brief      ザ・ワールド
@@ -110,7 +113,7 @@ private:
 
     bool            m_LockON;           // ロックオン確認
 
-    aqua::CVector3 m_AgoPosition;       //
+    aqua::CVector3  m_AgoPosition;       //
 
     aqua::CModel    m_Model;            // 自機のモデル
 
@@ -127,4 +130,6 @@ private:
     CEnemyManager*  m_EnemyManager;     //
 
     CEnemy*         m_Enemy;
+
+    CLockOnMarker*  m_LockOnMarker;
 };

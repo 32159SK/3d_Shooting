@@ -16,6 +16,7 @@
 
 namespace aqua
 {
+    class CMatrix;
 
     /*!
      *  @brief      Šp“x‚ÌŒü‚«
@@ -115,8 +116,15 @@ namespace aqua
          */
         void        SetAngle(ANGLE angle, float rad);
 
+        /*!
+         *  @brief  ƒJƒƒ‰s”æ“¾
+         */
+        aqua::CMatrix     GetViewMatrix(void);
+        aqua::CMatrix     GetProjectionMatrix(void);
 
         void        Update(void);
+
+
 
     };
 

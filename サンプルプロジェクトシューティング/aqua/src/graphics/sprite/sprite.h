@@ -125,6 +125,13 @@ namespace aqua
          */
         int     GetResourceHandle(void) const { return m_Texture.GetResourceHandle(); }
 
+        /*!
+         *  @brief      画像中心座標設定
+         *
+         *  @param[in]  center   画像中心
+         */
+        void            SetCenterPosition(aqua::CVector2 center) { position = center - aqua::CVector2(m_Texture.GetWidth() / 2.0f, m_Texture.GetHeight() / 2.0f); }
+
     private:
         //! テクスチャ
         aqua::CTexture          m_Texture;

@@ -124,6 +124,8 @@
     <ClCompile Include="src\game\game_object\stage_manager\stage_manager.cpp" />
     <ClCompile Include="src\game\game_object\stage_manager\stage_object\normal_block\normal_block.cpp" />
     <ClCompile Include="src\game\game_object\stage_manager\stage_object\stage_object.cpp" />
+    <ClCompile Include="src\game\game_object\ui_component\life_bar\life_bar.cpp" />
+    <ClCompile Include="src\game\game_object\ui_component\lockon_marker\lockon_marker.cpp" />
     <ClCompile Include="src\game\game_object\ui_component\rader\rader.cpp" />
     <ClCompile Include="src\game\game_object\ui_component\skill_icon\skill_icon.cpp" />
     <ClCompile Include="src\game\game_object\ui_component\ui_component.cpp" />
@@ -144,6 +146,7 @@
     <ClInclude Include="src\game\game_object\effect_manager\effect_manager.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy\along_wall\along_wall.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy\enemy.h" />
+    <ClInclude Include="src\game\game_object\enemy_manager\enemy\enemy_id.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy\mob_normal\mob_enemy.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy_manager.h" />
     <ClInclude Include="src\game\game_object\floor\floor.h" />
@@ -159,6 +162,8 @@
     <ClInclude Include="src\game\game_object\stage_manager\stage_object\normal_block\normal_block.h" />
     <ClInclude Include="src\game\game_object\stage_manager\stage_object\stage_object.h" />
     <ClInclude Include="src\game\game_object\stage_manager\stage_object\stage_object_id.h" />
+    <ClInclude Include="src\game\game_object\ui_component\life_bar\life_bar.h" />
+    <ClInclude Include="src\game\game_object\ui_component\lockon_marker\lockon_marker.h" />
     <ClInclude Include="src\game\game_object\ui_component\rader\rader.h" />
     <ClInclude Include="src\game\game_object\ui_component\skill_icon\skill_icon.h" />
     <ClInclude Include="src\game\game_object\ui_component\ui_component.h" />

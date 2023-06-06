@@ -1,8 +1,13 @@
 #include "../../../game_object.h"
 #include "mob_enemy.h"
 
+const float CMobEnemy::m_follow_range = 50.0f;
+const float CMobEnemy::m_lose_sight_time = 2.0f;
+
+
 CMobEnemy::CMobEnemy(aqua::IGameObject* parent)
 	: CEnemy(parent)
+	, m_Follow(false)
 {
 }
 
@@ -11,6 +16,8 @@ CMobEnemy::
 Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m, CBulletManager* bm)
 {
 	CEnemy::Initialize(pop_pos, wid, hei, dep, color, st_m, bm);
+	m_LoseSightTimer.Setup(m_lose_sight_time);
+	m_Dir = m_surroundings[aqua::Rand(3)];
 }
 
 void CMobEnemy::Update(void)
@@ -21,6 +28,9 @@ void CMobEnemy::Update(void)
 
 void CMobEnemy::Shot(void)
 {
+	if (!m_Follow)
+		return;
+
 	aqua::CVector3 front;
 
 	front.x = sin(aqua::DegToRad(m_Rotate));
@@ -31,6 +41,27 @@ void CMobEnemy::Shot(void)
 
 void CMobEnemy::Move(void)
 {
+	// 追尾している
+	if (FollowCheck())
+		Follow();
+	else
+		NotFollow();
+}
+
+void CMobEnemy::Dead(void)
+{
+	IUnit::Dead();
+}
+
+void CMobEnemy::Follow(void)
+{
+	// 見失っていたら追跡を解除
+	if (m_LoseSightTimer.Finished())
+	{
+		m_Follow = false;
+		m_LoseSightTimer.Reset();
+		return;
+	}
 	const float to_delta = 60.0f * aqua::GetDeltaTime();
 	aqua::CVector3 player_pos = m_Player->GetAgoPos();
 
@@ -47,31 +78,41 @@ void CMobEnemy::Move(void)
 	m_Velocity.x = (m_Speed * to_delta) * cos(m_Angle);
 	m_Velocity.z = (m_Speed * to_delta) * sin(m_Angle);
 
-	// 移動速度に合わせて回転角度を算出
-	m_Rotate = aqua::RadToDeg(atan2(m_Velocity.x, m_Velocity.z));
-
-	m_Cube.m_HRotate = m_Rotate;
-
-	// 壁と当たってたらそこで止まる
+	// 壁と当たってたらそこで止まる(ついでに見失うまでのカウントを進める)
 	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * m_Width * 1.5f))
+	{
+		m_LoseSightTimer.Update();
 		return;
-
-	m_Position += m_Velocity;
-
-	m_Cube.position = m_Position;
+	}
+	CEnemy::Move();
 }
 
-void CMobEnemy::Dead(void)
+void CMobEnemy::NotFollow(void)
 {
-	IUnit::Dead();
+	const float to_delta = 60.0f * aqua::GetDeltaTime();
+	
+	// 壁に当たったら向きを変える
+	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * m_Width * 1.5f))
+		m_Dir = m_surroundings[aqua::Rand(3)];
+
+	m_Velocity.x = (m_Speed * to_delta) * m_Dir.x;
+	m_Velocity.z = (m_Speed * to_delta) * m_Dir.z;
+
+	CEnemy::Move();
 }
 
-void CMobEnemy::Follow(void)
+bool CMobEnemy::FollowCheck(void)
 {
+	if (m_Follow)
+		return true;
 	// プレイヤーと自身の距離
 	aqua::CVector3 v = m_Player->GetPosition() - m_Position;
 
 	// 範囲内かつ、壁を隔てていないなら追跡開始
-	if (m_follow_range > abs(aqua::CVector3::Length(v))&&m_StageManager->StageObjectCollision(m_Player->GetPosition(),m_Position))
+	if (m_follow_range > abs(aqua::CVector3::Length(v)) && !m_StageManager->StageObjectCollision(m_Player->GetPosition(), m_Position))
 		m_Follow = true;
+	else
+		m_Follow = false;
+
+	return m_Follow;
 }

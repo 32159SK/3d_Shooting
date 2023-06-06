@@ -2,7 +2,7 @@
 #include "../../game_object.h"
 #include "rader.h"
 
-const std::string CRader::m_unit_path = "data\\texture\\unit_icon.png";
+const std::string CRader::m_unit_path = "data\\texture\\ui\\rader\\unit_icon.png";
 
 CRader::CRader(aqua::IGameObject* parent)
 	: IUIComponent(parent, "Rader")
@@ -15,7 +15,7 @@ void CRader::Initialize(CPlayer* player)
 	m_Player = player;
 
 	// レーダー画像の生成
-	m_RaderSprite.Create("data\\texture\\rader.png");
+	m_RaderSprite.Create("data\\texture\\ui\\rader\\rader.png");
 	m_RaderSprite.position = aqua::CVector2::ZERO;
 	// レーダー画像のサイズの取得
 	m_RaderSize.x = (float)m_RaderSprite.GetTextureWidth();

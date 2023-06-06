@@ -1,8 +1,6 @@
 #include "../game_object.h"
 #include "unit.h"
 
-const int IUnit::m_max_life = 5;
-
 IUnit::
 IUnit(aqua::IGameObject* parent, const std::string& object_name)
 	: aqua::IGameObject(parent,object_name)
@@ -10,6 +8,7 @@ IUnit(aqua::IGameObject* parent, const std::string& object_name)
 	, m_Width(0.0f)
 	, m_Depth(0.0f)
 	, m_Speed(0.0f)
+	, m_MaxLife(5)
 	, m_Life(0)
 	, m_DeadFlag(false)
 	, m_Rotate(0.0f)
@@ -27,8 +26,11 @@ void IUnit::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, 
 	m_Color = color;
 	m_BulletManager = bm;
 	m_StageManager = st_m;
-	m_Life = m_max_life;
+	m_Life = m_MaxLife;
 	m_Cube.Setup(m_Position, m_Width, m_Height, m_Depth, m_Color);
+	aqua::CreateGameObject<CLifeBar>(this);
+
+	IGameObject::Initialize();
 }
 
 void IUnit::Draw(void)
@@ -41,6 +43,8 @@ void IUnit::Update(void)
 {
 	Move();
 	m_Cube.position = m_Position;
+
+	IGameObject::Update();
 }
 
 bool IUnit::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere,int damage)

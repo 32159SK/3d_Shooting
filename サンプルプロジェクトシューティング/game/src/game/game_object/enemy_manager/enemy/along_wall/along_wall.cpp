@@ -1,13 +1,6 @@
 #include "../../../game_object.h"
 #include "along_wall.h"
 
-const aqua::CVector3 CAlongWallEnemy::m_surroundings[] =
-{
-	aqua::CVector3(1.0f,0.0f,0.0f),
-	aqua::CVector3(0.0f,0.0f,-1.0f),
-	aqua::CVector3(-1.0f,0.0f,0.0f),
-	aqua::CVector3(0.0f,0.0f,1.0f),
-};
 
 CAlongWallEnemy::CAlongWallEnemy(aqua::IGameObject* parent)
 	: CEnemy(parent)
@@ -51,19 +44,12 @@ void CAlongWallEnemy::Move(void)
 		if (m_WallDire == WALL_DIRE::LEFT)
 			m_WallDire = WALL_DIRE::UP;
 		else
-			m_WallDire = (WALL_DIRE)((int)m_WallDire + 1);
+			m_WallDire = (WALL_DIRE)(m_WallDire + 1);
 	}
 
 
-	m_Velocity.x = (m_Speed * to_delta) * m_surroundings[(int)m_WallDire].x;
-	m_Velocity.z = (m_Speed * to_delta) * m_surroundings[(int)m_WallDire].z;
+	m_Velocity.x = (m_Speed * to_delta) * m_surroundings[m_WallDire].x;
+	m_Velocity.z = (m_Speed * to_delta) * m_surroundings[m_WallDire].z;
 
-	// à⁄ìÆë¨ìxÇ…çáÇÌÇπÇƒâÒì]äpìxÇéZèo
-	m_Rotate = aqua::RadToDeg(atan2(m_Velocity.x, m_Velocity.z));
-
-	m_Cube.m_HRotate = m_Rotate;
-
-	m_Position += m_Velocity;
-
-	m_Cube.position = m_Position;
+	CEnemy::Move();
 }

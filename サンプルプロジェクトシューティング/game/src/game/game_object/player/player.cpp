@@ -19,6 +19,8 @@ CPlayer::CPlayer(aqua::IGameObject* parent)
 
 void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m, CBulletManager* bm)
 {
+	m_LockOnMarker = aqua::CreateGameObject<CLockOnMarker>(this);
+
 	IUnit::Initialize(pop_pos, wid, hei, dep, color, st_m, bm);
 	m_UnitType = UNIT_TYPE::PLAYER;
 	m_ShotBullet = BULLET_TYPE::NOMAL;
@@ -44,6 +46,7 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep
 	m_Cube.visible = false;
 
 	m_Model.Load("data\\model\\player.mv1");
+
 }
 
 void CPlayer::Update(void)
@@ -62,8 +65,6 @@ void CPlayer::Update(void)
 	}
 
 	IUnit::Update();
-	IGameObject::Update();
-
 	m_Model.position = m_Cube.position;
 	m_Model.rotation.y = aqua::DegToRad(m_Rotate);
 }
@@ -162,10 +163,10 @@ void CPlayer::Move(void)
 
 	m_Velocity = aqua::CVector3::ZERO;
 
-	if (Button(KEY_ID::W)) m_Velocity += aqua::CVector3(0.0f, 0.0f, 1.0f);
-	if (Button(KEY_ID::S)) m_Velocity -= aqua::CVector3(0.0f, 0.0f, 1.0f);
-	if (Button(KEY_ID::A)) m_Velocity -= aqua::CVector3(1.0f, 0.0f, 0.0f);
-	if (Button(KEY_ID::D)) m_Velocity += aqua::CVector3(1.0f, 0.0f, 0.0f);
+	if (Button(KEY_ID::W)) m_Velocity += aqua::CVector3::FRONT;
+	if (Button(KEY_ID::S)) m_Velocity += aqua::CVector3::BACK;
+	if (Button(KEY_ID::A)) m_Velocity += aqua::CVector3::LEFT;
+	if (Button(KEY_ID::D)) m_Velocity += aqua::CVector3::RIGHT;
 
 	if (Button(KEY_ID::RIGHT)) m_Rotate += 2.0f;
 	if (Button(KEY_ID::LEFT)) m_Rotate -= 2.0f;
@@ -174,13 +175,13 @@ void CPlayer::Move(void)
 	m_Velocity *= (m_Speed * to_delta);
 
 	// ロックオン
-	LockON();
+	LockOn();
 
 	// ザ・ワールド
 	TheWorld();
 	
 	// 壁と当たってたらそこで止まる
-	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * (m_Width / 2.0f)))
+	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * (m_Width )))
 		return;
 
 	m_Position += m_Velocity;
@@ -197,7 +198,7 @@ void CPlayer::Dead(void)
 	IUnit::Dead();
 }
 
-void CPlayer::LockON(void)
+void CPlayer::LockOn(void)
 {
 	m_LockonTimer.Update();
 
@@ -207,6 +208,7 @@ void CPlayer::LockON(void)
 		m_LockON = !m_LockON;
 		// 一度ロックオンした同じ敵を近くないのに再度ロックオンしないようnullを与える
 		m_Enemy = nullptr;
+		m_LockOnMarker->SetEnemy(m_Enemy);
 		m_LockonTimer.Reset();
 	}
 
@@ -214,11 +216,12 @@ void CPlayer::LockON(void)
 	if (!m_LockON)
 		return;
 
-	// エネミーがnullまたは、取得したエネミーが死んでいる
+	// エネミーがnullまたは、取得したエネミーが死んだ
 	if (!m_Enemy || m_Enemy->GetDead()
 		|| m_lock_range < aqua::CVector3::Length(m_Enemy->GetPosition() - m_Position))
 	{
 		m_Enemy = m_EnemyManager->GetNearest(m_Position);
+		m_LockOnMarker->SetEnemy(m_Enemy);
 		return;
 	}
 

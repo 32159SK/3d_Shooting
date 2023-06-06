@@ -314,13 +314,17 @@ namespace aqua
         void                DebugLog(void);
 
 
-        //! 成分がすべて0のベクトル
+        // 成分がすべて0のベクトル
         static const CVector3   ZERO;
-        //! 成分がすべて1のベクトル
+        // 成分がすべて1のベクトル
         static const CVector3   ONE;
+
+        // 単方向のベクトル
+        static const CVector3 FRONT;
+        static const CVector3 BACK;
+        static const CVector3 UP;
+        static const CVector3 DOWN;
+        static const CVector3 RIGHT;
+        static const CVector3 LEFT;
 	};
-
-
-
-
 }

@@ -54,7 +54,10 @@ public:
      */
     void        Finalize(void);
 
-
+    /*
+     *  @brief      カメラ取得(外部からカメラに干渉するためのゲッター)
+     */
+    aqua::CCamera* GetCamera(void) { return &m_Camera; }
 
 private:
     /*

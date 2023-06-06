@@ -51,11 +51,11 @@ Initialize(void)
     CBulletManager* bm = aqua::CreateGameObject<CBulletManager>(this);
     bm->Initialize(csv_r,st_m);
 
-    // プレイヤーの生成
-    m_Player = aqua::CreateGameObject<CPlayer>(this);
-
     // 敵管理クラスの生成
     m_EnemyManager = aqua::CreateGameObject<CEnemyManager>(this);
+
+    // プレイヤーの生成
+    m_Player = aqua::CreateGameObject<CPlayer>(this);
 
     // レーダークラスの生成
     CRader* rd = aqua::CreateGameObject<CRader>(this);
@@ -68,7 +68,6 @@ Initialize(void)
     // 敵管理クラスの初期化＆プレイヤー、弾管理クラスのセット
     m_EnemyManager->Initialize(csv_r, bm, m_Player, st_m, rd);
 
-//    m_Camera.SetCamera(0.1, 10000.0, aqua::CVector3(0, 500.0f, -50.0f), m_Player->GetPosition());
     m_Camera.SetCamera(50.0, 10000.0);
     m_Camera.m_Target = m_Player->GetPosition();
     m_Camera.m_Distace = 100.0f;

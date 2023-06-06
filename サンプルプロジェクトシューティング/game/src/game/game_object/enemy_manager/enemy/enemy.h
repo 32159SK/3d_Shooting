@@ -53,6 +53,8 @@ protected:
      */
     void            Dead(void)override;
 
+    static const aqua::CVector3 m_surroundings[];
+
     float           m_Angle;
     CPlayer*        m_Player;
 };

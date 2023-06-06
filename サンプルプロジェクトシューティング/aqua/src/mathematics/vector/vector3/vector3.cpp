@@ -13,8 +13,14 @@
 #include "..\..\..\debug\debug.h"
 #include <cmath>
 
-const aqua::CVector3 aqua::CVector3::ZERO = aqua::CVector3(0.0f, 0.0f,0.0f);
-const aqua::CVector3 aqua::CVector3::ONE = aqua::CVector3(1.0f, 1.0f, 1.0f);
+const aqua::CVector3 aqua::CVector3::ZERO  = aqua::CVector3( 0.0f,  0.0f,  0.0f);
+const aqua::CVector3 aqua::CVector3::ONE   = aqua::CVector3( 1.0f,  1.0f,  1.0f);
+const aqua::CVector3 aqua::CVector3::FRONT = aqua::CVector3( 0.0f,  0.0f,  1.0f);
+const aqua::CVector3 aqua::CVector3::BACK  = aqua::CVector3( 0.0f,  0.0f, -1.0f);
+const aqua::CVector3 aqua::CVector3::UP    = aqua::CVector3( 0.0f,  1.0f,  0.0f);
+const aqua::CVector3 aqua::CVector3::DOWN  = aqua::CVector3( 0.0f, -1.0f,  0.0f);
+const aqua::CVector3 aqua::CVector3::RIGHT = aqua::CVector3( 1.0f,  0.0f,  0.0f);
+const aqua::CVector3 aqua::CVector3::LEFT  = aqua::CVector3(-1.0f,  0.0f,  0.0f);
 
 /*
  *  コンストラクタ

@@ -42,6 +42,7 @@ public:
      */
     void        Initialize(CPlayer* player);
 
+
     void        Update(void)override;
 
     /*!

@@ -12,6 +12,7 @@
 #include "../game_object.h"
 #include "stage_manager.h"
 #include "stage_object/normal_block/normal_block.h"
+#include "stage_object/brittle_block/brittle_block.h"
 
 const float CStageManager::m_default_size = 25.0f;
 
@@ -22,6 +23,8 @@ CStageManager::
 CStageManager(aqua::IGameObject* parent)
     : aqua::IGameObject(parent, "StageManager")
     , m_WaveCount(0)
+    , m_CSVReader(nullptr)
+    , m_LastCollObject(nullptr)
 {
 }
 
@@ -80,7 +83,7 @@ void CStageManager::WaveChange(int wave)
     Create();
 }
 
-bool CStageManager::StageObjectCollision(aqua::CVector3 position, aqua::CVector3 destination)
+bool CStageManager::StageObjectCollision(aqua::CVector3 position, aqua::CVector3 destination,bool this_bullet)
 {
     bool collision = false;
     // (ˆ—d‚»‚¤)
@@ -88,9 +91,10 @@ bool CStageManager::StageObjectCollision(aqua::CVector3 position, aqua::CVector3
     {
         IStageObject* stage_obj = (IStageObject*)it;
         // ‚Ç‚ê‚©‚É“–‚½‚Á‚Ä‚é‚±‚Æ‚ªŠm”F‚Å‚«ŽŸ‘æfor•¶‚ð”²‚¯‚é
-        if (stage_obj->CollisionCheck(position, destination))
+        if (stage_obj->CollisionCheck(position, destination,this_bullet))
         {
             collision = true;
+            m_LastCollObject = stage_obj;
             break;
         }
     }
@@ -119,7 +123,7 @@ void CStageManager::Create(void)
             {
             case NULL_OBJECT:  continue;  break;    // ‚È‚ñ‚à‚È‚¢‚È‚çŽŸ‚Ö
             case NORMAL_BLOCK: stage_object = aqua::CreateGameObject<CNormalBlock>(this);  break;
-            case BRITTLE_BLOCK:break;
+            case BRITTLE_BLOCK:stage_object = aqua::CreateGameObject<CBrittleBlock>(this); break;
             default:
                 break;
             }

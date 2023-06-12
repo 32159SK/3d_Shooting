@@ -68,7 +68,7 @@ Initialize(void)
     // 敵管理クラスの初期化＆プレイヤー、弾管理クラスのセット
     m_EnemyManager->Initialize(csv_r, bm, m_Player, st_m, rd);
 
-    m_Camera.SetCamera(50.0, 10000.0);
+    m_Camera.SetCamera(50.0f, 10000.0f);
     m_Camera.m_Target = m_Player->GetPosition();
     m_Camera.m_Distace = 100.0f;
     m_Camera.m_VRotate = aqua::DegToRad(50.0f);
@@ -112,10 +112,7 @@ void
 CGameMain::
 GamePlay(void)
 {
-    //m_CamContorl->Move();
     m_Camera.m_Target = m_Player->GetPosition();
-    //m_Camera.m_Position = m_Camera.m_Target + aqua::CVector3(0.0f, 500.0f, -30.0f);
-    //m_Camera.SetCamera();
     float wheel_value = aqua::mouse::GetWheel();
     if (wheel_value > 0) m_Camera.m_Distace -= 5.0f;
     else if (wheel_value < 0) m_Camera.m_Distace += 5.0f;

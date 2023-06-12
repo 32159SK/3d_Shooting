@@ -81,6 +81,7 @@ void CPlayer::Draw(void)
 	case BULLET_TYPE::NOMAL: m_DrawBT.text = "BULLET:NOMAL"; break;
 	case BULLET_TYPE::FAST: m_DrawBT.text = "BULLET:FAST"; break;
 	case BULLET_TYPE::MINE: m_DrawBT.text = "BULLET:MINE"; break;
+	case BULLET_TYPE::REFLECT: m_DrawBT.text = "BULLET:REFLECT"; break;
 	default:
 		break;
 	}
@@ -181,7 +182,7 @@ void CPlayer::Move(void)
 	TheWorld();
 	
 	// •Ç‚Æ“–‚½‚Á‚Ä‚½‚ç‚»‚±‚ÅŽ~‚Ü‚é
-	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * (m_Width )))
+	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * m_Width, false))
 		return;
 
 	m_Position += m_Velocity;
@@ -232,6 +233,7 @@ void CPlayer::LockOn(void)
 	if (m_lock_range < abs(aqua::CVector3::Length(v)))
 	{
 		m_Enemy = nullptr;
+		m_LockOnMarker->SetEnemy(m_Enemy);
 		m_LockON = false;
 		return;
 	}

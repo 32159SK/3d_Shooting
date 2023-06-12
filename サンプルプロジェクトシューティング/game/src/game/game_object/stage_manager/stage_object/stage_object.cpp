@@ -47,6 +47,8 @@ Initialize(const STAGE_OBJECT_ID& id, int x, int z)
     m_Position.x = x * m_default_size - m_default_size / 2 * 20;
 
     m_Position.z = (20 - z) * m_default_size - m_default_size / 2 * 20;
+
+    
 }
 
 /*
@@ -80,6 +82,8 @@ Draw(void)
     // アクティブフラグOFFなら終了
     if (!m_ActiveFlag)
         return;
+    //m_Cube.Draw();
+    m_Model.Draw();
 }
 
 /*
@@ -91,6 +95,7 @@ Finalize(void)
 {
     // アクティブフラグをOFF
     m_ActiveFlag = false;
+    m_Model.Unload();
 }
 
 /*
@@ -133,15 +138,34 @@ SetActive(bool active)
     m_ActiveFlag = active;
 }
 
-bool IStageObject::CollisionCheck(aqua::CVector3 position, aqua::CVector3 destination)
+bool IStageObject::CollisionCheck(aqua::CVector3 position, aqua::CVector3 destination, bool this_bullet)
 {
-    return false;
+    if (!this)
+        return false;
+
+    return m_Cube.CheckCollision(position, destination);
 }
 
 void IStageObject::GoIn(void)
 {
+    if (m_StageEdge)
+    {
+        m_ObjectState = PLAY;
+        return;
+    }
+    // positionの仮変数
+    m_Model.position.y += 0.5f;
+
+    if (m_Model.position.y > m_Position.y)
+        m_ObjectState = PLAY;
+
 }
 
 void IStageObject::GoOut(void)
 {
+    // positionの仮変数
+    m_Model.position.y -= 0.5f;
+
+    if (m_Model.position.y < m_Cube.height)
+        m_ObjectState = FINISH;
 }

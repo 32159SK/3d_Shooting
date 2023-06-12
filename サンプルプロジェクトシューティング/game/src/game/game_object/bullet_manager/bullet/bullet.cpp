@@ -41,7 +41,7 @@ void IBullet::Update(void)
 
 	m_Position += m_Velocity;
 
-	if (aqua::CVector3::Length(m_StartPos-m_Position) > abs(m_Range))
+	if (aqua::CVector3::Length(m_StartPos - m_Position) > abs(m_Range))
 		Hit();
 
 	// ˆÚ“®‘¬“x‚É‡‚í‚¹‚Ä‰ñ“]Šp“x‚ğZo
@@ -54,5 +54,10 @@ void IBullet::Hit(void)
 {
 	DeleteObject();
 	m_Sphere.visible = false;
+}
+
+void IBullet::StageObjectHit(aqua::CCubePrimitive::COLL_DIRE c_dire)
+{
+	Hit();
 }
 

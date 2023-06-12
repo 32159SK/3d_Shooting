@@ -62,6 +62,16 @@ namespace aqua
         //! 頂点座標情報
         tagVERTEX3D         vertex[8];
 
+        // 接触した向き
+        enum class COLL_DIRE
+        {
+            FRONT,
+            RIGHT,
+            BACK,
+            LEFT,
+            DOWN,
+            UP
+        };
 
         /*!
          *  @brief      コンストラクタ
@@ -110,11 +120,14 @@ namespace aqua
          */
         bool    CheckCollision(CVector3& center_pos, float r)override;
 
+        COLL_DIRE           GetLastCollDire(void) { return last_dire; }
+
     private:
         WORD                index[36];
         static const int    polygon_count;
         static const int    vertex_count;
         static const int    index_count;
+        COLL_DIRE           last_dire;
 
     };
 }

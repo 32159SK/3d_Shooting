@@ -63,7 +63,9 @@ public:
 
     void        WaveChange(int wave);
 
-    bool        StageObjectCollision(aqua::CVector3 position, aqua::CVector3 destination);
+    bool        StageObjectCollision(aqua::CVector3 position, aqua::CVector3 destination, bool this_bullet);
+
+    aqua::CCubePrimitive::COLL_DIRE GetCollDire(void) { return m_LastCollObject->GetCollDire(); }
 
 private:
     void        Create(void);
@@ -81,4 +83,5 @@ private:
     int                             m_WaveCount;
 
     CCSVReader* m_CSVReader;
+    IStageObject*                   m_LastCollObject;   // 最後に接触したオブジェクト
 };

@@ -92,7 +92,7 @@ CEnemy* CEnemyManager::GetNearest(aqua::CVector3 player_pos)
 		if (itDistance < nearestDistance) nearestEnemy = enemy;
 
 		// ƒvƒŒƒCƒ„[‚Æ“G‚ÌŠÔ‚É•Ç‚ª‚ ‚ê‚Înull
-		if (m_StageManager->StageObjectCollision(enemy->GetPosition(), player_pos))
+		if (m_StageManager->StageObjectCollision(enemy->GetPosition(), player_pos, false))
 			nearestEnemy = nullptr;
 
 	}

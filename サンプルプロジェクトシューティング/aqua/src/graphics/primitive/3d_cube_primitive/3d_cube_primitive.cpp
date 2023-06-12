@@ -29,9 +29,10 @@ CCubePrimitive(void)
     , m_TRotate(0.0f)
     , color(aqua::CColor::WHITE)
     , spc_color(aqua::CColor::WHITE)
+    , last_dire(COLL_DIRE::FRONT)
     , fill(false)
 {
-    // 
+    // 手前
     index[0] = 0;
     index[1] = 1;
     index[2] = 2;
@@ -40,7 +41,7 @@ CCubePrimitive(void)
     index[4] = 2;
     index[5] = 1;
 
-    // 
+    // 右
     index[6] = 4;
     index[7] = 5;
     index[8] = 0;
@@ -49,7 +50,7 @@ CCubePrimitive(void)
     index[10] =0;
     index[11] =5;
 
-    // 
+    // 奥
     index[12] = 6;
     index[13] = 7;
     index[14] = 4;
@@ -58,7 +59,7 @@ CCubePrimitive(void)
     index[16] = 4;
     index[17] = 7;
      
-    // 
+    // 左
     index[18] = 2;
     index[19] = 3;
     index[20] = 6;
@@ -67,7 +68,7 @@ CCubePrimitive(void)
     index[22] =6;
     index[23] =3;
 
-    // 
+    // 下
     index[24] =1;
     index[25] =5;
     index[26] =3;
@@ -76,7 +77,7 @@ CCubePrimitive(void)
     index[28] =3;
     index[29] =5;
 
-    // 
+    // 上
     index[30] =4;
     index[31] =0;
     index[32] =6;
@@ -174,6 +175,7 @@ Draw(void)
 
 bool aqua::CCubePrimitive::CheckCollision(CVector3& pointA, CVector3& pointB)
 {
+    last_dire = COLL_DIRE::FRONT;
     for (int i = 0; i < index_count;)
     {
         // vertexとindexを使って三角形の頂点を求めどれかに触れていればその時点でfor文を抜ける
@@ -182,6 +184,9 @@ bool aqua::CCubePrimitive::CheckCollision(CVector3& pointA, CVector3& pointB)
             collision = true;
             return collision;
         }
+        // iはインデックスの要素番号なので6刻みで調べている面が変わる→6で割り切れるタイミングで面が切り替わる
+        if (i % 6)
+            last_dire = (COLL_DIRE)((int)last_dire + 1);
         i += 3;
     }
     collision = false;

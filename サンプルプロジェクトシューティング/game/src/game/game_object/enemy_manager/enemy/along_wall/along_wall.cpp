@@ -36,7 +36,7 @@ void CAlongWallEnemy::Move(void)
 {
 	const float to_delta = 60.0f * aqua::GetDeltaTime();
 
-	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_surroundings[(int)m_WallDire] * m_Width))
+	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_surroundings[(int)m_WallDire] * m_Width,false))
 	{
 		m_AlongWall = true;
 

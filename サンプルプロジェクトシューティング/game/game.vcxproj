@@ -104,6 +104,7 @@
     <ClCompile Include="src\game\game_object\bullet_manager\bullet\bullet.cpp" />
     <ClCompile Include="src\game\game_object\bullet_manager\bullet\homing_bullet\homing_bullet.cpp" />
     <ClCompile Include="src\game\game_object\bullet_manager\bullet\normal_bullet\normal_bullet.cpp" />
+    <ClCompile Include="src\game\game_object\bullet_manager\bullet\reflection_bullet\reflection_bullet.cpp" />
     <ClCompile Include="src\game\game_object\bullet_manager\bullet_manager.cpp" />
     <ClCompile Include="src\game\game_object\csv_reader\csv_reader.cpp" />
     <ClCompile Include="src\game\game_object\effect_manager\effect\effect.cpp" />
@@ -122,6 +123,7 @@
     <ClCompile Include="src\game\game_object\scene_manager\scene\title\title.cpp" />
     <ClCompile Include="src\game\game_object\scene_manager\scene_manager.cpp" />
     <ClCompile Include="src\game\game_object\stage_manager\stage_manager.cpp" />
+    <ClCompile Include="src\game\game_object\stage_manager\stage_object\brittle_block\brittle_block.cpp" />
     <ClCompile Include="src\game\game_object\stage_manager\stage_object\normal_block\normal_block.cpp" />
     <ClCompile Include="src\game\game_object\stage_manager\stage_object\stage_object.cpp" />
     <ClCompile Include="src\game\game_object\ui_component\life_bar\life_bar.cpp" />
@@ -137,6 +139,7 @@
     <ClInclude Include="src\game\game_object\bullet_manager\bullet\bullet.h" />
     <ClInclude Include="src\game\game_object\bullet_manager\bullet\homing_bullet\homing_bullet.h" />
     <ClInclude Include="src\game\game_object\bullet_manager\bullet\normal_bullet\normal_bullet.h" />
+    <ClInclude Include="src\game\game_object\bullet_manager\bullet\reflection_bullet\reflection_bullet.h" />
     <ClInclude Include="src\game\game_object\bullet_manager\bullet_manager.h" />
     <ClInclude Include="src\game\game_object\csv_reader\csv_reader.h" />
     <ClInclude Include="src\game\game_object\effect_manager\effect\effect.h" />
@@ -159,6 +162,7 @@
     <ClInclude Include="src\game\game_object\scene_manager\scene\title\title.h" />
     <ClInclude Include="src\game\game_object\scene_manager\scene_manager.h" />
     <ClInclude Include="src\game\game_object\stage_manager\stage_manager.h" />
+    <ClInclude Include="src\game\game_object\stage_manager\stage_object\brittle_block\brittle_block.h" />
     <ClInclude Include="src\game\game_object\stage_manager\stage_object\normal_block\normal_block.h" />
     <ClInclude Include="src\game\game_object\stage_manager\stage_object\stage_object.h" />
     <ClInclude Include="src\game\game_object\stage_manager\stage_object\stage_object_id.h" />

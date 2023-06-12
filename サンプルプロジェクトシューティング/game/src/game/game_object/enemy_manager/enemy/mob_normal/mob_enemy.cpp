@@ -79,7 +79,7 @@ void CMobEnemy::Follow(void)
 	m_Velocity.z = (m_Speed * to_delta) * sin(m_Angle);
 
 	// 壁と当たってたらそこで止まる(ついでに見失うまでのカウントを進める)
-	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * m_Width * 1.5f))
+	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * m_Width * 1.5f,false))
 	{
 		m_LoseSightTimer.Update();
 		return;
@@ -92,7 +92,7 @@ void CMobEnemy::NotFollow(void)
 	const float to_delta = 60.0f * aqua::GetDeltaTime();
 	
 	// 壁に当たったら向きを変える
-	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * m_Width * 1.5f))
+	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * m_Width * 1.5f, false))
 		m_Dir = m_surroundings[aqua::Rand(3)];
 
 	m_Velocity.x = (m_Speed * to_delta) * m_Dir.x;
@@ -109,7 +109,7 @@ bool CMobEnemy::FollowCheck(void)
 	aqua::CVector3 v = m_Player->GetPosition() - m_Position;
 
 	// 範囲内かつ、壁を隔てていないなら追跡開始
-	if (m_follow_range > abs(aqua::CVector3::Length(v)) && !m_StageManager->StageObjectCollision(m_Player->GetPosition(), m_Position))
+	if (m_follow_range > abs(aqua::CVector3::Length(v)) && !m_StageManager->StageObjectCollision(m_Player->GetPosition(), m_Position, false))
 		m_Follow = true;
 	else
 		m_Follow = false;

@@ -94,11 +94,13 @@ public:
     void                SetActive(bool active);
 
 
-    virtual bool        CollisionCheck(aqua::CVector3 position, aqua::CVector3 destination);
+    virtual bool        CollisionCheck(aqua::CVector3 position, aqua::CVector3 destination,bool this_bullet);
 
     void        SetEdge(void) { m_StageEdge = true; }
 
     bool        GetEdge(void) { return m_StageEdge; }
+
+    aqua::CCubePrimitive::COLL_DIRE GetCollDire(void) { return m_Cube.GetLastCollDire(); }
 protected:
 
     virtual void        GoIn(void);
@@ -120,9 +122,9 @@ protected:
     OBJECT_STATE                  m_ObjectState;          
     aqua::CVector3                m_Position;             //!< 位置
     aqua::CTimer                  m_Timer;                //!< オブジェクトの遷移タイマー
+    aqua::CCubePrimitive          m_Cube;                 //!< オブジェクトのコライダー
+    aqua::CModel                  m_Model;
     bool                          m_StageEdge;
     bool                          m_ActiveFlag;           //!< アクティブフラグ
     bool                          m_CollisionFlag;        //!< 衝突フラグ
-
-
 };

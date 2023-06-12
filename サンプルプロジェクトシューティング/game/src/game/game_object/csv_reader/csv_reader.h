@@ -52,6 +52,7 @@ enum class BULLET_TYPE
     NOMAL,
     FAST,
     MINE,
+    REFLECT,
     MAX
 };
 

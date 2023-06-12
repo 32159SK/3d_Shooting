@@ -67,21 +67,28 @@ public:
     /*
      *  @brief      弾の進行座標取得
      */
-    aqua::CVector3  GetDestination(void) { return m_Position + m_Velocity*1.5f; }
-
+    aqua::CVector3  GetDestination(void) { return m_Position + m_Velocity * 1.5f; }
 
     /*
      *  @brief      ヒット処理
      */
     void            Hit(void);
 
+
+    /*
+     *  @brief      ステージオブジェクトヒット処理
+     */
+    virtual void    StageObjectHit(aqua::CCubePrimitive::COLL_DIRE c_dire);
+
+
 protected:
+
 
     int                     m_Damage;       // ダメージ量
 
     float                   m_Radius;       // 半径
 
-    float                   m_Range;        // 射程距離内に入ったぜ...吉良吉影
+    float                   m_Range;        // 射程距離
 
         //! 水平回転角度
     float                   m_Rotate;

@@ -26,38 +26,25 @@ void CNormalBlock::Update(void)
 void CNormalBlock::Draw(void)
 {
 	//m_Cube.Draw();
-	m_Model.Draw();
+	IStageObject::Draw();
 }
 
 void CNormalBlock::Finalize(void)
 {
-	m_Model.Unload();
+	IStageObject::Finalize();
 }
 
-bool CNormalBlock::CollisionCheck(aqua::CVector3 position, aqua::CVector3 destination)
+bool CNormalBlock::CollisionCheck(aqua::CVector3 position, aqua::CVector3 destination, bool this_bullet)
 {
-	return m_Cube.CheckCollision(position, destination);
+	return IStageObject::CollisionCheck(position, destination,this_bullet);
 }
 
 void CNormalBlock::GoIn(void)
 {
-	if (m_StageEdge)
-	{
-		m_ObjectState = PLAY;
-		return;
-	}
-	// positionÇÃâºïœêî
-	m_Model.position.y += 0.5f;
-
-	if (m_Model.position.y > m_Position.y)
-		m_ObjectState = PLAY;
+	IStageObject::GoIn();
 }
 
 void CNormalBlock::GoOut(void)
 {
-	// positionÇÃâºïœêî
-	m_Model.position.y -=0.5f;
-
-	if (m_Model.position.y<m_Cube.height)
-		m_ObjectState = FINISH;
+	IStageObject::GoOut();
 }

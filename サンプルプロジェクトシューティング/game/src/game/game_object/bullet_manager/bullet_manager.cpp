@@ -1,7 +1,7 @@
 #include "../../game_object/game_object.h"
 #include "bullet_manager.h"
 #include "bullet/normal_bullet/normal_bullet.h"
-
+#include "bullet/reflection_bullet/reflection_bullet.h"
 
 CBulletManager::CBulletManager(aqua::IGameObject* parent)
 	: IGameObject(parent,"BulletManager")
@@ -42,8 +42,16 @@ void CBulletManager::Create(aqua::CVector3 shot_pos, aqua::CVector3 shot_front, 
 	// 新しく生成する弾の容器
  	IBullet* bullet = nullptr;
 	// 弾の生成処理と初期化
- 	bullet = aqua::CreateGameObject<CNormalBullet>(this);
+	if (bullet_type == BULLET_TYPE::REFLECT)
+	{
+		bullet = aqua::CreateGameObject<CReflectionBullet>(this);
+		bullet->Initialize(m_BulletInfo[(int)BULLET_TYPE::NOMAL], unit_type, shot_pos, shot_front, user);
+		return;
+	}
+	else
+		bullet = aqua::CreateGameObject<CNormalBullet>(this);
 	bullet->Initialize(m_BulletInfo[(int)bullet_type], unit_type, shot_pos, shot_front, user);
+
 }
 
 void CBulletManager::Finalize(void)
@@ -73,6 +81,7 @@ void CBulletManager::CheakHit(void)
 				return;
 			}
 		}
+		
 
 		// プレイヤーとの衝突確認
 		if (m_Player && !m_Player->GetDead() && m_Player->CheckHitBullet(bullet->GetAttri(), bullet->GetSphere(), bullet->GetDamage()))
@@ -82,9 +91,9 @@ void CBulletManager::CheakHit(void)
 		}
 
 		// ステージオブジェクトとの衝突確認(ブロック等)
-		if (m_StageManager->StageObjectCollision(bullet->GetPosition(), bullet->GetDestination()))
+		if (m_StageManager->StageObjectCollision(bullet->GetPosition(), bullet->GetDestination(),true))
 		{
-			bullet->Hit();
+			bullet->StageObjectHit(m_StageManager->GetCollDire());
 			return;
 		}
 	}

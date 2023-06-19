@@ -1,70 +1,59 @@
+#include "result.h"
 /*
- *  @file       title_scene.cpp
- *  @brief      タイトルシーン
- *  @author     Kazuto Shimazaki
- *  @date       2023/04/20
+ *  @file       result_scene.cpp
+ *  @brief
+ *  @author
+ *  @date       2021/02/13
  *  @version    1.0
  *
  *  Copyright (c) 2013-2021, Kazuya Maruyama. All rights reserved.
  */
 
-#include"../result/result.h"
-#include"../../../game_object.h"
-
- /*
-  *  コンストラクタ
-  */
-CResultScene::
-CResultScene(aqua::IGameObject* parent)
-    : IScene(parent, "ResultScene")
+CResultScene::CResultScene(aqua::IGameObject* parent)
+    : IScene(parent, "Result")
 {
 }
 
-/*
- *  初期化
- */
-void
-CResultScene::
-Initialize(void)
+void CResultScene::Initialize(void)
 {
-    AQUA_DEBUG_LOG("リザルトシーン");
+
+    // 背景スプライトの生成
+    m_BackgroundSprite.Create("data\\texture\\result_background.png");
+    m_BackgroundSprite.position = aqua::CVector2::ZERO;
+
+
+    m_ResultSprite[0].Create("data\\texture\\result\\game_over.png");
+    m_ResultSprite[0].position = aqua::CVector2((aqua::GetWindowWidth() - m_ResultSprite[0].GetTextureWidth()) / 2.0f, 200.0f);
+
+    m_ResultSprite[1].Create("data\\texture\\result\\retry.png");
+    m_ResultSprite[1].position = aqua::CVector2((aqua::GetWindowWidth() - m_ResultSprite[1].GetTextureWidth()) / 2.0f, 600.0f);
+
 }
 
-/*
- *  更新
- */
-void
-CResultScene::
-Update(void)
+void CResultScene::Update(void)
 {
-    Operation();
-}
-
-/*
- *  描画
- */
-void
-CResultScene::
-Draw(void)
-{
-}
-
-/*
- *  解放
- */
-void
-CResultScene::
-Finalize(void)
-{
-}
-
-
-/*
- *  操作処理
- */
-void CResultScene::Operation(void)
-{
-    // Zキー  ( 決定 )
+    // 
     if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::Z))
+        //リザルトシーンからタイトルシーンに移行
         Change(SCENE_ID::TITLE);
+}
+
+void CResultScene::Draw(void)
+{
+    // 背景スプライトの描画
+    m_BackgroundSprite.Draw();
+
+    for (int i = 0; i < 2; i++)
+        m_ResultSprite[i].Draw();
+
+}
+
+void CResultScene::Finalize(void)
+{
+    // 背景スプライトの描画
+    m_BackgroundSprite.Delete();
+
+    for (int i = 0; i < 2; i++)
+        m_ResultSprite[i].Delete();
+
 }

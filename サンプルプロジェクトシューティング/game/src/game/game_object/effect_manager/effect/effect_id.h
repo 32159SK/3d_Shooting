@@ -2,7 +2,8 @@
 
 enum class EFFECT_ID
 {
-	HIT
-	, BARRIER
+	  HIT
+	, BROKEN
+	, DEAD
 	, SKILL
 };

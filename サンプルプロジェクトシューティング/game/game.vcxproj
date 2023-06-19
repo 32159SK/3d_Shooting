@@ -108,7 +108,7 @@
     <ClCompile Include="src\game\game_object\bullet_manager\bullet_manager.cpp" />
     <ClCompile Include="src\game\game_object\csv_reader\csv_reader.cpp" />
     <ClCompile Include="src\game\game_object\effect_manager\effect\effect.cpp" />
-    <ClCompile Include="src\game\game_object\effect_manager\effect\hit_effect\hit_effect.cpp" />
+    <ClCompile Include="src\game\game_object\effect_manager\effect\normal_effect\normal_effect.cpp" />
     <ClCompile Include="src\game\game_object\effect_manager\effect\skill_effect\skill_effect.cpp" />
     <ClCompile Include="src\game\game_object\effect_manager\effect_manager.cpp" />
     <ClCompile Include="src\game\game_object\enemy_manager\enemy\along_wall\along_wall.cpp" />
@@ -122,6 +122,7 @@
     <ClCompile Include="src\game\game_object\scene_manager\scene\scene.cpp" />
     <ClCompile Include="src\game\game_object\scene_manager\scene\title\title.cpp" />
     <ClCompile Include="src\game\game_object\scene_manager\scene_manager.cpp" />
+    <ClCompile Include="src\game\game_object\sound_manager\sound_manager.cpp" />
     <ClCompile Include="src\game\game_object\stage_manager\stage_manager.cpp" />
     <ClCompile Include="src\game\game_object\stage_manager\stage_object\brittle_block\brittle_block.cpp" />
     <ClCompile Include="src\game\game_object\stage_manager\stage_object\normal_block\normal_block.cpp" />
@@ -144,7 +145,7 @@
     <ClInclude Include="src\game\game_object\csv_reader\csv_reader.h" />
     <ClInclude Include="src\game\game_object\effect_manager\effect\effect.h" />
     <ClInclude Include="src\game\game_object\effect_manager\effect\effect_id.h" />
-    <ClInclude Include="src\game\game_object\effect_manager\effect\hit_effect\hit_effect.h" />
+    <ClInclude Include="src\game\game_object\effect_manager\effect\normal_effect\normal_effect.h" />
     <ClInclude Include="src\game\game_object\effect_manager\effect\skill_effect\skill_effect.h" />
     <ClInclude Include="src\game\game_object\effect_manager\effect_manager.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy\along_wall\along_wall.h" />
@@ -161,6 +162,7 @@
     <ClInclude Include="src\game\game_object\scene_manager\scene\scene_id.h" />
     <ClInclude Include="src\game\game_object\scene_manager\scene\title\title.h" />
     <ClInclude Include="src\game\game_object\scene_manager\scene_manager.h" />
+    <ClInclude Include="src\game\game_object\sound_manager\sound_manager.h" />
     <ClInclude Include="src\game\game_object\stage_manager\stage_manager.h" />
     <ClInclude Include="src\game\game_object\stage_manager\stage_object\brittle_block\brittle_block.h" />
     <ClInclude Include="src\game\game_object\stage_manager\stage_object\normal_block\normal_block.h" />

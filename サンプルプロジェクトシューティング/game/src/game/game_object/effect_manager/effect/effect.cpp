@@ -19,6 +19,7 @@ const std::string IEffect::m_effect_category = "Effect";
 IEffect::
 IEffect(aqua::IGameObject* parent, const std::string& object_name)
     : aqua::IGameObject(parent, object_name, m_effect_category)
+    , m_Position(aqua::CVector3::ZERO)
 {
 }
 
@@ -32,7 +33,7 @@ Initialize(void)
 {
 }
 
-void IEffect::Initialize(EFFECT_ID id, const aqua::CVector3& position, std::string effect_name, std::string se_name)
+void IEffect::Initialize(const aqua::CVector3& position, std::string effect_name, std::string se_name)
 {
 }
 

@@ -121,6 +121,8 @@ protected:
 
     aqua::CTimer         m_ShotCT;
 
+    CEffectManager*      m_EffectManager;
+
     CBulletManager*      m_BulletManager;
 
     CStageManager*       m_StageManager;

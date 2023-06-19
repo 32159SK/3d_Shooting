@@ -61,6 +61,8 @@ Initialize(void)
     CRader* rd = aqua::CreateGameObject<CRader>(this);
     rd->Initialize(m_Player);
 
+    // エフェクト管理クラス
+    aqua::CreateGameObject<CEffectManager>(this);
 
     // プレイヤーの初期化＆弾管理クラスのセット
     m_Player->Initialize(aqua::CVector3(0.0f, 0.0f, -50.0f), 10.0f, 10.0f, 10.0f, aqua::CColor::BLUE,st_m, bm);

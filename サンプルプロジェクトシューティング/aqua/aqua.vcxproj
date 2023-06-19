@@ -23,6 +23,7 @@
     <ClCompile Include="src\graphics\color\color.cpp" />
     <ClCompile Include="src\graphics\draw_object\draw_object.cpp" />
     <ClCompile Include="src\graphics\effect2D\effect2D.cpp" />
+    <ClCompile Include="src\graphics\effect3D\effect3D.cpp" />
     <ClCompile Include="src\graphics\effekseer\effekseer.cpp" />
     <ClCompile Include="src\graphics\effekseer\effekseer_manager\effekseer_manager.cpp" />
     <ClCompile Include="src\graphics\effekseer\effekseer_resource\effekseer_resource.cpp" />
@@ -84,6 +85,7 @@
     <ClInclude Include="src\graphics\color\color.h" />
     <ClInclude Include="src\graphics\draw_object\draw_object.h" />
     <ClInclude Include="src\graphics\effect2D\effect2D.h" />
+    <ClInclude Include="src\graphics\effect3D\effect3D.h" />
     <ClInclude Include="src\graphics\effekseer\effekseer.h" />
     <ClInclude Include="src\graphics\effekseer\effekseer_manager\effekseer_manager.h" />
     <ClInclude Include="src\graphics\effekseer\effekseer_resource\effekseer_resource.h" />

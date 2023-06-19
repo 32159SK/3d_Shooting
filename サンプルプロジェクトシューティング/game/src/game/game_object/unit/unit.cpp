@@ -29,6 +29,8 @@ void IUnit::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, 
 	m_Life = m_MaxLife;
 	m_Cube.Setup(m_Position, m_Width, m_Height, m_Depth, m_Color);
 	aqua::CreateGameObject<CLifeBar>(this);
+	// エフェクト管理クラスを探査してポインタを受け取る
+	m_EffectManager = (CEffectManager*)aqua::FindGameObject("EffectManager");
 
 	IGameObject::Initialize();
 }
@@ -70,6 +72,8 @@ void IUnit::Move(void)
 void IUnit::Damage(int damage)
 {
 	m_Life -= damage;
+	m_EffectManager->Create(EFFECT_ID::HIT, m_Position);
+
 	if (m_Life <= 0)
 		Dead();
 }
@@ -77,5 +81,6 @@ void IUnit::Dead(void)
 {
 	m_DeadFlag = true;
 	m_Cube.visible = false;
+	m_EffectManager->Create(EFFECT_ID::DEAD, m_Position);
 	DeleteObject();
 }

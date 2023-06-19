@@ -16,7 +16,7 @@
   */
 CSkillEffect::
 CSkillEffect(aqua::IGameObject* parent)
-    : IEffect(parent, "HitEffect")
+    : IEffect(parent, "SkillEffect")
 {
 }
 
@@ -25,7 +25,7 @@ CSkillEffect(aqua::IGameObject* parent)
  *  èâä˙âª
  */
 void 
-CSkillEffect::Initialize(EFFECT_ID id, const aqua::CVector3& position, std::string effect_name, std::string se_name)
+CSkillEffect::Initialize(const aqua::CVector3& position, std::string effect_name, std::string se_name)
 {
 }
 

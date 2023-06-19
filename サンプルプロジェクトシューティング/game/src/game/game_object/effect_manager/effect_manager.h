@@ -48,5 +48,23 @@ public:
      *  @param[in]  id          エフェクトID
      *  @param[in]  position    位置
      */
-    void        Create(EFFECT_ID id, const aqua::CVector3& position, std::string effect_name, std::string se_name);
+    void        Create(EFFECT_ID id, const aqua::CVector3& position);
+
+    /*!
+     *  @brief      更新
+     */
+    void        Update(void)override;
+
+    /*!
+     *  @brief      描画
+     */
+    void        Draw(void)override;
+
+    /*!
+     *  @brief      解放
+     */
+    void        Finalize(void)override;
+
+private:
+    static const std::string    m_effect_file_names[];   // サウンドファイルパス
 };

@@ -1,9 +1,9 @@
 
 /*!
  *  @file       hit_effect.h
- *  @brief      ヒットエフェクト
+ *  @brief      通常エフェクトクラス
  *  @author     Kazuto Shimazaki
- *  @date       2021/12/02
+ *  @date       2023/06/19
  *  @version    1.0
  *
  *  Copyright (c) 2013-2021, Kazuya Maruyama. All rights reserved.
@@ -14,17 +14,17 @@
 #include "..\effect.h"
 
  /*!
-  *  @class      CHitEffect
+  *  @class      CNormalEffect
   *
-  *  @brief      ヒットエフェクトクラス
+  *  @brief      通常エフェクトクラス
   *
   *  @author     Kazuto Shimazaki
   *
-  *  @date       2021/12/02
+  *  @date       2023/06/19
   *
   *  @version    1.0
   */
-class CSkillEffect
+class CNormalEffect
     : public IEffect
 {
 public:
@@ -33,12 +33,12 @@ public:
      *
      *  @param[in]  parent  親のオブジェクト
      */
-    CSkillEffect(IGameObject* parent);
+    CNormalEffect(IGameObject* parent);
 
     /*!
      *  @brief      デストラクタ
      */
-    ~CSkillEffect(void) = default;
+    ~CNormalEffect(void) = default;
 
     /*!
      *  @brief      初期化
@@ -47,8 +47,22 @@ public:
      */
     void    Initialize(const aqua::CVector3& position, std::string effect_name, std::string se_name)override;
 
+    /*!
+     *  @brief      更新
+     */
+    void    Update(void)override;
+
+    /*!
+     *  @brief      描画
+     */
+    void    Draw(void)override;
+
+    /*!
+     *  @brief      解放
+     */
+    void    Finalize(void)override;
 
 
 private:
-
+    aqua::CEffect3D     m_Effect;
 };

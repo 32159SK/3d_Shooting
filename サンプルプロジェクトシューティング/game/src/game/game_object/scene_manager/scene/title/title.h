@@ -2,8 +2,8 @@
 /*
  *  @file       title_scene.h
  *  @brief      タイトルシーン
- *  @author     
- *  @date       
+ *  @author     Miyu Hujita
+ *  @date       2021/07/01
  *  @version    1.0
  *
  *  Copyright (c) 2013-2021, Kazuya Maruyama. All rights reserved.
@@ -13,6 +13,7 @@
 
 #include "aqua.h"
 #include "..\scene.h"
+#include "../../../game_object.h"
 
  /*
   *  @class      CTitleScene
@@ -64,5 +65,23 @@ public:
 
 
 private:
+    aqua::CSprite       m_BackgroundSprite;     //! 背景用スプライト
+    //aqua::CLabel        m_LicenseLabel;
 
+    static const float          m_un_operation_time;    // 操作不可能時間
+    static const float          m_dump_width;           // 画像の中で表示しない左からの横幅
+    static const aqua::CVector2 m_frame_thick;          // フレームの太さ
+
+    /*
+     *  @brief      操作時の文字の規定位置
+     *  @param[in]  [0] = タイトルスプライト
+     *  @param[in]  [1] = 「スタート」のボタン
+     */
+    static const aqua::CVector2 m_basis_position[3];
+
+    aqua::CSprite       m_StartSprite;      // 選択肢スプライト
+
+
+
+    //CSoundManager* m_SoundManager;
 };

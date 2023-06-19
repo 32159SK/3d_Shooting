@@ -10,9 +10,16 @@
  */
 
 #include "effect_manager.h"
-#include "effect/hit_effect/hit_effect.h"
+#include "effect/normal_effect/normal_effect.h"
 
- /*
+const std::string CEffectManager::m_effect_file_names[] =
+{
+     "hit"
+    ,"broken"
+    ,"dead"
+};
+
+/*
   *  コンストラクタ
   */
 CEffectManager::
@@ -26,14 +33,28 @@ CEffectManager(aqua::IGameObject* parent)
  */
 void
 CEffectManager::
-Create(EFFECT_ID id, const aqua::CVector3& position, std::string effect_name, std::string se_name)
+Create(EFFECT_ID id, const aqua::CVector3& position)
 {
     IEffect* effect = nullptr;
 
-    switch (id)
-    {
-    case EFFECT_ID::HIT:        effect = aqua::CreateGameObject<CHitEffect>(this);      break;
-    //case EFFECT_ID::SKILL:    effect = aqua::CreateGameObject<CBarrierEffect>(this);  break;
-    }
+    if (id != EFFECT_ID::SKILL)
+        effect = aqua::CreateGameObject<CNormalEffect>(this);
+    //else
+    //effect = aqua::CreateGameObject<CSkillEffect>(this);
+    effect->Initialize(position, m_effect_file_names[(int)id], "");
+}
 
+void CEffectManager::Update(void)
+{
+    IGameObject::Update();
+}
+
+void CEffectManager::Draw(void)
+{
+    IGameObject::Draw();
+}
+
+void CEffectManager::Finalize(void)
+{
+    IGameObject::Finalize();
 }

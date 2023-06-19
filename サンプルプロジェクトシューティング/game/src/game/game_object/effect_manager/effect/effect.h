@@ -42,7 +42,7 @@ public:
      *
      *  @param[in]  position    位置
      */
-    virtual void    Initialize(EFFECT_ID id, const aqua::CVector3& position, std::string effect_name, std::string se_name);
+    virtual void    Initialize(const aqua::CVector3& position, std::string effect_name, std::string se_name);
 
 
     /*!
@@ -72,5 +72,4 @@ private:
     void    Initialize(void) override;
 
     static const std::string    m_effect_category;  //! エフェクトカテゴリー
-
 };

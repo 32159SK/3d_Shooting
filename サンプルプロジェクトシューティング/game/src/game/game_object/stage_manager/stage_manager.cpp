@@ -122,7 +122,7 @@ void CStageManager::Create(void)
             switch (object_id)
             {
             case NULL_OBJECT:  continue;  break;    // ‚È‚ñ‚à‚È‚¢‚È‚çŽŸ‚Ö
-            case NORMAL_BLOCK: stage_object = aqua::CreateGameObject<CNormalBlock>(this);  break;
+            case NORMAL_BLOCK: stage_object = aqua::CreateGameObject<CBrittleBlock>(this);  break;
             case BRITTLE_BLOCK:stage_object = aqua::CreateGameObject<CBrittleBlock>(this); break;
             default:
                 break;

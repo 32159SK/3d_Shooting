@@ -103,6 +103,7 @@ private:
     void            TheWorld(void);
 
     static const float m_chage_shotCT;  // 
+    static const float m_ago_pos_time;  // 
     static const float m_the_world_time;// ‚ğ~‚ß‚Ä‚¢‚ç‚ê‚éŠÔ
     static const float m_the_world_CT;  // Ä‚Ñ‚ğ~‚ß‚ç‚ê‚é‚Ü‚Å‚ÌŠÔ
     static const float m_lock_range;
@@ -120,6 +121,8 @@ private:
     aqua::CLabel    m_DrawBT;           // 
 
     aqua::CTimer    m_ChageCT;          //
+
+    aqua::CTimer    m_AgoPosTimer;      // 
 
     aqua::CTimer    m_InvincibleTimer;  //
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "aqua.h"
+#include "../enemy_manager/enemy/enemy_id.h"
 #include <vector>
 
 
@@ -15,14 +16,6 @@ enum class FILE_TYPE
     STAGE
 };
 
-/*!
- *  @brief      エネミーの
- */
-enum class ENEMY_TYPE
-{
-    NOMAL,
-    TURRET,
-};
 
 /*!
  *  @brief      エネミーのポップテーブル
@@ -30,6 +23,7 @@ enum class ENEMY_TYPE
 struct ENEMY_POP_LIST
 {
     int   wave  = 1;
+    ENEMY_ID pop_e_id = ENEMY_ID::MOB;
     aqua::CVector3 pop_pos = aqua::CVector3::ZERO;
 };
 
@@ -38,6 +32,7 @@ struct ENEMY_POP_LIST
  */
 struct ENEMY_INFO
 {
+    ENEMY_ID id = ENEMY_ID::MOB;
     int   life = 1;
     float width = 5.0f;
     float height = 5.0f;

@@ -1,6 +1,9 @@
 
 #include "../game_object.h"
 #include "enemy_manager.h"
+#include "enemy/mob_normal/mob_enemy.h"
+#include "enemy/along_wall/along_wall.h"
+#include "enemy/fixed_enemy/fixed_enemy.h"
 
 const int CEnemyManager::m_max_wave = 2;
 
@@ -51,7 +54,17 @@ void CEnemyManager::Draw(void)
 void CEnemyManager::Create(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info)
 {
 	// 空のエネミークラスを用意
-	CEnemy* enemy = aqua::CreateGameObject<CMobEnemy>(this);
+	CEnemy* enemy = nullptr;
+	switch (enemy_info.id)
+	{
+	case ENEMY_ID::MOB:  enemy = aqua::CreateGameObject<CMobEnemy>(this); break;
+	case ENEMY_ID::ALONG_WALL: enemy = aqua::CreateGameObject<CAlongWallEnemy>(this); break;
+	case ENEMY_ID::FIXED: enemy = aqua::CreateGameObject<CFixedEnemy>(this); break;
+	default:
+		break;
+	}
+
+		
 
 	// 初期化とプレイヤーのポインタを渡す
 	enemy->Initialize(pop_pos, enemy_info.width, enemy_info.height, enemy_info.depth, enemy_info.color, m_StageManager, m_BulletManagar);
@@ -109,8 +122,8 @@ void CEnemyManager::WaveChange(void)
 	m_BulletManagar->EnemyReset();
 
 	for (int i = 0; i < m_PopList.size(); ++i)
-		if (m_PopList[i].wave == m_WaveCount) 
-			Create(m_PopList[i].pop_pos, m_EnemyInfo[1]);
+		if (m_PopList[i].wave == m_WaveCount)
+			Create(m_PopList[i].pop_pos, m_EnemyInfo[(int)m_PopList[i].pop_e_id]);
 
 	// waveに合わせてフィールドを切り替える
    	m_StageManager->WaveChange(m_WaveCount);

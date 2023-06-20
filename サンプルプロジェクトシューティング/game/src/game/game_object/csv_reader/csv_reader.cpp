@@ -56,6 +56,7 @@ void CCSVReader::Parse(const std::string& file_name)
 		{
 			e_info =
 			{
+				(ENEMY_ID)i,					// id
 				std::stoi(csv.GetString(i,0)),	// life
 				std::stof(csv.GetString(i,1)),	// width
 				std::stof(csv.GetString(i,2)),	// height
@@ -87,9 +88,10 @@ void CCSVReader::Parse(const std::string& file_name)
 			pop_list =
 			{
 				std::stoi(csv.GetString(i,0)),	// wave
-				aqua::CVector3( std::stof(csv.GetString(i,1)),	// pos_x
-				0.0f,
-				std::stof(csv.GetString(i,2)))	// pos_z
+				(ENEMY_ID)std::stoi(csv.GetString(i,1)),		// e_id
+				aqua::CVector3( std::stof(csv.GetString(i,2)),	// pos_x
+				0.0f,// yé≤ÇÕ0
+				std::stof(csv.GetString(i,3)))	// pos_z
 			};
 			m_PopList.push_back(pop_list);
 		}
@@ -97,13 +99,9 @@ void CCSVReader::Parse(const std::string& file_name)
 	case FILE_TYPE::STAGE:
 		// çs
 		for (int i = 0; i < 21; ++i)
-		{
 			// óÒ
 			for (int k = 0; k < 21; ++k)
-			{
 				m_Stage[i][k] = std::stoi(csv.GetString(i, k));
-			}
-		}
 		break;
 	default:
 		break;

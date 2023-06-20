@@ -113,6 +113,7 @@
     <ClCompile Include="src\game\game_object\effect_manager\effect_manager.cpp" />
     <ClCompile Include="src\game\game_object\enemy_manager\enemy\along_wall\along_wall.cpp" />
     <ClCompile Include="src\game\game_object\enemy_manager\enemy\enemy.cpp" />
+    <ClCompile Include="src\game\game_object\enemy_manager\enemy\fixed_enemy\fixed_enemy.cpp" />
     <ClCompile Include="src\game\game_object\enemy_manager\enemy\mob_normal\mob_enemy.cpp" />
     <ClCompile Include="src\game\game_object\enemy_manager\enemy_manager.cpp" />
     <ClCompile Include="src\game\game_object\floor\floor.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="src\game\game_object\enemy_manager\enemy\along_wall\along_wall.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy\enemy.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy\enemy_id.h" />
+    <ClInclude Include="src\game\game_object\enemy_manager\enemy\fixed_enemy\fixed_enemy.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy\mob_normal\mob_enemy.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy_manager.h" />
     <ClInclude Include="src\game\game_object\floor\floor.h" />

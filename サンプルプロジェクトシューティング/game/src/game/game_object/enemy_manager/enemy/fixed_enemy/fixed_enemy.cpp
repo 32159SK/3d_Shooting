@@ -1,0 +1,47 @@
+#include "../../../game_object.h"
+#include "fixed_enemy.h"
+
+const float CFixedEnemy::m_capture_range = 100.0f;
+
+CFixedEnemy::CFixedEnemy(aqua::IGameObject* parent)
+	: CEnemy(parent)
+{
+}
+
+void CFixedEnemy::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m, CBulletManager* bm)
+{
+	CEnemy::Initialize(pop_pos, wid, hei, dep, color, st_m, bm);
+}
+
+void CFixedEnemy::Update(void)
+{
+	CEnemy::Update();
+	m_Cube.m_HRotate = m_Rotate;
+}
+
+void CFixedEnemy::Shot(void)
+{
+
+	aqua::CVector3 front;
+
+	CEnemy::Shot();
+
+}
+
+void CFixedEnemy::Move(void)
+{
+	// プレイヤーと自身の距離
+	aqua::CVector3 v = m_Player->GetPosition() - m_Position;
+
+	// 一度でも捕捉すれば死ぬまでこちらを向く
+	if (m_capture_range > abs(aqua::CVector3::Length(v)))
+		m_Capture = true;
+	else if (!m_Capture)
+		return;
+
+	// ベクトルのノーマライズ
+	v.Normalize();
+
+	// 2点から回転角度を求める
+	m_Rotate = aqua::RadToDeg(atan2(v.x, v.z));
+}

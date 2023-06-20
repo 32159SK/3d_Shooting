@@ -27,7 +27,7 @@ void CAlongWallEnemy::Shot(void)
 	{
 		bull_dir.x = sin(aqua::DegToRad(m_Rotate + 30.0f * i));
 		bull_dir.z = cos(aqua::DegToRad(m_Rotate + 30.0f * i));
-		m_BulletManager->Create(m_Position, bull_dir, m_UnitType, BULLET_TYPE::NOMAL, this);
+		m_BulletManager->Create(m_Position, bull_dir, m_UnitType, BULLET_TYPE::REFLECT, this);
 	}
 
 }

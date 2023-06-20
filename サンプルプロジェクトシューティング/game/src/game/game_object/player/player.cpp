@@ -2,6 +2,7 @@
 #include "player.h"
 
 const float CPlayer::m_chage_shotCT = 0.5f;
+const float CPlayer::m_ago_pos_time = 0.2f;
 const float CPlayer::m_the_world_time = 7.0f;
 const float CPlayer::m_the_world_CT = 10.0f;
 const float CPlayer::m_lock_range = 200.0f;
@@ -32,7 +33,7 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep
 
 	// 現在の弾種の仮表示
 	m_DrawBT.Create(30.0f);
-	m_DrawBT.position = aqua::CVector2(aqua::GetWindowWidth()/2,0.0f);
+	m_DrawBT.position = aqua::CVector2(aqua::GetWindowWidth() / 2.0f, 0.0f);
 
 	// 最初からザ・ワールドを使えるようにタイマーの初期設定は0秒にする
 	m_TheWorldTimer.Setup(0.0f);
@@ -40,6 +41,8 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep
 	//
 	m_ChageCT.Setup(m_chage_shotCT);
 	m_ShotCT.Setup(0.5f);
+
+	m_AgoPosTimer.Setup(m_ago_pos_time);
 
 	m_LockonTimer.Setup(0.1f);
 
@@ -51,8 +54,10 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep
 
 void CPlayer::Update(void)
 {
-
 	m_Cube.m_HRotate = m_Rotate;
+
+	m_AgoPosTimer.Update();
+
 	Shot();
 	
 	// 被弾後の無敵時間
@@ -65,6 +70,14 @@ void CPlayer::Update(void)
 	}
 
 	IUnit::Update();
+
+	// ここで敵が追尾する用のポジションを取っておく(時間停止していない場合)
+	if (m_AgoPosTimer.Finished()&&!m_TimeStop)
+	{
+		m_AgoPosition = m_Position;
+		m_AgoPosTimer.Reset();
+	}
+
 	m_Model.position = m_Cube.position;
 	m_Model.rotation.y = aqua::DegToRad(m_Rotate);
 }
@@ -121,7 +134,6 @@ void CPlayer::Shot(void)
 	// 弾の種類の切り替え
 	if (m_ChageCT.Finished())
 	{
-
 		if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::UP) && m_ShotBullet != BULLET_TYPE::NOMAL)
 		{
 			// -1の弾に変更(例FAST→NOMAL)
@@ -151,9 +163,6 @@ void CPlayer::Shot(void)
 			m_BulletManager->Create(m_Position + front * 10, front * 10.5f, m_UnitType, m_ShotBullet, this);
 			m_ShotCT.Reset();
 		}
-		// ここでついでに敵が追尾する用のポジションを取っておく(時間停止していない場合)
-		if (!m_TimeStop)
-			m_AgoPosition = m_Position;
 	}
 }
 

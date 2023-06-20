@@ -44,6 +44,13 @@ void CEnemy::Update(void)
 
 void CEnemy::Shot(void)
 {
+
+	aqua::CVector3 front;
+
+	front.x = sin(aqua::DegToRad(m_Rotate));
+	front.z = cos(aqua::DegToRad(m_Rotate));
+
+	m_BulletManager->Create(m_Position, front, m_UnitType, BULLET_TYPE::NOMAL, this);
 }
 
 void CEnemy::Move(void)

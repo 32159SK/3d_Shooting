@@ -31,12 +31,7 @@ void CMobEnemy::Shot(void)
 	if (!m_Follow)
 		return;
 
-	aqua::CVector3 front;
-
-	front.x = sin(aqua::DegToRad(m_Rotate));
-	front.z = cos(aqua::DegToRad(m_Rotate));
-
-	m_BulletManager->Create(m_Position, front, m_UnitType, BULLET_TYPE::NOMAL, this);
+	CEnemy::Shot();
 }
 
 void CMobEnemy::Move(void)

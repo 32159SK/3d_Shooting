@@ -58,7 +58,7 @@ void CEnemyManager::Create(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info)
 	switch (enemy_info.id)
 	{
 	case ENEMY_ID::MOB:  enemy = aqua::CreateGameObject<CMobEnemy>(this); break;
-	case ENEMY_ID::ALONG_WALL: enemy = aqua::CreateGameObject<CAlongWallEnemy>(this); break;
+	case ENEMY_ID::ALONG_WALL: enemy = aqua::CreateGameObject<CFixedEnemy>(this); break;
 	case ENEMY_ID::FIXED: enemy = aqua::CreateGameObject<CFixedEnemy>(this); break;
 	default:
 		break;

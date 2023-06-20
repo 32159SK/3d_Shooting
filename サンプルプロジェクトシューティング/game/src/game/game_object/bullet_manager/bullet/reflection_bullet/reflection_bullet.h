@@ -52,5 +52,4 @@ private:
 
     aqua::CModel    m_Model;
 
-    aqua::CCubePrimitive::COLL_DIRE m_CollDire;
 };

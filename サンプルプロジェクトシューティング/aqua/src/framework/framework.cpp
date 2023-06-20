@@ -401,6 +401,10 @@ GameProcess( void )
     // サウンド処理更新
     CSoundManager::GetInstance( ).Update( );
 
+
+    // Effekseerに3D描画を設定する
+    Effekseer_Sync3DSetting();
+
 #ifdef AQUA_DEBUG
     // ビジュアルデバッガー取得
     core::CVisualDebugger& debug = core::CVisualDebugger::GetInstance( );
@@ -423,6 +427,7 @@ GameProcess( void )
 
     // Effekseer更新
     UpdateEffekseer2D();
+    UpdateEffekseer3D();
 
 #ifdef AQUA_DEBUG
     // ゲーム描画

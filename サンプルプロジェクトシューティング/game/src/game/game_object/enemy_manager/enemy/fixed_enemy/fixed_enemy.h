@@ -35,7 +35,17 @@ public:
     /*
      *  @brief      更新
      */
-    virtual void    Update(void)override;
+    void    Update(void)override;
+
+    /*
+     *  @brief      描画
+     */
+    void    Draw(void)override;
+
+    /*
+     *  @brief      解放
+     */
+    void    Finalize(void)override;
 
 
 private:
@@ -47,5 +57,7 @@ private:
     static const float   m_capture_range;        // 感知範囲
 
     bool            m_Capture;      // 捕捉フラグ
+
+    aqua::CModel    m_Model;
 
 };

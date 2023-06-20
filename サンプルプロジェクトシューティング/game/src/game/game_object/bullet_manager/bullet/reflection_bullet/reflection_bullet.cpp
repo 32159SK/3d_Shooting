@@ -3,7 +3,6 @@
 CReflectionBullet::CReflectionBullet(aqua::IGameObject* parent)
 	: IBullet(parent, "NomalBullet")
 	, m_ReflectCount(0)
-	, m_CollDire(aqua::CCubePrimitive::COLL_DIRE::FRONT)
 {
 }
 
@@ -11,7 +10,7 @@ void CReflectionBullet::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqu
 {
 	IBullet::Initialize(bullet_info, attri, pop_pos, front, user);
 	m_Sphere.visible = false;
-	m_Model.Load("data\\model\\bullet.mv1");
+	m_Model.Load("data\\model\\reflect_bullet.mv1");
 	Update();
 }
 
@@ -41,7 +40,6 @@ void CReflectionBullet::StageObjectHit(aqua::CCubePrimitive::COLL_DIRE c_dire)
 		Hit();
 	else // ”½Ë‰ñ”‚ğ‘‰Á
 		m_ReflectCount++;
-	m_CollDire = c_dire;
 
 	// “–‚½‚Á‚½•Ç‚ÌŒü‚«‚ª‘OŒã‚È‚çZ²‚ğ
 	if (c_dire == aqua::CCubePrimitive::COLL_DIRE::FRONT

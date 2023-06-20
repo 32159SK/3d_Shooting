@@ -1,3 +1,5 @@
+
+#include "../../../game_object.h"
 #include "brittle_block.h"
 
 
@@ -11,6 +13,9 @@ CBrittleBlock::CBrittleBlock(aqua::IGameObject* parent)
 void CBrittleBlock::Initialize(const STAGE_OBJECT_ID& id, int x, int z)
 {
 	IStageObject::Initialize(id, x, z);
+
+	m_EfectManager = (CEffectManager*)aqua::FindGameObject("EffectManager");
+
 	m_Cube.Setup(m_Position, m_default_size, m_default_size, m_default_size, aqua::CColor::WHITE);
 	m_Model.Load("data\\model\\brittle_block.mv1");
 	m_Model.position = m_Cube.position;
@@ -42,7 +47,7 @@ bool CBrittleBlock::CollisionCheck(aqua::CVector3 position, aqua::CVector3 desti
 	{
 		m_Endurance--;
 		if (m_Endurance == 0)
-			Break();
+			Broken();
 	}
 	return true;
 }
@@ -70,8 +75,9 @@ void CBrittleBlock::GoOut(void)
 		m_ObjectState = FINISH;
 }
 
-void CBrittleBlock::Break(void)
+void CBrittleBlock::Broken(void)
 {
 	m_ActiveFlag = false;
+	m_EfectManager->Create(EFFECT_ID::BROKEN, m_Position);
 	DeleteObject();
 }

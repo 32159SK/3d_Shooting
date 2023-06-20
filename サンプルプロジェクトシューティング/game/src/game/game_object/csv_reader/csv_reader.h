@@ -55,7 +55,6 @@ struct BULLET_INFO
 {
     BULLET_TYPE bullet_type = BULLET_TYPE::NOMAL;
     int     damage = 1;
-    float   radius = 5;
     float   speed = 2.0f;
     aqua::CColor color = aqua::CColor::RED;
 };

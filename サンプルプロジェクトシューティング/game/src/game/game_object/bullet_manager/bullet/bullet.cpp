@@ -1,5 +1,7 @@
 #include "bullet.h"
 
+const float IBullet::m_radius = 5.0f;
+
 
 IBullet::IBullet(aqua::IGameObject* parent, const std::string& object_name)
 	: IGameObject(parent, object_name, "Bullet")
@@ -13,15 +15,16 @@ void IBullet::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector
 	m_Position = pop_pos;
 	m_Dir = front;
 	m_Damage = bullet_info.damage;
-	m_Radius = bullet_info.radius;
 	m_Speed = bullet_info.speed;
 	m_Color = bullet_info.color;
 	m_Unit = user;
 
+
+
 	m_Range = 700.0f;
 
 	m_StartPos = m_Position;
-	m_Sphere.Setup(m_Position, m_Radius, m_Color);
+	m_Sphere.Setup(m_Position, m_radius, m_Color);
 }
 
 void IBullet::Draw(void)

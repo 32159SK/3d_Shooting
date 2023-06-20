@@ -31,6 +31,7 @@ CNormalEffect::Initialize(const aqua::CVector3& position, std::string effect_nam
     m_Position = position;
     m_Effect.position = m_Position;
     m_Effect.Play();
+    m_Effect.scale *= 5.0f;
 }
 
 void CNormalEffect::Update(void)

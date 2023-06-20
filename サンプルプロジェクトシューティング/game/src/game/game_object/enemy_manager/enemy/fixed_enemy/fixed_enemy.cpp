@@ -11,12 +11,28 @@ CFixedEnemy::CFixedEnemy(aqua::IGameObject* parent)
 void CFixedEnemy::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m, CBulletManager* bm)
 {
 	CEnemy::Initialize(pop_pos, wid, hei, dep, color, st_m, bm);
+	m_Model.Load("data\\model\\fixed_enemy.mv1");
+	m_Model.position = m_Position;
+	m_Cube.visible = false;
 }
 
 void CFixedEnemy::Update(void)
 {
 	CEnemy::Update();
 	m_Cube.m_HRotate = m_Rotate;
+	m_Model.rotation.y = aqua::DegToRad(m_Rotate);
+}
+
+void CFixedEnemy::Draw(void)
+{
+	m_Model.Draw();
+	CEnemy::Draw();
+}
+
+void CFixedEnemy::Finalize(void)
+{
+	CEnemy::Finalize();
+	m_Model.Unload();
 }
 
 void CFixedEnemy::Shot(void)

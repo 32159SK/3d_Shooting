@@ -83,10 +83,9 @@ public:
 
 protected:
 
+    static const float      m_radius;       // 
 
     int                     m_Damage;       // ƒ_ƒ[ƒW—Ê
-
-    float                   m_Radius;       // ”¼Œa
 
     float                   m_Range;        // Ë’ö‹——£
 

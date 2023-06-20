@@ -71,8 +71,10 @@ private:
     void GoIn(void)override;
     void GoOut(void)override;
 
-    void        Break(void);
+    void        Broken(void);
 
     int             m_Endurance;        // ‘Ï‹v’l
+
+    CEffectManager* m_EfectManager;
 
 };

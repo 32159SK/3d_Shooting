@@ -87,10 +87,7 @@ void CCSVReader::Parse(const std::string& file_name)
 			pop_list =
 			{
 				std::stoi(csv.GetString(i,0)),	// wave
-				(ENEMY_ID)std::stoi(csv.GetString(i,1)),		// e_id
-				aqua::CVector3( std::stof(csv.GetString(i,2)),	// pos_x
-				0.0f,// yé≤ÇÕ0
-				std::stof(csv.GetString(i,3)))	// pos_z
+				(ENEMY_ID)std::stoi(csv.GetString(i,1))		// e_id
 			};
 			m_PopList.push_back(pop_list);
 		}

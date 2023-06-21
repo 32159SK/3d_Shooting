@@ -60,12 +60,30 @@ public:
      */
     void        Finalize(void);
 
-
+    /*
+     *  @brief      ウェーブ切り替え
+     */
     void        WaveChange(int wave);
 
+    /*
+     *  @brief      解放
+     */
     bool        StageObjectCollision(aqua::CVector3 position, aqua::CVector3 destination, bool this_bullet);
 
+    /*
+     *  @brief      向き取得
+     */
     aqua::CCubePrimitive::COLL_DIRE GetCollDire(void) { return m_LastCollObject->GetCollDire(); }
+
+    /*
+     *  @brief      解放
+     */
+    int         GetEnemyCount(void) { return m_EnemyCount; }
+
+    /*
+     *  @brief      敵出現座標
+     */
+    aqua::CVector3 GetEnemyPopPos(int pos_number) { return m_EnemyPopPos[pos_number]; }
 
 private:
     void        Create(void);
@@ -82,6 +100,11 @@ private:
 
     int                             m_WaveCount;
 
+    int                             m_EnemyCount;
+
+    std::vector<aqua::CVector3>     m_EnemyPopPos;
+
     CCSVReader* m_CSVReader;
+
     IStageObject*                   m_LastCollObject;   // 最後に接触したオブジェクト
 };

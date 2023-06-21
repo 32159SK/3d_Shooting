@@ -122,8 +122,8 @@ void CEnemyManager::WaveChange(void)
 	m_BulletManagar->EnemyReset();
 
 	for (int i = 0; i < m_PopList.size(); ++i)
-		if (m_PopList[i].wave == m_WaveCount)
-			Create(m_PopList[i].pop_pos, m_EnemyInfo[(int)m_PopList[i].pop_e_id]);
+		if (m_PopList[i].wave == m_WaveCount && i > m_StageManager->GetEnemyCount())
+			Create(m_StageManager->GetEnemyPopPos(i), m_EnemyInfo[(int)m_PopList[i].pop_e_id]);
 
 	// waveに合わせてフィールドを切り替える
    	m_StageManager->WaveChange(m_WaveCount);

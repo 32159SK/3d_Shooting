@@ -24,7 +24,6 @@ struct ENEMY_POP_LIST
 {
     int   wave  = 1;
     ENEMY_ID pop_e_id = ENEMY_ID::MOB;
-    aqua::CVector3 pop_pos = aqua::CVector3::ZERO;
 };
 
 /*!

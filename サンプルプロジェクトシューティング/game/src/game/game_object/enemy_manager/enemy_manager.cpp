@@ -58,13 +58,11 @@ void CEnemyManager::Create(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info)
 	switch (enemy_info.id)
 	{
 	case ENEMY_ID::MOB:  enemy = aqua::CreateGameObject<CMobEnemy>(this); break;
-	case ENEMY_ID::ALONG_WALL: enemy = aqua::CreateGameObject<CFixedEnemy>(this); break;
+	case ENEMY_ID::ALONG_WALL: enemy = aqua::CreateGameObject<CAlongWallEnemy>(this); break;
 	case ENEMY_ID::FIXED: enemy = aqua::CreateGameObject<CFixedEnemy>(this); break;
 	default:
 		break;
 	}
-
-		
 
 	// 初期化とプレイヤーのポインタを渡す
 	enemy->Initialize(pop_pos, enemy_info.width, enemy_info.height, enemy_info.depth, enemy_info.color, m_StageManager, m_BulletManagar);
@@ -107,8 +105,8 @@ CEnemy* CEnemyManager::GetNearest(aqua::CVector3 player_pos)
 		// プレイヤーと敵の間に壁があればnull
 		if (m_StageManager->StageObjectCollision(enemy->GetPosition(), player_pos, false))
 			nearestEnemy = nullptr;
-
 	}
+
 	return nearestEnemy;
 }
 void CEnemyManager::WaveChange(void)
@@ -121,11 +119,12 @@ void CEnemyManager::WaveChange(void)
 	m_EnemyCount = 0;
 	m_BulletManagar->EnemyReset();
 
-	for (int i = 0; i < m_PopList.size(); ++i)
-		if (m_PopList[i].wave == m_WaveCount && i > m_StageManager->GetEnemyCount())
-			Create(m_StageManager->GetEnemyPopPos(i), m_EnemyInfo[(int)m_PopList[i].pop_e_id]);
-
 	// waveに合わせてフィールドを切り替える
    	m_StageManager->WaveChange(m_WaveCount);
+
+	for (int i = 0; i < m_PopList.size(); ++i)
+		if (m_PopList[i].wave == m_WaveCount /*&& i < m_StageManager->GetEnemyCount()*/)
+			Create(m_StageManager->GetEnemyPopPos(i), m_EnemyInfo[(int)m_PopList[i].pop_e_id]);
+
 	m_WaveCount++;
 }

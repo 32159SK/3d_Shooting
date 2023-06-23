@@ -13,6 +13,7 @@ void CFixedEnemy::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float
 	CEnemy::Initialize(pop_pos, wid, hei, dep, color, st_m, bm);
 	m_Model.Load("data\\model\\fixed_enemy.mv1");
 	m_Model.position = m_Position;
+	m_ShotBullet = BULLET_TYPE::PENETRATE;
 	m_Cube.visible = false;
 }
 

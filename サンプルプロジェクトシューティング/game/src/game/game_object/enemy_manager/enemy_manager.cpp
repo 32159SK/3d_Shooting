@@ -51,21 +51,21 @@ void CEnemyManager::Draw(void)
 	IGameObject::Draw();
 }
 
-void CEnemyManager::Create(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info)
+void CEnemyManager::Create(aqua::CVector3 pop_pos, ENEMY_ID enemy_id)
 {
 	// 空のエネミークラスを用意
 	CEnemy* enemy = nullptr;
-	switch (enemy_info.id)
+	switch (enemy_id)
 	{
 	case ENEMY_ID::MOB:  enemy = aqua::CreateGameObject<CMobEnemy>(this); break;
-	case ENEMY_ID::ALONG_WALL: enemy = aqua::CreateGameObject<CAlongWallEnemy>(this); break;
+	case ENEMY_ID::ALONG_WALL: enemy = aqua::CreateGameObject<CFixedEnemy>(this); break;
 	case ENEMY_ID::FIXED: enemy = aqua::CreateGameObject<CFixedEnemy>(this); break;
 	default:
 		break;
 	}
 
 	// 初期化とプレイヤーのポインタを渡す
-	enemy->Initialize(pop_pos, enemy_info.width, enemy_info.height, enemy_info.depth, enemy_info.color, m_StageManager, m_BulletManagar);
+	enemy->Initialize(pop_pos, m_EnemyInfo[(int)enemy_id].width, m_EnemyInfo[(int)enemy_id].height, m_EnemyInfo[(int)enemy_id].depth, m_EnemyInfo[(int)enemy_id].color, m_StageManager, m_BulletManagar);
 	enemy->SetPlayer(m_Player);
 	m_EnemyCount++;
 
@@ -77,6 +77,8 @@ void CEnemyManager::Create(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info)
 void CEnemyManager::Finalize(void)
 {
 	IGameObject::Finalize();
+	m_EnemyInfo.clear();
+	m_PopList.clear();
 }
 
 CEnemy* CEnemyManager::GetNearest(aqua::CVector3 player_pos)
@@ -92,8 +94,13 @@ CEnemy* CEnemyManager::GetNearest(aqua::CVector3 player_pos)
 	{
 		CEnemy* enemy = (CEnemy*)it;
 
+
 		// 最も近い敵がまだ見つかっていない場合、仮で代入する
 		if (!nearestEnemy) nearestEnemy = enemy;
+
+		// プレイヤーと敵の間に壁があれば次へ(ここでやっておかないと"壁の向こう側だが最も近い敵"にロックオンを合わせようとして何度やっても失敗する)
+		if (m_StageManager->StageObjectCollision(enemy->GetPosition(), player_pos, false))
+			continue;
 
 		// 敵とプレイヤーの距離
 		float nearestDistance = abs(aqua::CVector3::Length(nearestEnemy->GetPosition() - player_pos));
@@ -102,9 +109,6 @@ CEnemy* CEnemyManager::GetNearest(aqua::CVector3 player_pos)
 		// よりプレイヤーに近い敵をnearestEnemyにする
 		if (itDistance < nearestDistance) nearestEnemy = enemy;
 
-		// プレイヤーと敵の間に壁があればnull
-		if (m_StageManager->StageObjectCollision(enemy->GetPosition(), player_pos, false))
-			nearestEnemy = nullptr;
 	}
 
 	return nearestEnemy;
@@ -124,7 +128,7 @@ void CEnemyManager::WaveChange(void)
 
 	for (int i = 0; i < m_PopList.size(); ++i)
 		if (m_PopList[i].wave == m_WaveCount /*&& i < m_StageManager->GetEnemyCount()*/)
-			Create(m_StageManager->GetEnemyPopPos(i), m_EnemyInfo[(int)m_PopList[i].pop_e_id]);
+			Create(m_StageManager->GetEnemyPopPos(i), m_PopList[i].pop_e_id);
 
 	m_WaveCount++;
 }

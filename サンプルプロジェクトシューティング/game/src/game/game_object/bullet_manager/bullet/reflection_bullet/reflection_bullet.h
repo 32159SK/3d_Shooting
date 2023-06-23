@@ -31,25 +31,16 @@ public:
     /*
      *  @brief      初期化
      */
-    void    Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 pop_pos, aqua::CVector3 front, IUnit* user)override;
-
+    void    Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 pop_pos, aqua::CVector3 front, IUnit* user, CEffectManager* em)override;
 
     /*
-     *  @brief      更新
+     *  @brief      ステージオブジェクトヒット処理
      */
-    void    Update(void)override;
-
-    void    Draw(void)override;
-
-    void    Finalize(void)override;
-
     void    StageObjectHit(aqua::CCubePrimitive::COLL_DIRE c_dire)override;
 private:
 
-    static const int m_max_reflect_count = 4;
+    static const int m_max_reflect_count = 3;
 
     int             m_ReflectCount;
-
-    aqua::CModel    m_Model;
 
 };

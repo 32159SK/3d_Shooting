@@ -60,7 +60,7 @@ public:
     /*!
      *  @brief      エネミーの生成
      */
-    void        Create(aqua::CVector3 pop_pos ,ENEMY_INFO enemy_info);
+    void        Create(aqua::CVector3 pop_pos ,ENEMY_ID enemy_id);
 
     /*!
      *  @brief      解放

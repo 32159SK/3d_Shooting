@@ -72,11 +72,11 @@ void IUnit::Move(void)
 void IUnit::Damage(int damage)
 {
 	m_Life -= damage;
-	m_EffectManager->Create(EFFECT_ID::HIT, m_Position);
 
 	if (m_Life <= 0)
 		Dead();
 }
+
 void IUnit::Dead(void)
 {
 	m_DeadFlag = true;

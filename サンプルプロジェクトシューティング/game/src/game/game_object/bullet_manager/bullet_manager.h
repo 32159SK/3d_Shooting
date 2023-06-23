@@ -86,6 +86,7 @@ private:
     CCSVReader*             m_CSVReader;        // CSV読み取りクラスのポインタ
     CPlayer*                m_Player;           // プレイヤークラスの  ””
     CStageManager*          m_StageManager;     // ステージ管理クラスの””
+    CEffectManager*         m_EffectManager;    // エフェクト管理クラス
     std::vector<BULLET_INFO> m_BulletInfo;      // 
     std::vector<CEnemy*>    m_Enemy;            // 
 };

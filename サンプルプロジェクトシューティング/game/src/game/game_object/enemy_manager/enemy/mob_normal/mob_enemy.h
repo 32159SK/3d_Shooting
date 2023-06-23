@@ -2,7 +2,7 @@
  *  @file       unit.h
  *  @brief      ƒ†ƒjƒbƒgˆ—
  *  @author     Kazuto Shimazaki
- *  @date       2022/06/20
+ *  @date       2023/04/20
  *  @since      1.0
  *
  *  Copyright (c) 2013-2019, Kazuya Maruyama. All rights reserved.
@@ -57,7 +57,9 @@ private:
      *  @brief      ’ÇÕ
      */
     void    Follow(void);
-
+    /*
+     *  @brief      ”ñ’ÇÕ
+     */
     void    NotFollow(void);
 
     /*

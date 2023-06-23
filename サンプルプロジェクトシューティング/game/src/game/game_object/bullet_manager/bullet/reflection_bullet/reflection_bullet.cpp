@@ -6,32 +6,13 @@ CReflectionBullet::CReflectionBullet(aqua::IGameObject* parent)
 {
 }
 
-void CReflectionBullet::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 pop_pos, aqua::CVector3 front, IUnit* user)
+void CReflectionBullet::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 pop_pos, aqua::CVector3 front, IUnit* user, CEffectManager* em)
 {
-	IBullet::Initialize(bullet_info, attri, pop_pos, front, user);
+	IBullet::Initialize(bullet_info, attri, pop_pos, front, user, em);
 	m_Sphere.visible = false;
 	m_Model.Load("data\\model\\reflect_bullet.mv1");
-	Update();
 }
 
-void CReflectionBullet::Update(void)
-{
-	IBullet::Update();
-	m_Model.position = m_Position;
-	m_Model.rotation.y = aqua::DegToRad(m_Rotate);
-}
-
-void CReflectionBullet::Draw(void)
-{
-	IBullet::Draw();
-	m_Model.Draw();
-}
-
-void CReflectionBullet::Finalize(void)
-{
-	IBullet::Finalize();
-	m_Model.Unload();
-}
 
 void CReflectionBullet::StageObjectHit(aqua::CCubePrimitive::COLL_DIRE c_dire)
 {

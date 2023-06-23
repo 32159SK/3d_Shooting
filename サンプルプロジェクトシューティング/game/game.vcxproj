@@ -102,8 +102,8 @@
   <ItemGroup>
     <ClCompile Include="src\game\game.cpp" />
     <ClCompile Include="src\game\game_object\bullet_manager\bullet\bullet.cpp" />
-    <ClCompile Include="src\game\game_object\bullet_manager\bullet\homing_bullet\homing_bullet.cpp" />
     <ClCompile Include="src\game\game_object\bullet_manager\bullet\normal_bullet\normal_bullet.cpp" />
+    <ClCompile Include="src\game\game_object\bullet_manager\bullet\penetrate_bullet\penetrate_bullet.cpp" />
     <ClCompile Include="src\game\game_object\bullet_manager\bullet\reflection_bullet\reflection_bullet.cpp" />
     <ClCompile Include="src\game\game_object\bullet_manager\bullet_manager.cpp" />
     <ClCompile Include="src\game\game_object\csv_reader\csv_reader.cpp" />
@@ -112,6 +112,7 @@
     <ClCompile Include="src\game\game_object\effect_manager\effect\skill_effect\skill_effect.cpp" />
     <ClCompile Include="src\game\game_object\effect_manager\effect_manager.cpp" />
     <ClCompile Include="src\game\game_object\enemy_manager\enemy\along_wall\along_wall.cpp" />
+    <ClCompile Include="src\game\game_object\enemy_manager\enemy\boss_enemy\boss_enemy.cpp" />
     <ClCompile Include="src\game\game_object\enemy_manager\enemy\enemy.cpp" />
     <ClCompile Include="src\game\game_object\enemy_manager\enemy\fixed_enemy\fixed_enemy.cpp" />
     <ClCompile Include="src\game\game_object\enemy_manager\enemy\mob_normal\mob_enemy.cpp" />
@@ -139,8 +140,8 @@
   <ItemGroup>
     <ClInclude Include="src\game\game.h" />
     <ClInclude Include="src\game\game_object\bullet_manager\bullet\bullet.h" />
-    <ClInclude Include="src\game\game_object\bullet_manager\bullet\homing_bullet\homing_bullet.h" />
     <ClInclude Include="src\game\game_object\bullet_manager\bullet\normal_bullet\normal_bullet.h" />
+    <ClInclude Include="src\game\game_object\bullet_manager\bullet\penetrate_bullet\penetrate_bullet.h" />
     <ClInclude Include="src\game\game_object\bullet_manager\bullet\reflection_bullet\reflection_bullet.h" />
     <ClInclude Include="src\game\game_object\bullet_manager\bullet_manager.h" />
     <ClInclude Include="src\game\game_object\csv_reader\csv_reader.h" />
@@ -150,6 +151,7 @@
     <ClInclude Include="src\game\game_object\effect_manager\effect\skill_effect\skill_effect.h" />
     <ClInclude Include="src\game\game_object\effect_manager\effect_manager.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy\along_wall\along_wall.h" />
+    <ClInclude Include="src\game\game_object\enemy_manager\enemy\boss_enemy\boss_enemy.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy\enemy.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy\enemy_id.h" />
     <ClInclude Include="src\game\game_object\enemy_manager\enemy\fixed_enemy\fixed_enemy.h" />

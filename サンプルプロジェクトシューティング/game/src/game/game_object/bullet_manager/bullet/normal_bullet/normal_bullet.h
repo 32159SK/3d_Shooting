@@ -31,20 +31,6 @@ public:
     /*
      *  @brief      èâä˙âª
      */
-    void    Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 pop_pos, aqua::CVector3 front, IUnit* user)override;
-
-
-    /*
-     *  @brief      çXêV
-     */
-    void    Update(void)override;
-
-    void    Draw(void)override;
-
-    void    Finalize(void)override;
-
-private:
-
-    aqua::CModel    m_Model;
+    void    Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 pop_pos, aqua::CVector3 front, IUnit* user, CEffectManager* em)override;
 
 };

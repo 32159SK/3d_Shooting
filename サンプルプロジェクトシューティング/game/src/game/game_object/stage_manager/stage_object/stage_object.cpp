@@ -44,9 +44,9 @@ Initialize(const STAGE_OBJECT_ID& id, int x, int z)
     //	ç¿ïWê›íË
     m_Position = aqua::CVector3::ZERO;
 
-    m_Position.x = x * m_default_size - m_default_size / 2 * 20;
+    m_Position.x = x * m_default_size - m_default_size / 2.0f * 20.0f;
 
-    m_Position.z = (20 - z) * m_default_size - m_default_size / 2 * 20;
+    m_Position.z = (20.0f - z) * m_default_size - m_default_size / 2.0f * 20.0f;
 
     
 }

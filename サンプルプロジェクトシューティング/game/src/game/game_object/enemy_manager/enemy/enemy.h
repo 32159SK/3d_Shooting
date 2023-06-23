@@ -10,7 +10,6 @@
 #pragma once
 #include "aqua.h"
 #include "../../unit/unit.h"
-//#include "../../bullet_manager/bullet_manager.h"
 
 class CPlayer;
 
@@ -39,6 +38,14 @@ public:
      *  @brief      更新
      */
     virtual void    Update(void)override;
+    /*
+     *  @brief      更新
+     */
+    virtual void    Draw(void)override;
+    /*
+     *  @brief      更新
+     */
+    virtual void    Finalize(void)override;
 
     void            SetPlayer(CPlayer* player) { m_Player = player; }
 
@@ -56,5 +63,6 @@ protected:
     static const aqua::CVector3 m_surroundings[];
 
     float           m_Angle;
+    BULLET_TYPE     m_ShotBullet;
     CPlayer*        m_Player;
 };

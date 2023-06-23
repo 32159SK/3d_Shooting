@@ -31,7 +31,7 @@ public:
     /*
      *  @brief      初期化
      */
-    virtual void    Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri,aqua::CVector3 pop_pos,aqua::CVector3 front,IUnit* user);
+    virtual void    Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 pop_pos, aqua::CVector3 front, IUnit* user, CEffectManager* em);
 
     /*
      *  @brief      描画
@@ -42,6 +42,11 @@ public:
      *  @brief      更新
      */
     virtual void    Update(void)override;
+
+    /*
+     *  @brief      更新
+     */
+    virtual void    Finalize(void)override;
 
 
     /*
@@ -83,14 +88,12 @@ public:
 
 protected:
 
-    static const float      m_radius;       // 
 
     int                     m_Damage;       // ダメージ量
 
-    float                   m_Range;        // 射程距離
+    float                   m_Rotate;       //! 水平回転角度
 
-        //! 水平回転角度
-    float                   m_Rotate;
+    float                   m_Radius;       //! 水平回転角度
 
     aqua::CVector3          m_Dir;
 
@@ -104,9 +107,11 @@ protected:
 
     aqua::CVector3          m_Position;     // 座標
 
-    aqua::CColor            m_Color;        // 色
-
     aqua::CSpherePrimitive  m_Sphere;       // 
+
+    aqua::CModel            m_Model;
+
+    CEffectManager*         m_EffectManager;
 
     IUnit*                  m_Unit;
 };

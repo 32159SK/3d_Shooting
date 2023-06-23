@@ -41,6 +41,17 @@ void CEnemy::Update(void)
 	Move();
 }
 
+void CEnemy::Draw(void)
+{
+	IGameObject::Draw();
+}
+
+void CEnemy::Finalize(void)
+{
+	IGameObject::Finalize();
+
+}
+
 
 void CEnemy::Shot(void)
 {
@@ -50,7 +61,7 @@ void CEnemy::Shot(void)
 	front.x = sin(aqua::DegToRad(m_Rotate));
 	front.z = cos(aqua::DegToRad(m_Rotate));
 
-	m_BulletManager->Create(m_Position, front, m_UnitType, BULLET_TYPE::NOMAL, this);
+	m_BulletManager->Create(m_Position, front, m_UnitType, m_ShotBullet, this);
 }
 
 void CEnemy::Move(void)

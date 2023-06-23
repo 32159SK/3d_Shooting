@@ -75,8 +75,8 @@ void CCSVReader::Parse(const std::string& file_name)
 			{
 				(BULLET_TYPE)i,
 				std::stoi(csv.GetString(i,0)),	// damage
-				std::stof(csv.GetString(i,1)),	// speed
-				aqua::CColor::RED
+				std::stof(csv.GetString(i,1)),	// radius
+				std::stof(csv.GetString(i,2))	// speed
 			};
 			m_BulletInfo.push_back(b_info);
 		}

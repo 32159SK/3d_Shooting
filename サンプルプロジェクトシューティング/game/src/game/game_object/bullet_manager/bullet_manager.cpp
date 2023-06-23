@@ -2,6 +2,7 @@
 #include "bullet_manager.h"
 #include "bullet/normal_bullet/normal_bullet.h"
 #include "bullet/reflection_bullet/reflection_bullet.h"
+#include "bullet/penetrate_bullet/penetrate_bullet.h"
 
 CBulletManager::CBulletManager(aqua::IGameObject* parent)
 	: IGameObject(parent,"BulletManager")
@@ -42,16 +43,19 @@ void CBulletManager::Create(aqua::CVector3 shot_pos, aqua::CVector3 shot_front, 
 	// êVÇµÇ≠ê∂ê¨Ç∑ÇÈíeÇÃóeäÌ
  	IBullet* bullet = nullptr;
 	// íeÇÃê∂ê¨èàóùÇ∆èâä˙âª
-	if (bullet_type == BULLET_TYPE::REFLECT)
-	{
-		bullet = aqua::CreateGameObject<CReflectionBullet>(this);
-		bullet->Initialize(m_BulletInfo[(int)BULLET_TYPE::NOMAL], unit_type, shot_pos, shot_front, user);
-		return;
-	}
-	else
-		bullet = aqua::CreateGameObject<CNormalBullet>(this);
-	bullet->Initialize(m_BulletInfo[(int)bullet_type], unit_type, shot_pos, shot_front, user);
 
+	switch (bullet_type)
+	{
+	case BULLET_TYPE::NOMAL:bullet = aqua::CreateGameObject<CNormalBullet>(this);break;
+	case BULLET_TYPE::FAST:bullet = aqua::CreateGameObject<CNormalBullet>(this); break;
+	case BULLET_TYPE::REFLECT:bullet = aqua::CreateGameObject<CReflectionBullet>(this); break;
+	case BULLET_TYPE::PENETRATE:bullet = aqua::CreateGameObject<CPenetrateBullet>(this); break;
+	case BULLET_TYPE::MAX:
+		break;
+	default:
+		break;
+	}
+	bullet->Initialize(m_BulletInfo[(int)bullet_type], unit_type, shot_pos, shot_front, user);
 }
 
 void CBulletManager::Finalize(void)
@@ -73,8 +77,10 @@ void CBulletManager::CheakHit(void)
 		IBullet* bullet = (IBullet*)it;
 		for (int e = 0; e < e_count; ++e)
 		{
+			if (!m_Enemy[e])
+				continue;
 			// éÄÇÒÇ≈Ç»Ç¢ìGÇ∆íeÇÃè’ìÀämîF
-			if (m_Enemy[e] && !m_Enemy[e]->GetDead()
+			if (!m_Enemy[e]->GetDead()
 				&& m_Enemy[e]->CheckHitBullet(bullet->GetAttri(), bullet->GetSphere(), bullet->GetDamage()))
 			{
 				bullet->Hit();

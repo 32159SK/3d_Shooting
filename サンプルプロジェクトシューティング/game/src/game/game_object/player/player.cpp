@@ -91,10 +91,11 @@ void CPlayer::Draw(void)
 
 	switch (m_ShotBullet)
 	{
-	case BULLET_TYPE::NOMAL: m_DrawBT.text = "BULLET:NOMAL"; break;
-	case BULLET_TYPE::FAST: m_DrawBT.text = "BULLET:FAST"; break;
-	case BULLET_TYPE::MINE: m_DrawBT.text = "BULLET:MINE"; break;
-	case BULLET_TYPE::REFLECT: m_DrawBT.text = "BULLET:REFLECT"; break;
+	case BULLET_TYPE::NOMAL:	m_DrawBT.text = "BULLET:NOMAL"; break;
+	case BULLET_TYPE::FAST:		m_DrawBT.text = "BULLET:FAST"; break;
+	case BULLET_TYPE::REFLECT:	m_DrawBT.text = "BULLET:REFLECT"; break;
+	case BULLET_TYPE::PENETRATE:m_DrawBT.text = "BULLET:PENETRATE"; break;
+	
 	default:
 		break;
 	}
@@ -141,7 +142,7 @@ void CPlayer::Shot(void)
 			m_ChageCT.Reset();
 		}
 		// ↓キー
-		if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::DOWN) && (int)m_ShotBullet < (int)BULLET_TYPE::MAX - 1)
+		if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::DOWN) && (int)m_ShotBullet < (int)BULLET_TYPE::BOSS - 1)
 		{
 			// +1の弾に変更(例NOMAL→FAST)
 			m_ShotBullet = (BULLET_TYPE)((int)m_ShotBullet + 1);
@@ -160,7 +161,7 @@ void CPlayer::Shot(void)
 		if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::SPACE))
 		{
 			// 自機の正面から球を撃つ
-			m_BulletManager->Create(m_Position + front * 10, front * 10.5f, m_UnitType, m_ShotBullet, this);
+			m_BulletManager->Create(m_Position + front * 10.0f, front * 10.5f, m_UnitType, m_ShotBullet, this);
 			m_ShotCT.Reset();
 		}
 	}

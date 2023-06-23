@@ -12,6 +12,7 @@ CAlongWallEnemy::CAlongWallEnemy(aqua::IGameObject* parent)
 void CAlongWallEnemy::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m, CBulletManager* bm)
 {
 	CEnemy::Initialize(pop_pos, wid, hei, dep, color, st_m, bm);
+	m_ShotBullet = BULLET_TYPE::REFLECT;
 }
 
 void CAlongWallEnemy::Update(void)
@@ -27,7 +28,7 @@ void CAlongWallEnemy::Shot(void)
 	{
 		bull_dir.x = sin(aqua::DegToRad(m_Rotate + 30.0f * i));
 		bull_dir.z = cos(aqua::DegToRad(m_Rotate + 30.0f * i));
-		m_BulletManager->Create(m_Position, bull_dir, m_UnitType, BULLET_TYPE::REFLECT, this);
+		m_BulletManager->Create(m_Position, bull_dir, m_UnitType, m_ShotBullet, this);
 	}
 
 }

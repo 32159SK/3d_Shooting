@@ -126,7 +126,8 @@ void CStageManager::Create(void)
             case NULL_OBJECT:  continue;  break;    // ‚È‚ñ‚à‚È‚¢‚È‚çŽŸ‚Ö
             case NORMAL_BLOCK: stage_object = aqua::CreateGameObject<CNormalBlock>(this);  break;
             case BRITTLE_BLOCK:stage_object = aqua::CreateGameObject<CBrittleBlock>(this); break;
-            case ENEMY_POP_POS: m_EnemyPopPos.push_back(aqua::CVector3((float)x * m_default_size, 0.0f, (float)z * m_default_size)); m_EnemyCount++; continue; break;
+            case ENEMY_POP_POS: m_EnemyPopPos.push_back(aqua::CVector3((float)x * m_default_size - m_default_size / 2.0f * 20.0f,
+                0.0f, (float)(20.0f - z) * m_default_size - m_default_size / 2.0f * 20.0f)); m_EnemyCount++; continue; break;
             default:
                 break;
             }

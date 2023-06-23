@@ -12,7 +12,7 @@
 #include "../bullet.h"
 
 
-class CHomingBullet : public IBullet
+class CPenetrateBullet : public IBullet
 {
 public:
     /*
@@ -21,19 +21,20 @@ public:
      *  @param[in]  parent          親オブジェクト
      *  @param[in]  object_name     オブジェクト名
      */
-    CHomingBullet(aqua::IGameObject* parent);
+    CPenetrateBullet(aqua::IGameObject* parent);
 
     /*
      *  @brief      デストラクタ
      */
-    virtual ~CHomingBullet(void) = default;
-
+    virtual ~CPenetrateBullet(void) = default;
 
     /*
-     *  @brief      更新
+     *  @brief      初期化
      */
-    virtual void    Update(void)override;
+    void    Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 pop_pos, aqua::CVector3 front, IUnit* user, CEffectManager* em)override;
 
-private:
-
+    /*
+     *  @brief      ステージオブジェクトヒット処理
+     */
+    void    StageObjectHit(aqua::CCubePrimitive::COLL_DIRE c_dire)override { return; }
 };

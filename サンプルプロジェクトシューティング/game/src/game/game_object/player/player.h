@@ -103,10 +103,16 @@ private:
     void            TheWorld(void);
 
     static const float m_chage_shotCT;  // 
+
     static const float m_ago_pos_time;  // 
+    
     static const float m_the_world_time;// 時を止めていられる時間
+    
     static const float m_the_world_CT;  // 再び時を止められるまでの時間
-    static const float m_lock_range;
+    
+    static const float m_lock_range;    // ロックオン範囲
+
+    static const int   m_max_life;      // ライフの最大値
 
     bool            m_Invincible;       // 無敵
 
@@ -120,7 +126,7 @@ private:
 
     aqua::CLabel    m_DrawBT;           // 
 
-    aqua::CTimer    m_ChageCT;          //
+    aqua::CTimer    m_ChangeCT;          //
 
     aqua::CTimer    m_AgoPosTimer;      // 
 

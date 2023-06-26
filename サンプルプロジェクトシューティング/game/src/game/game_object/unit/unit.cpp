@@ -8,7 +8,7 @@ IUnit(aqua::IGameObject* parent, const std::string& object_name)
 	, m_Width(0.0f)
 	, m_Depth(0.0f)
 	, m_Speed(0.0f)
-	, m_MaxLife(5)
+	, m_MaxLife(0)
 	, m_Life(0)
 	, m_DeadFlag(false)
 	, m_Rotate(0.0f)
@@ -26,7 +26,6 @@ void IUnit::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, 
 	m_Color = color;
 	m_BulletManager = bm;
 	m_StageManager = st_m;
-	m_Life = m_MaxLife;
 	m_Cube.Setup(m_Position, m_Width, m_Height, m_Depth, m_Color);
 	aqua::CreateGameObject<CLifeBar>(this);
 	// エフェクト管理クラスを探査してポインタを受け取る

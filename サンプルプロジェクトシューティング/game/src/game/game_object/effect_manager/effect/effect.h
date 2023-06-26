@@ -42,7 +42,7 @@ public:
      *
      *  @param[in]  position    ˆÊ’u
      */
-    virtual void    Initialize(const aqua::CVector3& position, std::string effect_name, std::string se_name);
+    virtual void    Initialize(const aqua::CVector3& position, std::string effect_name, std::string se_name, float rotate = 0.0f);
 
 
     /*!

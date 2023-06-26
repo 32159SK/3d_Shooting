@@ -17,12 +17,14 @@ CEnemy::CEnemy(aqua::IGameObject* parent)
 
 void 
 CEnemy::
-Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m,CBulletManager* bm)
+Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m,CBulletManager* bm)
 {
-	IUnit::Initialize(pop_pos, wid, hei, dep, color,st_m, bm);
+	IUnit::Initialize(pop_pos, enemy_info.width, enemy_info.height, enemy_info.depth, enemy_info.color,st_m, bm);
+	m_MaxLife = enemy_info.life;
+	m_Life = m_MaxLife;
 	m_UnitType = UNIT_TYPE::ENEMY;
-	m_ShotCT.Setup(5.0f);
-	m_Speed = 0.5f;
+	m_ShotCT.Setup(enemy_info.shot_ct);
+	m_Speed = enemy_info.speed;
 }
 
 void CEnemy::Update(void)
@@ -44,12 +46,12 @@ void CEnemy::Update(void)
 void CEnemy::Draw(void)
 {
 	IGameObject::Draw();
+	m_Cube.Draw();
 }
 
 void CEnemy::Finalize(void)
 {
 	IGameObject::Finalize();
-
 }
 
 

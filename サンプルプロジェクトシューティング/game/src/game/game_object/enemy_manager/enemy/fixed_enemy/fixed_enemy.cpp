@@ -8,9 +8,10 @@ CFixedEnemy::CFixedEnemy(aqua::IGameObject* parent)
 {
 }
 
-void CFixedEnemy::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m, CBulletManager* bm)
+void CFixedEnemy::
+Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, CBulletManager* bm)
 {
-	CEnemy::Initialize(pop_pos, wid, hei, dep, color, st_m, bm);
+	CEnemy::Initialize(pop_pos, enemy_info, st_m, bm);
 	m_Model.Load("data\\model\\fixed_enemy.mv1");
 	m_Model.position = m_Position;
 	m_ShotBullet = BULLET_TYPE::PENETRATE;

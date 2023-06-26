@@ -32,8 +32,7 @@ public:
     /*
      *  @brief      初期化
      */
-    void    Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m, CBulletManager* bm)override;
-
+    void    Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, CBulletManager* bm)override;
     /*
      *  @brief      更新
      */
@@ -104,11 +103,13 @@ private:
 
     int             m_PhaseLife[3];
 
-    static const std::string m_model_file_path;
+    static const std::string m_model_file_path; // モデルファイルパス
+
+    static const aqua::CVector3 m_base_fort_pos[3];// 砲門基本座標
 
     static const float   m_summon_interval;     // 召喚間隔
 
-    BOSS_PHASE      m_Phase;                    // 
+    BOSS_PHASE      m_Phase;                    // 現在の形態
 
     float           m_FortRotate[3];            // 砲門角度
 
@@ -118,7 +119,7 @@ private:
 
     aqua::CTimer    m_SummonTimer;              // 召喚タイマー
 
-    aqua::CTimer    m_DeadTimer;                // 召喚タイマー
+    aqua::CTimer    m_DeadTimer;                // 死亡演出用タイマー
 
     CEnemyManager*  m_EnemyManager;             // 敵管理クラス(親クラス)
 };

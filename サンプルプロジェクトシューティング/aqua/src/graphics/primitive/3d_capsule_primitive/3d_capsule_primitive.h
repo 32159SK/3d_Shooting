@@ -45,6 +45,12 @@ namespace aqua
         int                 div_num;
         //! ”¼Œa
         float               radius;
+        //! A‚ğ’†S‚Æ‚µ‚½‚’¼‰ñ“]Šp“x
+        float               m_VRotate;
+        //! A‚ğ’†S‚Æ‚µ‚½…•½‰ñ“]Šp“x
+        float               m_HRotate;
+        //! A‚ğ’†S‚Æ‚µ‚½”P‚è‰ñ“]Šp“x
+        float               m_TRotate;
         //! F
         aqua::CColor        color;
         //! ”½ËŒõF
@@ -74,7 +80,7 @@ namespace aqua
          *  @param[in]  spc_color   ”½ËŒõF
          *  @param[in]  fill        “h‚è’×‚µƒtƒ‰ƒO
          */
-        void    Setup(const aqua::CVector3& A_pos,const aqua::CVector3& B_pos, float r, int divnum, const aqua::CColor& color_, const aqua::CColor& spc_color_, bool fill_ = true);
+        void    Setup(const aqua::CVector3& A_pos,const aqua::CVector3& B_pos, float r, int divnum = 10, const aqua::CColor& color_ = aqua::CColor::CYAN, const aqua::CColor& spc_color_ = aqua::CColor::WHITE, bool fill_ = true);
 
         /*!
          *  @brief      •`‰æ

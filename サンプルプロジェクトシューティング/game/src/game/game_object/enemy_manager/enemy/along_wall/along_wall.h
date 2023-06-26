@@ -30,8 +30,7 @@ public:
     /*
      *  @brief      ‰Šú‰»
      */
-    void    Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m, CBulletManager* bm)override;
-
+    void    Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, CBulletManager* bm)override;
     /*
      *  @brief      XV
      */

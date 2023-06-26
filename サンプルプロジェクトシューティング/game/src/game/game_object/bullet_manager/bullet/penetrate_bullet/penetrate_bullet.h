@@ -33,6 +33,7 @@ public:
      */
     void    Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 pop_pos, aqua::CVector3 front, IUnit* user, CEffectManager* em)override;
 
+
     /*
      *  @brief      ステージオブジェクトヒット処理
      */

@@ -6,6 +6,7 @@ const float CPlayer::m_ago_pos_time = 0.2f;
 const float CPlayer::m_the_world_time = 7.0f;
 const float CPlayer::m_the_world_CT = 10.0f;
 const float CPlayer::m_lock_range = 200.0f;
+const int   CPlayer::m_max_life = 10;
 
 CPlayer::CPlayer(aqua::IGameObject* parent)
 	: IUnit(parent, "Player")
@@ -22,7 +23,12 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep
 {
 	m_LockOnMarker = aqua::CreateGameObject<CLockOnMarker>(this);
 
+	m_MaxLife = m_max_life;
+	m_Life = m_MaxLife;
+
 	IUnit::Initialize(pop_pos, wid, hei, dep, color, st_m, bm);
+	
+
 	m_UnitType = UNIT_TYPE::PLAYER;
 	m_ShotBullet = BULLET_TYPE::NOMAL;
 	m_BulletManager->SetPlayer(this);
@@ -39,7 +45,7 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep
 	m_TheWorldTimer.Setup(0.0f);
 
 	//
-	m_ChageCT.Setup(m_chage_shotCT);
+	m_ChangeCT.Setup(m_chage_shotCT);
 	m_ShotCT.Setup(0.5f);
 
 	m_AgoPosTimer.Setup(m_ago_pos_time);
@@ -129,24 +135,24 @@ bool CPlayer::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, int 
 
 void CPlayer::Shot(void)
 {
-	m_ChageCT.Update();
+	m_ChangeCT.Update();
 	m_ShotCT.Update();
 
 	// íeÇÃéÌóﬁÇÃêÿÇËë÷Ç¶
-	if (m_ChageCT.Finished())
+	if (m_ChangeCT.Finished())
 	{
 		if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::UP) && m_ShotBullet != BULLET_TYPE::NOMAL)
 		{
 			// -1ÇÃíeÇ…ïœçX(ó·FASTÅ®NOMAL)
 			m_ShotBullet = (BULLET_TYPE)((int)m_ShotBullet - 1);
-			m_ChageCT.Reset();
+			m_ChangeCT.Reset();
 		}
 		// Å´ÉLÅ[
 		if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::DOWN) && (int)m_ShotBullet < (int)BULLET_TYPE::BOSS - 1)
 		{
 			// +1ÇÃíeÇ…ïœçX(ó·NOMALÅ®FAST)
 			m_ShotBullet = (BULLET_TYPE)((int)m_ShotBullet + 1);
-			m_ChageCT.Reset();
+			m_ChangeCT.Reset();
 		}
 	}
 

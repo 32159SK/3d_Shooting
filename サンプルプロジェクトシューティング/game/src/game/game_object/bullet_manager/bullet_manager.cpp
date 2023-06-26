@@ -18,6 +18,8 @@ void CBulletManager::Initialize(CCSVReader* csv_r, CStageManager* st_m)
 	m_StageManager = st_m;
 	m_CSVReader->Initialize(FILE_TYPE::BULLET_INFO, "bullet_info");
 
+	m_EffectManager = (CEffectManager*)aqua::FindGameObject("EffectManager");
+
 	// for文用の行数取得
 	int row = m_CSVReader->GetFileRow(FILE_TYPE::BULLET_INFO);
 	// 弾情報の格納
@@ -40,10 +42,11 @@ void CBulletManager::Draw(void)
 
 void CBulletManager::Create(aqua::CVector3 shot_pos, aqua::CVector3 shot_front, UNIT_TYPE unit_type, BULLET_TYPE bullet_type, IUnit* user)
 {
+
+
 	// 新しく生成する弾の容器
  	IBullet* bullet = nullptr;
 	// 弾の生成処理と初期化
-
 	switch (bullet_type)
 	{
 	case BULLET_TYPE::NOMAL:bullet = aqua::CreateGameObject<CNormalBullet>(this);break;
@@ -55,7 +58,7 @@ void CBulletManager::Create(aqua::CVector3 shot_pos, aqua::CVector3 shot_front, 
 	default:
 		break;
 	}
-	bullet->Initialize(m_BulletInfo[(int)bullet_type], unit_type, shot_pos, shot_front, user);
+	bullet->Initialize(m_BulletInfo[(int)bullet_type], unit_type, shot_pos, shot_front, user,m_EffectManager);
 }
 
 void CBulletManager::Finalize(void)
@@ -74,6 +77,10 @@ void CBulletManager::CheakHit(void)
 	// このリストを使って繰り返し処理をする
 	for (auto it : m_ChildObjectList)
 	{
+		// itのカテゴリーがBulletでないなら
+		if (it->GetGameObjectCategory() != "Bullet")
+			continue;
+
 		IBullet* bullet = (IBullet*)it;
 		for (int e = 0; e < e_count; ++e)
 		{

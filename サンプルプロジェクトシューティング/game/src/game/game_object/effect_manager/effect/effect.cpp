@@ -33,7 +33,7 @@ Initialize(void)
 {
 }
 
-void IEffect::Initialize(const aqua::CVector3& position, std::string effect_name, std::string se_name)
+void IEffect::Initialize(const aqua::CVector3& position, std::string effect_name, std::string se_name, float rotate)
 {
 }
 

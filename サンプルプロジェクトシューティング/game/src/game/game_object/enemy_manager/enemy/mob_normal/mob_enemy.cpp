@@ -13,9 +13,9 @@ CMobEnemy::CMobEnemy(aqua::IGameObject* parent)
 
 void
 CMobEnemy::
-Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m, CBulletManager* bm)
+Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, CBulletManager* bm)
 {
-	CEnemy::Initialize(pop_pos, wid, hei, dep, color, st_m, bm);
+	CEnemy::Initialize(pop_pos, enemy_info, st_m, bm);
 	m_LoseSightTimer.Setup(m_lose_sight_time);
 	m_Dir = m_surroundings[aqua::Rand(3)];
 	m_ShotBullet = BULLET_TYPE::NOMAL;
@@ -26,6 +26,15 @@ void CMobEnemy::Update(void)
 	CEnemy::Update();
 }
 
+void CMobEnemy::Draw(void)
+{
+	CEnemy::Draw();
+}
+
+void CMobEnemy::Finalize(void)
+{
+	CEnemy::Finalize();
+}
 
 void CMobEnemy::Shot(void)
 {

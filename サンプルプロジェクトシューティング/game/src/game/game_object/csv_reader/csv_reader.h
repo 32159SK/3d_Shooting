@@ -48,6 +48,7 @@ enum class BULLET_TYPE
     REFLECT,
     PENETRATE,
     BOSS,
+    BEAM,
     MAX
 };
 

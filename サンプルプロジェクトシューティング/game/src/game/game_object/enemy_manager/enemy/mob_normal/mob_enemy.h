@@ -33,14 +33,24 @@ public:
     /*
      *  @brief      ‰Šú‰»
      */
-    void    Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m, CBulletManager* bm)override;
+    void    Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, CBulletManager* bm)override;
 
     /*
      *  @brief      XV
      */
     void    Update(void)override;
 
-    void            SetPlayer(CPlayer* player) { m_Player = player; }
+    /*
+     *  @brief      •`‰æ
+     */
+    void    Draw(void)override;
+
+    /*
+     *  @brief      ‰ğ•ú
+     */
+    void    Finalize(void)override;
+
+    void    SetPlayer(CPlayer* player) { m_Player = player; }
 
 private:
 

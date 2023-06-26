@@ -65,7 +65,7 @@ void CEnemyManager::Create(aqua::CVector3 pop_pos, ENEMY_ID enemy_id)
 	}
 
 	// 初期化とプレイヤーのポインタを渡す
-	enemy->Initialize(pop_pos, m_EnemyInfo[(int)enemy_id].width, m_EnemyInfo[(int)enemy_id].height, m_EnemyInfo[(int)enemy_id].depth, m_EnemyInfo[(int)enemy_id].color, m_StageManager, m_BulletManagar);
+	enemy->Initialize(pop_pos, m_EnemyInfo[(int)enemy_id], m_StageManager, m_BulletManagar);
 	enemy->SetPlayer(m_Player);
 	m_EnemyCount++;
 
@@ -127,7 +127,7 @@ void CEnemyManager::WaveChange(void)
    	m_StageManager->WaveChange(m_WaveCount);
 
 	for (int i = 0; i < m_PopList.size(); ++i)
-		if (m_PopList[i].wave == m_WaveCount /*&& i < m_StageManager->GetEnemyCount()*/)
+		if (m_PopList[i].wave == 1 /*&& i < m_StageManager->GetEnemyCount()*/)
 			Create(m_StageManager->GetEnemyPopPos(i), m_PopList[i].pop_e_id);
 
 	m_WaveCount++;

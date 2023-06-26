@@ -11,5 +11,5 @@ void CPenetrateBullet::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua
 	m_Sphere.visible = false;
 	m_Model.Load("data\\model\\bullet.mv1");
 	m_Model.position = m_Position;
-	m_Model.rotation.y = aqua::DegToRad(m_Rotate);
 }
+

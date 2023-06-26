@@ -10,4 +10,5 @@ void CNormalBullet::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::C
 	IBullet::Initialize(bullet_info, attri, pop_pos, front, user, em);
 	m_Sphere.visible = false;
 	m_Model.Load("data\\model\\bullet.mv1");
+	m_Model.position = m_Position;
 }

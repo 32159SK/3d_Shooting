@@ -9,9 +9,10 @@ CBossEnemy::CBossEnemy(aqua::IGameObject* parent)
 {
 }
 
-void CBossEnemy::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m, CBulletManager* bm)
+void CBossEnemy::
+Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, CBulletManager* bm)
 {
-	CEnemy::Initialize(pop_pos, wid, hei, dep, color, st_m, bm);
+	CEnemy::Initialize(pop_pos, enemy_info, st_m, bm);
 	m_Model.Load("data\\model\\fixed_enemy.mv1");
 	m_Model.position = m_Position;
 	m_ShotBullet = BULLET_TYPE::PENETRATE;
@@ -59,7 +60,7 @@ void CBossEnemy::Finalize(void)
 
 bool CBossEnemy::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, int damage)
 {
-	return ;
+	return false ;
 }
 
 void CBossEnemy::Shot(void)
@@ -72,7 +73,6 @@ void CBossEnemy::Shot(void)
 		break;
 	case CBossEnemy::SECOND:m_ShotBullet = BULLET_TYPE::BOSS;
 
-		break;
 		break;
 	default:
 		break;
@@ -159,11 +159,8 @@ void CBossEnemy::PhaseChange(void)
 
 void CBossEnemy::SummonEnemy(void)
 {
-	// “GŠÇ—ƒNƒ‰ƒX‚ÌŽq‚Ì”‚ª2–¢–ž(ƒ{ƒX‚µ‚©¶‚«Žc‚Á‚Ä‚¢‚È‚¢)‚È‚çŽG‹›‚ð¢Š«
-	if (m_EnemyManager->GetChildList()->size() < 2)
-	{
-		m_EnemyManager->Create(m_FortPos[0], ENEMY_ID::MOB);
-		m_EnemyManager->Create(m_FortPos[2], ENEMY_ID::MOB);
-		m_SummonTimer.Reset();
-	}
+	// ŽG‹›‚ð¢Š«
+	m_EnemyManager->Create(m_FortPos[0], ENEMY_ID::MOB);
+	m_EnemyManager->Create(m_FortPos[2], ENEMY_ID::MOB);
+	m_SummonTimer.Reset();
 }

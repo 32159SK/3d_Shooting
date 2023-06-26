@@ -2,9 +2,19 @@
 
 IBullet::IBullet(aqua::IGameObject* parent, const std::string& object_name)
 	: IGameObject(parent, object_name, "Bullet")
+	, m_Damage(0.0f)
+	, m_Rotate(0.0f)
+	, m_Radius(0.0f)
+	, m_Speed(0.0f)
+	, m_Position(aqua::CVector3::ZERO)
+	, m_Dir(aqua::CVector3::ZERO)
+	, m_StartPos(aqua::CVector3::ZERO)
+	, m_Attri(UNIT_TYPE::PLAYER)
+	, m_EffectManager(nullptr)
+	, m_Unit(nullptr)
+
 {
 }
-
 
 void IBullet::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 pop_pos, aqua::CVector3 front, IUnit* user,CEffectManager* em)
 {
@@ -48,6 +58,10 @@ void IBullet::Update(void)
 
 	m_Model.position = m_Position;
 	m_Model.rotation.y = aqua::DegToRad(m_Rotate);
+
+	if (m_Position.x < -250.0f || m_Position.x > 250.0f ||
+		m_Position.z < -250.0f || m_Position.z > 250.0f)
+		DeleteObject();
 }
 
 void IBullet::Finalize(void)
@@ -57,7 +71,9 @@ void IBullet::Finalize(void)
 
 void IBullet::Hit(void)
 {
-	m_EffectManager->Create(EFFECT_ID::HIT, m_Position);
+	// エフェクト管理クラスがnullでないなら着弾地点にエフェクトを出す
+	if (m_EffectManager)
+		m_EffectManager->Create(EFFECT_ID::HIT, m_Position);
 	DeleteObject();
 }
 

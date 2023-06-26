@@ -25,17 +25,22 @@ CNormalEffect(aqua::IGameObject* parent)
  *  初期化
  */
 void
-CNormalEffect::Initialize(const aqua::CVector3& position, std::string effect_name, std::string se_name)
+CNormalEffect::Initialize(const aqua::CVector3& position, std::string effect_name, std::string se_name, float rotate)
 {
     m_Effect.Create("data\\texture\\effect\\" + effect_name + ".efkefc");
     m_Position = position;
+    m_Rotate = rotate;
     m_Effect.position = m_Position;
+    m_Effect.m_HRotate = m_Rotate;
     m_Effect.Play();
     m_Effect.scale *= 5.0f;
 }
 
 void CNormalEffect::Update(void)
 {
+    m_Effect.position = m_Position;
+    m_Effect.m_HRotate = m_Rotate;
+
     m_Effect.Update();
     // エフェクトが終了したら自身を削除
     if (m_Effect.Finished())

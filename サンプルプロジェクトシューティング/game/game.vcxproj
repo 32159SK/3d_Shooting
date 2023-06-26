@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\game\game.cpp" />
+    <ClCompile Include="src\game\game_object\bullet_manager\beam\beam.cpp" />
     <ClCompile Include="src\game\game_object\bullet_manager\bullet\bullet.cpp" />
     <ClCompile Include="src\game\game_object\bullet_manager\bullet\normal_bullet\normal_bullet.cpp" />
     <ClCompile Include="src\game\game_object\bullet_manager\bullet\penetrate_bullet\penetrate_bullet.cpp" />
@@ -139,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game\game.h" />
+    <ClInclude Include="src\game\game_object\bullet_manager\beam\beam.h" />
     <ClInclude Include="src\game\game_object\bullet_manager\bullet\bullet.h" />
     <ClInclude Include="src\game\game_object\bullet_manager\bullet\normal_bullet\normal_bullet.h" />
     <ClInclude Include="src\game\game_object\bullet_manager\bullet\penetrate_bullet\penetrate_bullet.h" />

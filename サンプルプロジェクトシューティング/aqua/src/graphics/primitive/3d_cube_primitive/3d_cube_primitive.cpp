@@ -208,3 +208,19 @@ bool aqua::CCubePrimitive::CheckCollision(CVector3& center_pos, float r)
     collision = false;
     return collision;
 }
+
+bool aqua::CCubePrimitive::CheckCollision(CVector3& positionA, CVector3& positionB, float r)
+{
+    for (int i = 0; i < index_count;)
+    {
+        // vertexとindexを使って三角形の頂点を求めどれかに触れていればその時点でfor文を抜ける
+        if (HitCheck_Capsule_Triangle(positionA, positionB, r, vertex[index[i]].pos, vertex[index[i + 1]].pos, vertex[index[i + 2]].pos) == 1)
+        {
+            collision = true;
+            return collision;
+        }
+        i += 3;
+    }
+    collision = false;
+    return collision;
+}

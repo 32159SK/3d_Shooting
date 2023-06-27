@@ -10,7 +10,6 @@
 #pragma once
 #include "aqua.h"
 #include "../../game_object.h"
-#include "../../unit/unit.h"
 
 class IBullet : public aqua::IGameObject
 {
@@ -113,5 +112,4 @@ protected:
 
     CEffectManager*         m_EffectManager;
 
-    IUnit*                  m_Unit;
 };

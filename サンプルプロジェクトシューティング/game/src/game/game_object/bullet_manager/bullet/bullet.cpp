@@ -2,7 +2,7 @@
 
 IBullet::IBullet(aqua::IGameObject* parent, const std::string& object_name)
 	: IGameObject(parent, object_name, "Bullet")
-	, m_Damage(0.0f)
+	, m_Damage(0)
 	, m_Rotate(0.0f)
 	, m_Radius(0.0f)
 	, m_Speed(0.0f)
@@ -11,8 +11,6 @@ IBullet::IBullet(aqua::IGameObject* parent, const std::string& object_name)
 	, m_StartPos(aqua::CVector3::ZERO)
 	, m_Attri(UNIT_TYPE::PLAYER)
 	, m_EffectManager(nullptr)
-	, m_Unit(nullptr)
-
 {
 }
 
@@ -24,7 +22,6 @@ void IBullet::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector
 	m_Damage = bullet_info.damage;
 	m_Speed = bullet_info.speed;
 	m_Radius = bullet_info.radius;
-	m_Unit = user;
 	m_EffectManager = em;
 
 	m_StartPos = m_Position;

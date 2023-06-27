@@ -11,6 +11,7 @@ IUnit(aqua::IGameObject* parent, const std::string& object_name)
 	, m_MaxLife(0)
 	, m_Life(0)
 	, m_DeadFlag(false)
+	, m_MoveFlag(true)
 	, m_Rotate(0.0f)
 	, m_Position(aqua::CVector3::ZERO)
 	, m_Velocity(aqua::CVector3::ZERO)
@@ -53,6 +54,18 @@ bool IUnit::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere,int dam
 	if (m_UnitType == type)
 		return false;
 	if (m_Cube.CheckCollision(sphere.position, sphere.radius))
+	{
+		Damage(damage);
+		return true;
+	}
+	return false;
+}
+
+bool IUnit::CheckHitBeam(UNIT_TYPE type, aqua::CCapsulePrimitive capsule, int damage)
+{
+	if (m_UnitType == type)
+		return false;
+	if (m_Cube.CheckCollision(capsule.Apos,capsule.Bpos,capsule.radius))
 	{
 		Damage(damage);
 		return true;

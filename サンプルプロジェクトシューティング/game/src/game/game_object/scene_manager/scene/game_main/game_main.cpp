@@ -116,7 +116,7 @@ CGameMain::
 GamePlay(void)
 {
     m_Camera.m_Target = m_Player->GetPosition();
-    float wheel_value = aqua::mouse::GetWheel();
+    float wheel_value = (float)aqua::mouse::GetWheel();
     if (wheel_value > 0) m_Camera.m_Distace -= 5.0f;
     else if (wheel_value < 0) m_Camera.m_Distace += 5.0f;
     m_Camera.Update();

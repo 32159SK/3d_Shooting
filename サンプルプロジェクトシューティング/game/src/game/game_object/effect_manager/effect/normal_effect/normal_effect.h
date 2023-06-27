@@ -45,7 +45,7 @@ public:
      *
      *  @param[in]  position    à íu
      */
-    void    Initialize(const aqua::CVector3& position, std::string effect_name, std::string se_name,float rotate = 0.0f)override;
+    void    Initialize(const aqua::CVector3& position, std::string effect_name, std::string se_name,float rotate = 0.0f, float scale = 5.0f)override;
 
     /*!
      *  @brief      çXêV
@@ -62,7 +62,7 @@ public:
      */
     void    Finalize(void)override;
 
-
+    aqua::CEffect3D* GetEffect(void) { return &m_Effect; }
 private:
     aqua::CEffect3D     m_Effect;
     float               m_Rotate;

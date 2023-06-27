@@ -24,8 +24,8 @@ CSkillEffect(aqua::IGameObject* parent)
 /*
  *  èâä˙âª
  */
-void 
-CSkillEffect::Initialize(const aqua::CVector3& position, std::string effect_name, std::string se_name)
+void
+CSkillEffect::Initialize(const aqua::CVector3& position, std::string effect_name, std::string se_name, float rotate, float scale)
 {
 }
 

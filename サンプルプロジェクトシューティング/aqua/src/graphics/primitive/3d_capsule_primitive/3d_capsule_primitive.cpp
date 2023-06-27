@@ -17,19 +17,6 @@ void aqua::CCapsulePrimitive::Setup(const aqua::CVector3& A_pos, const aqua::CVe
 
 void aqua::CCapsulePrimitive::Draw(void)
 {
-	// 行列を使ってAを中心とした回転処理を行う
-	aqua::CMatrix mat;
-
-	mat.RotationZ(aqua::DegToRad(m_TRotate));
-
-	mat.RotationX(aqua::DegToRad(m_VRotate));
-
-	mat.RotationY(aqua::DegToRad(m_HRotate));
-
-	mat.Translate(Apos);
-
-	Bpos *= mat;
-
 	if (!visible) return;
 
 	DrawCapsule3D(Apos, Bpos, radius, div_num, color.GetColor(), spc_color.GetColor(), fill);

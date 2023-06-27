@@ -107,18 +107,25 @@ namespace aqua
         void    Draw(void);
 
         /*!
-         *  @brief      衝突判定
+         *  @brief      線分衝突判定
          *  @param[in]  pointA          始点
          *  @param[in]  pointB          終点
          */
         bool    CheckCollision(CVector3& pointA, CVector3& pointB)override;
 
         /*!
-         *  @brief      衝突判定
+         *  @brief      球衝突判定
          *  @param[in]  center_pos      球の中心
          *  @param[in]  r               半径
          */
         bool    CheckCollision(CVector3& center_pos, float r)override;
+
+        /*!
+         *  @brief      球衝突判定
+         *  @param[in]  center_pos      球の中心
+         *  @param[in]  r               半径
+         */
+        bool    CheckCollision(CVector3& positionA, CVector3& positionB, float r)override;
 
         COLL_DIRE           GetLastCollDire(void) { return last_dire; }
 

@@ -48,7 +48,15 @@ public:
      *  @param[in]  id          エフェクトID
      *  @param[in]  position    位置
      */
-    void        Create(EFFECT_ID id, const aqua::CVector3& position, float rotate = 0.0f);
+    void        Create(EFFECT_ID id, const aqua::CVector3& position, float rotate = 0.0f, float scale = 5.0f);
+
+    /*!
+     *  @brief      エフェクト生成しポインタを渡す
+     *
+     *  @param[in]  id          エフェクトID
+     *  @param[in]  position    位置
+     */
+    aqua::CEffect3D* CreateGetEffect(EFFECT_ID id, const aqua::CVector3& position, float rotate = 0.0f, float scale = 5.0f);
 
     /*!
      *  @brief      更新

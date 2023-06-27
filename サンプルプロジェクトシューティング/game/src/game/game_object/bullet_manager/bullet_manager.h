@@ -13,6 +13,7 @@
 
 #include "aqua.h"
 #include "bullet/bullet.h"
+#include "beam/beam.h"
 
  /*!
   *  @class      CBulletManager
@@ -26,6 +27,7 @@
   *  @version    1.0
   */
 
+class CBeam;
 
 class CBulletManager
     : public aqua::IGameObject
@@ -82,6 +84,8 @@ public:
 private:
 
     void        CheakHit(void);
+
+    void        CheakHitBeam(CBeam* beam,int e_count);
 
     CCSVReader*             m_CSVReader;        // CSV読み取りクラスのポインタ
     CPlayer*                m_Player;           // プレイヤークラスの  ””

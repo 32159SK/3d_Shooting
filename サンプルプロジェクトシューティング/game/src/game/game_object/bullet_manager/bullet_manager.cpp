@@ -1,3 +1,4 @@
+
 #include "../../game_object/game_object.h"
 #include "bullet_manager.h"
 #include "bullet/normal_bullet/normal_bullet.h"
@@ -43,6 +44,13 @@ void CBulletManager::Draw(void)
 void CBulletManager::Create(aqua::CVector3 shot_pos, aqua::CVector3 shot_front, UNIT_TYPE unit_type, BULLET_TYPE bullet_type, IUnit* user)
 {
 
+	if (bullet_type == BULLET_TYPE::BEAM)
+	{
+		// 新しく生成する弾の容器
+		CBeam* beam = aqua::CreateGameObject<CBeam>(this);
+		beam->Initialize(m_BulletInfo[(int)bullet_type], unit_type, shot_pos, shot_front, user, m_EffectManager);
+		return;
+	}
 
 	// 新しく生成する弾の容器
  	IBullet* bullet = nullptr;
@@ -72,16 +80,19 @@ void CBulletManager::CheakHit(void)
 	if (m_ChildObjectList.empty())
 		return;
 
-	int e_count = m_Enemy.size();
+	int e_count = (int)m_Enemy.size();
 
 	// このリストを使って繰り返し処理をする
 	for (auto it : m_ChildObjectList)
 	{
 		// itのカテゴリーがBulletでないなら
 		if (it->GetGameObjectCategory() != "Bullet")
+		{
+			CheakHitBeam((CBeam*)it,e_count);
 			continue;
-
+		}
 		IBullet* bullet = (IBullet*)it;
+
 		for (int e = 0; e < e_count; ++e)
 		{
 			if (!m_Enemy[e])
@@ -95,7 +106,6 @@ void CBulletManager::CheakHit(void)
 			}
 		}
 		
-
 		// プレイヤーとの衝突確認
 		if (m_Player && !m_Player->GetDead() && m_Player->CheckHitBullet(bullet->GetAttri(), bullet->GetSphere(), bullet->GetDamage()))
 		{
@@ -111,7 +121,23 @@ void CBulletManager::CheakHit(void)
 		}
 	}
 
-
 }
 
+void CBulletManager::CheakHitBeam(CBeam* beam,int e_count)
+{
+	if (!beam->GetDamageFlag())
+		return;
 
+	for (int e = 0; e < e_count; ++e)
+	{
+		if (!m_Enemy[e])
+			continue;
+		// 死んでない敵と弾の衝突確認
+		if (!m_Enemy[e]->GetDead())
+			m_Enemy[e]->CheckHitBeam(beam->GetAttri(), beam->GetCapsule(), beam->GetDamage());
+	}
+
+	// プレイヤーとの衝突確認
+	if (m_Player && !m_Player->GetDead())
+		m_Player->CheckHitBeam(beam->GetAttri(), beam->GetCapsule(), beam->GetDamage());
+}

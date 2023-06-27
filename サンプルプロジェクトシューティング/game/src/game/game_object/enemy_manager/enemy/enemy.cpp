@@ -23,13 +23,16 @@ Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m,CB
 	m_MaxLife = enemy_info.life;
 	m_Life = m_MaxLife;
 	m_UnitType = UNIT_TYPE::ENEMY;
-	m_ShotCT.Setup(enemy_info.shot_ct);
+	m_ShotCT.Setup(10);
 	m_Speed = enemy_info.speed;
 }
 
 void CEnemy::Update(void)
 {
 	IGameObject::Update();
+	// ŽŽŒ±‰^—p
+	if (!m_MoveFlag)
+		return;
 
 	if (m_Player->GetTimeStop())
 		return;

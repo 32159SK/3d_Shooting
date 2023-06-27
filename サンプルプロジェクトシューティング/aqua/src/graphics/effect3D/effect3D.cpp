@@ -19,9 +19,9 @@ aqua::CEffect3D::
 CEffect3D(void)
     : position(aqua::CVector3::ZERO)
     , scale(aqua::CVector3::ONE)
-    , m_VRotate(0.0f)
-    , m_HRotate(0.0f)
-    , m_TRotate(0.0f)
+    , V_angle(0.0f)
+    , H_angle(0.0f)
+    , T_angle(0.0f)
     , color(aqua::CColor::WHITE)
     , m_PlayingEffectHandle(AQUA_UNUSED_HANDLE)
     , m_PlaySpeed(1.0f)
@@ -76,7 +76,7 @@ Update(void)
     SetScalePlayingEffekseer3DEffect(m_PlayingEffectHandle, scale.x, scale.y, scale.z);
 
     // âÒì]ílÇê›íË
-    SetRotationPlayingEffekseer3DEffect(m_PlayingEffectHandle, m_VRotate, m_HRotate, m_TRotate);
+    SetRotationPlayingEffekseer3DEffect(m_PlayingEffectHandle, V_angle, H_angle, T_angle);
 
     // êFê›íË
     SetColorPlayingEffekseer3DEffect(m_PlayingEffectHandle, color.red, color.green, color.blue, color.alpha);

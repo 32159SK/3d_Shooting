@@ -16,7 +16,7 @@ const std::string CEffectManager::m_effect_file_names[] =
 {
      "hit"
     ,"broken"
-    ,"beam"
+    ,"beam_2"
     ,"dead"
     ,"boss_dead"
 };
@@ -35,13 +35,21 @@ CEffectManager(aqua::IGameObject* parent)
  */
 void
 CEffectManager::
-Create(EFFECT_ID id, const aqua::CVector3& position, float rotate)
+Create(EFFECT_ID id, const aqua::CVector3& position, float rotate, float scale)
 {
     IEffect* effect = nullptr;
 
     if (id != EFFECT_ID::SKILL)
         effect = aqua::CreateGameObject<CNormalEffect>(this);
-    effect->Initialize(position, m_effect_file_names[(int)id], "",rotate);
+    effect->Initialize(position, m_effect_file_names[(int)id], "",rotate,scale);
+}
+
+aqua::CEffect3D* CEffectManager::CreateGetEffect(EFFECT_ID id, const aqua::CVector3& position, float rotate, float scale)
+{
+    CNormalEffect* effect = nullptr;
+    effect = aqua::CreateGameObject<CNormalEffect>(this);
+    effect->Initialize(position, m_effect_file_names[(int)id], "", rotate, scale);
+    return effect->GetEffect();
 }
 
 void CEffectManager::Update(void)

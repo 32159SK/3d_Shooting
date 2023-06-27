@@ -50,6 +50,11 @@ public:
      */
     virtual bool    CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, int damage);
 
+    /*
+     *  @brief      ビーム被弾判定
+     */
+    virtual bool    CheckHitBeam(UNIT_TYPE type, aqua::CCapsulePrimitive capsule, int damage);
+
     aqua::CVector3  GetPosition(void) { return m_Position; }
 
     bool            GetDead(void) { return m_DeadFlag; }
@@ -67,6 +72,8 @@ public:
     int             GetMaxLife(void) { return m_MaxLife; }
 
     int             GetLife(void) { return m_Life; }
+
+    void            SetMoveFlag(bool flag) { m_MoveFlag = flag; }
 
 protected:
 
@@ -95,6 +102,8 @@ protected:
     int                  m_Life;         // ライフ
 
     bool                 m_DeadFlag;     // 死亡フラグ
+
+    bool                 m_MoveFlag;
 
     float                m_Width;        // 幅
 

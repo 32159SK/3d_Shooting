@@ -14,7 +14,7 @@ Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, C
 	CEnemy::Initialize(pop_pos, enemy_info, st_m, bm);
 	m_Model.Load("data\\model\\fixed_enemy.mv1");
 	m_Model.position = m_Position;
-	m_ShotBullet = BULLET_TYPE::PENETRATE;
+	m_ShotBullet = BULLET_TYPE::BEAM;
 	m_Cube.visible = false;
 }
 
@@ -48,6 +48,7 @@ void CFixedEnemy::Shot(void)
 
 void CFixedEnemy::Move(void)
 {
+
 	// プレイヤーと自身の距離
 	aqua::CVector3 v = m_Player->GetPosition() - m_Position;
 

@@ -132,6 +132,19 @@ bool CPlayer::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, int 
 		return false;
 }
 
+bool CPlayer::CheckHitBeam(UNIT_TYPE type, aqua::CCapsulePrimitive capsule, int damage)
+{
+	if (m_Invincible)
+		return false;
+
+	if (IUnit::CheckHitBeam(type, capsule, damage))
+	{
+		m_Invincible = true;
+		return true;
+	}
+	else
+		return false;
+}
 
 void CPlayer::Shot(void)
 {
@@ -198,7 +211,7 @@ void CPlayer::Move(void)
 	TheWorld();
 	
 	// •Ç‚Æ“–‚½‚Á‚Ä‚½‚ç‚»‚±‚ÅŽ~‚Ü‚é
-	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * m_Width, false))
+	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * m_Width, false)|| !m_MoveFlag)
 		return;
 
 	m_Position += m_Velocity;

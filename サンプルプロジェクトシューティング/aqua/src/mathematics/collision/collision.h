@@ -36,6 +36,7 @@ namespace aqua
 
 		virtual bool	CheckCollision(CVector3& center_pos, float r);
 
+		virtual bool    CheckCollision(CVector3& positionA, CVector3& positionB, float r);
 	};
 
 };

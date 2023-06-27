@@ -54,6 +54,11 @@ public:
     bool            CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, int damage)override;
 
     /*
+     *  @brief      被弾確認
+     */
+    bool            CheckHitBeam(UNIT_TYPE type, aqua::CCapsulePrimitive capsule, int damage)override;
+
+    /*
      *  @brief      少し前の座標取得
      */
     aqua::CVector3  GetAgoPos(void) { return m_AgoPosition; }

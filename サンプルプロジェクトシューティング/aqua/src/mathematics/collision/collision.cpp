@@ -21,3 +21,8 @@ bool aqua::CCollision::CheckCollision(CVector3& center_pos, float r)
 {
 	return false;
 }
+
+bool aqua::CCollision::CheckCollision(CVector3& positionA, CVector3& positionB, float r)
+{
+	return false;
+}

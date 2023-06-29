@@ -6,7 +6,7 @@ const float CMobEnemy::m_lose_sight_time = 2.0f;
 
 
 CMobEnemy::CMobEnemy(aqua::IGameObject* parent)
-	: CEnemy(parent)
+	: CEnemy(parent,"MobEnemy")
 	, m_Follow(false)
 {
 }

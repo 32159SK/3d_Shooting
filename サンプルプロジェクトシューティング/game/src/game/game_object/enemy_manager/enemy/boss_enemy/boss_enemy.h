@@ -12,6 +12,7 @@
 #include "../enemy.h"
 
 class CEnemyManager;
+class CBossCannon;
 
 class CBossEnemy : public CEnemy
 {
@@ -111,15 +112,15 @@ private:
 
     BOSS_PHASE      m_Phase;                    // 現在の形態
 
-    float           m_FortRotate[3];            // 砲門角度
-
     aqua::CModel    m_Model;                    // モデル
 
-    aqua::CVector3  m_FortPos[3];               // 砲門座標
+    aqua::CVector3  m_FortPos[4];               // 砲門座標
 
     aqua::CTimer    m_SummonTimer;              // 召喚タイマー
 
     aqua::CTimer    m_DeadTimer;                // 死亡演出用タイマー
+
+    CBossCannon*    m_Cannon[4];                // 
 
     CEnemyManager*  m_EnemyManager;             // 敵管理クラス(親クラス)
 };

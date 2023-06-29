@@ -9,7 +9,7 @@ const aqua::CVector3 CEnemy::m_surroundings[] =
 	aqua::CVector3(0.0f,0.0f,1.0f),
 };
 
-CEnemy::CEnemy(aqua::IGameObject* parent)
+CEnemy::CEnemy(aqua::IGameObject* parent, const std::string& object_name)
 	: IUnit(parent,"Enemy")
 	, m_Angle(180.0f)
 {
@@ -23,8 +23,12 @@ Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m,CB
 	m_MaxLife = enemy_info.life;
 	m_Life = m_MaxLife;
 	m_UnitType = UNIT_TYPE::ENEMY;
-	m_ShotCT.Setup(10);
+	m_ShotCT.Setup(enemy_info.shot_ct);
 	m_Speed = enemy_info.speed;
+
+	// 発射のタイミングをずらすために乱数でばらつきを与える
+	float shot_time_rand = (float)aqua::Rand((int)ceil(enemy_info.shot_ct));
+	m_ShotCT.SetTime(shot_time_rand);
 }
 
 void CEnemy::Update(void)
@@ -60,7 +64,6 @@ void CEnemy::Finalize(void)
 
 void CEnemy::Shot(void)
 {
-
 	aqua::CVector3 front;
 
 	front.x = sin(aqua::DegToRad(m_Rotate));

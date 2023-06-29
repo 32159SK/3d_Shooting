@@ -10,7 +10,6 @@
 #pragma once
 #include "aqua.h"
 #include "../enemy.h"
- //#include "../../bullet_manager/bullet_manager.h"
 
 class CPlayer;
 

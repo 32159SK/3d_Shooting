@@ -3,7 +3,7 @@
 
 
 CAlongWallEnemy::CAlongWallEnemy(aqua::IGameObject* parent)
-	: CEnemy(parent)
+	: CEnemy(parent,"AlongWallEnemy")
 	, m_AlongWall(false)
 	,m_WallDire(WALL_DIRE::UP)
 {
@@ -25,10 +25,10 @@ void CAlongWallEnemy::Shot(void)
 {
 	aqua::CVector3 bull_dir;
 
-	for (int i = 0; i < 12; i++)
+	for (int i = 0; i < 4; i++)
 	{
-		bull_dir.x = sin(aqua::DegToRad(m_Rotate + 30.0f * i));
-		bull_dir.z = cos(aqua::DegToRad(m_Rotate + 30.0f * i));
+		bull_dir.x = sin(aqua::DegToRad(m_Rotate + 45.0f + 90.0f * i));
+		bull_dir.z = cos(aqua::DegToRad(m_Rotate + 45.0f + 90.0f * i));
 		m_BulletManager->Create(m_Position, bull_dir, m_UnitType, m_ShotBullet, this);
 	}
 

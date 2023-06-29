@@ -4,6 +4,8 @@
 #include "enemy/mob_normal/mob_enemy.h"
 #include "enemy/along_wall/along_wall.h"
 #include "enemy/fixed_enemy/fixed_enemy.h"
+#include "enemy/boss_enemy/boss_enemy.h"
+#include "enemy/boss_enemy/boss_cannon/boss_cannon.h"
 
 const int CEnemyManager::m_max_wave = 2;
 
@@ -58,7 +60,7 @@ void CEnemyManager::Create(aqua::CVector3 pop_pos, ENEMY_ID enemy_id)
 	switch (enemy_id)
 	{
 	case ENEMY_ID::MOB:  enemy = aqua::CreateGameObject<CMobEnemy>(this); break;
-	case ENEMY_ID::ALONG_WALL: enemy = aqua::CreateGameObject<CFixedEnemy>(this); break;
+	case ENEMY_ID::ALONG_WALL: enemy = aqua::CreateGameObject<CAlongWallEnemy>(this); break;
 	case ENEMY_ID::FIXED: enemy = aqua::CreateGameObject<CFixedEnemy>(this); break;
 	default:
 		break;
@@ -113,6 +115,15 @@ CEnemy* CEnemyManager::GetNearest(aqua::CVector3 player_pos)
 
 	return nearestEnemy;
 }
+
+CEnemy* CEnemyManager::CreateBossParts(aqua::CVector3 pop_pos, ENEMY_ID enemy_id)
+{
+	// “n‚³‚ê‚½î•ñ‚©‚ç“G‚ð¶¬
+	Create(pop_pos, enemy_id);
+	// ––”ö‚Ì—v‘f(’¼‘O‚É¶¬‚³‚ê‚½“G‚Ìƒ|ƒCƒ“ƒ^)‚ð•Ô‚·
+	return (CEnemy*)m_ChildObjectList.back();
+}
+
 void CEnemyManager::WaveChange(void)
 {
 	if (m_WaveCount > m_max_wave)

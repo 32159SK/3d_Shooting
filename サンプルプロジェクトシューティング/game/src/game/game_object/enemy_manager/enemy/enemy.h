@@ -22,7 +22,7 @@ public:
      *  @param[in]  parent          親オブジェクト
      *  @param[in]  object_name     オブジェクト名
      */
-    CEnemy(aqua::IGameObject* parent);
+    CEnemy(aqua::IGameObject* parent, const std::string& object_name);
 
     /*
      *  @brief      デストラクタ

@@ -9,7 +9,7 @@ const float CPlayer::m_lock_range = 200.0f;
 const int   CPlayer::m_max_life = 10;
 
 CPlayer::CPlayer(aqua::IGameObject* parent)
-	: IUnit(parent, "Player")
+	: IUnit(parent,"Player")
 	, m_AgoPosition(aqua::CVector3::ZERO)
 	, m_Invincible(false)
 	, m_TimeStop(false)
@@ -101,6 +101,7 @@ void CPlayer::Draw(void)
 	case BULLET_TYPE::FAST:		m_DrawBT.text = "BULLET:FAST"; break;
 	case BULLET_TYPE::REFLECT:	m_DrawBT.text = "BULLET:REFLECT"; break;
 	case BULLET_TYPE::PENETRATE:m_DrawBT.text = "BULLET:PENETRATE"; break;
+	case BULLET_TYPE::BEAM:		m_DrawBT.text = "BULLET:BEAM"; break;
 	
 	default:
 		break;
@@ -151,6 +152,9 @@ void CPlayer::Shot(void)
 	m_ChangeCT.Update();
 	m_ShotCT.Update();
 
+	if (!m_MoveFlag)
+		return;
+
 	// 弾の種類の切り替え
 	if (m_ChangeCT.Finished())
 	{
@@ -161,12 +165,22 @@ void CPlayer::Shot(void)
 			m_ChangeCT.Reset();
 		}
 		// ↓キー
-		if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::DOWN) && (int)m_ShotBullet < (int)BULLET_TYPE::BOSS - 1)
+		if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::DOWN) && (int)m_ShotBullet < (int)BULLET_TYPE::BEAM - 1)
 		{
 			// +1の弾に変更(例NOMAL→FAST)
 			m_ShotBullet = (BULLET_TYPE)((int)m_ShotBullet + 1);
 			m_ChangeCT.Reset();
 		}
+
+
+		//	ビームは無法すぎるので隠しコマンドで
+		if(aqua::keyboard::Button(aqua::keyboard::KEY_ID::LSHIFT) && aqua::keyboard::Button(aqua::keyboard::KEY_ID::B))
+		{
+			// +1の弾に変更(例NOMAL→FAST)
+			m_ShotBullet = BULLET_TYPE::BEAM;
+			m_ChangeCT.Reset();
+		}
+
 	}
 
 	// 正面座標
@@ -193,6 +207,14 @@ void CPlayer::Move(void)
 
 	m_Velocity = aqua::CVector3::ZERO;
 
+	// ザ・ワールド
+	TheWorld();
+
+	// 行動不可(ビーム待機中)なら処理を止める
+	if (!m_MoveFlag)
+		return;
+
+
 	if (Button(KEY_ID::W)) m_Velocity += aqua::CVector3::FRONT;
 	if (Button(KEY_ID::S)) m_Velocity += aqua::CVector3::BACK;
 	if (Button(KEY_ID::A)) m_Velocity += aqua::CVector3::LEFT;
@@ -207,11 +229,9 @@ void CPlayer::Move(void)
 	// ロックオン
 	LockOn();
 
-	// ザ・ワールド
-	TheWorld();
 	
 	// 壁と当たってたらそこで止まる
-	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * m_Width, false)|| !m_MoveFlag)
+	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * m_Width, false))
 		return;
 
 	m_Position += m_Velocity;

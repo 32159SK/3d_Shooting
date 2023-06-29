@@ -2,7 +2,7 @@
 #include "beam.h"
 
 const float CBeam::m_max_range = 250.0f;
-const float CBeam::m_charge_time = 3.0f;
+const float CBeam::m_charge_time = 4.0f;
 
 CBeam::CBeam(aqua::IGameObject* parent)
 	:IGameObject(parent,"Beam")

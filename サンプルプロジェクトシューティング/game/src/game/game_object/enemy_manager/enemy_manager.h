@@ -77,6 +77,11 @@ public:
      */
     CEnemy*     GetNearest(aqua::CVector3 player_pos);
 
+    /*!
+     *  @brief      É{ÉXÇÃïîà ê∂ê¨
+     */
+    CEnemy*     CreateBossParts(aqua::CVector3 pop_pos, ENEMY_ID enemy_id);
+
 private:
 
     void        WaveChange(void);

@@ -1,11 +1,18 @@
 #include "../../../game_object.h"
+#include "boss_cannon/boss_cannon.h"
 #include "boss_enemy.h"
 
 const float CBossEnemy::m_summon_interval = 15.0f;
+const aqua::CVector3 CBossEnemy::m_base_fort_pos[] = { aqua::CVector3::ZERO,aqua::CVector3::ZERO };
 const std::string CBossEnemy::m_model_file_path = "data\\model\\boss_enemy_N.mv1";
 
+
 CBossEnemy::CBossEnemy(aqua::IGameObject* parent)
-	: CEnemy(parent)
+	: CEnemy(parent, "BossEnemy")
+	, m_Phase(BOSS_PHASE::FIRST)
+	, m_FortPos{ aqua::CVector3::ZERO }
+	, m_Cannon{ nullptr }
+	, m_EnemyManager{ nullptr }
 {
 }
 
@@ -17,6 +24,7 @@ Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, C
 	m_Model.position = m_Position;
 	m_ShotBullet = BULLET_TYPE::PENETRATE;
 	m_Cube.visible = false;
+
 	// 親(敵管理)クラスを取得
 	m_EnemyManager = (CEnemyManager*)IGameObject::GetParent();
 
@@ -24,6 +32,9 @@ Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, C
 
 	for (int i = 0; i < BOSS_PHASE::SECOND; i++)
 		m_PhaseLife[i] = m_Life + m_Life / 2.0f * i;
+	for (int i = 0; i < 2; ++i)
+	m_Cannon[i] = (CBossCannon*)m_EnemyManager->CreateBossParts(m_base_fort_pos[i], ENEMY_ID::BOSS_CANNON);
+
 }
 
 void CBossEnemy::Update(void)
@@ -68,10 +79,10 @@ void CBossEnemy::Shot(void)
 
 	switch (m_Phase)
 	{
-	case CBossEnemy::FIRST:	m_ShotBullet = BULLET_TYPE::REFLECT;
+	case CBossEnemy::FIRST:	m_ShotBullet = BULLET_TYPE::BOSS;
 
 		break;
-	case CBossEnemy::SECOND:m_ShotBullet = BULLET_TYPE::BOSS;
+	case CBossEnemy::SECOND:m_ShotBullet = BULLET_TYPE::BEAM;
 
 		break;
 	default:
@@ -116,6 +127,15 @@ void CBossEnemy::Dead(void)
 
 void CBossEnemy::FirstPhase(void)
 {
+
+	// プレイヤーと自身の距離
+	aqua::CVector3 v = m_Player->GetPosition() - m_Position;
+
+	// ベクトルのノーマライズ
+	v.Normalize();
+
+	// 2点から回転角度を求める
+	m_Rotate = aqua::RadToDeg(atan2(v.x, v.z));
 }
 
 void CBossEnemy::SecondPhase(void)
@@ -127,15 +147,6 @@ void CBossEnemy::SecondPhase(void)
 	if (m_SummonTimer.Finished())
 		SummonEnemy();
 
-	// プレイヤーと自身の距離
-	aqua::CVector3 v = m_Player->GetPosition() - m_Position;
-
-	// ベクトルのノーマライズ
-	v.Normalize();
-
-	// 2点から回転角度を求める
-	m_Rotate = aqua::RadToDeg(atan2(v.x, v.z));
-
 }
 
 void CBossEnemy::PhaseChange(void)
@@ -146,15 +157,18 @@ void CBossEnemy::PhaseChange(void)
 	// モデルをアンロード
 	m_Model.Unload();
 
-	// 
-	std::string model_path = m_model_file_path;
+	if (m_Phase != BOSS_PHASE::DEAD)
+	{
+		// 
+		std::string model_path = m_model_file_path;
 
-	model_path.replace(model_path.find("N"), 1, std::to_string((int)m_Phase + 1));
+		model_path.replace(model_path.find("N"), 1, std::to_string((int)m_Phase + 1));
 
-	m_Model.Load(model_path);
+		m_Rotate = 0.0f;
+		m_Model.Load(model_path);
 
-	m_Model.position = m_Position;
-	m_Rotate = 0.0f;
+		m_Model.position = m_Position;
+	}
 }
 
 void CBossEnemy::SummonEnemy(void)

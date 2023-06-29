@@ -76,6 +76,9 @@ void CBeam::Update(void)
 	case CBeam::BEAM_STATE::FIRING:Firing();break;
 	case CBeam::BEAM_STATE::DESTROY:Destroy();break;
 	}
+	// 使用者が死んだら中断
+	if (!m_User || m_User->GetDead())
+		m_BeamState = BEAM_STATE::DESTROY;
 
 }
 
@@ -87,10 +90,6 @@ void CBeam::Charge(void)
 {
 	// チャージ中はダメージ判定なし
 	m_DamageFlag = false;
-
-	// チャージ中に使用者が死んだら中断(チャージさえ完了すれば中断せず発射する)
-	if(!m_User||m_User->GetDead())
-		m_BeamState = BEAM_STATE::DESTROY;
 
 	m_Timer.Update();
 	if (m_Timer.Finished())

@@ -68,12 +68,19 @@ public:
      *  @brief      回転値の取得
      */
     float           GetRotate(void) { return m_Rotate; }
-
+    /*
+     *  @brief      最大ライフの取得
+     */
     int             GetMaxLife(void) { return m_MaxLife; }
-
+    /*
+     *  @brief      現在ライフの取得
+     */
     int             GetLife(void) { return m_Life; }
 
-    void            SetMoveFlag(bool flag) { m_MoveFlag = flag; }
+    /*
+     *  @brief      行動可能フラグの設定
+     */
+    virtual void    SetMoveFlag(bool flag) { m_MoveFlag = flag; }
 
 protected:
 

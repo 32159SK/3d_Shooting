@@ -94,6 +94,11 @@ private:
      */
     void            SummonEnemy(void);
 
+    /*
+     *  @brief      オールレンジ攻撃(νガ〇ダムとかのファ〇ネルのイメージ)
+     */
+    void            AllRangeAttack(void);
+
 
     enum BOSS_PHASE
     {
@@ -102,25 +107,33 @@ private:
         DEAD
     };
 
-    int             m_PhaseLife[3];
-
     static const std::string m_model_file_path; // モデルファイルパス
 
-    static const aqua::CVector3 m_base_fort_pos[3];// 砲門基本座標
+    static const aqua::CVector3 m_base_cannon_pos[4];// 砲門基本座標
 
     static const float   m_summon_interval;     // 召喚間隔
+
+    static const float   m_all_range_ct;        // 
+    static const int     m_cannon_count[2];        // 
+
+    int             m_PhaseLife[3];             // 
+
+    bool            m_AllRangeAttacking;        // オールレンジ攻撃中
 
     BOSS_PHASE      m_Phase;                    // 現在の形態
 
     aqua::CModel    m_Model;                    // モデル
 
-    aqua::CVector3  m_FortPos[4];               // 砲門座標
+    aqua::CVector3  m_CannonPos[4];             // 砲門座標
 
     aqua::CTimer    m_SummonTimer;              // 召喚タイマー
 
-    aqua::CTimer    m_DeadTimer;                // 死亡演出用タイマー
+    aqua::CTimer    m_AllRangeTimer;            // 
+
+    aqua::CEffect3D* m_Effect;                  // エフェクト
 
     CBossCannon*    m_Cannon[4];                // 
 
     CEnemyManager*  m_EnemyManager;             // 敵管理クラス(親クラス)
+
 };

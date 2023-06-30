@@ -51,18 +51,57 @@ public:
     /*
      *  @brief      座標設定
      */
-    void    SetPosition(aqua::CVector3 pos) { m_Position = pos; }
+    void    SetPosition(aqua::CVector3 pos);
 
     /*
      *  @brief      弾種設定
      */
     void    SetBulletType(BULLET_TYPE bullet_type) { m_ShotBullet = bullet_type; }
 
+    /*
+     *  @brief      オールレンジ攻撃の設定
+     */
+    void    SetAllRange(void);
+
+    /*
+     *  @brief      行動可能フラグの設定
+     */
+    void    SetMoveFlag(bool flag)override;
+
+    /*
+     *  @brief      行動可能フラグの設定
+     */
+    void    Shot(void)override;
+
+    /*
+     *  @brief      終了フラグ取得
+     */
+    bool    GetFinish(void) { return m_AllRangeFinish; }
 private:
 
-    void            Move(void)override;
+    void    Move(void)override;
+
+    void    EasingMove(void);
+
+    void    AllRangeAttack(void);
+
+    static const float m_move_time;
+
+    static const float m_player_distance;
+
+    bool            m_AllRangeAttacking;        // オールレンジ攻撃中
+
+    bool            m_ReturnFlag;               // 元の場所に戻るかのフラグ
+
+    bool            m_AllRangeFinish;           // オールレンジ攻撃の終了
+
+    aqua::CVector3  m_StartPos;
+
+    aqua::CVector3  m_EndPos;
 
     aqua::CModel    m_Model;
+
+    aqua::CTimer    m_MoveTimer;
 
     CBossEnemy*     m_BossEnemy;
 };

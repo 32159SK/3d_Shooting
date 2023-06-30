@@ -40,8 +40,6 @@ void CFixedEnemy::Finalize(void)
 void CFixedEnemy::Shot(void)
 {
 
-	aqua::CVector3 front;
-
 	CEnemy::Shot();
 
 }

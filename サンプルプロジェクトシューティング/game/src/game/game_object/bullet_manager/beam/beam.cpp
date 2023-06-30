@@ -60,12 +60,16 @@ void CBeam::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 
 	// カプセルを描画する必要はない(あくまでもコライダー代わり)のでvisibleをfalseにする
 	m_Capsule.visible = false;
 
+	// 予測線の設定
+	m_PredictionLine.Setup(m_StartPos, m_EndPos, aqua::CColor::RED);
+
 	m_User->SetMoveFlag(false);
 }
 
 void CBeam::Draw(void)
 {
 	m_Capsule.Draw();
+	m_PredictionLine.Draw();
 }
 
 void CBeam::Update(void)
@@ -99,6 +103,10 @@ void CBeam::Charge(void)
 void CBeam::Firing(void)
 {
 	m_DamageFlag = true;
+
+	m_PredictionLine.visible = false;
+	
+	// エフェクトの再生が終了したら状態を移行
 	if (m_Effect->Finished())
 		m_BeamState = BEAM_STATE::DESTROY;
 }

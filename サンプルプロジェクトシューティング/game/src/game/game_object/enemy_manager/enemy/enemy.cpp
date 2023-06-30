@@ -34,11 +34,11 @@ Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m,CB
 void CEnemy::Update(void)
 {
 	IGameObject::Update();
-	// ŽŽŒ±‰^—p
-	if (!m_MoveFlag)
-		return;
 
 	if (m_Player->GetTimeStop())
+		return;
+
+	if (!m_MoveFlag)
 		return;
 
 	m_ShotCT.Update();

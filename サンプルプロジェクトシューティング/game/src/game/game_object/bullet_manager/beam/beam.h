@@ -103,6 +103,8 @@ private:
 
     aqua::CCapsulePrimitive m_Capsule;      // 
 
+    aqua::CLinePrimitive3D  m_PredictionLine;// —\‘ªü
+
     aqua::CTimer            m_Timer;
     
     aqua::CEffect3D*        m_Effect;

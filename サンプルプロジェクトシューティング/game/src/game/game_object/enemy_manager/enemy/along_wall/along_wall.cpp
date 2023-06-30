@@ -31,7 +31,6 @@ void CAlongWallEnemy::Shot(void)
 		bull_dir.z = cos(aqua::DegToRad(m_Rotate + 45.0f + 90.0f * i));
 		m_BulletManager->Create(m_Position, bull_dir, m_UnitType, m_ShotBullet, this);
 	}
-
 }
 
 void CAlongWallEnemy::Move(void)

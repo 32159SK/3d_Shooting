@@ -7,7 +7,7 @@
 #include "enemy/boss_enemy/boss_enemy.h"
 #include "enemy/boss_enemy/boss_cannon/boss_cannon.h"
 
-const int CEnemyManager::m_max_wave = 2;
+const int CEnemyManager::m_max_wave = 4;
 
 CEnemyManager::CEnemyManager(aqua::IGameObject* parent)
 	: IGameObject(parent, "EnemyManager")
@@ -62,6 +62,8 @@ void CEnemyManager::Create(aqua::CVector3 pop_pos, ENEMY_ID enemy_id)
 	case ENEMY_ID::MOB:  enemy = aqua::CreateGameObject<CMobEnemy>(this); break;
 	case ENEMY_ID::ALONG_WALL: enemy = aqua::CreateGameObject<CAlongWallEnemy>(this); break;
 	case ENEMY_ID::FIXED: enemy = aqua::CreateGameObject<CFixedEnemy>(this); break;
+	case ENEMY_ID::BOSS: enemy = aqua::CreateGameObject<CBossEnemy>(this); break;
+	case ENEMY_ID::BOSS_CANNON: enemy = aqua::CreateGameObject<CBossCannon>(this); break;
 	default:
 		break;
 	}
@@ -69,6 +71,7 @@ void CEnemyManager::Create(aqua::CVector3 pop_pos, ENEMY_ID enemy_id)
 	// 初期化とプレイヤーのポインタを渡す
 	enemy->Initialize(pop_pos, m_EnemyInfo[(int)enemy_id], m_StageManager, m_BulletManagar);
 	enemy->SetPlayer(m_Player);
+
 	m_EnemyCount++;
 
 	// 弾との衝突確認用に弾管理クラスに生成したエネミーのポインタを渡す
@@ -131,15 +134,16 @@ void CEnemyManager::WaveChange(void)
 		m_Finish = true;
 		return;
 	}
-	m_EnemyCount = 0;
+
 	m_BulletManagar->EnemyReset();
 
 	// waveに合わせてフィールドを切り替える
    	m_StageManager->WaveChange(m_WaveCount);
 
-	for (int i = 0; i < m_PopList.size(); ++i)
-		if (m_PopList[i].wave == 1 /*&& i < m_StageManager->GetEnemyCount()*/)
-			Create(m_StageManager->GetEnemyPopPos(i), m_PopList[i].pop_e_id);
+	//for (int i = 0; i < m_PopList.size(); ++i)
+	//	if (m_PopList[i].wave == m_WaveCount && m_EnemyCount < m_StageManager->GetEnemyCount())
+	//		Create(m_StageManager->GetEnemyPopPos(i), m_PopList[m_EnemyCount].pop_e_id);
+	Create(m_StageManager->GetEnemyPopPos(0), m_PopList[18].pop_e_id);
 
 	m_WaveCount++;
 }

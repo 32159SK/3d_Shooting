@@ -23,6 +23,7 @@ CStageManager::
 CStageManager(aqua::IGameObject* parent)
     : aqua::IGameObject(parent, "StageManager")
     , m_WaveCount(0)
+    , m_EnemyCount(0)
     , m_CSVReader(nullptr)
     , m_LastCollObject(nullptr)
 {
@@ -34,6 +35,7 @@ CStageManager(aqua::IGameObject* parent)
 void CStageManager::Initialize(CCSVReader* csv_reader)
 {
     m_CSVReader = csv_reader;
+    m_Player = (CPlayer*)aqua::FindGameObject("Player");
 }
 
 /*
@@ -70,6 +72,7 @@ void CStageManager::WaveChange(int wave)
 {
     m_WaveCount = wave;
 
+    //m_EnemyCount = 0;
     // 最初のwaveでないなら一旦ステージをリセットする
     if (m_WaveCount > 1)
     {
@@ -77,8 +80,6 @@ void CStageManager::WaveChange(int wave)
         {
             IStageObject* stage_obj = (IStageObject*)it;
             stage_obj->DeleteObject();
-            m_EnemyPopPos.clear();
-            m_EnemyCount = 0;
         }
     }
     
@@ -105,7 +106,7 @@ bool CStageManager::StageObjectCollision(aqua::CVector3 position, aqua::CVector3
 
 void CStageManager::Create(void)
 {
-    m_CSVReader->Initialize(FILE_TYPE::STAGE, "stage_" + std::to_string(3));
+    m_CSVReader->Initialize(FILE_TYPE::STAGE, "stage_" + std::to_string(4));
 
     for (int z = 0; z < 21; ++z)
         for (int x = 0; x < 21; ++x)
@@ -128,6 +129,7 @@ void CStageManager::Create(void)
             case BRITTLE_BLOCK:stage_object = aqua::CreateGameObject<CBrittleBlock>(this); break;
             case ENEMY_POP_POS: m_EnemyPopPos.push_back(aqua::CVector3((float)x * m_default_size - m_default_size / 2.0f * 20.0f,
                 0.0f, (float)(20.0f - z) * m_default_size - m_default_size / 2.0f * 20.0f)); m_EnemyCount++; continue; break;
+            case PLAYER_START_POS: m_Player->SetPosition(aqua::CVector3((float)x * m_default_size - m_default_size / 2.0f * 20.0f,0.0f, (float)(20.0f - z) * m_default_size - m_default_size / 2.0f * 20.0f));; continue; break;
             default:
                 break;
             }

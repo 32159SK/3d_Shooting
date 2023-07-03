@@ -64,12 +64,7 @@ public:
     void    SetAllRange(void);
 
     /*
-     *  @brief      行動可能フラグの設定
-     */
-    void    SetMoveFlag(bool flag)override;
-
-    /*
-     *  @brief      行動可能フラグの設定
+     *  @brief      射撃
      */
     void    Shot(void)override;
 
@@ -85,9 +80,21 @@ private:
 
     void    AllRangeAttack(void);
 
+    void    ReturnPosition(void);
+
     static const float m_move_time;
 
     static const float m_player_distance;
+
+    static const int   m_position_pattern;
+
+    enum ALLRANGE_STATE
+    {
+
+
+    };
+
+    float           m_ShotAngle;
 
     bool            m_AllRangeAttacking;        // オールレンジ攻撃中
 

@@ -84,10 +84,16 @@ private:
      *  @brief      第二形態
      */
     void            SecondPhase(void);
+
     /*
      *  @brief      形態変化
      */
     void            PhaseChange(void);
+
+    /*
+     *  @brief      砲の準備
+     */
+    void            CannonSetUp(void);
 
     /*
      *  @brief      雑魚召喚
@@ -114,6 +120,7 @@ private:
     static const float   m_summon_interval;     // 召喚間隔
 
     static const float   m_all_range_ct;        // 
+
     static const int     m_cannon_count[2];        // 
 
     int             m_PhaseLife[3];             // 
@@ -128,7 +135,7 @@ private:
 
     aqua::CTimer    m_SummonTimer;              // 召喚タイマー
 
-    aqua::CTimer    m_AllRangeTimer;            // 
+    aqua::CTimer    m_AllRangeCT;            // 
 
     aqua::CEffect3D* m_Effect;                  // エフェクト
 

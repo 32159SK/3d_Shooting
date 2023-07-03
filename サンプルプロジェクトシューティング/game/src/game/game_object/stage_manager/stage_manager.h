@@ -14,6 +14,9 @@
 #include "stage_object/stage_object.h"
 #include "stage_object/stage_object_id.h"
 
+
+class CPlayer;
+
 /*
  *  @class      CStageManager
  *
@@ -105,6 +108,8 @@ private:
     std::vector<aqua::CVector3>     m_EnemyPopPos;
 
     CCSVReader* m_CSVReader;
+
+    CPlayer*                        m_Player;
 
     IStageObject*                   m_LastCollObject;   // 最後に接触したオブジェクト
 };

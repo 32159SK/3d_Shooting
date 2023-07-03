@@ -45,7 +45,6 @@ Initialize(void)
 
     // ステージ管理の生成
     CStageManager* st_m = aqua::CreateGameObject<CStageManager>(this);
-    st_m->Initialize(csv_r);
 
     // 弾管理クラスの生成
     CBulletManager* bm = aqua::CreateGameObject<CBulletManager>(this);
@@ -59,6 +58,7 @@ Initialize(void)
     // レーダークラスの生成
     CRader* rd = aqua::CreateGameObject<CRader>(this);
     rd->Initialize(m_Player);
+    st_m->Initialize(csv_r);
 
     // エフェクト管理クラス
     aqua::CreateGameObject<CEffectManager>(this);

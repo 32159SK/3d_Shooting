@@ -95,13 +95,14 @@ void CBulletManager::CheakHit(void)
 
 		for (int e = 0; e < e_count; ++e)
 		{
-			if (!m_Enemy[e])
-				continue;
 			// 死んでない敵と弾の衝突確認
 			if (!m_Enemy[e]->GetDead()
 				&& m_Enemy[e]->CheckHitBullet(bullet->GetAttri(), bullet->GetSphere(), bullet->GetDamage()))
 			{
 				bullet->Hit();
+				// 死んだらポインタを削除
+				if (m_Enemy[e]->GetDead())
+					m_Enemy.erase(m_Enemy.begin() + e);
 				return;
 			}
 		}

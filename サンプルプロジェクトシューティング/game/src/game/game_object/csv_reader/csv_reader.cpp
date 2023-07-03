@@ -49,6 +49,12 @@ void CCSVReader::Parse(const std::string& file_name)
 	ENEMY_INFO e_info;
 	BULLET_INFO b_info;
 	ENEMY_POP_LIST pop_list;
+	// çs
+	for (int i = 0; i < 21; ++i)
+		// óÒ
+		for (int k = 0; k < 21; ++k)
+			m_Stage[i][k] = 0;
+
 	switch (m_FileType)
 	{
 	case FILE_TYPE::ENEMY_INFO:

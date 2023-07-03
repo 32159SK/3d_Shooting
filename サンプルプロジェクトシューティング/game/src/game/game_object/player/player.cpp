@@ -75,6 +75,8 @@ void CPlayer::Update(void)
 		m_InvincibleTimer.Reset();
 	}
 
+	m_Invincible = true;
+
 	IUnit::Update();
 
 	// ここで敵が追尾する用のポジションを取っておく(時間停止していない場合)
@@ -176,7 +178,7 @@ void CPlayer::Shot(void)
 		//	ビームは無法すぎるので隠しコマンドで
 		if(aqua::keyboard::Button(aqua::keyboard::KEY_ID::LSHIFT) && aqua::keyboard::Button(aqua::keyboard::KEY_ID::B))
 		{
-			// +1の弾に変更(例NOMAL→FAST)
+			// ビームに変更
 			m_ShotBullet = BULLET_TYPE::BEAM;
 			m_ChangeCT.Reset();
 		}

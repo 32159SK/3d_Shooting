@@ -9,7 +9,7 @@ void CFloor::Initialize(void)
 {
 	m_Floor.Load("data\\model\\Plane.mv1");
 	m_Floor.position = aqua::CVector3::ZERO;
-	m_Floor.position.y = -5.0f;
+	m_Floor.position.y = -10.0f;
 
 	m_Floor.scale = aqua::CVector3(0.5f, 0.5f, 0.5f);
 }

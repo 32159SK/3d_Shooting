@@ -75,6 +75,11 @@ public:
 
     bool            GetLockOnFlag(void) { return m_LockON; }
 
+    /*
+     *  @brief      座標のセッター
+     */
+    void            SetPosition(aqua::CVector3 pos) { m_Position = pos; }
+
 private:
 
     /*

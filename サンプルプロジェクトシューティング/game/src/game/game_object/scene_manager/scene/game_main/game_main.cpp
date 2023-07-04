@@ -76,6 +76,12 @@ Initialize(void)
     m_Camera.m_Distace = 100.0f;
     m_Camera.m_VRotate = aqua::DegToRad(50.0f);
 
+    // ホワイトアウト用の画像を生成しておく
+    m_WhiteOutSprite.Create("data\\texture\\white.png");
+    // 画像のアルファ値を0にして最初は透明にする
+    m_WhiteOutSprite.color.alpha = (unsigned char)0.0f;
+
+
 }
 
 /*
@@ -121,7 +127,10 @@ GamePlay(void)
     else if (wheel_value < 0) m_Camera.m_Distace += 5.0f;
     m_Camera.Update();
 
-    if (m_Player->GetDead()||m_EnemyManager->GetFinish())
+    if (m_Player->GetDead())
+        GameFinish();
+
+    if (m_WOTimer.Finished())
         GameFinish();
 }
 

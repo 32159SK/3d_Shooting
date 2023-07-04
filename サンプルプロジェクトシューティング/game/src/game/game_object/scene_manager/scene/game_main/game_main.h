@@ -59,6 +59,8 @@ public:
      */
     aqua::CCamera* GetCamera(void) { return &m_Camera; }
 
+
+    void            SetGameClear(bool game_clear) { m_GameClear = game_clear; }
 private:
     /*
      *  @brief      ゲーム開始
@@ -75,6 +77,7 @@ private:
      */
     void            GameFinish(void);
 
+
     /*
      *  @brief      状態ID
      */
@@ -86,9 +89,12 @@ private:
         STATE_GAME_SAVE,        //! スコアのセーブ
     };
 
+    bool                m_GameClear;    // ゲームクリアフラグ
+
     STATE               m_State;        //! 状態ID
     aqua::CCamera       m_Camera;
+    aqua::CTimer        m_WOTimer;      // ホワイトアウト用タイマー
     CPlayer*            m_Player;
     CEnemyManager*      m_EnemyManager;
-    aqua::CSprite       m_Sprite;
+    aqua::CSprite       m_WhiteOutSprite;// ホワイトアウト用スプライト
 };

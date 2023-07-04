@@ -9,7 +9,7 @@ CBulletManager::CBulletManager(aqua::IGameObject* parent)
 	: IGameObject(parent,"BulletManager")
 	, m_CSVReader(nullptr)
 	, m_Player(nullptr)
-	, m_Enemy{nullptr}
+	, m_EnemyList{nullptr}
 {
 }
 
@@ -26,6 +26,8 @@ void CBulletManager::Initialize(CCSVReader* csv_r, CStageManager* st_m)
 	// 弾情報の格納
 	for (int i = 0; i < row; ++i)
 		m_BulletInfo.push_back(m_CSVReader->GetBullInfo(i));
+
+	m_EnemyList.clear();
 }
 
 void CBulletManager::Update(void)
@@ -43,7 +45,6 @@ void CBulletManager::Draw(void)
 
 void CBulletManager::Create(aqua::CVector3 shot_pos, aqua::CVector3 shot_front, UNIT_TYPE unit_type, BULLET_TYPE bullet_type, IUnit* user)
 {
-
 	if (bullet_type == BULLET_TYPE::BEAM)
 	{
 		// 新しく生成する弾の容器
@@ -69,10 +70,27 @@ void CBulletManager::Create(aqua::CVector3 shot_pos, aqua::CVector3 shot_front, 
 	bullet->Initialize(m_BulletInfo[(int)bullet_type], unit_type, shot_pos, shot_front, user,m_EffectManager);
 }
 
+CBeam* CBulletManager::CreateGetBeam(aqua::CVector3 shot_pos, aqua::CVector3 shot_front, UNIT_TYPE unit_type, IUnit* user)
+{
+	Create(shot_pos, shot_front, unit_type, BULLET_TYPE::BEAM, user);
+	return (CBeam*)m_ChildObjectList.back();
+}
+
 void CBulletManager::Finalize(void)
 {
-	m_Enemy.clear();
+	m_EnemyList.clear();
 	IGameObject::Finalize();
+}
+
+void CBulletManager::EnemyReset(void)
+{
+	if (m_EnemyList.empty())
+		return;
+
+	for (int i = 0; i < m_EnemyList.size(); ++i)
+		m_EnemyList[i]->Finalize();
+
+	m_EnemyList.clear();
 }
 
 void CBulletManager::CheakHit(void)
@@ -80,7 +98,7 @@ void CBulletManager::CheakHit(void)
 	if (m_ChildObjectList.empty())
 		return;
 
-	int e_count = (int)m_Enemy.size();
+	int e_count = (int)m_EnemyList.size();
 
 	// このリストを使って繰り返し処理をする
 	for (auto it : m_ChildObjectList)
@@ -93,16 +111,19 @@ void CBulletManager::CheakHit(void)
 		}
 		IBullet* bullet = (IBullet*)it;
 
+
 		for (int e = 0; e < e_count; ++e)
 		{
+			if (!m_EnemyList[e])
+				continue;
 			// 死んでない敵と弾の衝突確認
-			if (!m_Enemy[e]->GetDead()
-				&& m_Enemy[e]->CheckHitBullet(bullet->GetAttri(), bullet->GetSphere(), bullet->GetDamage()))
+			if (!m_EnemyList[e]->GetDead()
+				&& m_EnemyList[e]->CheckHitBullet(bullet->GetAttri(), bullet->GetSphere(), bullet->GetDamage()))
 			{
 				bullet->Hit();
 				// 死んだらポインタを削除
-				if (m_Enemy[e]->GetDead())
-					m_Enemy.erase(m_Enemy.begin() + e);
+				if (m_EnemyList[e]->GetDead())
+					m_EnemyList.erase(m_EnemyList.begin() + e);
 				return;
 			}
 		}
@@ -131,11 +152,11 @@ void CBulletManager::CheakHitBeam(CBeam* beam,int e_count)
 
 	for (int e = 0; e < e_count; ++e)
 	{
-		if (!m_Enemy[e])
+		if (!m_EnemyList[e])
 			continue;
 		// 死んでない敵と弾の衝突確認
-		if (!m_Enemy[e]->GetDead())
-			m_Enemy[e]->CheckHitBeam(beam->GetAttri(), beam->GetCapsule(), beam->GetDamage());
+		if (!m_EnemyList[e]->GetDead())
+			m_EnemyList[e]->CheckHitBeam(beam->GetAttri(), beam->GetCapsule(), beam->GetDamage());
 	}
 
 	// プレイヤーとの衝突確認

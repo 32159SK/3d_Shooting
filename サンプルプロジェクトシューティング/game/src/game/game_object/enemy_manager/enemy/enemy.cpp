@@ -52,8 +52,8 @@ void CEnemy::Update(void)
 
 void CEnemy::Draw(void)
 {
-	IGameObject::Draw();
 	m_Cube.Draw();
+	IGameObject::Draw();
 }
 
 void CEnemy::Finalize(void)

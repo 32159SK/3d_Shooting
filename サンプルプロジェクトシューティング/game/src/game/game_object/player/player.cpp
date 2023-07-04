@@ -269,8 +269,7 @@ void CPlayer::LockOn(void)
 		return;
 
 	// エネミーがnullまたは、取得したエネミーが死んだ
-	if (!m_Enemy || m_Enemy->GetDead()
-		|| m_lock_range < aqua::CVector3::Length(m_Enemy->GetPosition() - m_Position))
+	if (!m_Enemy || m_Enemy->GetDead())
 	{
 		m_Enemy = m_EnemyManager->GetNearest(m_Position);
 		m_LockOnMarker->SetEnemy(m_Enemy);

@@ -10,6 +10,7 @@ CBeam::CBeam(aqua::IGameObject* parent)
 	, m_Rotate(0.0f)
 	, m_Radius(0.0f)
 	, m_DamageFlag(false)
+	, m_Finished(false)
 	, m_StartPos(aqua::CVector3::ZERO)
 	, m_EndPos(aqua::CVector3::ZERO)
 	, m_Dir(aqua::CVector3::ZERO)
@@ -52,7 +53,6 @@ void CBeam::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 
 
 	// エフェクトの再生
 	m_Effect = m_EffectManager->CreateGetEffect(EFFECT_ID::BEAM, m_StartPos, m_Rotate);
-
 
 	// タイマーのセット
 	m_Timer.Setup(m_charge_time);
@@ -115,6 +115,8 @@ void CBeam::Destroy(void)
 {
 	m_DamageFlag = false;
 	m_Effect->visible = false;
-	m_User->SetMoveFlag(true);
+	if (!m_User->GetDead())
+		m_User->SetMoveFlag(true);
+	m_Finished = true;
 	DeleteObject();
 }

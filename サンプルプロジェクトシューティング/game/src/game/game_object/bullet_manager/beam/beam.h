@@ -61,7 +61,15 @@ public:
      */
     int             GetDamage(void) { return m_Damage; }
 
+    /*
+     *  @brief      ダメージフラグの取得
+     */
     bool            GetDamageFlag(void) { return m_DamageFlag; }
+
+    /*
+     *  @brief      終了フラグの取得
+     */
+    bool            GetFinishFlag(void) { return m_Finished; }
 
 private:
 
@@ -90,6 +98,8 @@ private:
     float                   m_Radius;       //! 半径
 
     bool                    m_DamageFlag;   //
+
+    bool                    m_Finished;     // 終了
 
     aqua::CVector3          m_Dir;          //
 

@@ -61,7 +61,7 @@ public:
     /*
      *  @brief      オールレンジ攻撃の設定
      */
-    void    SetAllRange(void);
+    void    SetAllRange(float angle);
 
     /*
      *  @brief      射撃
@@ -69,38 +69,82 @@ public:
     void    Shot(void)override;
 
     /*
+     *  @brief      番号のセッター
+     */
+    void    SetCannonNumber(int number) { m_CannonNumber = number; }
+
+    /*
+     *  @brief      ボスのポインタのセッター
+     */
+    void    SetBossEnemy(CBossEnemy* boss) { m_BossEnemy = boss; }
+
+    /*
      *  @brief      終了フラグ取得
      */
     bool    GetFinish(void) { return m_AllRangeFinish; }
-private:
 
+    /*
+     *  @brief      死亡
+     */
+    void    Dead(void)override;
+private:
+    /*
+     *  @brief      行動処理
+     */
     void    Move(void)override;
 
+    /*
+     *  @brief      基本の動き
+     */
+    void    Default(void);
+
+    /*
+     *  @brief      イージングでの移動
+     */
     void    EasingMove(void);
 
-    void    AllRangeAttack(void);
+    /*
+     *  @brief      攻撃座標への移動
+     */
+    void    AllRangeMove(void);
 
+    /*
+     *  @brief      ビームの照射
+     */
+    void    Irradiation(void);
+
+    /*
+     *  @brief      基本座標へ戻る
+     */
     void    ReturnPosition(void);
 
-    static const float m_move_time;
 
-    static const float m_player_distance;
+    static const float m_move_time;             // 移動にかける時間
 
-    static const int   m_position_pattern;
+    static const float m_player_distance;       // プレイヤーとの距離
 
+    static const int   m_position_pattern;      // 座標の角度パターン
+
+    // オールレンジ攻撃の状態
     enum ALLRANGE_STATE
     {
-
-
+        DEFAULT,    // 基本
+        MOVE,       // 移動(攻撃座標へ向かう)
+        IRRADIATION,// 照射
+        RETURN      // 戻る
     };
 
-    float           m_ShotAngle;
+    int             m_CannonNumber;             // 砲の管理番号
+
+    float           m_ShotAngle;                // 射撃(オールレンジ)時の角度
 
     bool            m_AllRangeAttacking;        // オールレンジ攻撃中
 
     bool            m_ReturnFlag;               // 元の場所に戻るかのフラグ
 
     bool            m_AllRangeFinish;           // オールレンジ攻撃の終了
+
+    ALLRANGE_STATE  m_AllRangeState;            // オールレンジ攻撃の状態
 
     aqua::CVector3  m_StartPos;
 
@@ -111,4 +155,6 @@ private:
     aqua::CTimer    m_MoveTimer;
 
     CBossEnemy*     m_BossEnemy;
+
+    CBeam*          m_Beam;
 };

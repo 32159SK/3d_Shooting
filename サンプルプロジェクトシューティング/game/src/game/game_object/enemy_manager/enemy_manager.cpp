@@ -123,7 +123,7 @@ CEnemy* CEnemyManager::CreateBossParts(aqua::CVector3 pop_pos, ENEMY_ID enemy_id
 {
 	// 渡された情報から敵を生成
 	Create(pop_pos, enemy_id);
-	// 末尾の要素(直前に生成された敵のポインタ)を返す
+	// 末尾の要素(直前に生成された敵)のポインタを返す
 	return (CEnemy*)m_ChildObjectList.back();
 }
 
@@ -140,6 +140,7 @@ void CEnemyManager::WaveChange(void)
 	// waveに合わせてフィールドを切り替える
    	m_StageManager->WaveChange(m_WaveCount);
 
+	// 試験用なので一時的にコメントアウト
 	//for (int i = 0; i < m_PopList.size(); ++i)
 	//	if (m_PopList[i].wave == m_WaveCount && m_EnemyCount < m_StageManager->GetEnemyCount())
 	//		Create(m_StageManager->GetEnemyPopPos(i), m_PopList[m_EnemyCount].pop_e_id);

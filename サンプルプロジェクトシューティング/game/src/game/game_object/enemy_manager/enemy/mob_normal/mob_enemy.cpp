@@ -1,7 +1,7 @@
 #include "../../../game_object.h"
 #include "mob_enemy.h"
 
-const float CMobEnemy::m_follow_range = 50.0f;
+const float CMobEnemy::m_follow_range = 100.0f;
 const float CMobEnemy::m_lose_sight_time = 2.0f;
 
 

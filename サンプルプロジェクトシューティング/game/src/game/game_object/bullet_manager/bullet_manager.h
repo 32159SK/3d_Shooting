@@ -66,6 +66,11 @@ public:
     void        Create(aqua::CVector3 shot_pos, aqua::CVector3 shot_front, UNIT_TYPE unit_type, BULLET_TYPE bullet_type, IUnit* user);
 
     /*!
+     *  @brief      ビームを生成しポインタを渡す
+     */
+    CBeam*      CreateGetBeam(aqua::CVector3 shot_pos, aqua::CVector3 shot_front, UNIT_TYPE unit_type,IUnit* user);
+
+    /*!
      *  @brief      解放
      */
     void        Finalize(void) override;
@@ -73,14 +78,14 @@ public:
     /*!
      *  @brief      敵セッター
      */
-    void        SetEnemy(CEnemy* enemy) { m_Enemy.push_back(enemy); }
+    void        SetEnemy(CEnemy* enemy) { m_EnemyList.push_back(enemy); }
 
     /*!
      *  @brief      自機セッター
      */
     void        SetPlayer(CPlayer* player) { m_Player = player; }
 
-    void        EnemyReset(void) { m_Enemy.clear(); }
+    void        EnemyReset(void);
 private:
 
     void        CheakHit(void);
@@ -88,9 +93,9 @@ private:
     void        CheakHitBeam(CBeam* beam,int e_count);
 
     CCSVReader*             m_CSVReader;        // CSV読み取りクラスのポインタ
-    CPlayer*                m_Player;           // プレイヤークラスの  ””
-    CStageManager*          m_StageManager;     // ステージ管理クラスの””
+    CPlayer*                m_Player;           // プレイヤークラスのポインタ
+    CStageManager*          m_StageManager;     // ステージ管理クラスのポインタ
     CEffectManager*         m_EffectManager;    // エフェクト管理クラス
     std::vector<BULLET_INFO> m_BulletInfo;      // 
-    std::vector<CEnemy*>    m_Enemy;            // 
+    std::vector<CEnemy*>    m_EnemyList;            // 
 };

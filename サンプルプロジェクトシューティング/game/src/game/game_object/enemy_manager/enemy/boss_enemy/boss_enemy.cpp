@@ -4,11 +4,14 @@
 
 const float CBossEnemy::m_summon_interval = 20.0f;
 const float CBossEnemy::m_all_range_ct = 10.0f;
+const float CBossEnemy::m_dead_time = 6.0f;
 const int CBossEnemy::m_cannon_count[] = { 2,4 };
+const int CBossEnemy::m_position_pattern = 30;
+const int CBossEnemy::m_max_summon = 10;
 const aqua::CVector3 CBossEnemy::m_base_cannon_pos[] =
 {
-	 aqua::CVector3(-35.0f,0.0f,0.0f)
-	,aqua::CVector3(35.0f,0.0f,0.0f)
+	 aqua::CVector3(-40.0f,0.0f,10.0f)
+	,aqua::CVector3(40.0f,0.0f,10.0f)
 	,aqua::CVector3(20.0f,0.0f,0.5f)
 	,aqua::CVector3(-20.0f,0.0f,0.5f)
 };
@@ -18,10 +21,10 @@ const std::string CBossEnemy::m_model_file_path = "data\\model\\boss_enemy.mv1";
 CBossEnemy::CBossEnemy(aqua::IGameObject* parent)
 	: CEnemy(parent, "BossEnemy")
 	, m_PhaseLife{ 0 }
+	, m_SummonCount(0)
 	, m_AllRangeAttacking(false)
-	, m_Phase(BOSS_PHASE::SECOND)
+	, m_Phase(BOSS_PHASE::FIRST)
 	, m_CannonPos{ aqua::CVector3::ZERO }
-	, m_Effect(nullptr)
 	, m_Cannon{ nullptr }
 	, m_EnemyManager(nullptr)
 {
@@ -39,12 +42,21 @@ Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, C
 	// 親(敵管理)クラスを取得
 	m_EnemyManager = (CEnemyManager*)IGameObject::GetParent();
 
+	// ゲームメインシーンを探査
+	m_GameMain = (CGameMain*)aqua::FindGameObject("GameMainScene");
+
+	// 召喚タイマーのセット
 	m_SummonTimer.Setup(m_summon_interval);
 
+	// AR攻撃CT計測タイマーのセット
 	m_AllRangeCT.Setup(m_all_range_ct);
 
-	for (int i = 0; i < BOSS_PHASE::SECOND; i++)
-		m_PhaseLife[i] = m_Life * 0.5f;
+	// 死亡タイマーのセット
+	m_DeadTimer.Setup(m_dead_time);
+
+
+	for (int i = 0; i < BOSS_PHASE::DEAD; i++)
+		m_PhaseLife[i] = m_Life;
 
 	CannonSetUp();
 }
@@ -55,15 +67,19 @@ void CBossEnemy::Update(void)
 
 	if (m_Player->GetTimeStop())
 		return;
+	Move();
 
+	if (m_DeadFlag)
+		return;
 	m_ShotCT.Update();
 	if (m_ShotCT.Finished())
 	{
 		Shot();
 		m_ShotCT.Reset();
 	}
-	Move();
 
+	m_Life = m_PhaseLife[m_Phase];
+	m_Cube.position = m_Position;
 	m_Cube.m_HRotate = m_Rotate;
 	//m_Model.rotation.y = aqua::DegToRad(m_Rotate);
 }
@@ -85,29 +101,41 @@ bool CBossEnemy::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, i
 	return CEnemy::CheckHitBullet(type, sphere, damage);
 }
 
+void CBossEnemy::SetCannonPosition(void)
+{
+	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
+		if (m_Cannon[i] && !m_Cannon[i]->GetDead())
+			m_Cannon[i]->SetPosition(m_CannonPos[i]);
+}
+
 void CBossEnemy::Shot(void)
 {
-
 	if (m_AllRangeAttacking)
 		return;
 
 	switch (m_Phase)
 	{
-	case CBossEnemy::FIRST:	m_ShotBullet = BULLET_TYPE::REFLECT; break;
+	case CBossEnemy::FIRST:	m_ShotBullet = BULLET_TYPE::NOMAL; break;
 	case CBossEnemy::SECOND:m_ShotBullet = BULLET_TYPE::PENETRATE;	 break;
 	}
-
+	// CTが開けていれば砲に射撃をさせる
 	if (m_ShotCT.Finished())
 	{
 		for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
-			if (!m_Cannon[i]->GetDead())
+			if (m_Cannon[i] && !m_Cannon[i]->GetDead())
+			{
+				m_Cannon[i]->SetBulletType(m_ShotBullet);
 				m_Cannon[i]->Shot();
+			}
+		CEnemy::Shot();
 		m_ShotCT.Reset();
 	}
 }
 
 void CBossEnemy::Move(void)
 {
+	if (m_DeadFlag && m_Phase != BOSS_PHASE::DEAD)
+		return;
 	// ボスの形態に合わせた処理
 	switch (m_Phase)
 	{
@@ -123,18 +151,28 @@ void CBossEnemy::Damage(int damage)
 	m_PhaseLife[m_Phase] -= damage;
 
 	// 形態ごとのライフが0以下なら形態移行
-	if (m_PhaseLife[m_Phase] <= 0)
+	if (m_PhaseLife[m_Phase] <= 0 )
 		PhaseChange();
 }
 
 void CBossEnemy::Dead(void)
 {
-	m_DeadFlag = true;
-	m_Cube.visible = false;
-	m_Effect = m_EffectManager->CreateGetEffect(EFFECT_ID::BOSS_DEAD, m_Position);
-	// 死亡演出用タイマー
-	if (m_Effect->Finished())
+	if (!m_DeadFlag)
+	{
+		m_DeadFlag = true;
+		m_EffectManager->Create(EFFECT_ID::BOSS_DEAD, m_Position);
+	}
+	
+	// 死亡タイマーの更新
+	m_DeadTimer.Update();
+
+	//m_Cube.visible = false;
+	// 死亡演出
+	if (m_DeadTimer.Finished())
+	{
 		DeleteObject();
+		m_GameMain->GameFinish(true);
+	}
 }
 
 void CBossEnemy::FirstPhase(void)
@@ -152,14 +190,9 @@ void CBossEnemy::FirstPhase(void)
 	aqua::CMatrix mat;
 	mat.RotationY(aqua::DegToRad(m_Rotate));
 	mat.Translate(m_Position);
-	for (int i = 0; i < 2; ++i)
-	{
-		m_CannonPos[i] *= mat;
-		// 砲がnullでないなら算出した座標を代入する
-		if (m_Cannon[i])
-			m_Cannon[i]->SetPosition(m_CannonPos[i]);
-	}
-
+	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
+		m_CannonPos[i] = -m_base_cannon_pos[i] * mat;
+	SetCannonPosition();
 }
 
 void CBossEnemy::SecondPhase(void)
@@ -167,15 +200,11 @@ void CBossEnemy::SecondPhase(void)
 	// タイマーの更新
 	m_SummonTimer.Update();
 
-	//// 生成タイマーが終了
-	//if (m_SummonTimer.Finished())
-	//	SummonEnemy();
+	// 生成タイマーが終了
+	if (m_SummonTimer.Finished())
+		SummonEnemy();
 
-	// 砲の数
-	int cannon_count = 0;
-
-	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
-		m_Cannon[i]->SetPosition(m_CannonPos[i]);
+	SetCannonPosition();
 
 	// オールレンジ攻撃をしていないなら以下の処理を
 	if (!m_AllRangeAttacking)
@@ -185,19 +214,19 @@ void CBossEnemy::SecondPhase(void)
 
 		for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
 		{
-			// 砲がnullでないなら座標と弾種を代入し直す
-			if (m_Cannon[i])
+			// 砲が生きているなら座標と弾種を代入し直す
+			if (m_Cannon[i] && !m_Cannon[i]->GetDead())
 				m_Cannon[i]->SetBulletType(m_ShotBullet);
 		}
 		// CTが終了していたらオールレンジ攻撃を行う
 		if (m_AllRangeCT.Finished())
-  			AllRangeAttack();
+			AllRangeAttack();
 	}
 	else
 	{
 		for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
 			// 帰るタイミングはどれも一律で同じなのでどれか一つでも終えていればオールレンジ攻撃の終了
-			if (m_Cannon[i])
+			if (m_Cannon[i] && !m_Cannon[i]->GetDead())
 				if (m_Cannon[i]->GetFinish())
 					m_AllRangeAttacking = false;
 	}
@@ -205,12 +234,15 @@ void CBossEnemy::SecondPhase(void)
 
 void CBossEnemy::PhaseChange(void)
 {
+	// 状態が死亡ならこれ以上遷移させる必要はない
+	if (m_Phase == BOSS_PHASE::DEAD)
+		return;
 	// 自身の形態を次の形態へ変更
 	m_Phase = (BOSS_PHASE)((int)m_Phase + 1);
 
 	if (m_Phase != BOSS_PHASE::DEAD)
 	{
-		m_Rotate = 0.0f;
+		m_Rotate = 180.0f;
 		CannonSetUp();
 	}
 
@@ -222,19 +254,25 @@ void CBossEnemy::CannonSetUp(void)
 	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
 	{
 		if (m_Cannon[i])
-			m_Cannon[i]->DeleteObject();
+			m_Cannon[i]->Dead();
 		m_Cannon[i] = (CBossCannon*)m_EnemyManager->CreateBossParts(m_base_cannon_pos[i], ENEMY_ID::BOSS_CANNON);
 		m_Cannon[i]->SetBulletType(m_ShotBullet);
+		m_Cannon[i]->SetBossEnemy(this);
+		m_Cannon[i]->SetCannonNumber(i);
 		m_CannonPos[i] = m_Position + m_base_cannon_pos[i];
 	}
 }
 
 void CBossEnemy::SummonEnemy(void)
 {
-	// 雑魚を召喚
-	m_EnemyManager->Create(m_CannonPos[0], ENEMY_ID::MOB);
-	m_EnemyManager->Create(m_CannonPos[2], ENEMY_ID::MOB);
-	m_SummonTimer.Reset();
+	if (m_SummonCount < m_max_summon)
+	{
+		// 雑魚を召喚
+		m_EnemyManager->Create(m_CannonPos[0], ENEMY_ID::MOB);
+		m_EnemyManager->Create(m_CannonPos[2], ENEMY_ID::MOB);
+		m_SummonTimer.Reset();
+		m_SummonCount += 2;
+	}
 }
 
 void CBossEnemy::AllRangeAttack(void)
@@ -243,12 +281,27 @@ void CBossEnemy::AllRangeAttack(void)
 	// この時点でタイマーをリセット(この関数を再度呼ぶのを防ぐ目的、ARA中はタイマーの更新がかからないのでCTも問題はない)
 	m_AllRangeCT.Reset();
 
+	float shot_angle[4] = { 0.0f };
+
+	for (;;)
+	{
+		for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
+			// 乱数で角度を取る
+			shot_angle[i] = (float)aqua::Rand(360.0f / m_position_pattern);
+		
+		// 角度がどれも被ってないか確認する
+		if (shot_angle[0] != shot_angle[1] && shot_angle[0] != shot_angle[2] && shot_angle[0] != shot_angle[3] &&
+			shot_angle[1] != shot_angle[2] && shot_angle[1] != shot_angle[3] && shot_angle[2] != shot_angle[3])
+			break;
+	}
+
+
 	// 生きている砲にオールレンジ攻撃をさせる
 	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
-		if (m_Cannon[i])
+		if (m_Cannon[i] && !m_Cannon[i]->GetDead())
 		{
 			m_Cannon[i]->SetBulletType(BULLET_TYPE::BEAM);
-			m_Cannon[i]->SetAllRange();
+			m_Cannon[i]->SetAllRange(shot_angle[i]);
 		}
 
 }

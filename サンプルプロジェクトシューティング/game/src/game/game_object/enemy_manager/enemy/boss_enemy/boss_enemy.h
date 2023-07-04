@@ -49,11 +49,21 @@ public:
      */
     void    Finalize(void)override;
 
+    /*
+     *  @brief      砲の座標セット
+     */
+    void    SetCannonPosition(void);
 
     /*
      *  @brief      被弾判定
      */
     bool    CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, int damage)override;
+
+    /*
+     *  @brief      砲のリセット
+     */
+    void    ResetCannon(int number) { m_Cannon[number] = nullptr; }
+
 
 private:
     /*
@@ -119,11 +129,19 @@ private:
 
     static const float   m_summon_interval;     // 召喚間隔
 
-    static const float   m_all_range_ct;        // 
+    static const float   m_all_range_ct;        // オールレンジ攻撃のCT
 
-    static const int     m_cannon_count[2];        // 
+    static const float   m_dead_time;           // 死亡時間
 
-    int             m_PhaseLife[3];             // 
+    static const int     m_cannon_count[2];     // 砲の個数
+
+    static const int     m_position_pattern;    // 座標の角度パターン
+
+    static const int     m_max_summon;          // 最大召喚数
+
+    int             m_PhaseLife[2];             // 状態ごとのライフ
+
+    int             m_SummonCount;              // 召喚のカウンター
 
     bool            m_AllRangeAttacking;        // オールレンジ攻撃中
 
@@ -135,12 +153,13 @@ private:
 
     aqua::CTimer    m_SummonTimer;              // 召喚タイマー
 
-    aqua::CTimer    m_AllRangeCT;            // 
+    aqua::CTimer    m_AllRangeCT;               // オールレンジCT計測タイマー
 
-    aqua::CEffect3D* m_Effect;                  // エフェクト
+    aqua::CTimer    m_DeadTimer;                // 死亡タイマー
 
     CBossCannon*    m_Cannon[4];                // 
 
     CEnemyManager*  m_EnemyManager;             // 敵管理クラス(親クラス)
 
+    CGameMain*      m_GameMain;
 };

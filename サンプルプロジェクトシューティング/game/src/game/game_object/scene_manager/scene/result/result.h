@@ -57,10 +57,6 @@ public:
      */
     void        Finalize(void) override;
 
-    /*
-     *  @brief      シーン「操作可能」
-     */
-    void        Operation(void);
 
 
 private:

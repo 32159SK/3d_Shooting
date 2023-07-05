@@ -6,7 +6,7 @@ const float CPlayer::m_ago_pos_time = 0.2f;
 const float CPlayer::m_the_world_time = 7.0f;
 const float CPlayer::m_the_world_CT = 10.0f;
 const float CPlayer::m_lock_range = 200.0f;
-const int   CPlayer::m_max_life = 10;
+const int   CPlayer::m_max_life = 20;
 
 CPlayer::CPlayer(aqua::IGameObject* parent)
 	: IUnit(parent,"Player")
@@ -147,6 +147,15 @@ bool CPlayer::CheckHitBeam(UNIT_TYPE type, aqua::CCapsulePrimitive capsule, int 
 	}
 	else
 		return false;
+}
+
+void CPlayer::LifeHeal(int heal_value)
+{
+	// 回復値と現在残ライフの計が上限を超えるなら上限に合わせる
+	if (m_max_life <= m_Life + heal_value)
+		m_Life = m_max_life;
+	else
+		m_Life += heal_value;	// 越えなければそのまま回復値分加算する
 }
 
 void CPlayer::Shot(void)

@@ -87,8 +87,8 @@ void CBulletManager::EnemyReset(void)
 	if (m_EnemyList.empty())
 		return;
 
-	for (int i = 0; i < m_EnemyList.size(); ++i)
-		m_EnemyList[i]->Finalize();
+	//for (int i = 0; i < m_EnemyList.size(); ++i)
+	//	m_EnemyList[i]->Finalize();
 
 	m_EnemyList.clear();
 }

@@ -68,11 +68,6 @@ public:
     void        Finalize(void) override;
 
     /*!
-     *  @brief      終了確認
-     */
-    bool        GetFinish(void) { return m_Finish; }
-
-    /*!
      *  @brief      敵選出
      */
     CEnemy*     GetNearest(aqua::CVector3 player_pos);
@@ -87,10 +82,11 @@ private:
     void        WaveChange(void);
 
     static const int m_max_wave;
+    static const int m_heal_value;      // waveクリア時の回復値
 
-    int             m_EnemyCount;
-    int             m_WaveCount;
-    bool            m_Finish;
+    int             m_EnemyCount;       // 
+    int             m_WaveCount;        // 
+    bool            m_Finish;           // 
 
     CCSVReader*     m_CSVReader;
     CPlayer*        m_Player;

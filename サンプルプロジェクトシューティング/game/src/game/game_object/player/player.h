@@ -73,6 +73,7 @@ public:
      */
     void            SetEnemyManager(CEnemyManager* em) { m_EnemyManager = em; }
 
+
     bool            GetLockOnFlag(void) { return m_LockON; }
 
     /*
@@ -80,6 +81,10 @@ public:
      */
     void            SetPosition(aqua::CVector3 pos) { m_Position = pos; }
 
+    /*
+     *  @brief      ‰ñ•œ
+     */
+    void            LifeHeal(int heal_value);
 private:
 
     /*

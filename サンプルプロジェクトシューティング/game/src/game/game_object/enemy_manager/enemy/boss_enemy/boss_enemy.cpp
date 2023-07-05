@@ -160,19 +160,17 @@ void CBossEnemy::Dead(void)
 	if (!m_DeadFlag)
 	{
 		m_DeadFlag = true;
+		// 死亡演出
 		m_EffectManager->Create(EFFECT_ID::BOSS_DEAD, m_Position);
+		m_GameMain->SetGameClear(true);
 	}
 	
 	// 死亡タイマーの更新
 	m_DeadTimer.Update();
 
 	//m_Cube.visible = false;
-	// 死亡演出
 	if (m_DeadTimer.Finished())
-	{
 		DeleteObject();
-		m_GameMain->GameFinish(true);
-	}
 }
 
 void CBossEnemy::FirstPhase(void)

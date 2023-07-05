@@ -37,28 +37,27 @@ public:
     /*
      *  @brief      初期化
      */
-    void        Initialize(void);
+    void            Initialize(void);
 
     /*
      *  @brief      更新
      */
-    void        Update(void);
+    void            Update(void);
 
     /*
      *  @brief      描画
      */
-    void        Draw(void);
+    void            Draw(void);
 
     /*
      *  @brief      解放
      */
-    void        Finalize(void);
+    void            Finalize(void);
 
     /*
      *  @brief      カメラ取得(外部からカメラに干渉するためのゲッター)
      */
-    aqua::CCamera* GetCamera(void) { return &m_Camera; }
-
+    aqua::CCamera*  GetCamera(void) { return &m_Camera; }
 
     void            SetGameClear(bool game_clear) { m_GameClear = game_clear; }
 private:
@@ -77,6 +76,10 @@ private:
      */
     void            GameFinish(void);
 
+    /*
+     *  @brief      ゲーム終了
+     */
+    void            WhiteOut(void);
 
     /*
      *  @brief      状態ID
@@ -89,11 +92,13 @@ private:
         STATE_GAME_SAVE,        //! スコアのセーブ
     };
 
+    static const float  m_white_out_time;
+
     bool                m_GameClear;    // ゲームクリアフラグ
 
     STATE               m_State;        //! 状態ID
     aqua::CCamera       m_Camera;
-    aqua::CTimer        m_WOTimer;      // ホワイトアウト用タイマー
+    aqua::CTimer        m_WhiteOutTimer;      // ホワイトアウト用タイマー
     CPlayer*            m_Player;
     CEnemyManager*      m_EnemyManager;
     aqua::CSprite       m_WhiteOutSprite;// ホワイトアウト用スプライト

@@ -8,6 +8,7 @@
 #include "enemy/boss_enemy/boss_cannon/boss_cannon.h"
 
 const int CEnemyManager::m_max_wave = 4;
+const int CEnemyManager::m_heal_value = 5;
 
 CEnemyManager::CEnemyManager(aqua::IGameObject* parent)
 	: IGameObject(parent, "EnemyManager")
@@ -130,21 +131,21 @@ CEnemy* CEnemyManager::CreateBossParts(aqua::CVector3 pop_pos, ENEMY_ID enemy_id
 void CEnemyManager::WaveChange(void)
 {
 	if (m_WaveCount > m_max_wave)
-	{
-		m_Finish = true;
 		return;
-	}
 
 	m_BulletManagar->EnemyReset();
+
+	// waveのクリア時にプレイヤーのライフを回復させる
+	m_Player->LifeHeal(m_heal_value);
 
 	// waveに合わせてフィールドを切り替える
    	m_StageManager->WaveChange(m_WaveCount);
 
-	// 試験用なので一時的にコメントアウト
-	//for (int i = 0; i < m_PopList.size(); ++i)
-	//	if (m_PopList[i].wave == m_WaveCount && m_EnemyCount < m_StageManager->GetEnemyCount())
-	//		Create(m_StageManager->GetEnemyPopPos(i), m_PopList[m_EnemyCount].pop_e_id);
-	Create(m_StageManager->GetEnemyPopPos(0), m_PopList[18].pop_e_id);
+	 //試験用なので一時的にコメントアウト
+	for (int i = 0; i < m_PopList.size(); ++i)
+		if (m_PopList[i].wave == m_WaveCount && m_EnemyCount < m_StageManager->GetEnemyCount())
+			Create(m_StageManager->GetEnemyPopPos(i), m_PopList[m_EnemyCount].pop_e_id);
+	//Create(m_StageManager->GetEnemyPopPos(0), m_PopList[18].pop_e_id);
 
 	m_WaveCount++;
 }

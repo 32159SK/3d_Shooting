@@ -12,11 +12,14 @@
 #include "../../../game_object.h"
 #include "game_main.h"
 
+const float CGameMain::m_white_out_time = 6.0f;
 
 CGameMain::CGameMain(aqua::IGameObject* parent)
     : IScene(parent, "GameMainScene")
     , m_State(STATE::STATE_GAME_START)
     , m_Player(nullptr)
+    , m_EnemyManager(nullptr)
+    , m_GameClear(false)
 {
 }
 
@@ -71,17 +74,19 @@ Initialize(void)
     // 弾管理クラスの初期化
     bm->Initialize(csv_r,st_m);
 
+    // カメラのセットアップ
     m_Camera.SetCamera(50.0f, 10000.0f);
     m_Camera.m_Target = m_Player->GetPosition();
     m_Camera.m_Distace = 100.0f;
     m_Camera.m_VRotate = aqua::DegToRad(50.0f);
 
+    // タイマーのセットアップ
+    m_WhiteOutTimer.Setup(m_white_out_time);
+
     // ホワイトアウト用の画像を生成しておく
     m_WhiteOutSprite.Create("data\\texture\\white.png");
     // 画像のアルファ値を0にして最初は透明にする
     m_WhiteOutSprite.color.alpha = (unsigned char)0.0f;
-
-
 }
 
 /*
@@ -100,8 +105,6 @@ Update(void)
     case STATE_GAME_PLAY:   GamePlay();    break;
     }
     m_State = STATE_GAME_PLAY;
-
-
 }
 
 /*
@@ -127,16 +130,35 @@ GamePlay(void)
     else if (wheel_value < 0) m_Camera.m_Distace += 5.0f;
     m_Camera.Update();
 
+    // プレイヤーが死んだ時点でゲームを終了
     if (m_Player->GetDead())
         GameFinish();
-
-    if (m_WOTimer.Finished())
-        GameFinish();
+    // ゲームクリアされたらホワイトアウト処理をする
+    if (m_GameClear)
+        WhiteOut();
 }
 
 void CGameMain::GameFinish(void)
 {
+    // シーンを切り替える
     Change(SCENE_ID::RESULT);
+}
+
+void CGameMain::WhiteOut(void)
+{
+    // タイマーをアップデート
+    m_WhiteOutTimer.Update();
+
+    float alpha = 0.0f;
+
+    // イージングでアルファ値を変化させる
+    alpha = aqua::easing::InCubic(m_WhiteOutTimer.GetTime(), m_WhiteOutTimer.GetLimit(), 0.0f, 255.0f);
+
+    m_WhiteOutSprite.color.alpha = (unsigned char)alpha;
+
+    // タイマーが終了したらゲームを終了
+    if (m_WhiteOutTimer.Finished())
+        GameFinish();
 }
 
 

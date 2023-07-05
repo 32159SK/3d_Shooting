@@ -241,6 +241,8 @@ void CBossEnemy::PhaseChange(void)
 	if (m_Phase != BOSS_PHASE::DEAD)
 	{
 		m_Rotate = 180.0f;
+		m_BulletManager->EnemyReset();
+		m_BulletManager->SetEnemy(this);
 		CannonSetUp();
 	}
 

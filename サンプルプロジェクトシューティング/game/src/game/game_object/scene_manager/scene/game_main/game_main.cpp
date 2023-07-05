@@ -158,7 +158,10 @@ void CGameMain::WhiteOut(void)
 
     // タイマーが終了したらゲームを終了
     if (m_WhiteOutTimer.Finished())
+    {
+        m_WhiteOutSprite.color.alpha = (unsigned char)255.0f;
         GameFinish();
+    }
 }
 
 
@@ -170,6 +173,7 @@ CGameMain::
 Draw(void)
 {
     IGameObject::Draw();
+    m_WhiteOutSprite.Draw();
 }
 
 /*
@@ -180,4 +184,5 @@ CGameMain::
 Finalize(void)
 {
     IGameObject::Finalize();
+    m_WhiteOutSprite.Delete();
 }

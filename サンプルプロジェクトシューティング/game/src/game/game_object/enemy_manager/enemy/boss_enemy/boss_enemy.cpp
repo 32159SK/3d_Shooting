@@ -69,8 +69,9 @@ void CBossEnemy::Update(void)
 		return;
 	Move();
 
-	if (m_DeadFlag)
+	if (m_DeadFlag || !m_MoveFlag)
 		return;
+
 	m_ShotCT.Update();
 	if (m_ShotCT.Finished())
 	{
@@ -121,6 +122,9 @@ void CBossEnemy::Shot(void)
 	// CT‚ªŠJ‚¯‚Ä‚¢‚ê‚Î–C‚ÉËŒ‚‚ğ‚³‚¹‚é
 	if (m_ShotCT.Finished())
 	{
+		// ƒ‰ƒ“ƒ_ƒ€‚ÅŒ‚‚Â’e‚ğØ‚è‘Ö‚¦‚é
+		m_ShotBullet = (BULLET_TYPE)aqua::Rand((int)BULLET_TYPE::BEAM);
+
 		for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
 			if (m_Cannon[i] && !m_Cannon[i]->GetDead())
 			{

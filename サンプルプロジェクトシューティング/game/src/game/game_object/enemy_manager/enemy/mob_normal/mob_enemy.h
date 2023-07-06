@@ -58,11 +58,6 @@ private:
     void    Move(void)override;
 
     /*
-     *  @brief      éÄñS
-     */
-    void    Dead(void)override;
-
-    /*
      *  @brief      í«ê’
      */
     void    Follow(void);

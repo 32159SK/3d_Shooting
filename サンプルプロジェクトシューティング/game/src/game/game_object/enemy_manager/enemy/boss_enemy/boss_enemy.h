@@ -64,7 +64,12 @@ public:
      */
     void    ResetCannon(int number) { m_Cannon[number] = nullptr; }
 
+    /*
+     *  @brief      –C‚ÌƒŠƒZƒbƒg
+     */
+    bool    GetMoveFlag(void) { return m_MoveFlag; }
 
+    
 private:
     /*
      *  @brief      ŽËŒ‚

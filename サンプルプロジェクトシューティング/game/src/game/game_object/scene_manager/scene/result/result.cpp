@@ -1,14 +1,22 @@
-#include "../game_main/game_main.h"
 #include "result.h"
+#include "../game_main/game_main.h"
+
 /*
  *  @file       result_scene.cpp
  *  @brief
  *  @author
- *  @date       2021/02/13
+ *  @date       2023/07/06
  *  @version    1.0
  *
  *  Copyright (c) 2013-2021, Kazuya Maruyama. All rights reserved.
  */
+
+const std::string CResultScene::m_file_path[] =
+{
+    "data\\texture\\result\\",
+    "game_over",
+    "clear"
+};
 
 CResultScene::CResultScene(aqua::IGameObject* parent)
     : IScene(parent, "Result")
@@ -18,18 +26,18 @@ CResultScene::CResultScene(aqua::IGameObject* parent)
 void CResultScene::Initialize(void)
 {
     CGameMain* game_main = (CGameMain*)aqua::FindGameObject("GameMainScene");
-    bool game_clear = game_main->GetGameClear();
+    bool game_clear = false;
 
-    if (game_clear)
-    {
+    if (game_main)
+        game_clear = game_main->GetGameClear();
 
+    // boolはintで真1偽0に変換できるのでgame_clearを要素番号として活用
+    std::string path = m_file_path[0] + m_file_path[(int)game_clear + 1];
 
-    }
     // 背景スプライトの生成
-    m_BackgroundSprite.Create("data\\texture\\result_background.png");
-    m_ResultSprite[0].Create("data\\texture\\result\\game_over.png");
-
-    m_ResultSprite[1].Create("data\\texture\\result\\retry.png");
+    m_BackgroundSprite.Create(path + "_background.png");
+    m_ResultSprite[0].Create(path + ".png");
+    m_ResultSprite[1].Create(path + "_retry.png");
 
     m_BackgroundSprite.position = aqua::CVector2::ZERO;
     m_ResultSprite[0].position = aqua::CVector2((aqua::GetWindowWidth() - m_ResultSprite[0].GetTextureWidth()) / 2.0f, 200.0f);

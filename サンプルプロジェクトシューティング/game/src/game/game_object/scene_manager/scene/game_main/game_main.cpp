@@ -140,8 +140,11 @@ GamePlay(void)
 
 void CGameMain::GameFinish(void)
 {
-    // シーンを切り替える
-    Push(SCENE_ID::RESULT);
+    if (m_GameClear)
+        // シーンを切り替える
+        Push(SCENE_ID::RESULT);
+    else
+        Change(SCENE_ID::RESULT);
 }
 
 void CGameMain::WhiteOut(void)

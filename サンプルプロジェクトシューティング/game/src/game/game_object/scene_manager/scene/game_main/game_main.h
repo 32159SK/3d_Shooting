@@ -15,6 +15,9 @@
 #include"..\scene.h"
 
 
+class CPlayer;
+class CEnemyManager;
+
  /*
   *  @class      CGameMain
   *
@@ -80,7 +83,7 @@ private:
     void            GameFinish(void);
 
     /*
-     *  @brief      ゲーム終了
+     *  @brief      ホワイトアウト
      */
     void            WhiteOut(void);
 

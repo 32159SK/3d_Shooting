@@ -53,11 +53,6 @@ void CMobEnemy::Move(void)
 		NotFollow();
 }
 
-void CMobEnemy::Dead(void)
-{
-	IUnit::Dead();
-}
-
 void CMobEnemy::Follow(void)
 {
 	// Œ©¸‚Á‚Ä‚¢‚½‚ç’ÇÕ‚ğ‰ğœ

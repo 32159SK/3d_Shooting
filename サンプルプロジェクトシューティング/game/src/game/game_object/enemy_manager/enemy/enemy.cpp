@@ -86,4 +86,5 @@ void CEnemy::Move(void)
 void CEnemy::Dead(void)
 {
 	IUnit::Dead();
+	DeleteObject();
 }

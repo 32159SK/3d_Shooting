@@ -61,6 +61,8 @@ public:
 
 private:
 
-    aqua::CSprite   m_BackgroundSprite;
-    aqua::CSprite   m_ResultSprite[2];
+    static const std::string m_file_path[3];    // ファイルパス
+
+    aqua::CSprite   m_BackgroundSprite;         // 背景スプライト
+    aqua::CSprite   m_ResultSprite[2];          // 
 };

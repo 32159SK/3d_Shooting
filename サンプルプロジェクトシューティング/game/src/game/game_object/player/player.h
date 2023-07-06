@@ -103,11 +103,6 @@ private:
     void            Damage(int damage)override;
 
     /*
-     *  @brief      €–S
-     */
-    void            Dead(void)override;
-
-    /*
      *  @brief      ƒƒbƒNƒIƒ“
      */
     void            LockOn(void);

@@ -39,6 +39,8 @@ void CBossCannon::Update(void)
 	if (m_Player->GetTimeStop())
 		return;
 
+	if (!m_BossEnemy->GetMoveFlag())
+		return;
 	Move();
 
 	m_Cube.m_HRotate = m_Rotate;

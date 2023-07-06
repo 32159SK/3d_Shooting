@@ -75,7 +75,6 @@ void CPlayer::Update(void)
 		m_InvincibleTimer.Reset();
 	}
 
-	m_Invincible = true;
 
 	IUnit::Update();
 
@@ -252,11 +251,6 @@ void CPlayer::Move(void)
 void CPlayer::Damage(int damage)
 {
 	IUnit::Damage(damage);
-}
-
-void CPlayer::Dead(void)
-{
-	IUnit::Dead();
 }
 
 void CPlayer::LockOn(void)

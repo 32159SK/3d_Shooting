@@ -60,6 +60,9 @@ public:
     aqua::CCamera*  GetCamera(void) { return &m_Camera; }
 
     void            SetGameClear(bool game_clear) { m_GameClear = game_clear; }
+
+    bool            GetGameClear(void) { return m_GameClear; }
+
 private:
     /*
      *  @brief      ƒQ[ƒ€ŠJn

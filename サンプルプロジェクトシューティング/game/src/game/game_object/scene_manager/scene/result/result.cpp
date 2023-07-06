@@ -1,3 +1,4 @@
+#include "../game_main/game_main.h"
 #include "result.h"
 /*
  *  @file       result_scene.cpp
@@ -16,17 +17,26 @@ CResultScene::CResultScene(aqua::IGameObject* parent)
 
 void CResultScene::Initialize(void)
 {
+    CGameMain* game_main = (CGameMain*)aqua::FindGameObject("GameMainScene");
+    bool game_clear = game_main->GetGameClear();
 
+    if (game_clear)
+    {
+
+
+    }
     // 背景スプライトの生成
     m_BackgroundSprite.Create("data\\texture\\result_background.png");
-    m_BackgroundSprite.position = aqua::CVector2::ZERO;
-
-
     m_ResultSprite[0].Create("data\\texture\\result\\game_over.png");
-    m_ResultSprite[0].position = aqua::CVector2((aqua::GetWindowWidth() - m_ResultSprite[0].GetTextureWidth()) / 2.0f, 200.0f);
 
     m_ResultSprite[1].Create("data\\texture\\result\\retry.png");
+
+    m_BackgroundSprite.position = aqua::CVector2::ZERO;
+    m_ResultSprite[0].position = aqua::CVector2((aqua::GetWindowWidth() - m_ResultSprite[0].GetTextureWidth()) / 2.0f, 200.0f);
     m_ResultSprite[1].position = aqua::CVector2((aqua::GetWindowWidth() - m_ResultSprite[1].GetTextureWidth()) / 2.0f, 600.0f);
+
+
+    
 
 }
 
@@ -45,7 +55,6 @@ void CResultScene::Draw(void)
 
     for (int i = 0; i < 2; i++)
         m_ResultSprite[i].Draw();
-
 }
 
 void CResultScene::Finalize(void)
@@ -55,5 +64,4 @@ void CResultScene::Finalize(void)
 
     for (int i = 0; i < 2; i++)
         m_ResultSprite[i].Delete();
-
 }

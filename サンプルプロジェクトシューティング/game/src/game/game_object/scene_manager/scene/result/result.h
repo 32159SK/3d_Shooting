@@ -60,6 +60,7 @@ public:
 
 
 private:
+
     aqua::CSprite   m_BackgroundSprite;
     aqua::CSprite   m_ResultSprite[2];
 };

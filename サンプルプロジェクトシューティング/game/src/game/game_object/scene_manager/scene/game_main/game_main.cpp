@@ -12,7 +12,7 @@
 #include "../../../game_object.h"
 #include "game_main.h"
 
-const float CGameMain::m_white_out_time = 6.0f;
+const float CGameMain::m_white_out_time = 7.0f;
 
 CGameMain::CGameMain(aqua::IGameObject* parent)
     : IScene(parent, "GameMainScene")
@@ -141,7 +141,7 @@ GamePlay(void)
 void CGameMain::GameFinish(void)
 {
     // ƒV[ƒ“‚ğØ‚è‘Ö‚¦‚é
-    Change(SCENE_ID::RESULT);
+    Push(SCENE_ID::RESULT);
 }
 
 void CGameMain::WhiteOut(void)

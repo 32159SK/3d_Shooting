@@ -44,7 +44,6 @@ struct ENEMY_INFO
 enum class BULLET_TYPE
 {
     NOMAL,
-    FAST,
     REFLECT,
     PENETRATE,
     BEAM,

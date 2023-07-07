@@ -106,7 +106,7 @@ bool CStageManager::StageObjectCollision(aqua::CVector3 position, aqua::CVector3
 
 void CStageManager::Create(void)
 {
-    m_CSVReader->Initialize(FILE_TYPE::STAGE, "stage_" + std::to_string(4));
+    m_CSVReader->Initialize(FILE_TYPE::STAGE, "stage_" + std::to_string(m_WaveCount));
 
     for (int z = 0; z < 21; ++z)
         for (int x = 0; x < 21; ++x)

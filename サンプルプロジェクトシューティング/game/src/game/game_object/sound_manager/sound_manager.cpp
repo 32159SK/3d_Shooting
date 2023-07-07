@@ -19,6 +19,13 @@ const std::string CSoundManager::m_sound_file_names[] =
     , "data\\sound\\b_gamemain.mp3"   // アクションBGM
     // ( s_ ) SE
     , "data\\sound\\s_select.mp3"     // 選択音
+    , "data\\sound\\s_shot.mp3"
+    , "data\\sound\\s_charge.mp3"
+    , "data\\sound\\s_beam.mp3"
+    , "data\\sound\\s_damage.mp3"
+    , "data\\sound\\s_dead.mp3"
+    , "data\\sound\\s_boss_dead.mp3"
+    , "data\\sound\\s_time_stop.mp3"
 };
 
 /*
@@ -117,7 +124,7 @@ BGMStop(void)
 {
     if (!m_SoundPlayer) return;
 
-    // BGMはループ再生設定
+    // 
     for (int i = (int)SOUND_ID::b_TITLE; i < (int)SOUND_ID::s_SELECT; ++i)
     {
         m_SoundPlayer[i].Stop();

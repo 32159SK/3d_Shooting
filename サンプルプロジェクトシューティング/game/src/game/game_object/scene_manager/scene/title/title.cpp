@@ -41,9 +41,9 @@ void
 CTitleScene::
 Initialize(void)
 {
-    //// 前のBGMを停止させて新規にBGM再生
-    //m_SoundManager = (CSoundManager*)aqua::FindGameObject("SoundManager");
-    //if (m_SoundManager) { m_SoundManager->BGMStop(); m_SoundManager->Play(SOUND_ID::b_TITLE); }
+    // 前のBGMを停止させて新規にBGM再生
+    m_SoundManager = (CSoundManager*)aqua::FindGameObject("SoundManager");
+    if (m_SoundManager) { m_SoundManager->BGMStop(); m_SoundManager->Play(SOUND_ID::b_TITLE); }
 
     // 背景スプライトの生成
     m_BackgroundSprite.Create("data\\texture\\title_background2.png");

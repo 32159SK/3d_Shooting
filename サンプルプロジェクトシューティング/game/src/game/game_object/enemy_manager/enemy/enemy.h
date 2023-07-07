@@ -47,6 +47,7 @@ public:
      */
     virtual void    Finalize(void)override;
 
+
     void            SetPlayer(CPlayer* player) { m_Player = player; }
 
 protected:

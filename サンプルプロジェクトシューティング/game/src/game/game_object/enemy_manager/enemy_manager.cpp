@@ -141,11 +141,11 @@ void CEnemyManager::WaveChange(void)
 	// waveに合わせてフィールドを切り替える
    	m_StageManager->WaveChange(m_WaveCount);
 
-	 //試験用なので一時的にコメントアウト
-	//for (int i = 0; i < m_PopList.size(); ++i)
-	//	if (m_PopList[i].wave == m_WaveCount && m_EnemyCount < m_StageManager->GetEnemyCount())
-	//		Create(m_StageManager->GetEnemyPopPos(i), m_PopList[m_EnemyCount].pop_e_id);
-	Create(m_StageManager->GetEnemyPopPos(0), m_PopList[18].pop_e_id);
+	for (int i = 0; i < m_PopList.size(); ++i)
+		if (m_PopList[i].wave == m_WaveCount && m_EnemyCount < m_StageManager->GetEnemyCount())
+			Create(m_StageManager->GetEnemyPopPos(i), m_PopList[m_EnemyCount].pop_e_id);
+	//試験用なのでコメントアウト
+	//Create(m_StageManager->GetEnemyPopPos(0), m_PopList[18].pop_e_id);
 
 	m_WaveCount++;
 }

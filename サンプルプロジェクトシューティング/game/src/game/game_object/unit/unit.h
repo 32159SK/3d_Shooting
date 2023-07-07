@@ -104,6 +104,8 @@ protected:
       */
     virtual void    Dead(void);
 
+    static const float   m_beam_damage_interval;
+
     int                  m_MaxLife;
 
     int                  m_Life;         // ライフ
@@ -136,6 +138,8 @@ protected:
     aqua::CCubePrimitive m_Cube;         // ユニットのコライダー
 
     aqua::CTimer         m_ShotCT;
+
+    aqua::CTimer         m_BeamInterval;
 
     CEffectManager*      m_EffectManager;
 

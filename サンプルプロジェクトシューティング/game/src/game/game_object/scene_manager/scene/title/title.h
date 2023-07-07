@@ -83,5 +83,5 @@ private:
 
 
 
-    //CSoundManager* m_SoundManager;
+    CSoundManager* m_SoundManager;
 };

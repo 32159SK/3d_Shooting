@@ -104,6 +104,9 @@ bool CBossEnemy::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, i
 
 void CBossEnemy::SetCannonPosition(void)
 {
+	if (m_Phase == BOSS_PHASE::DEAD)
+		return;
+
 	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
 		if (m_Cannon[i] && !m_Cannon[i]->GetDead())
 			m_Cannon[i]->SetPosition(m_CannonPos[i]);
@@ -272,10 +275,12 @@ void CBossEnemy::SummonEnemy(void)
 	if (m_SummonCount < m_max_summon)
 	{
 		// ŽG‹›‚ð¢Š«
-		m_EnemyManager->Create(m_CannonPos[0], ENEMY_ID::MOB);
-		m_EnemyManager->Create(m_CannonPos[2], ENEMY_ID::MOB);
+		if (m_SummonCount % 2 == 0)
+			m_EnemyManager->Create(m_CannonPos[0], ENEMY_ID::MOB);
+		else
+			m_EnemyManager->Create(m_CannonPos[2], ENEMY_ID::MOB);
 		m_SummonTimer.Reset();
-		m_SummonCount += 2;
+		m_SummonCount++;
 	}
 }
 

@@ -1,6 +1,8 @@
 #include "../game_object.h"
 #include "unit.h"
 
+const float IUnit::m_beam_damage_interval =0.5f;
+
 IUnit::
 IUnit(aqua::IGameObject* parent, const std::string& object_name)
 	: aqua::IGameObject(parent,object_name)
@@ -10,7 +12,7 @@ IUnit(aqua::IGameObject* parent, const std::string& object_name)
 	, m_Speed(0.0f)
 	, m_MaxLife(0)
 	, m_Life(0)
-	, m_DeadFlag(false)
+	, m_DeadFlag(true)
 	, m_MoveFlag(true)
 	, m_Rotate(0.0f)
 	, m_Position(aqua::CVector3::ZERO)
@@ -27,10 +29,13 @@ void IUnit::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, 
 	m_Color = color;
 	m_BulletManager = bm;
 	m_StageManager = st_m;
+	m_DeadFlag = false;
 	m_Cube.Setup(m_Position, m_Width, m_Height, m_Depth, m_Color);
 	aqua::CreateGameObject<CLifeBar>(this);
 	// エフェクト管理クラスを探査してポインタを受け取る
 	m_EffectManager = (CEffectManager*)aqua::FindGameObject("EffectManager");
+
+	m_BeamInterval.Setup(m_beam_damage_interval);
 
 	IGameObject::Initialize();
 }
@@ -63,6 +68,12 @@ bool IUnit::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere,int dam
 
 bool IUnit::CheckHitBeam(UNIT_TYPE type, aqua::CCapsulePrimitive capsule, int damage)
 {
+	m_BeamInterval.Update();
+	if (!m_BeamInterval.Finished())
+		return false;
+
+	m_BeamInterval.Reset();
+
 	if (m_UnitType == type)
 		return false;
 	if (m_Cube.CheckCollision(capsule.Apos,capsule.Bpos,capsule.radius))

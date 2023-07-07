@@ -99,7 +99,6 @@ void CPlayer::Draw(void)
 	switch (m_ShotBullet)
 	{
 	case BULLET_TYPE::NOMAL:	m_DrawBT.text = "BULLET:NOMAL"; break;
-	case BULLET_TYPE::FAST:		m_DrawBT.text = "BULLET:FAST"; break;
 	case BULLET_TYPE::REFLECT:	m_DrawBT.text = "BULLET:REFLECT"; break;
 	case BULLET_TYPE::PENETRATE:m_DrawBT.text = "BULLET:PENETRATE"; break;
 	case BULLET_TYPE::BEAM:		m_DrawBT.text = "BULLET:BEAM"; break;
@@ -175,19 +174,10 @@ void CPlayer::Shot(void)
 			m_ChangeCT.Reset();
 		}
 		// ↓キー
-		if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::DOWN) && (int)m_ShotBullet < (int)BULLET_TYPE::BEAM - 1)
+		if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::DOWN) && (int)m_ShotBullet < (int)BULLET_TYPE::MAX - 1)
 		{
 			// +1の弾に変更(例NOMAL→FAST)
 			m_ShotBullet = (BULLET_TYPE)((int)m_ShotBullet + 1);
-			m_ChangeCT.Reset();
-		}
-
-
-		//	ビームは無法すぎるので隠しコマンドで
-		if(aqua::keyboard::Button(aqua::keyboard::KEY_ID::LSHIFT) && aqua::keyboard::Button(aqua::keyboard::KEY_ID::B))
-		{
-			// ビームに変更
-			m_ShotBullet = BULLET_TYPE::BEAM;
 			m_ChangeCT.Reset();
 		}
 

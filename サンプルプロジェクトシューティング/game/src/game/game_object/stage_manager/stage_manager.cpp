@@ -15,6 +15,7 @@
 #include "stage_object/brittle_block/brittle_block.h"
 
 const float CStageManager::m_default_size = 25.0f;
+const std::string CStageManager::m_file_path = "data\\csv\\stage_";
 
 /*
  *  コンストラクタ
@@ -24,7 +25,6 @@ CStageManager(aqua::IGameObject* parent)
     : aqua::IGameObject(parent, "StageManager")
     , m_WaveCount(0)
     , m_EnemyCount(0)
-    , m_CSVReader(nullptr)
     , m_LastCollObject(nullptr)
 {
 }
@@ -32,9 +32,8 @@ CStageManager(aqua::IGameObject* parent)
 /*
  *  初期化
  */
-void CStageManager::Initialize(CCSVReader* csv_reader)
+void CStageManager::Initialize(void)
 {
-    m_CSVReader = csv_reader;
     m_Player = (CPlayer*)aqua::FindGameObject("Player");
 }
 
@@ -104,13 +103,25 @@ bool CStageManager::StageObjectCollision(aqua::CVector3 position, aqua::CVector3
     return collision;
 }
 
+void CStageManager::StageLoad(void)
+{
+    aqua::CCSVLoader csv;
+    csv.Load(m_file_path + std::to_string(m_WaveCount) + ".csv");
+
+    // 行
+    for (int i = 0; i < 21; ++i)
+        // 列
+        for (int k = 0; k < 21; ++k)
+            m_Stage[i][k] = std::stoi(csv.GetString(i, k));
+
+
+    csv.Unload();
+
+}
+
 void CStageManager::Create(void)
 {
-    m_CSVReader->Initialize(FILE_TYPE::STAGE, "stage_" + std::to_string(m_WaveCount));
-
-    for (int z = 0; z < 21; ++z)
-        for (int x = 0; x < 21; ++x)
-            m_Stage[z][x] = m_CSVReader->GetStage(z, x);
+    StageLoad();
 
     // 生成するステージオブジェクトのUTSUWAを準備
     IStageObject* stage_object = nullptr;

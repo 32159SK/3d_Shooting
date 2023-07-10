@@ -12,8 +12,8 @@
 #pragma once
 
 #include "aqua.h"
-#include "bullet/bullet.h"
-#include "beam/beam.h"
+#include "bullet/bullet_info.h"
+
 
  /*!
   *  @class      CBulletManager
@@ -48,7 +48,7 @@ public:
     /*!
      *  @brief      初期化
      */
-    void        Initialize(CCSVReader* csv_r,CStageManager* st_m);
+    void        Initialize(void)override;
 
     /*!
      *  @brief      更新
@@ -88,11 +88,14 @@ public:
     void        EnemyReset(void);
 private:
 
+    void        BulletDataLoad(void);
+
     void        CheakHit(void);
 
     void        CheakHitBeam(CBeam* beam,int e_count);
 
-    CCSVReader*             m_CSVReader;        // CSV読み取りクラスのポインタ
+    static const std::string m_bullet_info_path;
+
     CPlayer*                m_Player;           // プレイヤークラスのポインタ
     CStageManager*          m_StageManager;     // ステージ管理クラスのポインタ
     CEffectManager*         m_EffectManager;    // エフェクト管理クラス

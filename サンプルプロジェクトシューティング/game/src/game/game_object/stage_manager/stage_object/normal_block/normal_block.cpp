@@ -39,12 +39,3 @@ bool CNormalBlock::CollisionCheck(aqua::CVector3 position, aqua::CVector3 destin
 	return IStageObject::CollisionCheck(position, destination,this_bullet);
 }
 
-void CNormalBlock::GoIn(void)
-{
-	IStageObject::GoIn();
-}
-
-void CNormalBlock::GoOut(void)
-{
-	IStageObject::GoOut();
-}

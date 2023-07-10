@@ -38,13 +38,9 @@ void
 CGameMain::
 Initialize(void)
 {
-    // CSV読み取りクラスの生成
-    CCSVReader* csv_r = aqua::CreateGameObject<CCSVReader>(this);
     // 床
     aqua::CreateGameObject<CFloor>(this);
 
-    // 引数なしで初期化できるものはここで
-    IGameObject::Initialize();
 
     // ステージ管理の生成
     CStageManager* st_m = aqua::CreateGameObject<CStageManager>(this);
@@ -60,19 +56,19 @@ Initialize(void)
 
     // レーダークラスの生成
     CRader* rd = aqua::CreateGameObject<CRader>(this);
-    rd->Initialize(m_Player);
-    st_m->Initialize(csv_r);
 
     // エフェクト管理クラス
     aqua::CreateGameObject<CEffectManager>(this);
+    // 引数なしで初期化できるものはここで
+    IGameObject::Initialize();
 
+    // レーダークラスの初期化
+    rd->Initialize(m_Player);
     // プレイヤーの初期化＆弾管理クラスのセット
     m_Player->Initialize(aqua::CVector3(0.0f, 0.0f, -50.0f), 10.0f, 10.0f, 10.0f, aqua::CColor::BLUE,st_m, bm);
     m_Player->SetEnemyManager(m_EnemyManager);
     // 敵管理クラスの初期化＆プレイヤー、弾管理クラスのセット
-    m_EnemyManager->Initialize(csv_r, bm, m_Player, st_m, rd);
-    // 弾管理クラスの初期化
-    bm->Initialize(csv_r,st_m);
+    m_EnemyManager->Initialize(bm, m_Player, st_m, rd);
 
     // カメラのセットアップ
     m_Camera.SetCamera(50.0f, 10000.0f);

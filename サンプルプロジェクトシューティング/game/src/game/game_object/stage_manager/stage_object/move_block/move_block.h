@@ -11,7 +11,7 @@
 #pragma once
 
 #include "aqua.h"
-#include "../normal_block/normal_block.h"
+#include "../stage_object.h"
 
  /*
   *  @class      IStageObject
@@ -26,19 +26,19 @@
   */
 
 
-class CBrittleBlock : public IStageObject
+class CMoveBlock : public IStageObject
 {
 public:
 
     /*
      *  @brief      コンストラクタ
      */
-    CBrittleBlock(aqua::IGameObject* parent);
+    CMoveBlock(aqua::IGameObject* parent);
 
     /*
      *  @brief      デストラクタ
      */
-    ~CBrittleBlock(void) = default;
+    ~CMoveBlock(void) = default;
 
     /*!
      *  @brief      初期化
@@ -63,15 +63,12 @@ public:
     void        Finalize(void)override;
 
 
-    bool        CollisionCheck(aqua::CVector3 position, aqua::CVector3 destination,bool this_bullet)override;
+    bool        CollisionCheck(aqua::CVector3 position, aqua::CVector3 destination, bool this_bullet)override;
 
 
 private:
+    void        Move(void);
 
-    void        Broken(void);
-
-    int             m_Endurance;        // 耐久値
-
-    CEffectManager* m_EfectManager;
+    CStageManager* m_StageManager;
 
 };

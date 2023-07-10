@@ -1,33 +1,29 @@
 
 #include "../../game_object/game_object.h"
 #include "bullet_manager.h"
+#include "beam/beam.h"
 #include "bullet/normal_bullet/normal_bullet.h"
 #include "bullet/reflection_bullet/reflection_bullet.h"
 #include "bullet/penetrate_bullet/penetrate_bullet.h"
 
+const std::string CBulletManager::m_bullet_info_path = "data\\csv\\bullet_info.csv";
+
 CBulletManager::CBulletManager(aqua::IGameObject* parent)
 	: IGameObject(parent,"BulletManager")
-	, m_CSVReader(nullptr)
 	, m_Player(nullptr)
 	, m_EnemyList{nullptr}
 {
 }
 
-void CBulletManager::Initialize(CCSVReader* csv_r, CStageManager* st_m)
+void CBulletManager::Initialize(void)
 {
-	m_CSVReader = csv_r;
-	m_StageManager = st_m;
-	m_CSVReader->Initialize(FILE_TYPE::BULLET_INFO, "bullet_info");
+	m_StageManager = (CStageManager*)aqua::FindGameObject("StageManager");
 
 	m_EffectManager = (CEffectManager*)aqua::FindGameObject("EffectManager");
 
-	// forï∂ópÇÃçsêîéÊìæ
-	int row = m_CSVReader->GetFileRow(FILE_TYPE::BULLET_INFO);
-	// íeèÓïÒÇÃäiî[
-	for (int i = 0; i < row; ++i)
-		m_BulletInfo.push_back(m_CSVReader->GetBullInfo(i));
-
 	m_EnemyList.clear();
+
+	BulletDataLoad();
 }
 
 void CBulletManager::Update(void)
@@ -90,6 +86,30 @@ void CBulletManager::EnemyReset(void)
 	//	m_EnemyList[i]->Finalize();
 
 	m_EnemyList.clear();
+}
+
+void CBulletManager::BulletDataLoad(void)
+{
+	aqua::CCSVLoader csv;
+	csv.Load(m_bullet_info_path);
+
+	int file_row = csv.GetRows();
+
+	BULLET_INFO info;
+	for (int i = 0; i < file_row; ++i)
+	{
+		info =
+		{
+			(BULLET_TYPE)i,
+			std::stoi(csv.GetString(i,0)),	// damage
+			std::stof(csv.GetString(i,1)),	// radius
+			std::stof(csv.GetString(i,2))	// speed
+		};
+		m_BulletInfo.push_back(info);
+	}
+
+	csv.Unload();
+
 }
 
 void CBulletManager::CheakHit(void)

@@ -46,22 +46,22 @@ public:
     /*
      *  @brief      初期化
      */
-    void        Initialize(CCSVReader* csv_reader);
+    void        Initialize(void)override;
 
     /*
      *  @brief      更新
      */
-    void        Update(void);
+    void        Update(void)override;
 
     /*
      *  @brief      描画
      */
-    void        Draw(void);
+    void        Draw(void)override;
 
     /*
      *  @brief      解放
      */
-    void        Finalize(void);
+    void        Finalize(void)override;
 
     /*
      *  @brief      ウェーブ切り替え
@@ -89,10 +89,13 @@ public:
     aqua::CVector3 GetEnemyPopPos(int pos_number) { return m_EnemyPopPos[pos_number]; }
 
 private:
+
+    void        StageLoad(void);
+
     void        Create(void);
 
     static const float              m_default_size;         //!< 標準サイズ
-
+    static const std::string        m_file_path;
     struct POS_NUMBER
     {
         int z = 0;
@@ -106,8 +109,6 @@ private:
     int                             m_EnemyCount;
 
     std::vector<aqua::CVector3>     m_EnemyPopPos;
-
-    CCSVReader* m_CSVReader;
 
     CPlayer*                        m_Player;
 

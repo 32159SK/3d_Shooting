@@ -1,6 +1,5 @@
 #pragma once
 
-#include"csv_reader/csv_reader.h"
 #include"sound_manager/sound_manager.h"
 #include"effect_manager/effect_manager.h"
 #include"stage_manager/stage_manager.h"

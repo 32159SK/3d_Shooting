@@ -9,6 +9,8 @@
 
 const int CEnemyManager::m_max_wave = 4;
 const int CEnemyManager::m_heal_value = 5;
+const std::string CEnemyManager::m_enemy_info_path = "data\\csv\\enemy_info.csv";
+const std::string CEnemyManager::m_pop_list_path = "data\\csv\\pop_list.csv";
 
 CEnemyManager::CEnemyManager(aqua::IGameObject* parent)
 	: IGameObject(parent, "EnemyManager")
@@ -20,24 +22,13 @@ CEnemyManager::CEnemyManager(aqua::IGameObject* parent)
 {
 }
 
-void CEnemyManager::Initialize(CCSVReader* csv_r, CBulletManager* bm, CPlayer* player, CStageManager* st_m, CRader* rader)
+void CEnemyManager::Initialize(CBulletManager* bm, CPlayer* player, CStageManager* st_m, CRader* rader)
 {
-	m_CSVReader = csv_r;
 	m_Player = player;
 	m_BulletManagar = bm;
 	m_StageManager = st_m;
 	m_Rader = rader;
-
-	m_CSVReader->Initialize(FILE_TYPE::POP_LIST, "pop_list");
-	int row = m_CSVReader->GetFileRow(FILE_TYPE::POP_LIST);
-	for (int i = 0; i < row; ++i)
-		m_PopList.push_back(m_CSVReader->GetPopList(i));
-
-	m_CSVReader->Initialize(FILE_TYPE::ENEMY_INFO, "enemy_info");
-	row = m_CSVReader->GetFileRow(FILE_TYPE::ENEMY_INFO);
-	for (int i = 0; i < row; ++i)
-		m_EnemyInfo.push_back(m_CSVReader->GetEneInfo(i));
-
+	EnemyDataLoad();
 }
 
 void CEnemyManager::Update(void)
@@ -128,6 +119,50 @@ CEnemy* CEnemyManager::CreateBossParts(aqua::CVector3 pop_pos, ENEMY_ID enemy_id
 	return (CEnemy*)m_ChildObjectList.back();
 }
 
+void CEnemyManager::EnemyDataLoad(void)
+{
+	aqua::CCSVLoader csv;
+	csv.Load(m_enemy_info_path);
+
+	int file_row = csv.GetRows();
+
+	ENEMY_INFO info;
+
+	for (int i = 0; i < file_row; ++i)
+	{
+		info =
+		{
+			(ENEMY_ID)i,					// id
+				std::stoi(csv.GetString(i, 0)),	// life
+				std::stof(csv.GetString(i, 1)),	// width
+				std::stof(csv.GetString(i, 2)),	// height
+				std::stof(csv.GetString(i, 3)),	// depth
+				std::stof(csv.GetString(i, 4)),	// speed
+				std::stof(csv.GetString(i, 5)),	// shot_ct
+				aqua::CColor::BLACK
+		};
+		m_EnemyInfo.push_back(info);
+	}
+
+	csv.Load(m_pop_list_path);
+
+	file_row = csv.GetRows();
+
+	ENEMY_POP_LIST pop_list;
+
+	for (int i = 0; i < file_row; ++i)
+	{
+		pop_list =
+		{
+			std::stoi(csv.GetString(i,0)),	// wave
+			(ENEMY_ID)std::stoi(csv.GetString(i,1))		// e_id
+		};
+		m_PopList.push_back(pop_list);
+	}
+
+	csv.Unload();
+}
+
 void CEnemyManager::WaveChange(void)
 {
 	if (m_WaveCount > m_max_wave)
@@ -141,11 +176,11 @@ void CEnemyManager::WaveChange(void)
 	// waveに合わせてフィールドを切り替える
    	m_StageManager->WaveChange(m_WaveCount);
 
-	for (int i = 0; i < m_PopList.size(); ++i)
-		if (m_PopList[i].wave == m_WaveCount && m_EnemyCount < m_StageManager->GetEnemyCount())
-			Create(m_StageManager->GetEnemyPopPos(i), m_PopList[m_EnemyCount].pop_e_id);
+	//for (int i = 0; i < m_PopList.size(); ++i)
+	//	if (m_PopList[i].wave == m_WaveCount && m_EnemyCount < m_StageManager->GetEnemyCount())
+	//		Create(m_StageManager->GetEnemyPopPos(i), m_PopList[m_EnemyCount].pop_e_id);
 	//試験用なのでコメントアウト
-	//Create(m_StageManager->GetEnemyPopPos(0), m_PopList[18].pop_e_id);
+	Create(m_StageManager->GetEnemyPopPos(0), m_PopList[18].pop_e_id);
 
 	m_WaveCount++;
 }

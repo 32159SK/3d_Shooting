@@ -9,7 +9,8 @@
  */
 #pragma once
 #include "aqua.h"
-#include"unit_type.h"
+#include "unit_type.h"
+#include "../bullet_manager/bullet/bullet_info.h"
 
 class CBulletManager;
 class IBullet;

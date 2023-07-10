@@ -52,29 +52,6 @@ bool CBrittleBlock::CollisionCheck(aqua::CVector3 position, aqua::CVector3 desti
 	return true;
 }
 
-void CBrittleBlock::GoIn(void)
-{
-	if (m_StageEdge)
-	{
-		m_ObjectState = PLAY;
-		return;
-	}
-	// position‚Ì‰¼•Ï”
-	m_Model.position.y += 0.5f;
-
-	if (m_Model.position.y > m_Position.y)
-		m_ObjectState = PLAY;
-}
-
-void CBrittleBlock::GoOut(void)
-{
-	// position‚Ì‰¼•Ï”
-	m_Model.position.y -= 0.5f;
-
-	if (m_Model.position.y < m_Cube.height)
-		m_ObjectState = FINISH;
-}
-
 void CBrittleBlock::Broken(void)
 {
 	m_ActiveFlag = false;

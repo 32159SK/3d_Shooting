@@ -63,6 +63,8 @@ Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, C
 
 void CBossEnemy::Update(void)
 {
+	m_Life = m_PhaseLife[m_Phase];
+
 	IGameObject::Update();
 
 	if (m_Player->GetTimeStop())
@@ -79,7 +81,6 @@ void CBossEnemy::Update(void)
 		m_ShotCT.Reset();
 	}
 
-	m_Life = m_PhaseLife[m_Phase];
 	m_Cube.position = m_Position;
 	m_Cube.m_HRotate = m_Rotate;
 	//m_Model.rotation.y = aqua::DegToRad(m_Rotate);
@@ -119,14 +120,14 @@ void CBossEnemy::Shot(void)
 
 	switch (m_Phase)
 	{
-	case CBossEnemy::FIRST:	m_ShotBullet = BULLET_TYPE::NOMAL; break;
+	case CBossEnemy::FIRST:	m_ShotBullet = BULLET_TYPE::BEAM; break;
 	case CBossEnemy::SECOND:m_ShotBullet = BULLET_TYPE::PENETRATE;	 break;
 	}
 	// CT‚ªŠJ‚¯‚Ä‚¢‚ê‚Î–C‚ÉËŒ‚‚ğ‚³‚¹‚é
 	if (m_ShotCT.Finished())
 	{
 		// ƒ‰ƒ“ƒ_ƒ€‚ÅŒ‚‚Â’e‚ğØ‚è‘Ö‚¦‚é
-		m_ShotBullet = (BULLET_TYPE)aqua::Rand((int)BULLET_TYPE::BEAM);
+		m_ShotBullet = (BULLET_TYPE)aqua::Rand((int)m_ShotBullet);
 
 		for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
 			if (m_Cannon[i] && !m_Cannon[i]->GetDead())

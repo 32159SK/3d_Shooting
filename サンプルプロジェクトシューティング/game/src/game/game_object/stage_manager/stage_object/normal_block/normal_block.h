@@ -66,8 +66,5 @@ public:
     bool        CollisionCheck(aqua::CVector3 position, aqua::CVector3 destination,bool this_bullet)override;
 
 
-private:
 
-    void GoIn(void)override;
-    void GoOut(void)override;
 };

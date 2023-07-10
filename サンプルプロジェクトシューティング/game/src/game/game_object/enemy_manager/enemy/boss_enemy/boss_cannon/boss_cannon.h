@@ -10,6 +10,7 @@
 #pragma once
 #include "aqua.h"
 #include "../../enemy.h"
+#include "../../../../bullet_manager/beam/beam.h"
 
 class CBossEnemy;
 

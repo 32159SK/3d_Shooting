@@ -24,18 +24,19 @@ CBeam::CBeam(aqua::IGameObject* parent)
 
 void CBeam::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 pop_pos, aqua::CVector3 dir, IUnit* user, CEffectManager* em)
 {
+	// 引数からビームの発射点や向き、使用者を設定
 	m_StartPos = pop_pos;
 	m_Radius = bullet_info.radius;
 	m_Damage = bullet_info.damage;
 	m_Attri = attri;
 	m_Dir = dir;
 	m_User = user;
-
 	m_EffectManager = em;
 
+	// 向きを正規化
 	m_Dir.Normalize();
 
-	// 回転角度を算出
+	// 向きから回転角度を算出
 	m_Rotate = aqua::RadToDeg(atan2(m_Dir.x, m_Dir.z));
 
 	// 終点座標の仮決め
@@ -45,7 +46,6 @@ void CBeam::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 
 	aqua::CMatrix mat;
 	mat.RotationY(aqua::DegToRad(m_Rotate));
 	mat.Translate(m_StartPos);
-
 	m_EndPos *= mat;
 
 	// コライダー用のカプセルクラスの設定
@@ -62,7 +62,7 @@ void CBeam::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 
 
 	// 予測線の設定
 	m_PredictionLine.Setup(m_StartPos, m_EndPos, aqua::CColor::RED);
-
+	// ビーム使用中は動けないよう使用者の行動可能フラグを偽にする
 	m_User->SetMoveFlag(false);
 }
 

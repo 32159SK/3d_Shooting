@@ -38,7 +38,7 @@ void IBullet::Draw(void)
 void IBullet::Update(void)
 {
 	const float to_delta = 60.0f * aqua::GetDeltaTime();
-
+	// 弾の移動処理
 	m_Velocity = aqua::CVector3::ZERO;
 	m_Velocity += m_Dir;
 	m_Velocity = m_Velocity.Normalize();
@@ -50,7 +50,7 @@ void IBullet::Update(void)
 
 	// 移動速度に合わせて回転角度を算出
 	m_Rotate = aqua::RadToDeg(atan2(m_Velocity.x, m_Velocity.z));
-
+	// 当たり判定用の球クラスの座標を合わせる
 	m_Sphere.position = m_Position;
 
 	m_Model.position = m_Position;

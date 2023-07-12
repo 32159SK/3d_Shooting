@@ -7,5 +7,4 @@ enum class EFFECT_ID
 	, BEAM
 	, DEAD
 	, BOSS_DEAD
-	, SKILL
 };

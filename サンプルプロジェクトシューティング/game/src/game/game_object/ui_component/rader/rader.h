@@ -70,7 +70,7 @@ private:
 
     aqua::CSprite                   m_RaderSprite;  // レーダー画像
     aqua::CSprite                   m_PlayerSprite; // レーダー内の自機表示
-    std::vector<aqua::CSprite>      m_EnemySprite;  // ""のエネミー表示
+    std::vector<aqua::CSprite>      m_EnemySprite;  // レーダー内エネミー表示
 
     aqua::CVector2                  m_RaderSize;    // レーダー画像のサイズ
 

@@ -58,5 +58,4 @@ private:
     bool            m_Capture;      // •ß‘¨ƒtƒ‰ƒO
 
     aqua::CModel    m_Model;
-
 };

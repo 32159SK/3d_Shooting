@@ -31,7 +31,7 @@ CNormalEffect::Initialize(const aqua::CVector3& position, std::string effect_nam
     m_Position = position;
     m_Rotate = rotate;
     m_Effect.position = m_Position;
-    m_Effect.H_angle = aqua::DegToRad(m_Rotate);
+    m_Effect.rotation.y = aqua::DegToRad(m_Rotate);
     m_Effect.Play();
     m_Effect.scale *= scale;
 }
@@ -39,7 +39,7 @@ CNormalEffect::Initialize(const aqua::CVector3& position, std::string effect_nam
 void CNormalEffect::Update(void)
 {
     m_Effect.position = m_Position;
-    m_Effect.H_angle = aqua::DegToRad(m_Rotate);
+    m_Effect.rotation.y = aqua::DegToRad(m_Rotate);
 
     m_Effect.Update();
     // エフェクトが終了したら自身を削除

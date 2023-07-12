@@ -1,8 +1,8 @@
 /*
- *  @file       unit.h
- *  @brief      ユニット処理
+ *  @file       nomal_bullet.h
+ *  @brief      通常弾
  *  @author     Kazuto Shimazaki
- *  @date       2022/06/20
+ *  @date       2023/04/21
  *  @since      1.0
  *
  *  Copyright (c) 2013-2019, Kazuya Maruyama. All rights reserved.
@@ -19,7 +19,6 @@ public:
      *  @brief      コンストラクタ
      *
      *  @param[in]  parent          親オブジェクト
-     *  @param[in]  object_name     オブジェクト名
      */
     CNormalBullet(aqua::IGameObject* parent);
 

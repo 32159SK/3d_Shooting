@@ -12,6 +12,7 @@ void CFixedEnemy::
 Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, CBulletManager* bm)
 {
 	CEnemy::Initialize(pop_pos, enemy_info, st_m, bm);
+
 	m_Model.Load("data\\model\\fixed_enemy.mv1");
 	m_Model.position = m_Position;
 	m_ShotBullet = BULLET_TYPE::BEAM;
@@ -39,7 +40,6 @@ void CFixedEnemy::Finalize(void)
 
 void CFixedEnemy::Shot(void)
 {
-
 	CEnemy::Shot();
 
 }

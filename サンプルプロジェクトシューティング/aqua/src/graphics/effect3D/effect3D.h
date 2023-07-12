@@ -42,12 +42,8 @@ namespace aqua
         aqua::CVector3  position;
         //! Šg‘å—¦
         aqua::CVector3  scale;
-        //! ‚’¼‰ñ“]’l
-        float           V_angle;
-        //! …•½‰ñ“]’l
-        float           H_angle;
-        //! ”P‚è‰ñ“]’l
-        float           T_angle;
+        //! ‰ñ“]’l
+        aqua::CVector3  rotation;
         //! F
         aqua::CColor    color;
 

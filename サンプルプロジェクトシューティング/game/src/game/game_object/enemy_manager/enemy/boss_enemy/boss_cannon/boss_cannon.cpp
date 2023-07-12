@@ -4,7 +4,7 @@
 
 const float CBossCannon::m_player_distance = 100.0f;
 const float CBossCannon::m_move_time = 2.0f;
-const int   CBossCannon::m_position_pattern = 30;
+const int   CBossCannon::m_position_pattern = 40;
 
 CBossCannon::CBossCannon(aqua::IGameObject* parent)
 	: CEnemy(parent, "BossCannon")
@@ -23,9 +23,14 @@ CBossCannon::CBossCannon(aqua::IGameObject* parent)
 void CBossCannon::
 Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, CBulletManager* bm)
 {
+	// ロックオンマーカークラスを生成してターゲットをプレイヤーに設定
+	m_LockOnMarker = aqua::CreateGameObject<CLockOnMarker>(this);
+	m_LockOnMarker->SetTarget(m_Player);
+	// 基底クラスで基本的な初期化を行う
 	CEnemy::Initialize(pop_pos, enemy_info, st_m, bm);
+
 	// モデルは仮
-	m_Model.Load("data\\model\\fixed_enemy.mv1");
+	m_Model.Load("data\\model\\boss_cannon.mv1");
 	m_Model.position = m_Position;
 
 	m_Cube.visible = false;
@@ -36,8 +41,8 @@ void CBossCannon::Update(void)
 	// 射撃はあくまでもボス依存なので継承元のCEnemyのアップデートは呼び出さない
 	IGameObject::Update();
 
-	if (m_Player->GetTimeStop())
-		return;
+	if (!m_BossEnemy->GetDead())
+		m_BossEnemy->SetMoveFlag(m_MoveFlag);
 
 	if (!m_BossEnemy->GetMoveFlag())
 		return;
@@ -77,9 +82,14 @@ void CBossCannon::SetPosition(aqua::CVector3 pos)
 
 void CBossCannon::SetAllRange(float angle)
 {
+	// オールレンジ攻撃中フラグを真にし、終了検知フラグを偽にする
 	m_AllRangeAttacking = true;
 	m_AllRangeFinish = false;
+	// 移動タイマーを設定
 	m_MoveTimer.Setup(m_move_time);
+
+	// ロックオンフラグを真にする(これでロックオンマーカーが描画される)
+	m_LockON = true;
 
 	// 移動の始点に現在座標を代入
 	m_StartPos = m_Position;
@@ -170,6 +180,8 @@ void CBossCannon::AllRangeMove(void)
 		m_MoveTimer.Reset();
 		// 状態を照射に遷移
 		m_AllRangeState = ALLRANGE_STATE::IRRADIATION;
+		// ロックオンフラグを偽にする
+		m_LockON = false;
 
 		m_ReturnFlag = true;
 	}
@@ -188,11 +200,14 @@ void CBossCannon::Irradiation(void)
 		front.z = cos(aqua::DegToRad(m_Rotate));
 		m_Beam = m_BulletManager->CreateGetBeam(m_Position, front, m_UnitType, this);
 	}
-	// ビームが終了したらポインタにnullを代入し状態をRETURNへ遷移
+	// ビームが終了
 	else if ( m_Beam && m_Beam->GetFinishFlag())
 	{
+		// ポインタにnullを代入
 		m_Beam = nullptr;
+		// ボスエネミーの砲座標セットクラスを呼び出す
 		m_BossEnemy->SetCannonPosition();
+		// 状態をRETURNへ遷移
 		m_AllRangeState = ALLRANGE_STATE::RETURN;
 	}
 }

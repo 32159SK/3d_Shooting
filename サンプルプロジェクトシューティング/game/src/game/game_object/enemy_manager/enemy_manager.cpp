@@ -8,7 +8,7 @@
 #include "enemy/boss_enemy/boss_cannon/boss_cannon.h"
 
 const int CEnemyManager::m_max_wave = 4;
-const int CEnemyManager::m_heal_value = 5;
+const int CEnemyManager::m_heal_value = 3;
 const std::string CEnemyManager::m_enemy_info_path = "data\\csv\\enemy_info.csv";
 const std::string CEnemyManager::m_pop_list_path = "data\\csv\\pop_list.csv";
 
@@ -61,8 +61,8 @@ void CEnemyManager::Create(aqua::CVector3 pop_pos, ENEMY_ID enemy_id)
 	}
 
 	// 初期化とプレイヤーのポインタを渡す
-	enemy->Initialize(pop_pos, m_EnemyInfo[(int)enemy_id], m_StageManager, m_BulletManagar);
 	enemy->SetPlayer(m_Player);
+	enemy->Initialize(pop_pos, m_EnemyInfo[(int)enemy_id], m_StageManager, m_BulletManagar);
 
 	m_EnemyCount++;
 
@@ -176,11 +176,11 @@ void CEnemyManager::WaveChange(void)
 	// waveに合わせてフィールドを切り替える
    	m_StageManager->WaveChange(m_WaveCount);
 
-	//for (int i = 0; i < m_PopList.size(); ++i)
-	//	if (m_PopList[i].wave == m_WaveCount && m_EnemyCount < m_StageManager->GetEnemyCount())
-	//		Create(m_StageManager->GetEnemyPopPos(i), m_PopList[m_EnemyCount].pop_e_id);
-	//試験用なのでコメントアウト
-	Create(m_StageManager->GetEnemyPopPos(0), m_PopList[18].pop_e_id);
+	for (int i = 0; i < m_PopList.size(); ++i)
+		if (m_PopList[i].wave == m_WaveCount && m_EnemyCount < m_StageManager->GetEnemyCount())
+			Create(m_StageManager->GetEnemyPopPos(i), m_PopList[m_EnemyCount].pop_e_id);
+	//ボスの動作試験用なのでコメントアウト
+	//Create(m_StageManager->GetEnemyPopPos(0), m_PopList[18].pop_e_id);
 
 	m_WaveCount++;
 }

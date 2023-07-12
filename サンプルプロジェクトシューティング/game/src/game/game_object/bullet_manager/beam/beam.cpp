@@ -86,15 +86,11 @@ void CBeam::Update(void)
 
 }
 
-void CBeam::Finalize(void)
-{
-}
-
 void CBeam::Charge(void)
 {
 	// チャージ中はダメージ判定なし
 	m_DamageFlag = false;
-
+	// タイマーを更新して終了したら状態を移行
 	m_Timer.Update();
 	if (m_Timer.Finished())
 		m_BeamState = BEAM_STATE::FIRING;
@@ -102,8 +98,9 @@ void CBeam::Charge(void)
 
 void CBeam::Firing(void)
 {
+	// ダメージ判定を有効にする
 	m_DamageFlag = true;
-
+	// 予測線の可視化をやめる
 	m_PredictionLine.visible = false;
 	
 	// エフェクトの再生が終了したら状態を移行
@@ -113,8 +110,10 @@ void CBeam::Firing(void)
 
 void CBeam::Destroy(void)
 {
+	// ダメージ判定を無効
 	m_DamageFlag = false;
 	m_Effect->visible = false;
+	// 使用者が死んでいないなら使用者を再度行動可能にする
 	if (!m_User->GetDead())
 		m_User->SetMoveFlag(true);
 	m_Finished = true;

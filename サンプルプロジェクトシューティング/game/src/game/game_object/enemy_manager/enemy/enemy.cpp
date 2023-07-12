@@ -35,9 +35,6 @@ void CEnemy::Update(void)
 {
 	IGameObject::Update();
 
-	if (m_Player->GetTimeStop())
-		return;
-
 	if (!m_MoveFlag)
 		return;
 
@@ -86,5 +83,6 @@ void CEnemy::Move(void)
 void CEnemy::Dead(void)
 {
 	IUnit::Dead();
+	m_BulletManager->EnemyReset(this);
 	DeleteObject();
 }

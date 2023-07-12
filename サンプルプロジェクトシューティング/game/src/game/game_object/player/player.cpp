@@ -3,8 +3,6 @@
 
 const float CPlayer::m_chage_shotCT = 0.5f;
 const float CPlayer::m_ago_pos_time = 0.2f;
-const float CPlayer::m_the_world_time = 7.0f;
-const float CPlayer::m_the_world_CT = 10.0f;
 const float CPlayer::m_lock_range = 200.0f;
 const int   CPlayer::m_max_life = 20;
 
@@ -12,8 +10,6 @@ CPlayer::CPlayer(aqua::IGameObject* parent)
 	: IUnit(parent,"Player")
 	, m_AgoPosition(aqua::CVector3::ZERO)
 	, m_Invincible(false)
-	, m_TimeStop(false)
-	, m_LockON(false)
 	, m_EnemyManager(nullptr)
 	, m_Enemy(nullptr)
 {
@@ -40,9 +36,6 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep
 	// 現在の弾種の仮表示
 	m_DrawBT.Create(30.0f);
 	m_DrawBT.position = aqua::CVector2(aqua::GetWindowWidth() / 2.0f, 0.0f);
-
-	// 最初からザ・ワールドを使えるようにタイマーの初期設定は0秒にする
-	m_TheWorldTimer.Setup(0.0f);
 
 	//
 	m_ChangeCT.Setup(m_chage_shotCT);
@@ -79,7 +72,7 @@ void CPlayer::Update(void)
 	IUnit::Update();
 
 	// ここで敵が追尾する用のポジションを取っておく(時間停止していない場合)
-	if (m_AgoPosTimer.Finished()&&!m_TimeStop)
+	if (m_AgoPosTimer.Finished())
 	{
 		m_AgoPosition = m_Position;
 		m_AgoPosTimer.Reset();
@@ -207,9 +200,6 @@ void CPlayer::Move(void)
 
 	m_Velocity = aqua::CVector3::ZERO;
 
-	// ザ・ワールド
-	TheWorld();
-
 	// 行動不可(ビーム待機中)なら処理を止める
 	if (!m_MoveFlag)
 		return;
@@ -248,12 +238,12 @@ void CPlayer::LockOn(void)
 	m_LockonTimer.Update();
 
 	// タイマーが終了しているかつ、キーが入力された
-	if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::X) && m_LockonTimer.Finished())
+	if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::Q) && m_LockonTimer.Finished())
 	{
 		m_LockON = !m_LockON;
 		// 一度ロックオンした同じ敵を近くないのに再度ロックオンしないようnullを与える
 		m_Enemy = nullptr;
-		m_LockOnMarker->SetEnemy(m_Enemy);
+		m_LockOnMarker->SetTarget(m_Enemy);
 		m_LockonTimer.Reset();
 	}
 
@@ -265,7 +255,7 @@ void CPlayer::LockOn(void)
 	if (!m_Enemy || m_Enemy->GetDead())
 	{
 		m_Enemy = m_EnemyManager->GetNearest(m_Position);
-		m_LockOnMarker->SetEnemy(m_Enemy);
+		m_LockOnMarker->SetTarget(m_Enemy);
 		return;
 	}
 
@@ -276,7 +266,7 @@ void CPlayer::LockOn(void)
 	if (m_lock_range < abs(aqua::CVector3::Length(v)))
 	{
 		m_Enemy = nullptr;
-		m_LockOnMarker->SetEnemy(m_Enemy);
+		m_LockOnMarker->SetTarget(m_Enemy);
 		m_LockON = false;
 		return;
 	}
@@ -286,24 +276,4 @@ void CPlayer::LockOn(void)
 
 	// 2点から回転角度を求める
 	m_Rotate = aqua::RadToDeg(atan2(v.x, v.z));
-}
-
-void CPlayer::TheWorld(void)
-{
-	// ザ・ワールド用タイマー
-	m_TheWorldTimer.Update();
-	// 停止時間切れの時は時止めを解除してタイマーをクールタイムとして再設定
-	if (m_TimeStop&&m_TheWorldTimer.Finished())
-	{
-		m_TimeStop = false;
-		m_TheWorldTimer.Setup(m_the_world_CT);
-	}
-
-	// 時が止まっていないかつタイマー終了→クールタイム開けなのでザ・ワールド使用可能
-	if (!m_TimeStop && m_TheWorldTimer.Finished()&&
-		aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::Z))
-	{
-		m_TimeStop = true;
-		m_TheWorldTimer.Setup(m_the_world_time);
-	}
 }

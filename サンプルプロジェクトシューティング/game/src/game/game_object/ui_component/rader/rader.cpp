@@ -33,6 +33,7 @@ void CRader::Initialize(CPlayer* player)
 
 void CRader::Update(void)
 {
+	// 
 	for (int i = 0; i < m_EnemyCount; ++i)
 		if (!m_Enemy[i] && !m_Enemy[i]->GetDead())
 			m_EnemySprite[i].visible = false;

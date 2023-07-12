@@ -1,6 +1,6 @@
 /*
- *  @file       unit.h
- *  @brief      ƒ†ƒjƒbƒgˆ—
+ *  @file       penetrate_bullet.h
+ *  @brief      ŠÑ’Ê’e
  *  @author     Kazuto Shimazaki
  *  @date       2022/06/20
  *  @since      1.0

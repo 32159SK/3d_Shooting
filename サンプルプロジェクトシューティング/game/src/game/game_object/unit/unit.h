@@ -2,7 +2,7 @@
  *  @file       unit.h
  *  @brief      ユニット処理
  *  @author     Kazuto Shimazaki
- *  @date       2022/06/20
+ *  @date       2023/04/14
  *  @since      1.0
  *
  *  Copyright (c) 2013-2019, Kazuya Maruyama. All rights reserved.
@@ -58,7 +58,7 @@ public:
 
     aqua::CVector3  GetPosition(void) { return m_Position; }
 
-    bool            GetDead(void) { return m_DeadFlag; }
+    bool            GetDead(void);
 
     /*
      *  @brief      平面座標の取得
@@ -79,9 +79,15 @@ public:
     int             GetLife(void) { return m_Life; }
 
     /*
-     *  @brief      行動可能フラグの設定
+     *  @brief      ロックオンフラグの取得
+     */
+    bool            GetLockOnFlag(void) { return m_LockON; }
+
+    /*
+     *  @brief      行動可能フラグのセッター
      */
     virtual void    SetMoveFlag(bool flag) { m_MoveFlag = flag; }
+
 
 protected:
 
@@ -113,7 +119,9 @@ protected:
 
     bool                 m_DeadFlag;     // 死亡フラグ
 
-    bool                 m_MoveFlag;
+    bool                 m_MoveFlag;     // 行動可能フラグ
+
+    bool                 m_LockON;       // ロックオンフラグ
 
     float                m_Width;        // 幅
 

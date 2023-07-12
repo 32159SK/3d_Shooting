@@ -2,18 +2,22 @@
 #include "boss_cannon/boss_cannon.h"
 #include "boss_enemy.h"
 
-const float CBossEnemy::m_summon_interval = 20.0f;
 const float CBossEnemy::m_all_range_ct = 10.0f;
 const float CBossEnemy::m_dead_time = 6.0f;
-const int CBossEnemy::m_cannon_count[] = { 2,4 };
-const int CBossEnemy::m_position_pattern = 30;
+const float CBossEnemy::m_rotate_speed = 1.0f;
+const int CBossEnemy::m_cannon_count[] = { 4,8 };
+const int CBossEnemy::m_position_pattern = 45;
 const int CBossEnemy::m_max_summon = 10;
 const aqua::CVector3 CBossEnemy::m_base_cannon_pos[] =
 {
-	 aqua::CVector3(-40.0f,0.0f,10.0f)
-	,aqua::CVector3(40.0f,0.0f,10.0f)
-	,aqua::CVector3(20.0f,0.0f,0.5f)
-	,aqua::CVector3(-20.0f,0.0f,0.5f)
+	 aqua::CVector3(-40.0f,0.0f,0.0f)
+	,aqua::CVector3(40.0f,0.0f,0.0f)
+	,aqua::CVector3(0.0f,0.0f,40.0f)
+	,aqua::CVector3(0.0f,0.0f,-40.0f)
+	,aqua::CVector3(40.0f,0.0f,40.0f)
+	,aqua::CVector3(40.0f,0.0f,-40.0f)
+	,aqua::CVector3(-40.0f,0.0f,40.0f)
+	,aqua::CVector3(-40.0f,0.0f,-40.0f)
 };
 const std::string CBossEnemy::m_model_file_path = "data\\model\\boss_enemy.mv1";
 
@@ -34,19 +38,16 @@ void CBossEnemy::
 Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, CBulletManager* bm)
 {
 	CEnemy::Initialize(pop_pos, enemy_info, st_m, bm);
-	//m_Model.Load("data\\model\\fixed_enemy.mv1");
-	//m_Model.position = m_Position;
+	m_Model.Load("data\\model\\boss_enemy.mv1");
+	m_Model.position = m_Position;
 	m_ShotBullet = BULLET_TYPE::PENETRATE;
-	//m_Cube.visible = false;
+	m_Cube.visible = false;
 
 	// 親(敵管理)クラスを取得
 	m_EnemyManager = (CEnemyManager*)IGameObject::GetParent();
 
 	// ゲームメインシーンを探査
 	m_GameMain = (CGameMain*)aqua::FindGameObject("GameMainScene");
-
-	// 召喚タイマーのセット
-	m_SummonTimer.Setup(m_summon_interval);
 
 	// AR攻撃CT計測タイマーのセット
 	m_AllRangeCT.Setup(m_all_range_ct);
@@ -56,46 +57,41 @@ Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, C
 
 
 	for (int i = 0; i < BOSS_PHASE::DEAD; i++)
-		m_PhaseLife[i] = m_Life;
+		m_PhaseLife[i] = m_Life + m_Life * (i + 1);
 
 	CannonSetUp();
 }
 
 void CBossEnemy::Update(void)
 {
+	// 
 	m_Life = m_PhaseLife[m_Phase];
 
 	IGameObject::Update();
 
-	if (m_Player->GetTimeStop())
-		return;
-	Move();
-
 	if (m_DeadFlag || !m_MoveFlag)
 		return;
 
-	m_ShotCT.Update();
-	if (m_ShotCT.Finished())
-	{
-		Shot();
-		m_ShotCT.Reset();
-	}
+	Move();
+
+
+	Shot();
 
 	m_Cube.position = m_Position;
-	m_Cube.m_HRotate = m_Rotate;
-	//m_Model.rotation.y = aqua::DegToRad(m_Rotate);
+	//m_Cube.m_HRotate = m_Rotate;
+	m_Model.rotation.y = m_Rotate;
 }
 
 void CBossEnemy::Draw(void)
 {
-	//m_Model.Draw();
+	m_Model.Draw();
 	CEnemy::Draw();
 }
 
 void CBossEnemy::Finalize(void)
 {
 	CEnemy::Finalize();
-	//m_Model.Unload();
+	m_Model.Unload();
 }
 
 bool CBossEnemy::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, int damage)
@@ -105,7 +101,8 @@ bool CBossEnemy::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, i
 
 void CBossEnemy::SetCannonPosition(void)
 {
-	if (m_Phase == BOSS_PHASE::DEAD)
+	// 自身がnull・形態が死のいずれかであれば処理しない
+	if (!this||m_Phase == BOSS_PHASE::DEAD)
 		return;
 
 	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
@@ -115,8 +112,11 @@ void CBossEnemy::SetCannonPosition(void)
 
 void CBossEnemy::Shot(void)
 {
+	// オールレンジ攻撃の最中であれば処理しない
 	if (m_AllRangeAttacking)
 		return;
+
+	m_ShotCT.Update();
 
 	switch (m_Phase)
 	{
@@ -135,7 +135,6 @@ void CBossEnemy::Shot(void)
 				m_Cannon[i]->SetBulletType(m_ShotBullet);
 				m_Cannon[i]->Shot();
 			}
-		CEnemy::Shot();
 		m_ShotCT.Reset();
 	}
 }
@@ -144,6 +143,7 @@ void CBossEnemy::Move(void)
 {
 	if (m_DeadFlag && m_Phase != BOSS_PHASE::DEAD)
 		return;
+	m_Rotate += m_rotate_speed;
 	// ボスの形態に合わせた処理
 	switch (m_Phase)
 	{
@@ -151,7 +151,6 @@ void CBossEnemy::Move(void)
 	case CBossEnemy::SECOND:SecondPhase();	break;
 	case CBossEnemy::DEAD:  Dead();			break;
 	}
-
 }
 
 void CBossEnemy::Damage(int damage)
@@ -190,11 +189,12 @@ void CBossEnemy::FirstPhase(void)
 	v.Normalize();
 
 	// 2点から回転角度を求める
-	m_Rotate = aqua::RadToDeg(atan2(v.x, v.z));
+	m_Cube.m_HRotate = aqua::RadToDeg(atan2(v.x, v.z));
+
 
 	// 行列を使って始点を中心とした回転処理を行い砲の座標を決める
 	aqua::CMatrix mat;
-	mat.RotationY(aqua::DegToRad(m_Rotate));
+	mat.RotationY(aqua::DegToRad(m_Cube.m_HRotate));
 	mat.Translate(m_Position);
 	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
 		m_CannonPos[i] = -m_base_cannon_pos[i] * mat;
@@ -203,13 +203,6 @@ void CBossEnemy::FirstPhase(void)
 
 void CBossEnemy::SecondPhase(void)
 {
-	// タイマーの更新
-	m_SummonTimer.Update();
-
-	// 生成タイマーが終了
-	if (m_SummonTimer.Finished())
-		SummonEnemy();
-
 	SetCannonPosition();
 
 	// オールレンジ攻撃をしていないなら以下の処理を
@@ -248,12 +241,10 @@ void CBossEnemy::PhaseChange(void)
 
 	if (m_Phase != BOSS_PHASE::DEAD)
 	{
-		m_Rotate = 180.0f;
 		m_BulletManager->EnemyReset();
 		m_BulletManager->SetEnemy(this);
 		CannonSetUp();
 	}
-
 }
 
 void CBossEnemy::CannonSetUp(void)
@@ -271,37 +262,31 @@ void CBossEnemy::CannonSetUp(void)
 	}
 }
 
-void CBossEnemy::SummonEnemy(void)
-{
-	if (m_SummonCount < m_max_summon)
-	{
-		// 雑魚を召喚
-		if (m_SummonCount % 2 == 0)
-			m_EnemyManager->Create(m_CannonPos[0], ENEMY_ID::MOB);
-		else
-			m_EnemyManager->Create(m_CannonPos[2], ENEMY_ID::MOB);
-		m_SummonTimer.Reset();
-		m_SummonCount++;
-	}
-}
-
 void CBossEnemy::AllRangeAttack(void)
 {
 	m_AllRangeAttacking = true;
 	// この時点でタイマーをリセット(この関数を再度呼ぶのを防ぐ目的、ARA中はタイマーの更新がかからないのでCTも問題はない)
 	m_AllRangeCT.Reset();
 
-	float shot_angle[4] = { 0.0f };
+	float shot_angle[8] = { 0.0f };
 
 	for (;;)
 	{
 		for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
 			// 乱数で角度を取る
-			shot_angle[i] = (float)aqua::Rand(360.0f / m_position_pattern);
-		
+			shot_angle[i] = (float)aqua::Rand(m_cannon_count[m_Phase]);
+
 		// 角度がどれも被ってないか確認する
 		if (shot_angle[0] != shot_angle[1] && shot_angle[0] != shot_angle[2] && shot_angle[0] != shot_angle[3] &&
-			shot_angle[1] != shot_angle[2] && shot_angle[1] != shot_angle[3] && shot_angle[2] != shot_angle[3])
+			shot_angle[0] != shot_angle[4] && shot_angle[0] != shot_angle[5] && shot_angle[0] != shot_angle[6] &&
+			shot_angle[0] != shot_angle[7] && shot_angle[1] != shot_angle[2] && shot_angle[1] != shot_angle[3] &&
+			shot_angle[1] != shot_angle[4] && shot_angle[1] != shot_angle[5] && shot_angle[1] != shot_angle[6] &&
+			shot_angle[1] != shot_angle[7] && shot_angle[2] != shot_angle[3] && shot_angle[2] != shot_angle[4] &&
+			shot_angle[2] != shot_angle[5] && shot_angle[2] != shot_angle[6] && shot_angle[2] != shot_angle[7] &&
+			shot_angle[3] != shot_angle[4] && shot_angle[3] != shot_angle[5] && shot_angle[3] != shot_angle[6] &&
+			shot_angle[3] != shot_angle[7] && shot_angle[4] != shot_angle[5] && shot_angle[4] != shot_angle[6] &&
+			shot_angle[4] != shot_angle[7] && shot_angle[5] != shot_angle[6] && shot_angle[5] != shot_angle[7] &&
+			shot_angle[6] != shot_angle[7] )
 			break;
 	}
 

@@ -28,8 +28,6 @@ void CBulletManager::Initialize(void)
 
 void CBulletManager::Update(void)
 {
-	if (m_Player->GetTimeStop())
-		return;
 	CheakHit();
 	IGameObject::Update();
 }
@@ -82,10 +80,15 @@ void CBulletManager::EnemyReset(void)
 	if (m_EnemyList.empty())
 		return;
 
-	//for (int i = 0; i < m_EnemyList.size(); ++i)
-	//	m_EnemyList[i]->Finalize();
-
 	m_EnemyList.clear();
+}
+
+void CBulletManager::EnemyReset(CEnemy* enemy)
+{
+	int e_count = (int)m_EnemyList.size();
+	for (int e = 0; e < e_count; ++e)
+		if (m_EnemyList[e] == enemy)
+			m_EnemyList[e] = nullptr;
 }
 
 void CBulletManager::BulletDataLoad(void)
@@ -133,17 +136,18 @@ void CBulletManager::CheakHit(void)
 
 		for (int e = 0; e < e_count; ++e)
 		{
-			if (!m_EnemyList[e])
-				continue;
-			// 死んでない敵と弾の衝突確認
-			if (!m_EnemyList[e]->GetDead()
-				&& m_EnemyList[e]->CheckHitBullet(bullet->GetAttri(), bullet->GetSphere(), bullet->GetDamage()))
+			if (m_EnemyList[e] != nullptr)
 			{
-				bullet->Hit();
-				// 死んだらポインタを削除
-				if (m_EnemyList[e]->GetDead())
-					m_EnemyList.erase(m_EnemyList.begin() + e);
-				return;
+				// 死んでない敵と弾の衝突確認
+				if (!m_EnemyList[e]->GetDead()
+					&& m_EnemyList[e]->CheckHitBullet(bullet->GetAttri(), bullet->GetSphere(), bullet->GetDamage()))
+				{
+					bullet->Hit();
+					// 死んだらポインタを削除
+					if (m_EnemyList[e]->GetDead())
+						m_EnemyList.erase(m_EnemyList.begin() + e);
+					return;
+				}
 			}
 		}
 		

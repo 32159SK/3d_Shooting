@@ -86,6 +86,8 @@ public:
     void        SetPlayer(CPlayer* player) { m_Player = player; }
 
     void        EnemyReset(void);
+
+    void        EnemyReset(CEnemy* enemy);
 private:
 
     void        BulletDataLoad(void);
@@ -100,5 +102,5 @@ private:
     CStageManager*          m_StageManager;     // ステージ管理クラスのポインタ
     CEffectManager*         m_EffectManager;    // エフェクト管理クラス
     std::vector<BULLET_INFO> m_BulletInfo;      // 
-    std::vector<CEnemy*>    m_EnemyList;            // 
+    std::vector<CEnemy*>    m_EnemyList;        // 
 };

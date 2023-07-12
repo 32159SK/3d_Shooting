@@ -57,18 +57,17 @@ public:
      */
     void        Finalize(void) override;
 
-    void        SetEnemy(CEnemy* enemy) { m_LockOnEnemy = enemy; }
+    void        SetTarget(IUnit* target) { m_Target = target; }
 
 private:
 
-
-    aqua::CSprite  m_Sprite;   // 
+    aqua::CSprite  m_Sprite;   // ロックオン画像スプライト
 
     aqua::CCamera* m_Camera;   // カメラのポインタ容器
 
-    CPlayer*       m_Player;
+    IUnit*         m_User;     // ロックオン使用者
 
-    CEnemy*        m_LockOnEnemy;
+    IUnit*         m_Target;   // ロックオン対象
 
     CGameMain*     m_GameMain; // ゲームメインシーンのポインタ容器
 };

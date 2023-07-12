@@ -111,11 +111,6 @@ private:
     void            CannonSetUp(void);
 
     /*
-     *  @brief      雑魚召喚
-     */
-    void            SummonEnemy(void);
-
-    /*
      *  @brief      オールレンジ攻撃(νガ〇ダムとかのファ〇ネルのイメージ)
      */
     void            AllRangeAttack(void);
@@ -130,9 +125,7 @@ private:
 
     static const std::string m_model_file_path; // モデルファイルパス
 
-    static const aqua::CVector3 m_base_cannon_pos[4];// 砲門基本座標
-
-    static const float   m_summon_interval;     // 召喚間隔
+    static const aqua::CVector3 m_base_cannon_pos[8];// 砲門基本座標
 
     static const float   m_all_range_ct;        // オールレンジ攻撃のCT
 
@@ -144,6 +137,8 @@ private:
 
     static const int     m_max_summon;          // 最大召喚数
 
+    static const float   m_rotate_speed;        // 回転速度
+
     int             m_PhaseLife[2];             // 状態ごとのライフ
 
     int             m_SummonCount;              // 召喚のカウンター
@@ -154,15 +149,13 @@ private:
 
     aqua::CModel    m_Model;                    // モデル
 
-    aqua::CVector3  m_CannonPos[4];             // 砲門座標
-
-    aqua::CTimer    m_SummonTimer;              // 召喚タイマー
+    aqua::CVector3  m_CannonPos[8];             // 砲門座標
 
     aqua::CTimer    m_AllRangeCT;               // オールレンジCT計測タイマー
 
     aqua::CTimer    m_DeadTimer;                // 死亡タイマー
 
-    CBossCannon*    m_Cannon[4];                // 
+    CBossCannon*    m_Cannon[8];                // 
 
     CEnemyManager*  m_EnemyManager;             // 敵管理クラス(親クラス)
 

@@ -1,8 +1,8 @@
 /*
- *  @file       unit.h
+ *  @file       beam.h
  *  @brief      ユニット処理
  *  @author     Kazuto Shimazaki
- *  @date       2022/06/20
+ *  @date       2023/06/26
  *  @since      1.0
  *
  *  Copyright (c) 2013-2019, Kazuya Maruyama. All rights reserved.
@@ -19,7 +19,6 @@ public:
      *  @brief      コンストラクタ
      *
      *  @param[in]  parent          親オブジェクト
-     *  @param[in]  object_name     オブジェクト名
      */
     CBeam(aqua::IGameObject* parent);
 
@@ -44,10 +43,8 @@ public:
     void            Update(void)override;
 
     /*
-     *  @brief      更新
+     *  @brief      当たり判定用のカプセル取得
      */
-    void            Finalize(void)override;
-
     aqua::CCapsulePrimitive GetCapsule(void) { return m_Capsule; }
 
 
@@ -72,14 +69,24 @@ public:
     bool            GetFinishFlag(void) { return m_Finished; }
 
 private:
-
+    /*
+     *  @brief      チャージ
+     */
     void            Charge(void);
 
+    /*
+     *  @brief      発射
+     */
     void            Firing(void);
 
+    /*
+     *  @brief      消滅
+     */
     void            Destroy(void);
 
-
+    /*
+     *  @brief      ビームの状態
+     */
     enum class BEAM_STATE
     {
         CHARGE, // 収束
@@ -97,29 +104,29 @@ private:
 
     float                   m_Radius;       //! 半径
 
-    bool                    m_DamageFlag;   //
+    bool                    m_DamageFlag;   // ダメージ判定
 
     bool                    m_Finished;     // 終了
 
-    aqua::CVector3          m_Dir;          //
+    aqua::CVector3          m_Dir;          // 方向
 
-    aqua::CVector3          m_StartPos;     //
+    aqua::CVector3          m_StartPos;     // 始点
 
-    aqua::CVector3          m_EndPos;       //
+    aqua::CVector3          m_EndPos;       // 終点
 
     UNIT_TYPE               m_Attri;        // 属性
 
-    BEAM_STATE              m_BeamState;    // 
+    BEAM_STATE              m_BeamState;    // 現在のビームの状態
 
-    aqua::CCapsulePrimitive m_Capsule;      // 
+    aqua::CCapsulePrimitive m_Capsule;      // 当たり判定用のカプセルクラス
 
     aqua::CLinePrimitive3D  m_PredictionLine;// 予測線
 
-    aqua::CTimer            m_Timer;
+    aqua::CTimer            m_Timer;        // タイマー
     
-    aqua::CEffect3D*        m_Effect;
+    aqua::CEffect3D*        m_Effect;       // エフェクトのポインタ容器
 
-    CEffectManager*         m_EffectManager;
+    CEffectManager*         m_EffectManager;// エフェクト管理クラスのポインタ容器
 
-    IUnit*                  m_User;         // 
+    IUnit*                  m_User;         // 使用者
 };

@@ -63,18 +63,11 @@ public:
      */
     aqua::CVector3  GetAgoPos(void) { return m_AgoPosition; }
 
-    /*
-     *  @brief      時止め確認
-     */
-    bool            GetTimeStop(void) { return m_TimeStop; }
 
     /*
      *  @brief      敵管理クラスセッター
      */
     void            SetEnemyManager(CEnemyManager* em) { m_EnemyManager = em; }
-
-
-    bool            GetLockOnFlag(void) { return m_LockON; }
 
     /*
      *  @brief      座標のセッター
@@ -107,28 +100,15 @@ private:
      */
     void            LockOn(void);
 
-    /*
-     *  @brief      ザ・ワールド
-     */
-    void            TheWorld(void);
-
     static const float m_chage_shotCT;  // 
 
     static const float m_ago_pos_time;  // 
-    
-    static const float m_the_world_time;// 時を止めていられる時間
-    
-    static const float m_the_world_CT;  // 再び時を止められるまでの時間
     
     static const float m_lock_range;    // ロックオン範囲
 
     static const int   m_max_life;      // ライフの最大値
 
     bool            m_Invincible;       // 無敵
-
-    bool            m_TimeStop;         // 時止め確認
-
-    bool            m_LockON;           // ロックオン確認
 
     aqua::CVector3  m_AgoPosition;       //
 
@@ -141,8 +121,6 @@ private:
     aqua::CTimer    m_AgoPosTimer;      // 
 
     aqua::CTimer    m_InvincibleTimer;  //
-
-    aqua::CTimer    m_TheWorldTimer;    // 
 
     aqua::CTimer    m_LockonTimer;      // 連続でm_LockONが切り替わるのを防止
 

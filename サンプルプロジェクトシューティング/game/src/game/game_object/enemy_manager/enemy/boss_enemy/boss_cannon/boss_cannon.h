@@ -158,4 +158,6 @@ private:
     CBossEnemy*     m_BossEnemy;
 
     CBeam*          m_Beam;
+
+    CLockOnMarker*  m_LockOnMarker;
 };

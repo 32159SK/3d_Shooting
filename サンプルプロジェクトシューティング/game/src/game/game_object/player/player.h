@@ -2,7 +2,7 @@
  *  @file       unit.h
  *  @brief      ユニット処理
  *  @author     Kazuto Shimazaki
- *  @date       2022/06/20
+ *  @date       2023/05/20
  *  @since      1.0
  *
  *  Copyright (c) 2013-2019, Kazuya Maruyama. All rights reserved.
@@ -91,18 +91,13 @@ private:
     void            Move(void)override;
 
     /*
-     *  @brief      死亡処理
-     */
-    void            Damage(int damage)override;
-
-    /*
      *  @brief      ロックオン
      */
     void            LockOn(void);
 
-    static const float m_chage_shotCT;  // 
+    static const float m_change_shotCT;  // 弾種切り替え間隔
 
-    static const float m_ago_pos_time;  // 
+    static const float m_ago_pos_time;  // 座標を取る間隔
     
     static const float m_lock_range;    // ロックオン範囲
 
@@ -110,23 +105,23 @@ private:
 
     bool            m_Invincible;       // 無敵
 
-    aqua::CVector3  m_AgoPosition;       //
+    aqua::CVector3  m_AgoPosition;      // 追尾座標
 
     aqua::CModel    m_Model;            // 自機のモデル
 
-    aqua::CLabel    m_DrawBT;           // 
+    aqua::CLabel    m_DrawBT;           // 弾種描画
 
-    aqua::CTimer    m_ChangeCT;          //
+    aqua::CTimer    m_ChangeCT;         // 弾種切り替えタイマー
 
-    aqua::CTimer    m_AgoPosTimer;      // 
+    aqua::CTimer    m_AgoPosTimer;      // 追尾座標を取る間隔用のタイマー
 
-    aqua::CTimer    m_InvincibleTimer;  //
+    aqua::CTimer    m_InvincibleTimer;  // 無敵時間タイマー
 
     aqua::CTimer    m_LockonTimer;      // 連続でm_LockONが切り替わるのを防止
 
-    CEnemyManager*  m_EnemyManager;     //
+    CEnemyManager*  m_EnemyManager;     // 敵管理クラス
 
-    CEnemy*         m_Enemy;
+    CEnemy*         m_LockOnEnemy;      // ロックオン中の敵
 
-    CLockOnMarker*  m_LockOnMarker;
+    CLockOnMarker*  m_LockOnMarker;     // ロックオンマーカークラスのポインタ
 };

@@ -3,7 +3,7 @@
  *  @file       effect_manager.cpp
  *  @brief      エフェクト管理
  *  @author     kazuto shimazaki
- *  @date       2023/05/23
+ *  @date       2023/06/19
  *  @version    1.0
  *
  *  Copyright (c) 2013-2021, Kazuya Maruyama. All rights reserved.

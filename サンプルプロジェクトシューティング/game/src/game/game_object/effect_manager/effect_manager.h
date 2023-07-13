@@ -3,7 +3,7 @@
  *  @file       effect_manager.h
  *  @brief      エフェクト管理
  *  @author     Kazuto Shimazaki
- *  @date       2021/12/02
+ *  @date       2023/06/19
  *  @version    1.0
  *
  *  Copyright (c) 2013-2021, Kazuya Maruyama. All rights reserved.
@@ -22,7 +22,7 @@
   *
   *  @author     Kazuto Shimazaki
   *
-  *  @date       2023/5/23
+  *  @date       2023/06/19
   *
   *  @version    1.0
   */

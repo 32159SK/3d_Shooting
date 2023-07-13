@@ -3,7 +3,7 @@
  *  @file       effect.h
  *  @brief      エフェクト
  *  @author     Kazuto Shimazaki
- *  @date       2021/12/02
+ *  @date       2023/06/19
  *  @version    1.0
  *
  *  Copyright (c) 2013-2021, Kazuya Maruyama. All rights reserved.
@@ -21,7 +21,7 @@
   *
   *  @author     Kazuto Shimazaki
   *
-  *  @date       2021/12/02
+  *  @date       2023/06/19
   *
   *  @version    1.0
   */
@@ -62,7 +62,7 @@ public:
 
 protected:
 
-    aqua::CVector3      m_Position;
+    aqua::CVector3      m_Position; // 描画座標
 
 private:
     /*!

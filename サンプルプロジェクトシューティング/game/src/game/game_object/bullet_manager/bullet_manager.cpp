@@ -52,7 +52,7 @@ void CBulletManager::Create(aqua::CVector3 shot_pos, aqua::CVector3 shot_front, 
 	// íeÇÃê∂ê¨èàóùÇ∆èâä˙âª
 	switch (bullet_type)
 	{
-	case BULLET_TYPE::NOMAL:bullet = aqua::CreateGameObject<CNormalBullet>(this);break;
+	case BULLET_TYPE::NORMAL:bullet = aqua::CreateGameObject<CNormalBullet>(this);break;
 	case BULLET_TYPE::REFLECT:bullet = aqua::CreateGameObject<CReflectionBullet>(this); break;
 	case BULLET_TYPE::PENETRATE:bullet = aqua::CreateGameObject<CPenetrateBullet>(this); break;
 	case BULLET_TYPE::MAX:

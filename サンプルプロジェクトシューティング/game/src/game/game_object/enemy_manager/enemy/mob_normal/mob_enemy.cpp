@@ -18,7 +18,7 @@ Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, C
 	CEnemy::Initialize(pop_pos, enemy_info, st_m, bm);
 	m_LoseSightTimer.Setup(m_lose_sight_time);
 	m_Dir = m_surroundings[aqua::Rand(3)];
-	m_ShotBullet = BULLET_TYPE::NOMAL;
+	m_ShotBullet = BULLET_TYPE::NORMAL;
 }
 
 void CMobEnemy::Update(void)

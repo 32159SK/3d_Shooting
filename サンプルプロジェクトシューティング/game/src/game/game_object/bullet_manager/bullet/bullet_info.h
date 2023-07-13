@@ -2,7 +2,7 @@
 
 enum class BULLET_TYPE
 {
-    NOMAL,
+    NORMAL,
     REFLECT,
     PENETRATE,
     BEAM,
@@ -11,7 +11,7 @@ enum class BULLET_TYPE
 
 struct BULLET_INFO
 {
-    BULLET_TYPE bullet_type = BULLET_TYPE::NOMAL;
+    BULLET_TYPE bullet_type = BULLET_TYPE::NORMAL;
     int     damage = 1;
     float   radius = 5.0f;
     float   speed = 1.0f;

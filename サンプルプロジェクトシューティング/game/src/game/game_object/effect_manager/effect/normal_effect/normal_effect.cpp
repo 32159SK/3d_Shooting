@@ -27,6 +27,7 @@ CNormalEffect(aqua::IGameObject* parent)
 void
 CNormalEffect::Initialize(const aqua::CVector3& position, std::string effect_name, std::string se_name, float rotate, float scale)
 {
+    // エフェクト名から再生
     m_Effect.Create("data\\texture\\effect\\" + effect_name + ".efkefc");
     m_Position = position;
     m_Rotate = rotate;

@@ -60,6 +60,17 @@ public:
      */
     void        Finalize(void) override;
 
+    /*!
+     *  @brief  レイキャスト
+     */
+    void        Raycast(aqua::CVector3 pointA, aqua::CVector3 pointB);
+
+    /*!
+     *  @brief  
+     */
+    aqua::CVector3 GetRaycastPos(void) { return m_RaycastPos; }
+
 private:
     aqua::CModel            m_Floor;
+    aqua::CVector3          m_RaycastPos;
 };

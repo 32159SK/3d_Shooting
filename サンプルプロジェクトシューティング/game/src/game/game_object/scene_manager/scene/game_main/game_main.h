@@ -14,7 +14,7 @@
 #include "aqua.h"
 #include"..\scene.h"
 
-
+class CFloor;
 class CPlayer;
 class CEnemyManager;
 
@@ -99,12 +99,16 @@ private:
     };
 
     static const float  m_white_out_time;
+    static const float  m_camera_distace;   // カメラの距離
+    static const float  m_camera_v_rotate;  // カメラの垂直回転
+
 
     bool                m_GameClear;    // ゲームクリアフラグ
 
     STATE               m_State;        //! 状態ID
     aqua::CCamera       m_Camera;
     aqua::CTimer        m_WhiteOutTimer;      // ホワイトアウト用タイマー
+    CFloor*             m_Floor;
     CPlayer*            m_Player;
     CEnemyManager*      m_EnemyManager;
     aqua::CSprite       m_WhiteOutSprite;// ホワイトアウト用スプライト

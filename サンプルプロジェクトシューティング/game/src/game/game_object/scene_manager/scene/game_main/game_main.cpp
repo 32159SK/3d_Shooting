@@ -13,10 +13,13 @@
 #include "game_main.h"
 
 const float CGameMain::m_white_out_time = 7.0f;
+const float CGameMain::m_camera_distace = 150.0f;
+const float CGameMain::m_camera_v_rotate = 70.0f;
 
 CGameMain::CGameMain(aqua::IGameObject* parent)
     : IScene(parent, "GameMainScene")
     , m_State(STATE::STATE_GAME_START)
+    , m_Floor(nullptr)
     , m_Player(nullptr)
     , m_EnemyManager(nullptr)
     , m_GameClear(false)
@@ -39,8 +42,7 @@ CGameMain::
 Initialize(void)
 {
     // 床
-    aqua::CreateGameObject<CFloor>(this);
-
+    m_Floor = aqua::CreateGameObject<CFloor>(this);
 
     // ステージ管理の生成
     CStageManager* st_m = aqua::CreateGameObject<CStageManager>(this);
@@ -65,7 +67,7 @@ Initialize(void)
     // レーダークラスの初期化
     rd->Initialize(m_Player);
     // プレイヤーの初期化＆弾管理クラスのセット
-    m_Player->Initialize(aqua::CVector3(0.0f, 0.0f, -50.0f), 10.0f, 10.0f, 10.0f, aqua::CColor::BLUE,st_m, bm);
+    m_Player->Initialize(aqua::CVector3::ZERO, 10.0f, 10.0f, 10.0f, aqua::CColor::BLUE,st_m, bm);
     m_Player->SetEnemyManager(m_EnemyManager);
     // 敵管理クラスの初期化＆プレイヤー、弾管理クラスのセット
     m_EnemyManager->Initialize(bm, m_Player, st_m, rd);
@@ -73,8 +75,8 @@ Initialize(void)
     // カメラのセットアップ
     m_Camera.SetCamera(50.0f, 10000.0f);
     m_Camera.m_Target = m_Player->GetPosition();
-    m_Camera.m_Distace = 100.0f;
-    m_Camera.m_VRotate = aqua::DegToRad(50.0f);
+    m_Camera.m_Distace = m_camera_distace;
+    m_Camera.m_VRotate = aqua::DegToRad(m_camera_v_rotate);
 
     // タイマーのセットアップ
     m_WhiteOutTimer.Setup(m_white_out_time);
@@ -121,10 +123,9 @@ CGameMain::
 GamePlay(void)
 {
     m_Camera.m_Target = m_Player->GetPosition();
-    float wheel_value = (float)aqua::mouse::GetWheel();
-    if (wheel_value > 0) m_Camera.m_Distace -= 5.0f;
-    else if (wheel_value < 0) m_Camera.m_Distace += 5.0f;
     m_Camera.Update();
+
+    m_Floor->Raycast(m_Camera.m_Position, m_Camera.m_Target * 2.0f);
 
     // プレイヤーが死んだ時点でゲームを終了
     if (m_Player->GetDead())

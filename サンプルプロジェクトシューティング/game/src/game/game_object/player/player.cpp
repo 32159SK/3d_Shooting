@@ -54,6 +54,8 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep
 	// モデルのロード
 	m_Model.Load("data\\model\\player.mv1");
 
+	m_Floor = (CFloor*)aqua::FindGameObject("Floor");
+
 }
 
 void CPlayer::Update(void)
@@ -166,14 +168,16 @@ void CPlayer::Shot(void)
 	// 弾の種類の切り替え
 	if (m_ChangeCT.Finished())
 	{
-		if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::UP) && m_ShotBullet != BULLET_TYPE::NORMAL)
+		float wheel_value = (float)aqua::mouse::GetWheel();
+
+		if (wheel_value > 0 && m_ShotBullet != BULLET_TYPE::NORMAL)
 		{
 			// -1の弾に変更(例FAST→NOMAL)
 			m_ShotBullet = (BULLET_TYPE)((int)m_ShotBullet - 1);
 			m_ChangeCT.Reset();
 		}
 		// ↓キー
-		if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::DOWN) && (int)m_ShotBullet < (int)BULLET_TYPE::MAX - 1)
+		else if (wheel_value < 0 && (int)m_ShotBullet < (int)BULLET_TYPE::MAX - 1)
 		{
 			// +1の弾に変更(例NOMAL→FAST)
 			m_ShotBullet = (BULLET_TYPE)((int)m_ShotBullet + 1);
@@ -190,7 +194,7 @@ void CPlayer::Shot(void)
 
 	if (m_ShotCT.Finished())
 	{
-		if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::SPACE))
+		if (aqua::mouse::Button(aqua::mouse::BUTTON_ID::LEFT))
 		{
 			// 自機の正面から球を撃つ
 			m_BulletManager->Create(m_Position + front * 10.0f, front * 10.5f, m_UnitType, m_ShotBullet, this);
@@ -217,15 +221,15 @@ void CPlayer::Move(void)
 	if (Button(KEY_ID::A)) m_Velocity += aqua::CVector3::LEFT;
 	if (Button(KEY_ID::D)) m_Velocity += aqua::CVector3::RIGHT;
 
-	if (Button(KEY_ID::RIGHT)) m_Rotate += 2.0f;
-	if (Button(KEY_ID::LEFT)) m_Rotate -= 2.0f;
-
 	m_Velocity = m_Velocity.Normalize();
 	m_Velocity *= (m_Speed * to_delta);
 
 	// ロックオン
 	LockOn();
 
+	// ロックオンしていないならマウス追従
+	if (!m_LockON)
+		MouseTrack();
 	
 	// 壁と当たってたらそこで止まる
 	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * m_Width, false))
@@ -236,13 +240,34 @@ void CPlayer::Move(void)
 	AQUA_DEBUG_LOG("X:" + std::to_string(m_Position.x) + ",Z" + std::to_string(m_Position.z));
 }
 
+void CPlayer::MouseTrack(void)
+{
+	aqua::CVector3 raycast = m_Floor->GetRaycastPos();
+	// マウス座標を3次元のベクトルクラスで変数に入れる
+	aqua::CVector3 mpos = aqua::CVector3((float)aqua::mouse::GetCursorPos().x
+		, (float)aqua::mouse::GetCursorPos().y/* - (aqua::GetWindowHeight() / 2.0f)*/, 0.0f) ;
+	// スクリーン座標をワールド座標に変換する夢のような関数
+	mpos = ConvScreenPosToWorldPos(mpos);
+
+
+	// マウス座標と自身の座標の差分を求める
+	aqua::CVector3 v = mpos -  raycast;
+
+	// ベクトルのノーマライズ
+	v.Normalize();
+
+	// 2点から回転角度を求める
+	m_Rotate = aqua::RadToDeg(atan2(v.x, v.z));
+
+}
+
 void CPlayer::LockOn(void)
 {
 	// ロックオンタイマーの更新
 	m_LockonTimer.Update();
 
 	// タイマーが終了しているかつ、キーが入力された
-	if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::Q) && m_LockonTimer.Finished())
+	if (aqua::mouse::Released(aqua::mouse::BUTTON_ID::RIGHT) && m_LockonTimer.Finished())
 	{
 		m_LockON = !m_LockON;
 		// 一度ロックオンした同じ敵を近くないのに再度ロックオンしないようnullを与える

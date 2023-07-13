@@ -91,6 +91,11 @@ private:
     void            Move(void)override;
 
     /*
+     *  @brief      マウス追従による回転処理
+     */
+    void            MouseTrack(void);
+
+    /*
      *  @brief      ロックオン
      */
     void            LockOn(void);
@@ -118,6 +123,8 @@ private:
     aqua::CTimer    m_InvincibleTimer;  // 無敵時間タイマー
 
     aqua::CTimer    m_LockonTimer;      // 連続でm_LockONが切り替わるのを防止
+
+    CFloor*         m_Floor;            // 
 
     CEnemyManager*  m_EnemyManager;     // 敵管理クラス
 

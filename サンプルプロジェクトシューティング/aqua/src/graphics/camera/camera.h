@@ -124,8 +124,6 @@ namespace aqua
 
         void        Update(void);
 
-
-
     };
 
 }

@@ -22,6 +22,8 @@ CModel(void)
     , position(aqua::CVector3::ZERO)
     , scale(aqua::CVector3::ONE)
     , rotation(aqua::CVector3::ZERO)
+    , handle(0)
+    , m_LineCollPos(aqua::CVector3::ZERO)
 {
 }
 
@@ -64,7 +66,8 @@ Load(const std::string& file_name)
     }
 
     MV1SetScale(m_ModelResource->GetResourceHandle(), scale);
-
+    // コリジョン情報を構築する
+    MV1SetupCollInfo(m_ModelResource->GetResourceHandle());
 }
 
 /*
@@ -93,7 +96,7 @@ void aqua::CModel::Draw(void)
     if (!visible) return;
 
     // モデルリソースハンドル取得
-    int handle = m_ModelResource->GetResourceHandle();
+    handle = m_ModelResource->GetResourceHandle();
 
     if (handle < 0) return;
 
@@ -105,6 +108,24 @@ void aqua::CModel::Draw(void)
 
     // 描画
     MV1DrawModel(handle);
+}
+
+/*
+ *  線分との当たり判定
+ */
+bool aqua::CModel::CheckCollision(CVector3& pointA, CVector3& pointB)
+{
+    // コリジョン結果の変数を用意
+    MV1_COLL_RESULT_POLY coll_result;
+
+    // 線分とモデルの当たり判定
+    coll_result = MV1CollCheck_Line(handle, -1, pointA, pointB);
+
+    // 線分との接触座標を取っておく
+    if (coll_result.HitFlag) m_LineCollPos = coll_result.HitPosition;
+
+    // 接触フラグを返す
+    return coll_result.HitFlag;
 }
 
 /*

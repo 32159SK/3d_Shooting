@@ -34,6 +34,8 @@ Initialize(void)
 
     aqua::CreateGameObject<CSceneManager>(this);
 
+    // マウスの描画を行う
+    SetMouseDispFlag(true);
 
 
     IGameObject::Initialize();

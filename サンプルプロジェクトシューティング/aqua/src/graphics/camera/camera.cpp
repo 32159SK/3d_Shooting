@@ -6,12 +6,12 @@
  */
 aqua::CCamera::
 CCamera(void)
-	: m_Near(0)
-	, m_Far(0)
-	, m_Fov(0)
-	, m_VRotate(0)
-	, m_HRotate(0)
-	, m_TRotate(0)
+	: m_Near(0.0f)
+	, m_Far(0.0f)
+	, m_Fov(0.0f)
+	, m_VRotate(0.0f)
+	, m_HRotate(0.0f)
+	, m_TRotate(0.0f)
 	, m_Distace(100)
 	, m_Position(aqua::CVector3::ZERO)
 	, m_Target(aqua::CVector3::ZERO)

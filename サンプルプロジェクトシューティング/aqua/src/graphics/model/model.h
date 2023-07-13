@@ -76,6 +76,13 @@ namespace aqua
          */
         void    Draw(void);
 
+        /*!
+         *  @brief      代入演算子のオーバーロード
+         *
+         *  @param[in]  pointA     始点
+         *  @param[in]  pointB     終点
+         */
+        bool	CheckCollision(CVector3& pointA, CVector3& pointB)override;
 
         /*!
          *  @brief      モデルのリソースハンドル取得
@@ -111,6 +118,12 @@ namespace aqua
          */
         CModel& operator=(const CModel& model);
 
+        /*!
+         *  @brief      線分との接触座標取得
+         *
+         *  @return     線分との接触座標取得
+         */
+        aqua::CVector3 GetLineCollPos(void) { return m_LineCollPos; }
     private:        
 
         /*!
@@ -131,6 +144,12 @@ namespace aqua
          *  @brief      CSurfaceクラスをフレンド登録
          */
         friend class CSurface;
+
+        // モデルのリソースハンドル
+        int                   handle;
+
+        // 線分との接触座標
+        aqua::CVector3        m_LineCollPos;
 
         //! テクスチャリソースクラス
         core::CModelResource* m_ModelResource;

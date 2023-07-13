@@ -2,6 +2,7 @@
 
 #include"sound_manager/sound_manager.h"
 #include"effect_manager/effect_manager.h"
+#include"floor/floor.h"
 #include"stage_manager/stage_manager.h"
 #include"player/player.h"
 #include"enemy_manager/enemy_manager.h"

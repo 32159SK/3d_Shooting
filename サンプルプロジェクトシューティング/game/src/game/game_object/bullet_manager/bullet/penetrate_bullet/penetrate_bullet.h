@@ -30,6 +30,13 @@ public:
 
     /*
      *  @brief      初期化
+     *
+     *  @param[in]  bullet_info      発射する弾情報
+     *  @param[in]  attri            所属
+     *  @param[in]  pop_pos          発射座標
+     *  @param[in]  dir              向き
+     *  @param[in]  user             使用者
+     *  @param[in]  em               エフェクト管理クラスのポインタ(撃つ度探査させたら重くなる)
      */
     void    Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 pop_pos, aqua::CVector3 front, IUnit* user, CEffectManager* em)override;
 

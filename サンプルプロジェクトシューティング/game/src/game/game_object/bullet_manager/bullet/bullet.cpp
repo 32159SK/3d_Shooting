@@ -26,6 +26,9 @@ void IBullet::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector
 
 	m_StartPos = m_Position;
 	m_Sphere.Setup(m_Position, m_Radius);
+	m_Sphere.visible = false;
+	m_Model.position = m_Position;
+	// 初期化の段階で一度だけ更新を呼ぶことで向きを合わせる処理をさせる
 	Update();
 }
 
@@ -52,10 +55,11 @@ void IBullet::Update(void)
 	m_Rotate = aqua::RadToDeg(atan2(m_Velocity.x, m_Velocity.z));
 	// 当たり判定用の球クラスの座標を合わせる
 	m_Sphere.position = m_Position;
-
+	// モデルの座標と回転を合わせる
 	m_Model.position = m_Position;
 	m_Model.rotation.y = aqua::DegToRad(m_Rotate);
 
+	// ステージ範囲外に出たら削除
 	if (m_Position.x < -250.0f || m_Position.x > 250.0f ||
 		m_Position.z < -250.0f || m_Position.z > 250.0f)
 		DeleteObject();
@@ -63,6 +67,7 @@ void IBullet::Update(void)
 
 void IBullet::Finalize(void)
 {
+	// モデルの解放
 	m_Model.Unload();
 }
 
@@ -71,11 +76,13 @@ void IBullet::Hit(void)
 	// エフェクト管理クラスがnullでないなら着弾地点にエフェクトを出す
 	if (m_EffectManager)
 		m_EffectManager->Create(EFFECT_ID::HIT, m_Position);
+	// 自身を削除
 	DeleteObject();
 }
 
 void IBullet::StageObjectHit(aqua::CCubePrimitive::COLL_DIRE c_dire)
 {
+	// 基本のヒット処理を行う
 	Hit();
 }
 

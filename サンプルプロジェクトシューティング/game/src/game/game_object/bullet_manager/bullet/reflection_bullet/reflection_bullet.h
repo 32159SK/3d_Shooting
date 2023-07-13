@@ -1,6 +1,6 @@
 /*
- *  @file       unit.h
- *  @brief      ユニット処理
+ *  @file       reflect_bullet.h
+ *  @brief      反射弾
  *  @author     Kazuto Shimazaki
  *  @date       2022/06/20
  *  @since      1.0
@@ -39,8 +39,8 @@ public:
     void    StageObjectHit(aqua::CCubePrimitive::COLL_DIRE c_dire)override;
 private:
 
-    static const int m_max_reflect_count = 3;
+    static const int m_max_reflect_count = 3;   // 最大反射回数
 
-    int             m_ReflectCount;
+    int             m_ReflectCount;             // 反射回数のカウント
 
 };

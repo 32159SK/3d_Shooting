@@ -1,18 +1,26 @@
 #pragma once
 
+
+/*!
+ *  @brief      íeéÌ
+ */
 enum class BULLET_TYPE
 {
-    NORMAL,
-    REFLECT,
-    PENETRATE,
-    BEAM,
+    NORMAL,     // í èÌíe
+    REFLECT,    // îΩéÀíe
+    PENETRATE,  // ínå`ä—í íe
+    BEAM,       // ÉQt...ÉrÅ[ÉÄ
     MAX
 };
 
+
+/*!
+ *  @brief      íeèÓïÒ
+ */
 struct BULLET_INFO
 {
-    BULLET_TYPE bullet_type = BULLET_TYPE::NORMAL;
-    int     damage = 1;
-    float   radius = 5.0f;
-    float   speed = 1.0f;
+    BULLET_TYPE bullet_type = BULLET_TYPE::NORMAL;  // íeéÌ
+    int     damage = 1;                             // É_ÉÅÅ[ÉWíl
+    float   radius = 5.0f;                          // îºåa
+    float   speed = 1.0f;                           // íeë¨
 };

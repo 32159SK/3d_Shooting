@@ -1,5 +1,5 @@
 /*
- *  @file       unit.h
+ *  @file       bullet.h
  *  @brief      ユニット処理
  *  @author     Kazuto Shimazaki
  *  @date       2022/06/20
@@ -29,6 +29,13 @@ public:
 
     /*
      *  @brief      初期化
+     *
+     *  @param[in]  bullet_info      発射する弾情報
+     *  @param[in]  attri            所属
+     *  @param[in]  pop_pos          発生座標
+     *  @param[in]  dir              向き
+     *  @param[in]  user             使用者
+     *  @param[in]  em               エフェクト管理クラスのポインタ(撃つ度探査させたら重くなる)
      */
     virtual void    Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 pop_pos, aqua::CVector3 front, IUnit* user, CEffectManager* em);
 

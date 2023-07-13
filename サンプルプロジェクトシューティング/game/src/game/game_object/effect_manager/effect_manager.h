@@ -47,6 +47,8 @@ public:
      *
      *  @param[in]  id          エフェクトID
      *  @param[in]  position    位置
+     *  @param[in]  rotate      回転値
+     *  @param[in]  scale       拡大率
      */
     void        Create(EFFECT_ID id, const aqua::CVector3& position, float rotate = 0.0f, float scale = 5.0f);
 
@@ -55,6 +57,8 @@ public:
      *
      *  @param[in]  id          エフェクトID
      *  @param[in]  position    位置
+     *  @param[in]  rotate      回転値
+     *  @param[in]  scale       拡大率
      */
     aqua::CEffect3D* CreateGetEffect(EFFECT_ID id, const aqua::CVector3& position, float rotate = 0.0f, float scale = 5.0f);
 
@@ -74,5 +78,5 @@ public:
     void        Finalize(void)override;
 
 private:
-    static const std::string    m_effect_file_names[];   // サウンドファイルパス
+    static const std::string    m_effect_file_names[];   // エフェクトファイルパス
 };

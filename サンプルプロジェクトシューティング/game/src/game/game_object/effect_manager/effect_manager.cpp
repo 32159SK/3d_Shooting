@@ -55,15 +55,18 @@ aqua::CEffect3D* CEffectManager::CreateGetEffect(EFFECT_ID id, const aqua::CVect
 
 void CEffectManager::Update(void)
 {
+    // 自身の子オブジェクトのアップデート
     IGameObject::Update();
 }
 
 void CEffectManager::Draw(void)
 {
+    // 自身の子オブジェクトの描画
     IGameObject::Draw();
 }
 
 void CEffectManager::Finalize(void)
 {
+    // 自身の子オブジェクトの解放
     IGameObject::Finalize();
 }

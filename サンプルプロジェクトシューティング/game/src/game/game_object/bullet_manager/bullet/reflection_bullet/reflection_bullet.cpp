@@ -8,10 +8,8 @@ CReflectionBullet::CReflectionBullet(aqua::IGameObject* parent)
 
 void CReflectionBullet::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 pop_pos, aqua::CVector3 front, IUnit* user, CEffectManager* em)
 {
-	IBullet::Initialize(bullet_info, attri, pop_pos, front, user, em);
-	m_Sphere.visible = false;
 	m_Model.Load("data\\model\\reflect_bullet.mv1");
-	m_Model.position = m_Position;
+	IBullet::Initialize(bullet_info, attri, pop_pos, front, user, em);
 }
 
 

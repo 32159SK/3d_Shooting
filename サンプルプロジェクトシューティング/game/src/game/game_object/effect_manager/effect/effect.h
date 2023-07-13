@@ -41,6 +41,10 @@ public:
      *  @brief      初期化
      *
      *  @param[in]  position    位置
+     *  @param[in]  effect_name エフェクト名
+     *  @param[in]  se_name     SE名
+     *  @param[in]  rotate      回転値
+     *  @param[in]  scale       拡大率
      */
     virtual void    Initialize(const aqua::CVector3& position, std::string effect_name, std::string se_name, float rotate = 0.0f, float scale = 5.0f);
 
@@ -62,7 +66,7 @@ public:
 
 protected:
 
-    aqua::CVector3      m_Position; // 描画座標
+    aqua::CVector3      m_Position; // 描画位置
 
 private:
     /*!

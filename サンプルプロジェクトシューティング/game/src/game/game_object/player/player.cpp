@@ -242,16 +242,22 @@ void CPlayer::Move(void)
 
 void CPlayer::MouseTrack(void)
 {
-	aqua::CVector3 raycast = m_Floor->GetRaycastPos();
-	// マウス座標を3次元のベクトルクラスで変数に入れる
-	aqua::CVector3 mpos = aqua::CVector3((float)aqua::mouse::GetCursorPos().x
-		, (float)aqua::mouse::GetCursorPos().y/* - (aqua::GetWindowHeight() / 2.0f)*/, 0.0f) ;
+	// マウス座標を2点取り、3次元のベクトルクラスで変数に入れる
+	aqua::CVector3 mpos_A = aqua::CVector3((float)aqua::mouse::GetCursorPos().x
+		, (float)aqua::mouse::GetCursorPos().y, 0.0f) ;
+	aqua::CVector3 mpos_B = aqua::CVector3((float)aqua::mouse::GetCursorPos().x
+		, (float)aqua::mouse::GetCursorPos().y, 1.0f) ;
+
 	// スクリーン座標をワールド座標に変換する夢のような関数
-	mpos = ConvScreenPosToWorldPos(mpos);
+	mpos_A = ConvScreenPosToWorldPos(mpos_A);
+	mpos_B = ConvScreenPosToWorldPos(mpos_B);
 
+	// 床と2点のマウス座標でレイキャストを行い接触座標を求める
+	m_Floor->Raycast(mpos_A, mpos_B);
+	aqua::CVector3 raycast = m_Floor->GetRaycastPos();
 
-	// マウス座標と自身の座標の差分を求める
-	aqua::CVector3 v = mpos -  raycast;
+	// レイキャスト座標と自身の座標の差分を求める
+	aqua::CVector3 v = raycast - m_Position;
 
 	// ベクトルのノーマライズ
 	v.Normalize();

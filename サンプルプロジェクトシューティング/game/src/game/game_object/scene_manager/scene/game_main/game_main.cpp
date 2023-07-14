@@ -125,8 +125,6 @@ GamePlay(void)
     m_Camera.m_Target = m_Player->GetPosition();
     m_Camera.Update();
 
-    m_Floor->Raycast(m_Camera.m_Position, m_Camera.m_Target * 2.0f);
-
     // プレイヤーが死んだ時点でゲームを終了
     if (m_Player->GetDead())
         GameFinish();

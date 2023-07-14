@@ -71,7 +71,7 @@ public:
     /*
      *  @brief      ‰ð•ú
      */
-    bool        StageObjectCollision(aqua::CVector3 position, aqua::CVector3 destination, bool this_bullet);
+    bool        StageObjectCollision(aqua::CVector3 position, aqua::CVector3 destination, bool this_bullet = false);
 
     /*
      *  @brief      Œü‚«Žæ“¾

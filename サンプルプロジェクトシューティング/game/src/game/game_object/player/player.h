@@ -91,7 +91,17 @@ private:
     void            Move(void)override;
 
     /*
-     *  @brief      マウス追従による回転処理
+     *  @brief      複合操作
+     */
+    void            CompoundOperation(void);
+
+    /*
+     *  @brief      マウス操作
+     */
+    void            MouseOparation(void);
+
+    /*
+     *  @brief      マウス追従による回転
      */
     void            MouseTrack(void);
 
@@ -99,6 +109,16 @@ private:
      *  @brief      ロックオン
      */
     void            LockOn(void);
+
+    /*
+     *  @brief      操作スタイル
+     */
+    enum OPERATE_STYLE
+    {
+        COMPOUND,   // キーマウ複合操作
+        MOUSE_ONRY  // マウスのみ
+    };
+
 
     static const float m_change_shotCT;  // 弾種切り替え間隔
 
@@ -112,6 +132,8 @@ private:
 
     aqua::CVector3  m_AgoPosition;      // 追尾座標
 
+    aqua::CVector3  m_ClickPosition;    // クリックされた座標
+
     aqua::CModel    m_Model;            // 自機のモデル
 
     aqua::CLabel    m_DrawBT;           // 弾種描画
@@ -124,7 +146,11 @@ private:
 
     aqua::CTimer    m_LockonTimer;      // 連続でm_LockONが切り替わるのを防止
 
-    CFloor*         m_Floor;            // 
+    aqua::CTimer    m_OperateTimer;      // 連続でm_OperateStyleが切り替わるのを防止
+
+    OPERATE_STYLE   m_OperateStyle;     // 操作スタイル
+
+    CFloor*         m_Floor;            // 床のポインタ
 
     CEnemyManager*  m_EnemyManager;     // 敵管理クラス
 

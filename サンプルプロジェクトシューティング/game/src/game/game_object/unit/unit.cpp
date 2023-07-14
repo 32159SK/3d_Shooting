@@ -10,6 +10,7 @@ IUnit(aqua::IGameObject* parent, const std::string& object_name)
 	, m_Width(0.0f)
 	, m_Depth(0.0f)
 	, m_Speed(0.0f)
+	, m_Angle(0.0f)
 	, m_MaxLife(0)
 	, m_Life(0)
 	, m_DeadFlag(true)
@@ -75,7 +76,6 @@ bool IUnit::CheckHitBeam(UNIT_TYPE type, aqua::CCapsulePrimitive capsule, int da
 	// タイマーが終了していないまたビームの所属が自身と同じなら処理しない
 	if (!m_BeamInterval.Finished()|| m_UnitType == type)
 		return false;
-
 	// キューブクラスのコリジョン関数で判定チェック
 	if (m_Cube.CheckCollision(capsule.Apos,capsule.Bpos,capsule.radius))
 	{
@@ -83,7 +83,6 @@ bool IUnit::CheckHitBeam(UNIT_TYPE type, aqua::CCapsulePrimitive capsule, int da
 		Damage(damage);
 		// タイマーをリセット
 		m_BeamInterval.Reset();
-		return m_Cube.collision;
 	}
 	return m_Cube.collision;
 }

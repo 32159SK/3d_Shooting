@@ -11,7 +11,6 @@ const aqua::CVector3 CEnemy::m_surroundings[] =
 
 CEnemy::CEnemy(aqua::IGameObject* parent, const std::string& object_name)
 	: IUnit(parent,"Enemy")
-	, m_Angle(180.0f)
 {
 }
 

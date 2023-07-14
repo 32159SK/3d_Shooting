@@ -14,7 +14,7 @@
 
 const float CGameMain::m_white_out_time = 7.0f;
 const float CGameMain::m_camera_distace = 150.0f;
-const float CGameMain::m_camera_v_rotate = 70.0f;
+const float CGameMain::m_camera_v_rotate = 60.0f;
 
 CGameMain::CGameMain(aqua::IGameObject* parent)
     : IScene(parent, "GameMainScene")
@@ -41,7 +41,7 @@ void
 CGameMain::
 Initialize(void)
 {
-    // 床
+    // 床の生成
     m_Floor = aqua::CreateGameObject<CFloor>(this);
 
     // ステージ管理の生成
@@ -66,7 +66,8 @@ Initialize(void)
 
     // レーダークラスの初期化
     rd->Initialize(m_Player);
-    // プレイヤーの初期化＆弾管理クラスのセット
+
+    // プレイヤーの初期化＆敵管理クラスのセット
     m_Player->Initialize(aqua::CVector3::ZERO, 10.0f, 10.0f, 10.0f, aqua::CColor::BLUE,st_m, bm);
     m_Player->SetEnemyManager(m_EnemyManager);
     // 敵管理クラスの初期化＆プレイヤー、弾管理クラスのセット

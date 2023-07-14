@@ -64,7 +64,6 @@ protected:
 
     static const aqua::CVector3 m_surroundings[];
 
-    float           m_Angle;
     BULLET_TYPE     m_ShotBullet;
     CPlayer*        m_Player;
 };

@@ -66,11 +66,11 @@ public:
     void        Raycast(aqua::CVector3 pointA, aqua::CVector3 pointB);
 
     /*!
-     *  @brief  
+     *  @brief  レイキャスト座標取得
      */
     aqua::CVector3 GetRaycastPos(void) { return m_RaycastPos; }
 
 private:
     aqua::CModel            m_Floor;
-    aqua::CVector3          m_RaycastPos;
+    aqua::CVector3          m_RaycastPos;   // レイキャスト座標
 };

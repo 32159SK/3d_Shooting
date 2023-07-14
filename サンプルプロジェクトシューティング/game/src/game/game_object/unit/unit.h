@@ -129,8 +129,9 @@ protected:
 
     float                m_Depth;        // 奥行
 
-    //! 水平回転角度
-    float                m_Rotate;
+    float                m_Angle;
+
+    float                m_Rotate;       //! 水平回転角度
 
     UNIT_TYPE            m_UnitType;     // ユニット属性
 

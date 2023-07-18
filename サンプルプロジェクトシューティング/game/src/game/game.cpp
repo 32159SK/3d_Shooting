@@ -34,6 +34,8 @@ Initialize(void)
 
     aqua::CreateGameObject<CSceneManager>(this);
 
+    // シーンを跨いでデータの共有を行う中継クラス
+    aqua::CreateGameObject<CDataRelay>(this);
     // マウスの描画を行う
     SetMouseDispFlag(true);
 

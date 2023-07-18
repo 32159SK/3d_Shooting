@@ -49,8 +49,6 @@ public:
      */
     void    Change(SCENE_ID id);
 
-
-
     /*
      *  @brief      シーンをスタックする
      *

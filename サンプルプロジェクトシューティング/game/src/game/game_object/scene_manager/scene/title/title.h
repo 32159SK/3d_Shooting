@@ -76,12 +76,15 @@ private:
      *  @brief      操作時の文字の規定位置
      *  @param[in]  [0] = タイトルスプライト
      *  @param[in]  [1] = 「スタート」のボタン
+     *  @param[in]  [2] = 「キーマウ操作」のボタン
+     *  @param[in]  [3] = 「マウス操作」のボタン
      */
-    static const aqua::CVector2 m_basis_position[3];
+    static const        aqua::CVector2 m_basis_position[3];
 
-    aqua::CSprite       m_StartSprite;      // 選択肢スプライト
+    OPERATE_STYLE       m_OperateStyle;     // 操作スタイル
 
+    aqua::CSprite       m_StartSprite;      // スプライト
+    aqua::CSprite       m_ChoiceSprite[2];  // 選択肢スプライト
 
-
-    CSoundManager* m_SoundManager;
+    CSoundManager*      m_SoundManager;
 };

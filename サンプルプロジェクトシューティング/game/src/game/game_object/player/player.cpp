@@ -24,6 +24,10 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep
 	// ロックオンマーカークラスを生成しポインタを入れる
 	m_LockOnMarker = aqua::CreateGameObject<CLockOnMarker>(this);
 
+	// データプールクラスを一度呼び出し、タイトルで選択された操作方法を確認する
+	CDataRelay* data_pool = (CDataRelay*)aqua::FindGameObject("DataRelay");
+	m_OperateStyle = data_pool->GetOperateStyle();
+
 	// ライフ最大値を代入
 	m_MaxLife = m_max_life;
 	m_Life = m_MaxLife;
@@ -208,7 +212,15 @@ void CPlayer::Shot(void)
 
 	if (m_ShotCT.Finished())
 	{
-		if (aqua::mouse::Button(aqua::mouse::BUTTON_ID::LEFT) || m_OperateStyle == OPERATE_STYLE::MOUSE_ONRY)
+		// マウス操作でビームを撃つときに自動で撃たれ続けたら動けないのでビームを撃つときだけは自分のタイミングで撃てるようにする
+		if (m_OperateStyle == OPERATE_STYLE::MOUSE_ONRY &&
+			m_ShotBullet == BULLET_TYPE::BEAM && aqua::mouse::Trigger(aqua::mouse::BUTTON_ID::MIDDLE))
+		{
+			// 自機の正面から球を撃つ
+			m_BulletManager->Create(m_Position + front * 10.0f, front * 10.5f, m_UnitType, m_ShotBullet, this);
+			m_ShotCT.Reset();
+		}
+		else if (aqua::mouse::Button(aqua::mouse::BUTTON_ID::LEFT) || m_OperateStyle == OPERATE_STYLE::MOUSE_ONRY && m_ShotBullet!=BULLET_TYPE::BEAM)
 		{
 			// 自機の正面から球を撃つ
 			m_BulletManager->Create(m_Position + front * 10.0f, front * 10.5f, m_UnitType, m_ShotBullet, this);
@@ -239,8 +251,8 @@ void CPlayer::Move(void)
 	// 操作スタイルによって処理を分ける
 	switch (m_OperateStyle)
 	{
-	case CPlayer::COMPOUND: CompoundOperation();break;
-	case CPlayer::MOUSE_ONRY:MouseOparation();	break;
+	case OPERATE_STYLE::COMPOUND:	CompoundOperation();break;
+	case OPERATE_STYLE::MOUSE_ONRY:	MouseOparation();	break;
 	}
 	// ロックオン
 	LockOn();
@@ -311,7 +323,7 @@ void CPlayer::MouseOparation(void)
 
 void CPlayer::MouseTrack(void)
 {
-	// マウス座標を2点取り、3次元のベクトルクラスで変数に入れる
+	// マウス座標を手前と奥で2点取り、3次元のベクトルクラスで変数に入れる
 	aqua::CVector3 mpos_A = aqua::CVector3((float)aqua::mouse::GetCursorPos().x
 		, (float)aqua::mouse::GetCursorPos().y, 0.0f) ;
 	aqua::CVector3 mpos_B = aqua::CVector3((float)aqua::mouse::GetCursorPos().x

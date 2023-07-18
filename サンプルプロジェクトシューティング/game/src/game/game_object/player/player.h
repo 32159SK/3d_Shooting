@@ -9,6 +9,7 @@
  */
 #pragma once
 #include "aqua.h"
+#include "play_style.h"
 #include "../unit/unit.h"
 
 class CEnemyManager;
@@ -109,16 +110,6 @@ private:
      *  @brief      ロックオン
      */
     void            LockOn(void);
-
-    /*
-     *  @brief      操作スタイル
-     */
-    enum OPERATE_STYLE
-    {
-        COMPOUND,   // キーマウ複合操作
-        MOUSE_ONRY  // マウスのみ
-    };
-
 
     static const float m_change_shotCT;  // 弾種切り替え間隔
 

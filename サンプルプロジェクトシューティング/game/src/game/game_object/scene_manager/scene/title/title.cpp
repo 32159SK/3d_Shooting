@@ -17,12 +17,15 @@ const aqua::CVector2 CTitleScene::m_frame_thick = { 12.0f, 9.0f };   // 枠の太さ
 
     /*
      *  @brief      操作時の文字の規定位置
-     *
      *  @param[in]  [0] = タイトルスプライト
      *  @param[in]  [1] = 「スタート」のボタン
+     *  @param[in]  [2] = 「キーマウ操作」のボタン
+     *  @param[in]  [3] = 「マウス操作」のボタン
      */
 const aqua::CVector2 CTitleScene::m_basis_position[] = {
     { aqua::CVector2(260.0f  , 480.0f) },  // 「スタート」のボタン
+    { aqua::CVector2(320.0f  , 520.0f) },  // 「キーマウ操作」のボタン
+    { aqua::CVector2(640.0f  , 520.0f) }   // 「マウス操作」のボタン
 };
 
 /*
@@ -31,6 +34,7 @@ const aqua::CVector2 CTitleScene::m_basis_position[] = {
 CTitleScene::
 CTitleScene(aqua::IGameObject* parent)
     : IScene(parent, "TitleScene")
+    , m_OperateStyle(OPERATE_STYLE::COMPOUND)
 {
 }
 
@@ -53,7 +57,6 @@ Initialize(void)
     m_StartSprite.Create("data\\texture\\ui\\menu\\start.png");
     m_StartSprite.scale = aqua::CVector2(2.0f, 2.0f);
     m_StartSprite.position = m_basis_position[0];
-
 }
 
 /*
@@ -103,7 +106,18 @@ Finalize(void)
  */
 void CTitleScene::Operation(void)
 {
+
+    // 二択なのでややこしい書き方はするだけ無駄と判断
+    if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::RIGHT))
+        m_OperateStyle = OPERATE_STYLE::MOUSE_ONRY;     // 操作方法をマウスのみに
+    else if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::LEFT))
+        m_OperateStyle = OPERATE_STYLE::COMPOUND;       // 操作方法をキーマウに
+
     // Zキー  ( 決定 )
     if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::Z))
+    {
+        CDataRelay* data_relay = (CDataRelay*)aqua::FindGameObject("DataRelay");
+        data_relay->SetOPerateStyle(m_OperateStyle);
         Change(SCENE_ID::GAMEMAIN);
+    }
 }

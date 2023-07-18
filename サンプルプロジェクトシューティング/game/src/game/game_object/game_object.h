@@ -5,6 +5,7 @@
 #include"floor/floor.h"
 #include"stage_manager/stage_manager.h"
 #include"player/player.h"
+#include"data_relay/data_relay.h"
 #include"enemy_manager/enemy_manager.h"
 #include"enemy_manager/enemy/enemy.h"
 #include"ui_component/rader/rader.h"

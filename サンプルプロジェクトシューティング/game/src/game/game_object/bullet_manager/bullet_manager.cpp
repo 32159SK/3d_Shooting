@@ -79,7 +79,7 @@ void CBulletManager::EnemyReset(void)
 {
 	if (m_EnemyList.empty())
 		return;
-
+	m_ChildObjectList.clear();
 	m_EnemyList.clear();
 }
 

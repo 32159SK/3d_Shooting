@@ -1,5 +1,5 @@
+#include "../../../data_relay/data_relay.h"
 #include "result.h"
-#include "../game_main/game_main.h"
 
 /*
  *  @file       result_scene.cpp
@@ -10,6 +10,7 @@
  *
  *  Copyright (c) 2013-2021, Kazuya Maruyama. All rights reserved.
  */
+
 
 const std::string CResultScene::m_file_path[] =
 {
@@ -25,14 +26,11 @@ CResultScene::CResultScene(aqua::IGameObject* parent)
 
 void CResultScene::Initialize(void)
 {
-    CGameMain* game_main = (CGameMain*)aqua::FindGameObject("GameMainScene");
-    bool game_clear = false;
-
-    if (game_main)
-        game_clear = game_main->GetGameClear();
+    CDataRelay* data_relay = (CDataRelay*)aqua::FindGameObject("DataRelay");
+    bool clear = data_relay->GetClearFlag();
 
     // boolはintで真1偽0に変換できるのでgame_clearを要素番号として活用
-    std::string path = m_file_path[0] + m_file_path[(int)game_clear + 1];
+    std::string path = m_file_path[0] + m_file_path[(int)clear + 1];
 
     // 背景スプライトの生成
     m_BackgroundSprite.Create(path + "_background.png");
@@ -42,10 +40,6 @@ void CResultScene::Initialize(void)
     m_BackgroundSprite.position = aqua::CVector2::ZERO;
     m_ResultSprite[0].position = aqua::CVector2((aqua::GetWindowWidth() - m_ResultSprite[0].GetTextureWidth()) / 2.0f, 200.0f);
     m_ResultSprite[1].position = aqua::CVector2((aqua::GetWindowWidth() - m_ResultSprite[1].GetTextureWidth()) / 2.0f, 600.0f);
-
-
-    
-
 }
 
 void CResultScene::Update(void)

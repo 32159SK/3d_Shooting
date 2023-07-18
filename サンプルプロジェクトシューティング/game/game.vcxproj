@@ -107,6 +107,7 @@
     <ClCompile Include="src\game\game_object\bullet_manager\bullet\penetrate_bullet\penetrate_bullet.cpp" />
     <ClCompile Include="src\game\game_object\bullet_manager\bullet\reflection_bullet\reflection_bullet.cpp" />
     <ClCompile Include="src\game\game_object\bullet_manager\bullet_manager.cpp" />
+    <ClCompile Include="src\game\game_object\data_relay\data_relay.cpp" />
     <ClCompile Include="src\game\game_object\effect_manager\effect\effect.cpp" />
     <ClCompile Include="src\game\game_object\effect_manager\effect\normal_effect\normal_effect.cpp" />
     <ClCompile Include="src\game\game_object\effect_manager\effect_manager.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="src\game\game_object\bullet_manager\bullet\penetrate_bullet\penetrate_bullet.h" />
     <ClInclude Include="src\game\game_object\bullet_manager\bullet\reflection_bullet\reflection_bullet.h" />
     <ClInclude Include="src\game\game_object\bullet_manager\bullet_manager.h" />
+    <ClInclude Include="src\game\game_object\data_relay\data_relay.h" />
     <ClInclude Include="src\game\game_object\effect_manager\effect\effect.h" />
     <ClInclude Include="src\game\game_object\effect_manager\effect\effect_id.h" />
     <ClInclude Include="src\game\game_object\effect_manager\effect\normal_effect\normal_effect.h" />
@@ -161,6 +163,7 @@
     <ClInclude Include="src\game\game_object\floor\floor.h" />
     <ClInclude Include="src\game\game_object\game_object.h" />
     <ClInclude Include="src\game\game_object\player\player.h" />
+    <ClInclude Include="src\game\game_object\player\play_style.h" />
     <ClInclude Include="src\game\game_object\scene_manager\scene\game_main\game_main.h" />
     <ClInclude Include="src\game\game_object\scene_manager\scene\result\result.h" />
     <ClInclude Include="src\game\game_object\scene_manager\scene\scene.h" />

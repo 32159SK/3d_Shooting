@@ -136,11 +136,9 @@ GamePlay(void)
 
 void CGameMain::GameFinish(void)
 {
-    if (m_GameClear)
-        // ƒV[ƒ“‚ðØ‚è‘Ö‚¦‚é
-        Push(SCENE_ID::RESULT);
-    else
-        Change(SCENE_ID::RESULT);
+    CDataRelay* data_relay = (CDataRelay*)aqua::FindGameObject("DataRelay");
+    data_relay->SetClear(m_GameClear);
+    Change(SCENE_ID::RESULT);
 }
 
 void CGameMain::WhiteOut(void)

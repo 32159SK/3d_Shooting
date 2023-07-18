@@ -212,19 +212,27 @@ void CPlayer::Shot(void)
 
 	if (m_ShotCT.Finished())
 	{
-		// マウス操作でビームを撃つときに自動で撃たれ続けたら動けないのでビームを撃つときだけは自分のタイミングで撃てるようにする
-		if (m_OperateStyle == OPERATE_STYLE::MOUSE_ONRY &&
-			m_ShotBullet == BULLET_TYPE::BEAM && aqua::mouse::Trigger(aqua::mouse::BUTTON_ID::MIDDLE))
+		switch (m_OperateStyle)
 		{
-			// 自機の正面から球を撃つ
-			m_BulletManager->Create(m_Position + front * 10.0f, front * 10.5f, m_UnitType, m_ShotBullet, this);
-			m_ShotCT.Reset();
-		}
-		else if (aqua::mouse::Button(aqua::mouse::BUTTON_ID::LEFT) || m_OperateStyle == OPERATE_STYLE::MOUSE_ONRY && m_ShotBullet!=BULLET_TYPE::BEAM)
-		{
-			// 自機の正面から球を撃つ
-			m_BulletManager->Create(m_Position + front * 10.0f, front * 10.5f, m_UnitType, m_ShotBullet, this);
-			m_ShotCT.Reset();
+		case COMPOUND:
+			if (aqua::mouse::Button(aqua::mouse::BUTTON_ID::LEFT))
+			{
+				// 自機の正面から弾を撃つ
+				m_BulletManager->Create(m_Position + front * 10.0f, front * 10.5f, m_UnitType, m_ShotBullet, this);
+				m_ShotCT.Reset();
+			}
+			break;
+		case MOUSE_ONRY: // 弾の種類がビームでなければ自動で、ビームならマウス中央ボタンで発射
+			if (m_ShotBullet != BULLET_TYPE::BEAM
+				||(m_ShotBullet == BULLET_TYPE::BEAM && aqua::mouse::Trigger(aqua::mouse::BUTTON_ID::MIDDLE)))
+			{
+				// 自機の正面から球を撃つ
+				m_BulletManager->Create(m_Position + front * 10.0f, front * 10.5f, m_UnitType, m_ShotBullet, this);
+				m_ShotCT.Reset();
+			}
+			break;
+		default:
+			break;
 		}
 	}
 }

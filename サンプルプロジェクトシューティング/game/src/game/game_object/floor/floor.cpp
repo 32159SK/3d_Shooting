@@ -16,11 +16,6 @@ void CFloor::Initialize(void)
 
 }
 
-void CFloor::Update(void)
-{
-
-}
-
 void CFloor::Draw(void)
 {
 	m_Floor.Draw();

@@ -46,11 +46,6 @@ public:
     void        Initialize(void) override;
 
     /*!
-     *  @brief      XV
-     */
-    void        Update(void) override;
-
-    /*!
      *  @brief      •`‰æ
      */
     void        Draw(void) override;

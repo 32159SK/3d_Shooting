@@ -18,7 +18,7 @@ void
 CEnemy::
 Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m,CBulletManager* bm)
 {
-	IUnit::Initialize(pop_pos, enemy_info.width, enemy_info.height, enemy_info.depth, enemy_info.color,st_m, bm);
+	IUnit::Initialize(pop_pos, enemy_info.width, enemy_info.height, enemy_info.depth,st_m, bm);
 	m_MaxLife = enemy_info.life;
 	m_Life = m_MaxLife;
 	m_UnitType = UNIT_TYPE::ENEMY;

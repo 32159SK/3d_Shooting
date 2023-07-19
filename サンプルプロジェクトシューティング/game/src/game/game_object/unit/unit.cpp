@@ -22,17 +22,17 @@ IUnit(aqua::IGameObject* parent, const std::string& object_name)
 {
 }
 
-void IUnit::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m , CBulletManager* bm)
+void IUnit::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, CStageManager* st_m , CBulletManager* bm)
 {
 	// 各種基礎情報の設定
 	m_Position = pop_pos;
 	m_Width = wid;
 	m_Height = hei;
 	m_Depth = dep;
-	m_Color = color;
 	m_BulletManager = bm;
 	m_StageManager = st_m;
 	m_DeadFlag = false;
+	m_Color = aqua::CColor::BLACK;
 	m_Cube.Setup(m_Position, m_Width, m_Height, m_Depth, m_Color);
 	aqua::CreateGameObject<CLifeBar>(this);
 	// エフェクト管理クラスを探査してポインタを受け取る

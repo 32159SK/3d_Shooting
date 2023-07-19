@@ -34,7 +34,7 @@ public:
     /*
      *  @brief      ‰Šú‰»
      */
-    virtual void    Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m, CBulletManager* bm);
+    virtual void    Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, CStageManager* st_m, CBulletManager* bm);
 
     /*
      *  @brief      •`‰æ

@@ -4,13 +4,18 @@
 const float CPlayer::m_change_shotCT = 0.5f;
 const float CPlayer::m_ago_pos_time = 0.2f;
 const float CPlayer::m_lock_range = 200.0f;
+const float CPlayer::m_width = 10.0f;
+const float CPlayer::m_height = 10.0f;
+const float CPlayer::m_depth = 10.0f;
+const float CPlayer::m_invincible_time = 2.0f;
+const float CPlayer::m_font_size = 30.0f;
 const int   CPlayer::m_max_life = 20;
 
 CPlayer::CPlayer(aqua::IGameObject* parent)
 	: IUnit(parent,"Player")
 	, m_Invincible(false)
 	, m_AgoPosition(aqua::CVector3::ZERO)
-	, m_ClickPosition(aqua::CVector3::ZERO)
+	, m_MousePosition(aqua::CVector3::ZERO)
 	, m_OperateStyle(OPERATE_STYLE::MOUSE_ONRY)
 	, m_Floor(nullptr)
 	, m_EnemyManager(nullptr)
@@ -19,7 +24,7 @@ CPlayer::CPlayer(aqua::IGameObject* parent)
 {
 }
 
-void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m, CBulletManager* bm)
+void CPlayer::Initialize(aqua::CVector3 pop_pos, CStageManager* st_m, CBulletManager* bm)
 {
 	// ロックオンマーカークラスを生成しポインタを入れる
 	m_LockOnMarker = aqua::CreateGameObject<CLockOnMarker>(this);
@@ -33,7 +38,7 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep
 	m_Life = m_MaxLife;
 
 	// 基本的なユニットの初期化を基底クラスの初期化を呼び出して行う
-	IUnit::Initialize(pop_pos, wid, hei, dep, color, st_m, bm);
+	IUnit::Initialize(pop_pos, m_width, m_height, m_depth,st_m, bm);
 	
 
 	m_UnitType = UNIT_TYPE::PLAYER;
@@ -42,10 +47,10 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep
 	m_Speed = 1.0f;
 
 	// 無敵時間の設定
-	m_InvincibleTimer.Setup(2.0f);
+	m_InvincibleTimer.Setup(m_invincible_time);
 
 	// 現在の弾種の仮表示
-	m_DrawBT.Create(30.0f);
+	m_DrawBT.Create(m_font_size);
 	m_DrawBT.position = aqua::CVector2(aqua::GetWindowWidth() / 2.0f, 0.0f);
 
 	// 切り替えタイマーのセットアップ
@@ -70,7 +75,7 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep
 
 	// 操作スタイルがマウスの時最初から勝手に動くのを防ぐ
 	if (m_OperateStyle == MOUSE_ONRY)
-		m_ClickPosition = m_Position;
+		m_MousePosition = m_Position;
 }
 
 void CPlayer::Update(void)
@@ -303,7 +308,7 @@ void CPlayer::MouseOparation(void)
 	const float to_delta = 60.0f * aqua::GetDeltaTime();
 
 	// プレイヤーと自身の距離
-	aqua::CVector3 v = m_ClickPosition - m_Position;
+	aqua::CVector3 v = m_MousePosition - m_Position;
 	v.y = 0.0f;
 
 	// 二次元の向きを外積から取る
@@ -337,7 +342,7 @@ void CPlayer::MouseTrack(void)
 	aqua::CVector3 mpos_B = aqua::CVector3((float)aqua::mouse::GetCursorPos().x
 		, (float)aqua::mouse::GetCursorPos().y, 1.0f) ;
 
-	// スクリーン座標をワールド座標に変換する夢のような関数
+	// スクリーン座標をワールド座標に変換する関数を使い、2点を変換
 	mpos_A = ConvScreenPosToWorldPos(mpos_A);
 	mpos_B = ConvScreenPosToWorldPos(mpos_B);
 
@@ -362,10 +367,10 @@ void CPlayer::MouseTrack(void)
 	if (m_OperateStyle != OPERATE_STYLE::MOUSE_ONRY)
 		return;
 
-	// クリックした際、レイキャスト座標と自身の座標が壁を隔ててない場合その座標をクリックされた座標に代入する
+	// レイキャスト座標と自身の座標が壁を隔ててない場合その座標を代入する
 	if (!m_StageManager->StageObjectCollision(m_Position, raycast))
-		m_ClickPosition = raycast;
-	m_ClickPosition.y = 0.0f;
+		m_MousePosition = raycast;
+	m_MousePosition.y = 0.0f;
 }
 
 void CPlayer::LockOn(void)

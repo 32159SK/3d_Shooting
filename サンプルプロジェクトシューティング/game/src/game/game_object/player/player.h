@@ -35,7 +35,7 @@ public:
     /*
      *  @brief      初期化
      */
-    void            Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, aqua::CColor color, CStageManager* st_m,CBulletManager* bm)override;
+    void            Initialize(aqua::CVector3 pop_pos, CStageManager* st_m, CBulletManager* bm);
 
     /*
      *  @brief      更新
@@ -117,13 +117,23 @@ private:
     
     static const float m_lock_range;    // ロックオン範囲
 
+    static const float m_width;         // 幅定数
+
+    static const float m_height;        // 高さ定数
+
+    static const float m_depth;         // 奥行定数
+
+    static const float m_invincible_time;// 無敵時間
+
+    static const float m_font_size;     // フォントサイズ
+
     static const int   m_max_life;      // ライフの最大値
 
     bool            m_Invincible;       // 無敵
 
     aqua::CVector3  m_AgoPosition;      // 追尾座標
 
-    aqua::CVector3  m_ClickPosition;    // クリックされた座標
+    aqua::CVector3  m_MousePosition;    // クリックされた座標
 
     aqua::CModel    m_Model;            // 自機のモデル
 

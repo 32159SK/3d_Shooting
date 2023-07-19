@@ -36,7 +36,6 @@ struct ENEMY_INFO
     float depth = 5.0f;
     float speed = 1.0f;
     float shot_ct = 1.5f;
-    aqua::CColor color = aqua::CColor::BLACK;
 };
 
 

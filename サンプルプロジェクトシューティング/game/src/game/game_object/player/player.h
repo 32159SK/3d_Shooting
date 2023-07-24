@@ -47,6 +47,9 @@ public:
      */
     void            Draw(void) override;
 
+    /*
+     *  @brief      ‰ğ•ú
+     */
     void            Finalize(void)override;
 
     /*
@@ -113,8 +116,10 @@ private:
 
     static const float m_change_shotCT;  // ’eíØ‚è‘Ö‚¦ŠÔŠu
 
-    static const float m_ago_pos_time;  // À•W‚ğæ‚éŠÔŠu
+    static const float m_shot_ct;       // ËŒ‚ŠÔŠu
     
+    static const float m_ago_pos_time;  // À•W‚ğæ‚éŠÔŠu
+
     static const float m_lock_range;    // ƒƒbƒNƒIƒ“”ÍˆÍ
 
     static const float m_width;         // •’è”

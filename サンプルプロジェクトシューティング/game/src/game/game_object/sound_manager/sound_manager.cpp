@@ -16,7 +16,9 @@ const std::string CSoundManager::m_sound_file_names[] =
 {
     // ( b_ ) BGM
       "data\\sound\\b_title.mp3"     // タイトルBGM
-    , "data\\sound\\b_gamemain.mp3"   // アクションBGM
+    , "data\\sound\\b_game_main.mp3"   // ゲームメインBGM
+    , "data\\sound\\b_game_clear.mp3"
+    , "data\\sound\\b_game_over.mp3"
     // ( s_ ) SE
     , "data\\sound\\s_select.mp3"     // 選択音
     , "data\\sound\\s_shot.mp3"

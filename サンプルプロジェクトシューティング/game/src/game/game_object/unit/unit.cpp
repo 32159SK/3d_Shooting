@@ -19,6 +19,10 @@ IUnit(aqua::IGameObject* parent, const std::string& object_name)
 	, m_Rotate(0.0f)
 	, m_Position(aqua::CVector3::ZERO)
 	, m_Velocity(aqua::CVector3::ZERO)
+	, m_EffectManager(nullptr)
+	, m_SoundManager(nullptr)
+	, m_BulletManager(nullptr)
+	, m_StageManager(nullptr)
 {
 }
 
@@ -37,6 +41,7 @@ void IUnit::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, 
 	aqua::CreateGameObject<CLifeBar>(this);
 	// エフェクト管理クラスを探査してポインタを受け取る
 	m_EffectManager = (CEffectManager*)aqua::FindGameObject("EffectManager");
+	m_SoundManager = (CSoundManager*)aqua::FindGameObject("SoundManager");
 	// ビームによるダメージの間隔用タイマーのセットアップ
 	m_BeamInterval.Setup(m_beam_damage_interval);
 
@@ -106,6 +111,9 @@ void IUnit::Damage(int damage)
 {
 	// ライフをダメージ数値分減算
 	m_Life -= damage;
+
+	// ダメージSE
+	m_SoundManager->Play(SOUND_ID::s_DAMAGE);
 
 	// ライフが0以下になったら死亡処理を行う
 	if (m_Life <= 0)

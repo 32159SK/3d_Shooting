@@ -94,7 +94,6 @@ public:
 
 protected:
 
-
     int                     m_Damage;       // ダメージ量
 
     float                   m_Rotate;       //! 水平回転角度

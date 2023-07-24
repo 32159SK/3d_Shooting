@@ -43,7 +43,7 @@ void CBulletManager::Create(aqua::CVector3 shot_pos, aqua::CVector3 shot_front, 
 	{
 		// êVÇµÇ≠ê∂ê¨Ç∑ÇÈíeÇÃóeäÌ
 		CBeam* beam = aqua::CreateGameObject<CBeam>(this);
-		beam->Initialize(m_BulletInfo[(int)bullet_type], unit_type, shot_pos, shot_front, user, m_EffectManager);
+		beam->Initialize(m_BulletInfo[(int)bullet_type], unit_type, shot_pos, shot_front, user, m_SoundManager, m_EffectManager);
 		return;
 	}
 

@@ -138,8 +138,7 @@ void CEnemyManager::EnemyDataLoad(void)
 				std::stof(csv.GetString(i, 2)),	// height
 				std::stof(csv.GetString(i, 3)),	// depth
 				std::stof(csv.GetString(i, 4)),	// speed
-				std::stof(csv.GetString(i, 5)),	// shot_ct
-				aqua::CColor::BLACK
+				std::stof(csv.GetString(i, 5))	// shot_ct
 		};
 		m_EnemyInfo.push_back(info);
 	}

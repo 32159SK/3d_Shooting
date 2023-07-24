@@ -35,9 +35,10 @@ public:
      *  @param[in]  pop_pos          発射座標
      *  @param[in]  dir              向き
      *  @param[in]  user             使用者
-     *  @param[in]  em               エフェクト管理クラスのポインタ(撃つ度探査させたら重くなる)
+     *  @param[in]  sm               サウンド管理クラスのポインタ(撃つ度探査させたら重くなる)
+     *  @param[in]  em               エフェクト管理クラスのポインタ(↑同様撃つ度探査させたら重くなる)
      */
-    void            Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 pop_pos, aqua::CVector3 dir, IUnit* user, CEffectManager* em);
+    void            Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 pop_pos, aqua::CVector3 dir, IUnit* user,CSoundManager* sm, CEffectManager* em);
 
     /*
      *  @brief      描画
@@ -132,6 +133,8 @@ private:
     aqua::CTimer            m_Timer;        // タイマー
     
     aqua::CEffect3D*        m_Effect;       // エフェクトのポインタ容器
+
+    CSoundManager*          m_SoundManager; // サウンド管理クラス
 
     CEffectManager*         m_EffectManager;// エフェクト管理クラスのポインタ容器
 

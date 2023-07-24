@@ -22,7 +22,7 @@ CBeam::CBeam(aqua::IGameObject* parent)
 {
 }
 
-void CBeam::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 pop_pos, aqua::CVector3 dir, IUnit* user, CEffectManager* em)
+void CBeam::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 pop_pos, aqua::CVector3 dir, IUnit* user, CSoundManager* sm, CEffectManager* em)
 {
 	// 引数からビームの発射点や向き、使用者を設定
 	m_StartPos = pop_pos;
@@ -31,6 +31,7 @@ void CBeam::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 
 	m_Attri = attri;
 	m_Dir = dir;
 	m_User = user;
+	m_SoundManager = sm;
 	m_EffectManager = em;
 
 	// 向きを正規化
@@ -64,6 +65,9 @@ void CBeam::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 
 	m_PredictionLine.Setup(m_StartPos, m_EndPos, aqua::CColor::RED);
 	// ビーム使用中は動けないよう使用者の行動可能フラグを偽にする
 	m_User->SetMoveFlag(false);
+
+	// チャージ音のSEを再生開始
+	m_SoundManager->Play(SOUND_ID::s_CHARGE);
 }
 
 void CBeam::Draw(void)
@@ -98,6 +102,12 @@ void CBeam::Charge(void)
 
 void CBeam::Firing(void)
 {
+	// 発射関数内でダメージフラグが偽なのは最初のみなのでこのタイミングでSEを切り替える
+	if (!m_DamageFlag)
+	{
+		m_SoundManager->Stop(SOUND_ID::s_CHARGE);
+		m_SoundManager->Play(SOUND_ID::s_BEAM);
+	}
 	// ダメージ判定を有効にする
 	m_DamageFlag = true;
 	// 予測線の可視化をやめる
@@ -110,9 +120,18 @@ void CBeam::Firing(void)
 
 void CBeam::Destroy(void)
 {
+	// SEが再生中なら止める
+	if (m_SoundManager->IsPlaying(SOUND_ID::s_CHARGE))
+		m_SoundManager->Stop(SOUND_ID::s_CHARGE);
+	else if (m_SoundManager->IsPlaying(SOUND_ID::s_BEAM))
+		m_SoundManager->Stop(SOUND_ID::s_BEAM);
+
 	// ダメージ判定を無効
 	m_DamageFlag = false;
+
+	// エフェクトの描画を無効
 	m_Effect->visible = false;
+
 	// 使用者が死んでいないなら使用者を再度行動可能にする
 	if (!m_User->GetDead())
 		m_User->SetMoveFlag(true);

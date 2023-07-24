@@ -40,7 +40,7 @@ Create(EFFECT_ID id, const aqua::CVector3& position, float rotate, float scale)
     // エフェクト再生クラスを生成し、引数から受け取った情報をもとにそれに合わせたエフェクトを再生
     IEffect* effect = nullptr;
     effect = aqua::CreateGameObject<CNormalEffect>(this);
-    effect->Initialize(position, m_effect_file_names[(int)id], "",rotate,scale);
+    effect->Initialize(position, m_effect_file_names[(int)id], rotate,scale);
 }
 
 aqua::CEffect3D* CEffectManager::CreateGetEffect(EFFECT_ID id, const aqua::CVector3& position, float rotate, float scale)
@@ -48,7 +48,7 @@ aqua::CEffect3D* CEffectManager::CreateGetEffect(EFFECT_ID id, const aqua::CVect
     // エフェクト再生クラスを生成
     CNormalEffect* effect = nullptr;
     effect = aqua::CreateGameObject<CNormalEffect>(this);
-    effect->Initialize(position, m_effect_file_names[(int)id], "", rotate, scale);
+    effect->Initialize(position, m_effect_file_names[(int)id], rotate, scale);
     // 生成したクラスで再生中のエフェクトのポインタ渡す
     return effect->GetEffect();
 }

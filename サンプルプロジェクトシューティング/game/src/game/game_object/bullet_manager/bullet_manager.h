@@ -98,9 +98,10 @@ private:
 
     static const std::string m_bullet_info_path;
 
-    CPlayer*                m_Player;           // プレイヤークラスのポインタ
-    CStageManager*          m_StageManager;     // ステージ管理クラスのポインタ
+    CPlayer*                m_Player;           // プレイヤークラス
+    CStageManager*          m_StageManager;     // ステージ管理クラス
     CEffectManager*         m_EffectManager;    // エフェクト管理クラス
-    std::vector<BULLET_INFO> m_BulletInfo;      // 
-    std::vector<CEnemy*>    m_EnemyList;        // 
+    CSoundManager*          m_SoundManager;     // サウンド管理クラス
+    std::vector<BULLET_INFO> m_BulletInfo;      // 弾情報のリスト
+    std::vector<CEnemy*>    m_EnemyList;        // 現在生存している敵のリスト
 };

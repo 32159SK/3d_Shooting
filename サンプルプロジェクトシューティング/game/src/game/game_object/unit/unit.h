@@ -153,6 +153,8 @@ protected:
 
     CEffectManager*      m_EffectManager;
 
+    CSoundManager*       m_SoundManager;
+
     CBulletManager*      m_BulletManager;
 
     CStageManager*       m_StageManager;

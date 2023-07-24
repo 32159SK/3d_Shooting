@@ -20,8 +20,9 @@ enum SOUND_ID
 {
     // (b_) BGM
     b_TITLE             // タイトルBGM
-    , b_GAMEMAIN        // ゲームメインBGM
-
+    , b_GAME_MAIN        // ゲームメインBGM
+    , b_GAME_CLEAR
+    , b_GAME_OVER
 
     // (s_) SE
     , s_SELECT          // 選択音
@@ -31,7 +32,6 @@ enum SOUND_ID
     , s_DAMAGE
     , s_DEAD
     , s_BOSS_DEAD
-    , s_TIME_STOP
     , MAX
 };
 

@@ -1,6 +1,7 @@
 #include "../game_object.h"
 #include "player.h"
 
+const float CPlayer::m_shot_ct = 0.5f;
 const float CPlayer::m_change_shotCT = 0.5f;
 const float CPlayer::m_ago_pos_time = 0.2f;
 const float CPlayer::m_lock_range = 200.0f;
@@ -55,7 +56,8 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, CStageManager* st_m, CBulletMan
 
 	// 切り替えタイマーのセットアップ
 	m_ChangeCT.Setup(m_change_shotCT);
-	m_ShotCT.Setup(0.5f);
+	// 射撃間隔タイマーのセットアップ
+	m_ShotCT.Setup(m_shot_ct);
 	
 	// 追尾座標間隔タイマーのセットアップ
 	m_AgoPosTimer.Setup(m_ago_pos_time);
@@ -191,15 +193,16 @@ void CPlayer::Shot(void)
 	// 弾の種類の切り替え
 	if (m_ChangeCT.Finished())
 	{
+		// ホイールの入力値を取得
 		float wheel_value = (float)aqua::mouse::GetWheel();
 
+		// マイナスであれば前の弾に変更(例REFLECT→NOMAL)
 		if (wheel_value > 0 && m_ShotBullet != BULLET_TYPE::NORMAL)
 		{
-			// -1の弾に変更(例FAST→NOMAL)
 			m_ShotBullet = (BULLET_TYPE)((int)m_ShotBullet - 1);
 			m_ChangeCT.Reset();
 		}
-		// ↓キー
+		// プラスであれば次の弾に変更(例NOMAL→REFLECT)
 		else if (wheel_value < 0 && (int)m_ShotBullet < (int)BULLET_TYPE::MAX - 1)
 		{
 			// +1の弾に変更(例NOMAL→FAST)
@@ -222,6 +225,9 @@ void CPlayer::Shot(void)
 		case COMPOUND:
 			if (aqua::mouse::Button(aqua::mouse::BUTTON_ID::LEFT))
 			{
+				// ビームでなければSEを再生(ビームはチャージ音等が特殊なのでビームクラス内で再生)
+				if (m_ShotBullet != BULLET_TYPE::BEAM)
+					m_SoundManager->Play(SOUND_ID::s_SHOT);
 				// 自機の正面から弾を撃つ
 				m_BulletManager->Create(m_Position + front * 10.0f, front * 10.5f, m_UnitType, m_ShotBullet, this);
 				m_ShotCT.Reset();
@@ -231,6 +237,8 @@ void CPlayer::Shot(void)
 			if (m_ShotBullet != BULLET_TYPE::BEAM
 				||(m_ShotBullet == BULLET_TYPE::BEAM && aqua::mouse::Trigger(aqua::mouse::BUTTON_ID::MIDDLE)))
 			{
+				// SEを再生
+				m_SoundManager->Play(SOUND_ID::s_SHOT);
 				// 自機の正面から球を撃つ
 				m_BulletManager->Create(m_Position + front * 10.0f, front * 10.5f, m_UnitType, m_ShotBullet, this);
 				m_ShotCT.Reset();

@@ -65,4 +65,6 @@ private:
 
     aqua::CSprite   m_BackgroundSprite;         // 背景スプライト
     aqua::CSprite   m_ResultSprite[2];          // 
+
+    CSoundManager*  m_SoundManager;             // サウンド管理クラス
 };

@@ -74,7 +74,6 @@ void CBossEnemy::Update(void)
 
 	Move();
 
-
 	Shot();
 
 	m_Cube.position = m_Position;
@@ -92,11 +91,6 @@ void CBossEnemy::Finalize(void)
 {
 	CEnemy::Finalize();
 	m_Model.Unload();
-}
-
-bool CBossEnemy::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, int damage)
-{
-	return CEnemy::CheckHitBullet(type, sphere, damage);
 }
 
 void CBossEnemy::SetCannonPosition(void)
@@ -164,11 +158,14 @@ void CBossEnemy::Damage(int damage)
 
 void CBossEnemy::Dead(void)
 {
+	// ‚±‚±‚ð’Ê‚é‚Ì‚ÍÅ‰‚Ì‚Ý
 	if (!m_DeadFlag)
 	{
 		m_DeadFlag = true;
 		// Ž€–S‰‰o
 		m_EffectManager->Create(EFFECT_ID::BOSS_DEAD, m_Position);
+		// SE‚ðÄ¶
+		m_SoundManager->Play(SOUND_ID::s_BOSS_DEAD);
 		m_GameMain->SetGameClear(true);
 	}
 	

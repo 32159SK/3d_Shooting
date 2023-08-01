@@ -68,10 +68,6 @@ private:
     aqua::CSprite       m_BackgroundSprite;     //! 背景用スプライト
     //aqua::CLabel        m_LicenseLabel;
 
-    static const float          m_un_operation_time;    // 操作不可能時間
-    static const float          m_dump_width;           // 画像の中で表示しない左からの横幅
-    static const aqua::CVector2 m_frame_thick;          // フレームの太さ
-
     /*
      *  @brief      操作時の文字の規定位置
      *  @param[in]  [0] = タイトルスプライト
@@ -83,7 +79,6 @@ private:
 
     OPERATE_STYLE       m_OperateStyle;     // 操作スタイル
 
-    aqua::CSprite       m_StartSprite;      // スプライト
     aqua::CSprite       m_ChoiceSprite[2];  // 選択肢スプライト
 
     CSoundManager*      m_SoundManager;

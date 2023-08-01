@@ -55,11 +55,6 @@ public:
     void    SetCannonPosition(void);
 
     /*
-     *  @brief      ”í’e”»’è
-     */
-    bool    CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, int damage)override;
-
-    /*
      *  @brief      –C‚ÌƒŠƒZƒbƒg
      */
     void    ResetCannon(int number) { m_Cannon[number] = nullptr; }

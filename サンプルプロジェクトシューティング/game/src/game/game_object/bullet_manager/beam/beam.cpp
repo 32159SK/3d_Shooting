@@ -66,6 +66,9 @@ void CBeam::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 
 	// ビーム使用中は動けないよう使用者の行動可能フラグを偽にする
 	m_User->SetMoveFlag(false);
 
+	// サウンド管理クラスを取得
+	m_SoundManager = (CSoundManager*)aqua::FindGameObject("SoundManager");
+
 	// チャージ音のSEを再生開始
 	m_SoundManager->Play(SOUND_ID::s_CHARGE);
 }

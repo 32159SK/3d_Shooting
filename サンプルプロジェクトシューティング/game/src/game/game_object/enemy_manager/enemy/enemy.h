@@ -38,22 +38,30 @@ public:
      *  @brief      更新
      */
     virtual void    Update(void)override;
+
     /*
-     *  @brief      更新
+     *  @brief      描画
      */
     virtual void    Draw(void)override;
+
     /*
-     *  @brief      更新
+     *  @brief      解放
      */
     virtual void    Finalize(void)override;
 
-
+    /*
+     *  @brief      プレイヤーのセッター
+     */
     void            SetPlayer(CPlayer* player) { m_Player = player; }
 
 protected:
-
+    /*
+     *  @brief      射撃
+     */
     virtual void    Shot(void)override;
-
+    /*
+     *  @brief      移動
+     */
     virtual void    Move(void)override;
 
 

@@ -113,7 +113,7 @@ void IUnit::Damage(int damage)
 	m_Life -= damage;
 
 	// ダメージSE
-	m_SoundManager->Play(SOUND_ID::s_DAMAGE);
+	//m_SoundManager->Play(SOUND_ID::s_DAMAGE);
 
 	// ライフが0以下になったら死亡処理を行う
 	if (m_Life <= 0)
@@ -126,5 +126,7 @@ void IUnit::Dead(void)
 	m_Cube.visible = false;
 	// 死亡エフェクトを再生
 	m_EffectManager->Create(EFFECT_ID::DEAD, m_Position);
+	// SEを再生
+	m_SoundManager->Play(SOUND_ID::s_DEAD);
 	DeleteObject();
 }

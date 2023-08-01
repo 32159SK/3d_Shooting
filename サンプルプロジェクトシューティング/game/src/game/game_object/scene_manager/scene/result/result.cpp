@@ -1,4 +1,4 @@
-#include "../../../data_relay/data_relay.h"
+#include "../../../game_object.h"
 #include "result.h"
 
 /*
@@ -26,6 +26,12 @@ CResultScene::CResultScene(aqua::IGameObject* parent)
 
 void CResultScene::Initialize(void)
 {
+    // サウンド管理クラスを取得
+    m_SoundManager = (CSoundManager*)aqua::FindGameObject("SoundManager");
+    // 再生中のBGMを止める
+    m_SoundManager->BGMStop();
+
+    // 中継クラスを取得
     CDataRelay* data_relay = (CDataRelay*)aqua::FindGameObject("DataRelay");
     bool clear = data_relay->GetClearFlag();
 
@@ -40,6 +46,12 @@ void CResultScene::Initialize(void)
     m_BackgroundSprite.position = aqua::CVector2::ZERO;
     m_ResultSprite[0].position = aqua::CVector2((aqua::GetWindowWidth() - m_ResultSprite[0].GetTextureWidth()) / 2.0f, 200.0f);
     m_ResultSprite[1].position = aqua::CVector2((aqua::GetWindowWidth() - m_ResultSprite[1].GetTextureWidth()) / 2.0f, 600.0f);
+
+    // クリアしているかしていないかでBGMを変える
+    if (clear)
+        m_SoundManager->Play(SOUND_ID::b_GAME_CLEAR);
+    else
+        m_SoundManager->Play(SOUND_ID::b_GAME_OVER);
 }
 
 void CResultScene::Update(void)

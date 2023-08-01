@@ -18,14 +18,16 @@ void
 CEnemy::
 Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m,CBulletManager* bm)
 {
+	// 基本的なユニットの初期化を基底クラスの初期化を呼び出して行う
 	IUnit::Initialize(pop_pos, enemy_info.width, enemy_info.height, enemy_info.depth,st_m, bm);
+	// 渡された情報でステータスを決める
 	m_MaxLife = enemy_info.life;
 	m_Life = m_MaxLife;
 	m_UnitType = UNIT_TYPE::ENEMY;
 	m_ShotCT.Setup(enemy_info.shot_ct);
 	m_Speed = enemy_info.speed;
 
-	// 発射のタイミングをずらすために乱数でばらつきを与える
+	// 発射のタイミングをずらすために乱数である程度のばらつきを与える
 	float shot_time_rand = (float)aqua::Rand((int)ceil(enemy_info.shot_ct));
 	m_ShotCT.SetTime(shot_time_rand);
 }
@@ -62,10 +64,14 @@ void CEnemy::Shot(void)
 {
 	aqua::CVector3 front;
 
+	// 回転角度から正面を求める
 	front.x = sin(aqua::DegToRad(m_Rotate));
 	front.z = cos(aqua::DegToRad(m_Rotate));
 
+	// 弾の生成
 	m_BulletManager->Create(m_Position, front, m_UnitType, m_ShotBullet, this);
+	// SEを再生
+	//m_SoundManager->Play(SOUND_ID::s_SHOT);
 }
 
 void CEnemy::Move(void)

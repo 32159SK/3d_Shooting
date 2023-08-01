@@ -21,10 +21,10 @@ const std::string CSoundManager::m_sound_file_names[] =
     , "data\\sound\\b_game_over.mp3"
     // ( s_ ) SE
     , "data\\sound\\s_select.mp3"     // ‘I‘ð‰¹
-    , "data\\sound\\s_shot.mp3"
+    //, "data\\sound\\s_shot.mp3"
     , "data\\sound\\s_charge.mp3"
     , "data\\sound\\s_beam.mp3"
-    , "data\\sound\\s_damage.mp3"
+    //, "data\\sound\\s_damage.mp3"
     , "data\\sound\\s_dead.mp3"
     , "data\\sound\\s_boss_dead.mp3"
     , "data\\sound\\s_time_stop.mp3"

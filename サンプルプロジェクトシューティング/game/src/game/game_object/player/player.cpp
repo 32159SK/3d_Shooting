@@ -201,6 +201,8 @@ void CPlayer::Shot(void)
 		{
 			m_ShotBullet = (BULLET_TYPE)((int)m_ShotBullet - 1);
 			m_ChangeCT.Reset();
+			// SEを再生
+			m_SoundManager->Play(SOUND_ID::s_SELECT);
 		}
 		// プラスであれば次の弾に変更(例NOMAL→REFLECT)
 		else if (wheel_value < 0 && (int)m_ShotBullet < (int)BULLET_TYPE::MAX - 1)
@@ -208,6 +210,8 @@ void CPlayer::Shot(void)
 			// +1の弾に変更(例NOMAL→FAST)
 			m_ShotBullet = (BULLET_TYPE)((int)m_ShotBullet + 1);
 			m_ChangeCT.Reset();
+			// SEを再生
+			m_SoundManager->Play(SOUND_ID::s_SELECT);
 		}
 
 	}
@@ -227,7 +231,7 @@ void CPlayer::Shot(void)
 			{
 				// ビームでなければSEを再生(ビームはチャージ音等が特殊なのでビームクラス内で再生)
 				if (m_ShotBullet != BULLET_TYPE::BEAM)
-					m_SoundManager->Play(SOUND_ID::s_SHOT);
+					//m_SoundManager->Play(SOUND_ID::s_SHOT);
 				// 自機の正面から弾を撃つ
 				m_BulletManager->Create(m_Position + front * 10.0f, front * 10.5f, m_UnitType, m_ShotBullet, this);
 				m_ShotCT.Reset();
@@ -238,7 +242,7 @@ void CPlayer::Shot(void)
 				||(m_ShotBullet == BULLET_TYPE::BEAM && aqua::mouse::Trigger(aqua::mouse::BUTTON_ID::MIDDLE)))
 			{
 				// SEを再生
-				m_SoundManager->Play(SOUND_ID::s_SHOT);
+				//m_SoundManager->Play(SOUND_ID::s_SHOT);
 				// 自機の正面から球を撃つ
 				m_BulletManager->Create(m_Position + front * 10.0f, front * 10.5f, m_UnitType, m_ShotBullet, this);
 				m_ShotCT.Reset();

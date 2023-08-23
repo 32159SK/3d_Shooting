@@ -16,8 +16,6 @@ CPlayer::CPlayer(aqua::IGameObject* parent)
 	: IUnit(parent,"Player")
 	, m_Invincible(false)
 	, m_AgoPosition(aqua::CVector3::ZERO)
-	, m_MousePosition(aqua::CVector3::ZERO)
-	, m_OperateStyle(OPERATE_STYLE::MOUSE_ONRY)
 	, m_Floor(nullptr)
 	, m_EnemyManager(nullptr)
 	, m_LockOnEnemy(nullptr)
@@ -30,9 +28,6 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, CStageManager* st_m, CBulletMan
 	// ロックオンマーカークラスを生成しポインタを入れる
 	m_LockOnMarker = aqua::CreateGameObject<CLockOnMarker>(this);
 
-	// データプールクラスを一度呼び出し、タイトルで選択された操作方法を確認する
-	CDataRelay* data_pool = (CDataRelay*)aqua::FindGameObject("DataRelay");
-	m_OperateStyle = data_pool->GetOperateStyle();
 
 	// ライフ最大値を代入
 	m_MaxLife = m_max_life;
@@ -65,9 +60,6 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, CStageManager* st_m, CBulletMan
 	// ロックオンタイマーのセットアップ
 	m_LockonTimer.Setup(0.1f);
 
-	// 操作タイマーのセットアップ
-	m_OperateTimer.Setup(0.1f);
-
 	m_Cube.visible = false;
 	// モデルのロード
 	m_Model.Load("data\\model\\player.mv1");
@@ -75,9 +67,15 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, CStageManager* st_m, CBulletMan
 	// 床のポインタを取る
 	m_Floor = (CFloor*)aqua::FindGameObject("Floor");
 
-	// 操作スタイルがマウスの時最初から勝手に動くのを防ぐ
-	if (m_OperateStyle == MOUSE_ONRY)
-		m_MousePosition = m_Position;
+	// 弾のアイコンの生成
+	for (int i = 0; i < (int)BULLET_TYPE::MAX; ++i)
+	{
+		// 弾種名を管理クラスから受け取り、それを用いてファイルパスにする
+		m_BulletIcon[i].Create("data\\texture\\ui\\icon\\" + m_BulletManager->GetBulletName((BULLET_TYPE)i) + ".png");
+		// 仮の座標
+		m_BulletIcon[i].position = aqua::CVector2(aqua::GetWindowWidth() / 2.0f, 0.0f);
+	}
+
 }
 
 void CPlayer::Update(void)
@@ -125,7 +123,7 @@ void CPlayer::Draw(void)
 	case BULLET_TYPE::REFLECT:	m_DrawBT.text = "BULLET:REFLECT"; break;
 	case BULLET_TYPE::PENETRATE:m_DrawBT.text = "BULLET:PENETRATE"; break;
 	case BULLET_TYPE::BEAM:		m_DrawBT.text = "BULLET:BEAM"; break;
-	
+
 	default:
 		break;
 	}
@@ -133,6 +131,10 @@ void CPlayer::Draw(void)
 	m_DrawBT.Draw();
 	m_Model.Draw();
 	IUnit::Draw();
+	// 弾アイコンの描画(現在選択中の弾種のみ描画する)
+	for (int i = 0; i < (int)BULLET_TYPE::MAX; ++i)
+		if (i == (int)m_ShotBullet)
+			m_BulletIcon[i].Draw();
 }
 
 void CPlayer::Finalize(void)
@@ -140,6 +142,9 @@ void CPlayer::Finalize(void)
 	IUnit::Finalize();
 	m_DrawBT.Delete();
 	m_Model.Unload();
+	// 弾アイコンの解放
+	for (int i = 0; i < (int)BULLET_TYPE::MAX; ++i)
+		m_BulletIcon[i].Delete();
 }
 
 bool CPlayer::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, int damage)
@@ -222,35 +227,14 @@ void CPlayer::Shot(void)
 	front.x = sin(aqua::DegToRad(m_Rotate));
 	front.z = cos(aqua::DegToRad(m_Rotate));
 
-	if (m_ShotCT.Finished())
+	if (m_ShotCT.Finished() && (aqua::mouse::Button(aqua::mouse::BUTTON_ID::LEFT)))
 	{
-		switch (m_OperateStyle)
-		{
-		case COMPOUND:
-			if (aqua::mouse::Button(aqua::mouse::BUTTON_ID::LEFT))
-			{
-				// ビームでなければSEを再生(ビームはチャージ音等が特殊なのでビームクラス内で再生)
-				if (m_ShotBullet != BULLET_TYPE::BEAM)
-					//m_SoundManager->Play(SOUND_ID::s_SHOT);
-				// 自機の正面から弾を撃つ
-				m_BulletManager->Create(m_Position + front * 10.0f, front * 10.5f, m_UnitType, m_ShotBullet, this);
-				m_ShotCT.Reset();
-			}
-			break;
-		case MOUSE_ONRY: // 弾の種類がビームでなければ自動で、ビームならマウス中央ボタンで発射
-			if (m_ShotBullet != BULLET_TYPE::BEAM
-				||(m_ShotBullet == BULLET_TYPE::BEAM && aqua::mouse::Trigger(aqua::mouse::BUTTON_ID::MIDDLE)))
-			{
-				// SEを再生
-				//m_SoundManager->Play(SOUND_ID::s_SHOT);
-				// 自機の正面から球を撃つ
-				m_BulletManager->Create(m_Position + front * 10.0f, front * 10.5f, m_UnitType, m_ShotBullet, this);
-				m_ShotCT.Reset();
-			}
-			break;
-		default:
-			break;
-		}
+		// ビームでなければSEを再生(ビームはチャージ音等が特殊なのでビームクラス内で再生)
+		//if (m_ShotBullet != BULLET_TYPE::BEAM)
+			//m_SoundManager->Play(SOUND_ID::s_SHOT);
+		// 自機の正面から弾を撃つ
+			m_BulletManager->Create(m_Position + front * 10.0f, front * 10.5f, m_UnitType, m_ShotBullet, this);
+			m_ShotCT.Reset();
 	}
 }
 
@@ -260,25 +244,9 @@ void CPlayer::Move(void)
 	if (!m_MoveFlag)
 		return;
 
-	m_OperateTimer.Update();
+	// 操作
+	Operation();
 
-	// スペースキーを押したら操作スタイルを切り替える
-	if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::SPACE)&&m_OperateTimer.Finished())
-	{
-		if (m_OperateStyle != OPERATE_STYLE::COMPOUND)
-			m_OperateStyle = OPERATE_STYLE::COMPOUND;
-		else
-			m_OperateStyle = OPERATE_STYLE::MOUSE_ONRY;
-		m_OperateTimer.Reset();
-	}
-
-
-	// 操作スタイルによって処理を分ける
-	switch (m_OperateStyle)
-	{
-	case OPERATE_STYLE::COMPOUND:	CompoundOperation();break;
-	case OPERATE_STYLE::MOUSE_ONRY:	MouseOparation();	break;
-	}
 	// ロックオン
 	LockOn();
 
@@ -286,14 +254,13 @@ void CPlayer::Move(void)
 	MouseTrack();
 }
 
-void CPlayer::CompoundOperation(void)
+void CPlayer::Operation(void)
 {
 	using namespace aqua::keyboard;
 	const float to_delta = 60.0f * aqua::GetDeltaTime();
 
 	// 移動速度は更新の度にリセット
 	m_Velocity = aqua::CVector3::ZERO;
-
 
 	if (Button(KEY_ID::W)) m_Velocity += aqua::CVector3::FRONT;
 	if (Button(KEY_ID::S)) m_Velocity += aqua::CVector3::BACK;
@@ -310,40 +277,6 @@ void CPlayer::CompoundOperation(void)
 	// 座標に移動速度を加算する
 	m_Position += m_Velocity;
 	AQUA_DEBUG_LOG("X:" + std::to_string(m_Position.x) + ",Z" + std::to_string(m_Position.z));
-}
-
-void CPlayer::MouseOparation(void)
-{
-	// 左クリックされている間はその場にとどまる
-	if (aqua::mouse::Button(aqua::mouse::BUTTON_ID::LEFT))
-		return;
-	const float to_delta = 60.0f * aqua::GetDeltaTime();
-
-	// プレイヤーと自身の距離
-	aqua::CVector3 v = m_MousePosition - m_Position;
-	v.y = 0.0f;
-
-	// 二次元の向きを外積から取る
-	float dir = aqua::CVector2::Cross(aqua::CVector2(v.x, v.z), aqua::CVector2(m_Velocity.x, m_Velocity.z));
-
-	// 向きの値によって角度を変化させる
-	if (dir > 0.001f)
-		m_Angle -= aqua::DegToRad(10.0f);
-	else if (dir < 0.001f)
-		m_Angle += aqua::DegToRad(10.0f);
-	
-	// ベクトルのノーマライズ
-	m_Velocity.Normalize();
-	// 速さに角度と三角比の値をかけて移動速度を求める
-	m_Velocity.x = (m_Speed * to_delta) * cos(m_Angle);
-	m_Velocity.z = (m_Speed * to_delta) * sin(m_Angle);
-
-	// 壁と当たってたらそこで止まる
-	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * m_Width, false))
-		return;
-
-	// 座標に移動速度を加算する
-	m_Position += m_Velocity;
 }
 
 void CPlayer::MouseTrack(void)
@@ -374,15 +307,6 @@ void CPlayer::MouseTrack(void)
 		// 2点から回転値を求める
 		m_Rotate = aqua::RadToDeg(atan2(v.x, v.z));
 	}
-
-	// 操作スタイルがマウスのみでなければ続きは処理しない
-	if (m_OperateStyle != OPERATE_STYLE::MOUSE_ONRY)
-		return;
-
-	// レイキャスト座標と自身の座標が壁を隔ててない場合その座標を代入する
-	if (!m_StageManager->StageObjectCollision(m_Position, raycast))
-		m_MousePosition = raycast;
-	m_MousePosition.y = 0.0f;
 }
 
 void CPlayer::LockOn(void)

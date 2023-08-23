@@ -85,12 +85,10 @@ public:
      */
     void            Hit(void);
 
-
     /*
      *  @brief      ステージオブジェクトヒット処理
      */
     virtual void    StageObjectHit(aqua::CCubePrimitive::COLL_DIRE c_dire);
-
 
 protected:
 

@@ -28,7 +28,7 @@ void IBullet::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector
 	m_Sphere.Setup(m_Position, m_Radius);
 	m_Sphere.visible = false;
 	m_Model.position = m_Position;
-	// 初期化の段階で一度だけ更新を呼ぶことで向きを合わせる処理をさせる
+	// 初期化の段階で一度だけ更新を呼ぶことで向きを合わせる
 	Update();
 }
 

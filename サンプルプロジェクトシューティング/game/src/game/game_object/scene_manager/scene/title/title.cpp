@@ -29,7 +29,6 @@ const aqua::CVector2 CTitleScene::m_basis_position[] = {
 CTitleScene::
 CTitleScene(aqua::IGameObject* parent)
     : IScene(parent, "TitleScene")
-    , m_OperateStyle(OPERATE_STYLE::COMPOUND)
 {
 }
 
@@ -51,14 +50,6 @@ Initialize(void)
     // 背景スプライトの生成
     m_BackgroundSprite.Create("data\\texture\\title\\title_background.png");
     m_BackgroundSprite.position = aqua::CVector2::ZERO;
-
-    // 選択画像の生成
-    m_ChoiceSprite[0].Create("data\\texture\\title\\compound_button.png");
-    m_ChoiceSprite[1].Create("data\\texture\\title\\mouse_button.png");
-
-
-    for (int i = 0; i < 2; ++i)
-        m_ChoiceSprite[i].position = m_basis_position[i];
 
     // BGMを再生
     m_SoundManager->Play(SOUND_ID::b_TITLE);
@@ -85,9 +76,6 @@ Draw(void)
     m_BackgroundSprite.Draw();
 
 
-    for (int i = 0; i < 2; ++i)
-        m_ChoiceSprite[i].Draw();
-
 }
 
 /*
@@ -101,8 +89,6 @@ Finalize(void)
     m_BackgroundSprite.Delete();
 
 
-    for (int i = 0; i < 2; ++i)
-        m_ChoiceSprite[i].Delete();
 
     //m_LicenseLabel.Delete();
 }
@@ -114,23 +100,10 @@ Finalize(void)
 void CTitleScene::Operation(void)
 {
 
-    // 二択なのでややこしい書き方はするだけ無駄と判断
-    if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::RIGHT))
-    {
-        m_OperateStyle = OPERATE_STYLE::MOUSE_ONRY;     // 操作方法をマウスのみに
-        m_SoundManager->Play(SOUND_ID::s_SELECT);
-    }
-    else if (aqua::keyboard::Released(aqua::keyboard::KEY_ID::LEFT))
-    {
-        m_OperateStyle = OPERATE_STYLE::COMPOUND;       // 操作方法をキーマウに
-        m_SoundManager->Play(SOUND_ID::s_SELECT);
-    }
-
     // Zキー  ( 決定 )
     if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::Z))
     {
         CDataRelay* data_relay = (CDataRelay*)aqua::FindGameObject("DataRelay");
-        data_relay->SetOPerateStyle(m_OperateStyle);
         Change(SCENE_ID::GAMEMAIN);
     }
 }

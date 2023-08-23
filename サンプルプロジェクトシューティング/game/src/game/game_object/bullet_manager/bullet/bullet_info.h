@@ -23,4 +23,5 @@ struct BULLET_INFO
     int     damage = 1;                             // É_ÉÅÅ[ÉWíl
     float   radius = 5.0f;                          // îºåa
     float   speed = 1.0f;                           // íeë¨
+    std::string bullet_name;                        // íeéÌñº
 };

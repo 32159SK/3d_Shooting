@@ -9,7 +9,6 @@
  */
 #pragma once
 #include "aqua.h"
-#include "play_style.h"
 #include "../unit/unit.h"
 
 class CEnemyManager;
@@ -95,14 +94,9 @@ private:
     void            Move(void)override;
 
     /*
-     *  @brief      複合操作
+     *  @brief      操作
      */
-    void            CompoundOperation(void);
-
-    /*
-     *  @brief      マウス操作
-     */
-    void            MouseOparation(void);
+    void            Operation(void);
 
     /*
      *  @brief      マウス追従による回転
@@ -138,11 +132,11 @@ private:
 
     aqua::CVector3  m_AgoPosition;      // 追尾座標
 
-    aqua::CVector3  m_MousePosition;    // クリックされた座標
-
     aqua::CModel    m_Model;            // 自機のモデル
 
     aqua::CLabel    m_DrawBT;           // 弾種描画
+
+    aqua::CSprite   m_BulletIcon[4];    // 弾種アイコン
 
     aqua::CTimer    m_ChangeCT;         // 弾種切り替えタイマー
 
@@ -151,10 +145,6 @@ private:
     aqua::CTimer    m_InvincibleTimer;  // 無敵時間タイマー
 
     aqua::CTimer    m_LockonTimer;      // 連続でm_LockONが切り替わるのを防止
-
-    aqua::CTimer    m_OperateTimer;      // 連続でm_OperateStyleが切り替わるのを防止
-
-    OPERATE_STYLE   m_OperateStyle;     // 操作スタイル
 
     CFloor*         m_Floor;            // 床のポインタ
 

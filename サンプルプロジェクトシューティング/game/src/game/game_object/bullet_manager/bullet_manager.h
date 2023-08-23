@@ -88,6 +88,11 @@ public:
     void        EnemyReset(void);
 
     void        EnemyReset(CEnemy* enemy);
+
+    /*
+     *  @brief      ’eŽí–¼Žæ“¾
+     */
+    std::string GetBulletName(BULLET_TYPE bullet_type) { return m_BulletInfo[(int)bullet_type].bullet_name; }
 private:
 
     void        BulletDataLoad(void);

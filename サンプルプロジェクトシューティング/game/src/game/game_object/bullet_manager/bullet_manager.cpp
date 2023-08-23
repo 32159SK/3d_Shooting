@@ -106,7 +106,8 @@ void CBulletManager::BulletDataLoad(void)
 			(BULLET_TYPE)i,
 			std::stoi(csv.GetString(i,0)),	// damage
 			std::stof(csv.GetString(i,1)),	// radius
-			std::stof(csv.GetString(i,2))	// speed
+			std::stof(csv.GetString(i,2)),	// speed
+			csv.GetString(i,3)				// bullet_name
 		};
 		m_BulletInfo.push_back(info);
 	}

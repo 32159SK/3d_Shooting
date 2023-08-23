@@ -12,7 +12,6 @@
 #pragma once
 
 #include "aqua.h"
-#include "../player/play_style.h"
 #include <stdio.h>
 #include <string>
 
@@ -44,20 +43,12 @@ public:
      */
     ~CDataRelay(void) = default;
 
-    /*!
-     *  @brief      操作スタイルの取得
-     */
-    void    SetOPerateStyle(OPERATE_STYLE style) { m_OperateStyle = style; }
 
     /*!
      *  @brief      リザルト時に扱うデータ取得
      */
     void    SetClear(bool clear) { m_Clear = clear; }
 
-    /*!
-     *  @brief      リザルト時に扱うデータ取得
-     */
-    OPERATE_STYLE    GetOperateStyle(void) { return m_OperateStyle; }
 
     /*!
      *  @brief      リザルト時に扱うデータ取得
@@ -66,5 +57,4 @@ public:
 private:
 
     bool            m_Clear;        // 
-    OPERATE_STYLE   m_OperateStyle; // 操作スタイル
 };

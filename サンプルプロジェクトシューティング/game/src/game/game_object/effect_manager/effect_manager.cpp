@@ -15,6 +15,7 @@
 const std::string CEffectManager::m_effect_file_names[] =
 {
      "hit"
+    ,"beam_hit"
     ,"broken"
     ,"beam"
     ,"dead"

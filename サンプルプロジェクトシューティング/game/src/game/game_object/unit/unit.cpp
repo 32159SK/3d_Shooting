@@ -1,7 +1,7 @@
 #include "../game_object.h"
 #include "unit.h"
 
-const float IUnit::m_beam_damage_interval =0.2f;
+const float IUnit::m_beam_damage_interval =0.3f;
 
 IUnit::
 IUnit(aqua::IGameObject* parent, const std::string& object_name)
@@ -86,6 +86,10 @@ bool IUnit::CheckHitBeam(UNIT_TYPE type, aqua::CCapsulePrimitive capsule, int da
 	{
 		// 当たったらダメージ
 		Damage(damage);
+
+		// 被弾エフェクト
+		m_EffectManager->Create(EFFECT_ID::BEAM_HIT,m_Cube.collision_pos);
+
 		// タイマーをリセット
 		m_BeamInterval.Reset();
 	}
@@ -124,9 +128,9 @@ void IUnit::Dead(void)
 {
 	m_DeadFlag = true;
 	m_Cube.visible = false;
+
 	// 死亡エフェクトを再生
 	m_EffectManager->Create(EFFECT_ID::DEAD, m_Position);
 	// SEを再生
 	m_SoundManager->Play(SOUND_ID::s_DEAD);
-	DeleteObject();
 }

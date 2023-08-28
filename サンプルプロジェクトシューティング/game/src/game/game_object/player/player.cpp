@@ -116,18 +116,6 @@ void CPlayer::Update(void)
 
 void CPlayer::Draw(void)
 {
-	// 現在使用中の弾を
-	switch (m_ShotBullet)
-	{
-	case BULLET_TYPE::NORMAL:	m_DrawBT.text = "BULLET:NOMAL"; break;
-	case BULLET_TYPE::REFLECT:	m_DrawBT.text = "BULLET:REFLECT"; break;
-	case BULLET_TYPE::PENETRATE:m_DrawBT.text = "BULLET:PENETRATE"; break;
-	case BULLET_TYPE::BEAM:		m_DrawBT.text = "BULLET:BEAM"; break;
-
-	default:
-		break;
-	}
-	// 
 	m_DrawBT.Draw();
 	m_Model.Draw();
 	IUnit::Draw();
@@ -164,15 +152,9 @@ bool CPlayer::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, int 
 
 bool CPlayer::CheckHitBeam(UNIT_TYPE type, aqua::CCapsulePrimitive capsule, int damage)
 {
-	// 無敵なら処理をやめる
-	if (m_Invincible)
-		return false;
 	// 基底ユニットクラスの被弾確認を呼び出し当たっていたら無敵フラグを真にする
 	if (IUnit::CheckHitBeam(type, capsule, damage))
-	{
-		m_Invincible = true;
 		return true;
-	}
 	else
 		return false;
 }
@@ -252,6 +234,12 @@ void CPlayer::Move(void)
 
 	// マウス追従
 	MouseTrack();
+}
+
+void CPlayer::Dead(void)
+{
+	IUnit::Dead();
+	m_Model.visible = false;
 }
 
 void CPlayer::Operation(void)

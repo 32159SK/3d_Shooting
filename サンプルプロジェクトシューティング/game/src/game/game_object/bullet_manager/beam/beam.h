@@ -76,6 +76,10 @@ public:
      */
     bool            GetFinishFlag(void) { return m_Finished; }
 
+    /*
+     *  @brief      消滅
+     */
+    void            Destroy(void);
 private:
     /*
      *  @brief      チャージ
@@ -87,10 +91,6 @@ private:
      */
     void            Firing(void);
 
-    /*
-     *  @brief      消滅
-     */
-    void            Destroy(void);
 
     /*
      *  @brief      ビームの状態

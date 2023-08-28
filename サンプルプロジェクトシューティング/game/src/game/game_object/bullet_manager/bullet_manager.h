@@ -85,9 +85,17 @@ public:
      */
     void        SetPlayer(CPlayer* player) { m_Player = player; }
 
+    /*
+     *  @brief      リセット
+     */
     void        EnemyReset(void);
 
+    /*
+     *  @brief      リセット
+     */
     void        EnemyReset(CEnemy* enemy);
+
+    void        WaveChange(void);
 
     /*
      *  @brief      弾種名取得
@@ -95,10 +103,19 @@ public:
     std::string GetBulletName(BULLET_TYPE bullet_type) { return m_BulletInfo[(int)bullet_type].bullet_name; }
 private:
 
+    /*
+     *  @brief      リセット
+     */
     void        BulletDataLoad(void);
 
+    /*
+     *  @brief      ヒット判定
+     */
     void        CheakHit(void);
 
+    /*
+     *  @brief      ビームのヒット判定
+     */
     void        CheakHitBeam(CBeam* beam,int e_count);
 
     static const std::string m_bullet_info_path;

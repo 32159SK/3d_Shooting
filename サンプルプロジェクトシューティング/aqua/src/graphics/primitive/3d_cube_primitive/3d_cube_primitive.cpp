@@ -21,6 +21,7 @@ const int aqua::CCubePrimitive::index_count = 36;
 aqua::CCubePrimitive::
 CCubePrimitive(void)
     : position(CVector3::ZERO)
+    , collision_pos(aqua::CVector3::ZERO)
     , width(0.0f)
     , height(0.0f)
     , depth(0.0f)
@@ -211,16 +212,27 @@ bool aqua::CCubePrimitive::CheckCollision(CVector3& center_pos, float r)
 
 bool aqua::CCubePrimitive::CheckCollision(CVector3& positionA, CVector3& positionB, float r)
 {
+    collision = false;
+
     for (int i = 0; i < index_count;)
     {
         // vertexとindexを使って三角形の頂点を求めどれかに触れていればその時点でfor文を抜ける
         if (HitCheck_Capsule_Triangle(positionA, positionB, r, vertex[index[i]].pos, vertex[index[i + 1]].pos, vertex[index[i + 2]].pos) == 1)
         {
             collision = true;
-            return collision;
+
+            aqua::CVector3 coll_pos;
+            coll_pos = ((aqua::CVector3)vertex[index[i]].pos + (aqua::CVector3)vertex[index[i + 1]].pos + (aqua::CVector3)vertex[index[i + 2]].pos) / 3.0f;
+            
+            float a = abs(aqua::CVector3::Length(positionA - coll_pos));
+            float b = abs(aqua::CVector3::Length(positionA - collision_pos));
+            if (a < b || collision_pos == aqua::CVector3::ZERO)
+                collision_pos = coll_pos;
+
+
+            //return collision;
         }
         i += 3;
     }
-    collision = false;
     return collision;
 }

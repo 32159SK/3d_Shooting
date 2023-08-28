@@ -94,6 +94,11 @@ private:
     void            Move(void)override;
 
     /*
+     *  @brief      €–S
+     */
+    void            Dead(void)override;
+
+    /*
      *  @brief      ‘€ì
      */
     void            Operation(void);

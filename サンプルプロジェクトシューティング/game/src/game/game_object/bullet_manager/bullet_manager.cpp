@@ -28,6 +28,9 @@ void CBulletManager::Initialize(void)
 
 void CBulletManager::Update(void)
 {
+	// 自身がnullなら処理しない
+	if (!this)
+		return;
 	CheakHit();
 	IGameObject::Update();
 }
@@ -79,7 +82,7 @@ void CBulletManager::EnemyReset(void)
 {
 	if (m_EnemyList.empty())
 		return;
-	m_ChildObjectList.clear();
+	WaveChange();
 	m_EnemyList.clear();
 }
 
@@ -89,6 +92,24 @@ void CBulletManager::EnemyReset(CEnemy* enemy)
 	for (int e = 0; e < e_count; ++e)
 		if (m_EnemyList[e] == enemy)
 			m_EnemyList[e] = nullptr;
+}
+
+void CBulletManager::WaveChange(void)
+{
+	if (m_ChildObjectList.empty())
+		nullptr;
+	for (auto it : m_ChildObjectList)
+	{
+		if (it->GetGameObjectName() == "Beam")
+		{
+			CBeam* beam = (CBeam*)it;
+			beam->Destroy();
+		}
+		if (it)
+			it->DeleteObject();
+
+	}
+	m_ChildObjectList.clear();
 }
 
 void CBulletManager::BulletDataLoad(void)
@@ -118,6 +139,7 @@ void CBulletManager::BulletDataLoad(void)
 
 void CBulletManager::CheakHit(void)
 {
+	// プレイヤーまたは子オブジェクト(空間内に存在する弾)が存在しないなら処理しない
 	if (m_ChildObjectList.empty())
 		return;
 
@@ -126,8 +148,10 @@ void CBulletManager::CheakHit(void)
 	// このリストを使って繰り返し処理をする
 	for (auto it : m_ChildObjectList)
 	{
-		// itのカテゴリーがBulletでないなら
-		if (it->GetGameObjectCategory() != "Bullet")
+		if (!it)
+			continue;
+		// itのnameがビームなら
+		if (it->GetGameObjectName() == "Beam")
 		{
 			CheakHitBeam((CBeam*)it,e_count);
 			continue;
@@ -171,6 +195,7 @@ void CBulletManager::CheakHit(void)
 
 void CBulletManager::CheakHitBeam(CBeam* beam,int e_count)
 {
+	// ビームにダメージ判定がない(チャージ中)なら処理しない
 	if (!beam->GetDamageFlag())
 		return;
 

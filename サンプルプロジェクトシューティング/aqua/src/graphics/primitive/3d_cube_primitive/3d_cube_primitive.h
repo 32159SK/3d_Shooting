@@ -40,6 +40,8 @@ namespace aqua
     public:
         //! ’†SÀ•W
         aqua::CVector3      position;
+        //! ÚGÀ•W
+        aqua::CVector3      collision_pos;
         //! •
         float               width;
         //! ‚‚³

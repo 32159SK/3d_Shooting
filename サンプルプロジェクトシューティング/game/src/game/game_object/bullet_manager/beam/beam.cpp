@@ -63,6 +63,7 @@ void CBeam::Initialize(BULLET_INFO bullet_info, UNIT_TYPE attri, aqua::CVector3 
 
 	// 予測線の設定
 	m_PredictionLine.Setup(m_StartPos, m_EndPos, aqua::CColor::RED);
+
 	// ビーム使用中は動けないよう使用者の行動可能フラグを偽にする
 	m_User->SetMoveFlag(false);
 
@@ -135,8 +136,8 @@ void CBeam::Destroy(void)
 	// エフェクトの描画を無効
 	m_Effect->visible = false;
 
-	// 使用者が死んでいないなら使用者を再度行動可能にする
-	if (!m_User->GetDead())
+	// 使用者nullまたは死んでいないなら使用者を再度行動可能にする
+	if (!m_User || !m_User->GetDead())
 		m_User->SetMoveFlag(true);
 	m_Finished = true;
 	DeleteObject();

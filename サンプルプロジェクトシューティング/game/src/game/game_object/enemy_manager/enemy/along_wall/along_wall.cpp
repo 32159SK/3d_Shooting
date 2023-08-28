@@ -49,8 +49,7 @@ void CAlongWallEnemy::Move(void)
 	}
 
 
-	m_Velocity.x = (m_Speed * to_delta) * m_surroundings[m_WallDire].x;
-	m_Velocity.z = (m_Speed * to_delta) * m_surroundings[m_WallDire].z;
+	m_Velocity = (m_Speed * to_delta) * m_surroundings[m_WallDire];
 
 	CEnemy::Move();
 }

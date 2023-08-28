@@ -100,16 +100,13 @@ void CBossEnemy::SetCannonPosition(void)
 		return;
 
 	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
-		if (m_Cannon[i] && !m_Cannon[i]->GetDead())
+		if (m_Cannon[i] && !m_Cannon[i]->GetDead() && m_Cannon[i]->GetFinish())
 			m_Cannon[i]->SetPosition(m_CannonPos[i]);
 }
 
 void CBossEnemy::Shot(void)
 {
-	// オールレンジ攻撃の最中であれば処理しない
-	if (m_AllRangeAttacking)
-		return;
-
+	// 射撃タイマーの更新
 	m_ShotCT.Update();
 
 	switch (m_Phase)
@@ -124,7 +121,7 @@ void CBossEnemy::Shot(void)
 		m_ShotBullet = (BULLET_TYPE)aqua::Rand((int)m_ShotBullet);
 
 		for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
-			if (m_Cannon[i] && !m_Cannon[i]->GetDead())
+			if (m_Cannon[i] && !m_Cannon[i]->GetDead()&&m_Cannon[i]->GetFinish())
 			{
 				m_Cannon[i]->SetBulletType(m_ShotBullet);
 				m_Cannon[i]->Shot();
@@ -137,7 +134,6 @@ void CBossEnemy::Move(void)
 {
 	if (m_DeadFlag && m_Phase != BOSS_PHASE::DEAD)
 		return;
-	m_Rotate += m_rotate_speed;
 	// ボスの形態に合わせた処理
 	switch (m_Phase)
 	{
@@ -200,6 +196,11 @@ void CBossEnemy::FirstPhase(void)
 
 void CBossEnemy::SecondPhase(void)
 {
+	aqua::CMatrix mat;
+	mat.RotationY(aqua::DegToRad(m_Rotate));
+	mat.Translate(m_Position);
+	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
+		m_CannonPos[i] = -m_base_cannon_pos[i] * mat;
 	SetCannonPosition();
 
 	// オールレンジ攻撃をしていないなら以下の処理を
@@ -207,6 +208,7 @@ void CBossEnemy::SecondPhase(void)
 	{
 		// 
 		m_AllRangeCT.Update();
+
 
 		for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
 		{
@@ -220,12 +222,18 @@ void CBossEnemy::SecondPhase(void)
 	}
 	else
 	{
-		for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
+		for (int i = 0; i < m_cannon_count[0]; ++i)
 			// 帰るタイミングはどれも一律で同じなのでどれか一つでも終えていればオールレンジ攻撃の終了
 			if (m_Cannon[i] && !m_Cannon[i]->GetDead())
 				if (m_Cannon[i]->GetFinish())
 					m_AllRangeAttacking = false;
 	}
+
+	m_Rotate += 0.5f;
+
+
+	m_Model.rotation.y = aqua::DegToRad(m_Rotate);
+
 }
 
 void CBossEnemy::PhaseChange(void)
@@ -237,11 +245,7 @@ void CBossEnemy::PhaseChange(void)
 	m_Phase = (BOSS_PHASE)((int)m_Phase + 1);
 
 	if (m_Phase != BOSS_PHASE::DEAD)
-	{
-		m_BulletManager->EnemyReset();
-		m_BulletManager->SetEnemy(this);
 		CannonSetUp();
-	}
 }
 
 void CBossEnemy::CannonSetUp(void)
@@ -269,28 +273,20 @@ void CBossEnemy::AllRangeAttack(void)
 
 	for (;;)
 	{
-		for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
+		for (int i = 0; i < m_cannon_count[0]; ++i)
 			// 乱数で角度を取る
 			shot_angle[i] = (float)aqua::Rand(m_cannon_count[m_Phase]);
 
 		// 角度がどれも被ってないか確認する
 		if (shot_angle[0] != shot_angle[1] && shot_angle[0] != shot_angle[2] && shot_angle[0] != shot_angle[3] &&
-			shot_angle[0] != shot_angle[4] && shot_angle[0] != shot_angle[5] && shot_angle[0] != shot_angle[6] &&
-			shot_angle[0] != shot_angle[7] && shot_angle[1] != shot_angle[2] && shot_angle[1] != shot_angle[3] &&
-			shot_angle[1] != shot_angle[4] && shot_angle[1] != shot_angle[5] && shot_angle[1] != shot_angle[6] &&
-			shot_angle[1] != shot_angle[7] && shot_angle[2] != shot_angle[3] && shot_angle[2] != shot_angle[4] &&
-			shot_angle[2] != shot_angle[5] && shot_angle[2] != shot_angle[6] && shot_angle[2] != shot_angle[7] &&
-			shot_angle[3] != shot_angle[4] && shot_angle[3] != shot_angle[5] && shot_angle[3] != shot_angle[6] &&
-			shot_angle[3] != shot_angle[7] && shot_angle[4] != shot_angle[5] && shot_angle[4] != shot_angle[6] &&
-			shot_angle[4] != shot_angle[7] && shot_angle[5] != shot_angle[6] && shot_angle[5] != shot_angle[7] &&
-			shot_angle[6] != shot_angle[7] )
+			shot_angle[1] != shot_angle[2] && shot_angle[1] != shot_angle[3] && shot_angle[2] != shot_angle[3])
 			break;
 	}
 
 
-	// 生きている砲にオールレンジ攻撃をさせる
+	// 生きている"偶数番号"の砲にオールレンジ攻撃をさせる
 	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
-		if (m_Cannon[i] && !m_Cannon[i]->GetDead())
+		if (m_Cannon[i] && !m_Cannon[i]->GetDead() && i<= 3)
 		{
 			m_Cannon[i]->SetBulletType(BULLET_TYPE::BEAM);
 			m_Cannon[i]->SetAllRange(shot_angle[i]);

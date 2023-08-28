@@ -90,6 +90,7 @@ public:
      */
     virtual void    StageObjectHit(aqua::CCubePrimitive::COLL_DIRE c_dire);
 
+    
 protected:
 
     int                     m_Damage;       // É_ÉÅÅ[ÉWó 

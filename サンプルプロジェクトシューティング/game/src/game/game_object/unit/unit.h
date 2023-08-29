@@ -84,6 +84,11 @@ public:
     bool            GetLockOnFlag(void) { return m_LockON; }
 
     /*
+     *  @brief      行動可能フラグの取得
+     */
+    bool            GetMoveFlag(void) { return m_MoveFlag; }
+
+    /*
      *  @brief      行動可能フラグのセッター
      */
     virtual void    SetMoveFlag(bool flag) { m_MoveFlag = flag; }

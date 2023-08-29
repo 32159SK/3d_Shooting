@@ -73,7 +73,7 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, CStageManager* st_m, CBulletMan
 		// 弾種名を管理クラスから受け取り、それを用いてファイルパスにする
 		m_BulletIcon[i].Create("data\\texture\\ui\\icon\\" + m_BulletManager->GetBulletName((BULLET_TYPE)i) + ".png");
 		// 仮の座標
-		m_BulletIcon[i].position = aqua::CVector2(aqua::GetWindowWidth() / 2.0f, 0.0f);
+		m_BulletIcon[i].position = aqua::CVector2(aqua::GetWindowWidth() - m_BulletIcon[i].GetTextureWidth(), 0.0f);
 	}
 
 }
@@ -222,9 +222,20 @@ void CPlayer::Shot(void)
 
 void CPlayer::Move(void)
 {
-	// 行動不可(ビーム待機中)なら処理を止める
+	// 行動不可(ビーム待機中)
 	if (!m_MoveFlag)
-		return;
+	{
+		// マウス中央ボタン(ホイール押し込み)でキャンセル
+		if (aqua::mouse::Button(aqua::mouse::BUTTON_ID::MIDDLE))
+		{
+			// イメージ的には無理やり中断するので自傷ダメージ
+			Damage(2);
+			m_EffectManager->Create(EFFECT_ID::BEAM_HIT, m_Position,0.0f,8.0f);
+			m_MoveFlag = true;
+		}
+		else
+			return;
+	}
 
 	// 操作
 	Operation();

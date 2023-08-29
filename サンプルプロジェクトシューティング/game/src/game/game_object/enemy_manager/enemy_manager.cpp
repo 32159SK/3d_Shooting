@@ -178,8 +178,8 @@ void CEnemyManager::WaveChange(void)
 	for (int i = 0; i < m_PopList.size(); ++i)
 		if (m_PopList[i].wave == m_WaveCount && m_EnemyCount < m_StageManager->GetEnemyCount())
 			Create(m_StageManager->GetEnemyPopPos(i), m_PopList[m_EnemyCount].pop_e_id);
-	////ボスの動作試験用なのでコメントアウト
-	//Create(m_StageManager->GetEnemyPopPos(2), m_PopList[18].pop_e_id);
+	//ボスの動作試験用なのでコメントアウト
+	//Create(m_StageManager->GetEnemyPopPos(3), m_PopList[18].pop_e_id);
 
 	m_WaveCount++;
 }

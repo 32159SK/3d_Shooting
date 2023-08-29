@@ -22,12 +22,13 @@ const std::string CSoundManager::m_sound_file_names[] =
     // ( s_ ) SE
     , "data\\sound\\s_select.mp3"     // ‘I‘ð‰¹
     //, "data\\sound\\s_shot.mp3"
+    , "data\\sound\\s_reflect.mp3"
     , "data\\sound\\s_charge.mp3"
     , "data\\sound\\s_beam.mp3"
-    //, "data\\sound\\s_damage.mp3"
+    , "data\\sound\\s_broken.mp3"
+    , "data\\sound\\s_damage.mp3"
     , "data\\sound\\s_dead.mp3"
     , "data\\sound\\s_boss_dead.mp3"
-    , "data\\sound\\s_time_stop.mp3"
 };
 
 /*
@@ -85,6 +86,9 @@ CSoundManager::
 Play(SOUND_ID id)
 {
     if (!m_SoundPlayer) return;
+
+    if (IsPlaying(id))
+        m_SoundPlayer[(int)id].Stop();
 
     m_SoundPlayer[(int)id].Play();
 }

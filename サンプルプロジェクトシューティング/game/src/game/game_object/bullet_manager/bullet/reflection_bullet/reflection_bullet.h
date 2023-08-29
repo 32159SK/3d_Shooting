@@ -43,4 +43,5 @@ private:
 
     int             m_ReflectCount;             // ”½Ë‰ñ”‚ÌƒJƒEƒ“ƒg
 
+    CSoundManager*  m_SoundManager;             // 
 };

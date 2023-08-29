@@ -41,6 +41,13 @@ void
 CGameMain::
 Initialize(void)
 {
+    // ëOÇÃBGMÇí‚é~Ç≥ÇπÇƒêVãKÇ…BGMçƒê∂
+    m_SoundManager = (CSoundManager*)aqua::FindGameObject("SoundManager");
+    if (m_SoundManager)
+    {
+        m_SoundManager->BGMStop();
+        m_SoundManager->Play(SOUND_ID::b_GAME_MAIN);
+    }
     // è∞ÇÃê∂ê¨
     m_Floor = aqua::CreateGameObject<CFloor>(this);
 

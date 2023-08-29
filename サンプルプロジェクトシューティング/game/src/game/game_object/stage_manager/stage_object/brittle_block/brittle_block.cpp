@@ -15,7 +15,7 @@ void CBrittleBlock::Initialize(const STAGE_OBJECT_ID& id, int x, int z)
 	IStageObject::Initialize(id, x, z);
 
 	m_EfectManager = (CEffectManager*)aqua::FindGameObject("EffectManager");
-
+	m_SoundManager = (CSoundManager*)aqua::FindGameObject("SoundManager");
 	m_Cube.Setup(m_Position, m_default_size, m_default_size, m_default_size, aqua::CColor::WHITE);
 	m_Model.Load("data\\model\\brittle_block.mv1");
 	m_Model.position = m_Cube.position;
@@ -56,5 +56,6 @@ void CBrittleBlock::Broken(void)
 {
 	m_ActiveFlag = false;
 	m_EfectManager->Create(EFFECT_ID::BROKEN, m_Position);
+	m_SoundManager->Play(SOUND_ID::s_BROKEN);
 	DeleteObject();
 }

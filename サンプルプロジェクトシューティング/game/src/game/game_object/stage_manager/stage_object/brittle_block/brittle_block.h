@@ -73,5 +73,5 @@ private:
     int             m_Endurance;        // ‘Ï‹v’l
 
     CEffectManager* m_EfectManager;
-
+    CSoundManager*  m_SoundManager;
 };

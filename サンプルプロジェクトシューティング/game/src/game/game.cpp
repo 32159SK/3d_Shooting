@@ -31,9 +31,9 @@ CGame::
 Initialize(void)
 {
     // 最初に作るオブジェクト群
-    aqua::CreateGameObject<CSceneManager>(this);
     // サウンド管理クラス
     aqua::CreateGameObject<CSoundManager>(this);
+    aqua::CreateGameObject<CSceneManager>(this);
     // シーンを跨いでデータの共有を行う中継クラス
     aqua::CreateGameObject<CDataRelay>(this);
     // マウスの描画を行う

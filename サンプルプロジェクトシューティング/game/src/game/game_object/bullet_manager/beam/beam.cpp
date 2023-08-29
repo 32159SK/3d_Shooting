@@ -88,8 +88,8 @@ void CBeam::Update(void)
 	case CBeam::BEAM_STATE::FIRING:Firing();break;
 	case CBeam::BEAM_STATE::DESTROY:Destroy();break;
 	}
-	// 使用者が死んだら中断
-	if (!m_User || m_User->GetDead())
+	// 使用者が死ぬ、もしくはキャンセル(照射中に移動等)で中断
+	if (!m_User || m_User->GetDead() || m_User->GetMoveFlag())
 		m_BeamState = BEAM_STATE::DESTROY;
 
 }

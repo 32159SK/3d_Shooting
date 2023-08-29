@@ -73,7 +73,7 @@ void CEnemy::Shot(void)
 	// SE‚ðÄ¶
 	//m_SoundManager->Play(SOUND_ID::s_SHOT);
 }
-
+ 
 void CEnemy::Move(void)
 {
 	// ˆÚ“®‘¬“x‚É‡‚í‚¹‚Ä‰ñ“]Šp“x‚ðŽZo

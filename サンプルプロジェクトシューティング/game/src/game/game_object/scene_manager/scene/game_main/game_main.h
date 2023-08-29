@@ -112,4 +112,6 @@ private:
     CPlayer*            m_Player;
     CEnemyManager*      m_EnemyManager;
     aqua::CSprite       m_WhiteOutSprite;// ホワイトアウト用スプライト
+    CSoundManager* m_SoundManager;             // サウンド管理クラス
+
 };

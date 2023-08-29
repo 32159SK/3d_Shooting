@@ -27,9 +27,11 @@ enum SOUND_ID
     // (s_) SE
     , s_SELECT          // ‘I‘ð‰¹
     //, s_SHOT
+    , s_REFLECT
     , s_CHARGE
     , s_BEAM
-    //, s_DAMAGE
+    , s_BROKEN
+    , s_DAMAGE
     , s_DEAD
     , s_BOSS_DEAD
     , MAX

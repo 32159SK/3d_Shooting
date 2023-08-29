@@ -4,7 +4,7 @@
 
 const float CBossEnemy::m_all_range_ct = 10.0f;
 const float CBossEnemy::m_dead_time = 6.0f;
-const float CBossEnemy::m_rotate_speed = 1.0f;
+const float CBossEnemy::m_rotate_speed = 0.3f;
 const int CBossEnemy::m_cannon_count[] = { 4,8 };
 const int CBossEnemy::m_position_pattern = 45;
 const int CBossEnemy::m_max_summon = 10;
@@ -77,8 +77,7 @@ void CBossEnemy::Update(void)
 	Shot();
 
 	m_Cube.position = m_Position;
-	//m_Cube.m_HRotate = m_Rotate;
-	m_Model.rotation.y = m_Rotate;
+	m_Model.rotation.y = aqua::DegToRad(m_Rotate);
 }
 
 void CBossEnemy::Draw(void)
@@ -100,7 +99,7 @@ void CBossEnemy::SetCannonPosition(void)
 		return;
 
 	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
-		if (m_Cannon[i] && !m_Cannon[i]->GetDead() && m_Cannon[i]->GetFinish())
+		if (m_Cannon[i] && !m_Cannon[i]->GetDead())
 			m_Cannon[i]->SetPosition(m_CannonPos[i]);
 }
 
@@ -109,19 +108,20 @@ void CBossEnemy::Shot(void)
 	// 射撃タイマーの更新
 	m_ShotCT.Update();
 
-	switch (m_Phase)
-	{
-	case CBossEnemy::FIRST:	m_ShotBullet = BULLET_TYPE::BEAM; break;
-	case CBossEnemy::SECOND:m_ShotBullet = BULLET_TYPE::PENETRATE;	 break;
-	}
-	// CTが開けていれば砲に射撃をさせる
+	// CTが開けていれば砲撃をさせる
 	if (m_ShotCT.Finished())
 	{
-		// ランダムで撃つ弾を切り替える
-		m_ShotBullet = (BULLET_TYPE)aqua::Rand((int)m_ShotBullet);
-
+		switch (m_Phase)
+		{
+		case CBossEnemy::FIRST:
+			m_ShotBullet = BULLET_TYPE::BEAM;
+			// ランダムで撃つ弾を切り替える
+			m_ShotBullet = (BULLET_TYPE)aqua::Rand((int)m_ShotBullet);
+			break;
+		case CBossEnemy::SECOND:m_ShotBullet = BULLET_TYPE::PENETRATE; break;
+		}
 		for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
-			if (m_Cannon[i] && !m_Cannon[i]->GetDead()&&m_Cannon[i]->GetFinish())
+			if (m_Cannon[i] && !m_Cannon[i]->GetDead() && m_Cannon[i]->GetFinish())
 			{
 				m_Cannon[i]->SetBulletType(m_ShotBullet);
 				m_Cannon[i]->Shot();
@@ -148,8 +148,10 @@ void CBossEnemy::Damage(int damage)
 	m_PhaseLife[m_Phase] -= damage;
 
 	// 形態ごとのライフが0以下なら形態移行
-	if (m_PhaseLife[m_Phase] <= 0 )
+	if (m_PhaseLife[m_Phase] <= 0)
 		PhaseChange();
+	else
+		m_SoundManager->Play(SOUND_ID::s_DAMAGE);
 }
 
 void CBossEnemy::Dead(void)
@@ -168,7 +170,6 @@ void CBossEnemy::Dead(void)
 	// 死亡タイマーの更新
 	m_DeadTimer.Update();
 
-	//m_Cube.visible = false;
 	if (m_DeadTimer.Finished())
 		DeleteObject();
 }
@@ -196,13 +197,17 @@ void CBossEnemy::FirstPhase(void)
 
 void CBossEnemy::SecondPhase(void)
 {
+
 	aqua::CMatrix mat;
 	mat.RotationY(aqua::DegToRad(m_Rotate));
 	mat.Translate(m_Position);
+
 	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
 		m_CannonPos[i] = -m_base_cannon_pos[i] * mat;
+
 	SetCannonPosition();
 
+	m_Rotate += m_rotate_speed;
 	// オールレンジ攻撃をしていないなら以下の処理を
 	if (!m_AllRangeAttacking)
 	{
@@ -222,17 +227,15 @@ void CBossEnemy::SecondPhase(void)
 	}
 	else
 	{
-		for (int i = 0; i < m_cannon_count[0]; ++i)
+		for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
 			// 帰るタイミングはどれも一律で同じなのでどれか一つでも終えていればオールレンジ攻撃の終了
-			if (m_Cannon[i] && !m_Cannon[i]->GetDead())
+			if (m_Cannon[i] && !m_Cannon[i]->GetDead() && i <= 3)
 				if (m_Cannon[i]->GetFinish())
 					m_AllRangeAttacking = false;
 	}
 
-	m_Rotate += 0.5f;
 
 
-	m_Model.rotation.y = aqua::DegToRad(m_Rotate);
 
 }
 
@@ -284,7 +287,7 @@ void CBossEnemy::AllRangeAttack(void)
 	}
 
 
-	// 生きている"偶数番号"の砲にオールレンジ攻撃をさせる
+	// 生きている"半分"の砲にオールレンジ攻撃をさせる
 	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
 		if (m_Cannon[i] && !m_Cannon[i]->GetDead() && i<= 3)
 		{

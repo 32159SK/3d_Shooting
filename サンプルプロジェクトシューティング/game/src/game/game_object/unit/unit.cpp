@@ -88,7 +88,7 @@ bool IUnit::CheckHitBeam(UNIT_TYPE type, aqua::CCapsulePrimitive capsule, int da
 		Damage(damage);
 
 		// 被弾エフェクト
-		m_EffectManager->Create(EFFECT_ID::BEAM_HIT,m_Cube.collision_pos);
+		m_EffectManager->Create(EFFECT_ID::BEAM_HIT, m_Position, 0.0f, 8.0f);
 
 		// タイマーをリセット
 		m_BeamInterval.Reset();
@@ -116,12 +116,14 @@ void IUnit::Damage(int damage)
 	// ライフをダメージ数値分減算
 	m_Life -= damage;
 
-	// ダメージSE
-	//m_SoundManager->Play(SOUND_ID::s_DAMAGE);
 
 	// ライフが0以下になったら死亡処理を行う
 	if (m_Life <= 0)
 		Dead();
+	else
+		// 0以下でなければダメージSEを再生しない
+		m_SoundManager->Play(SOUND_ID::s_DAMAGE);
+
 }
 
 void IUnit::Dead(void)

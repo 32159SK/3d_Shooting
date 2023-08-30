@@ -137,10 +137,6 @@ private:
 
     aqua::CVector3  m_AgoPosition;      // 追尾座標
 
-    aqua::CModel    m_Model;            // 自機のモデル
-
-    aqua::CLabel    m_DrawBT;           // 弾種描画
-
     aqua::CSprite   m_BulletIcon[4];    // 弾種アイコン
 
     aqua::CTimer    m_ChangeCT;         // 弾種切り替えタイマー

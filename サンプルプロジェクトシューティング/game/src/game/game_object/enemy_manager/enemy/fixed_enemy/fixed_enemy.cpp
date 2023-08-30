@@ -11,12 +11,10 @@ CFixedEnemy::CFixedEnemy(aqua::IGameObject* parent)
 void CFixedEnemy::
 Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, CBulletManager* bm)
 {
-	CEnemy::Initialize(pop_pos, enemy_info, st_m, bm);
-
 	m_Model.Load("data\\model\\fixed_enemy.mv1");
-	m_Model.position = m_Position;
 	m_ShotBullet = BULLET_TYPE::BEAM;
-	m_Cube.visible = false;
+
+	CEnemy::Initialize(pop_pos, enemy_info, st_m, bm);
 }
 
 void CFixedEnemy::Update(void)
@@ -26,22 +24,11 @@ void CFixedEnemy::Update(void)
 	m_Model.rotation.y = aqua::DegToRad(m_Rotate);
 }
 
-void CFixedEnemy::Draw(void)
-{
-	m_Model.Draw();
-	CEnemy::Draw();
-}
-
-void CFixedEnemy::Finalize(void)
-{
-	CEnemy::Finalize();
-	m_Model.Unload();
-}
-
 void CFixedEnemy::Shot(void)
 {
-	CEnemy::Shot();
-
+	// •â‘«‚µ‚Ä‚¢‚ê‚ÎŽËŒ‚
+	if (m_Capture)
+		CEnemy::Shot();
 }
 
 void CFixedEnemy::Move(void)

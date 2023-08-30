@@ -45,10 +45,6 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, CStageManager* st_m, CBulletMan
 	// 無敵時間の設定
 	m_InvincibleTimer.Setup(m_invincible_time);
 
-	// 現在の弾種の仮表示
-	m_DrawBT.Create(m_font_size);
-	m_DrawBT.position = aqua::CVector2(aqua::GetWindowWidth() / 2.0f, 0.0f);
-
 	// 切り替えタイマーのセットアップ
 	m_ChangeCT.Setup(m_change_shotCT);
 	// 射撃間隔タイマーのセットアップ
@@ -116,8 +112,6 @@ void CPlayer::Update(void)
 
 void CPlayer::Draw(void)
 {
-	m_DrawBT.Draw();
-	m_Model.Draw();
 	IUnit::Draw();
 	// 弾アイコンの描画(現在選択中の弾種のみ描画する)
 	for (int i = 0; i < (int)BULLET_TYPE::MAX; ++i)
@@ -128,8 +122,6 @@ void CPlayer::Draw(void)
 void CPlayer::Finalize(void)
 {
 	IUnit::Finalize();
-	m_DrawBT.Delete();
-	m_Model.Unload();
 	// 弾アイコンの解放
 	for (int i = 0; i < (int)BULLET_TYPE::MAX; ++i)
 		m_BulletIcon[i].Delete();

@@ -34,21 +34,6 @@ public:
      */
     void    Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, CBulletManager* bm)override;
 
-    /*
-     *  @brief      XV
-     */
-    void    Update(void)override;
-
-    /*
-     *  @brief      •`‰æ
-     */
-    void    Draw(void)override;
-
-    /*
-     *  @brief      ‰ğ•ú
-     */
-    void    Finalize(void)override;
-
     void    SetPlayer(CPlayer* player) { m_Player = player; }
 
 private:

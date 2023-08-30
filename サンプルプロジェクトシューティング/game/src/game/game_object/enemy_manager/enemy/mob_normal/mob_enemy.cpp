@@ -15,25 +15,12 @@ void
 CMobEnemy::
 Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, CBulletManager* bm)
 {
-	CEnemy::Initialize(pop_pos, enemy_info, st_m, bm);
+	m_Model.Load("data\\model\\mob_enemy.mv1");
+
 	m_LoseSightTimer.Setup(m_lose_sight_time);
 	m_Dir = m_surroundings[aqua::Rand(3)];
 	m_ShotBullet = BULLET_TYPE::NORMAL;
-}
-
-void CMobEnemy::Update(void)
-{
-	CEnemy::Update();
-}
-
-void CMobEnemy::Draw(void)
-{
-	CEnemy::Draw();
-}
-
-void CMobEnemy::Finalize(void)
-{
-	CEnemy::Finalize();
+	CEnemy::Initialize(pop_pos, enemy_info, st_m, bm);
 }
 
 void CMobEnemy::Shot(void)

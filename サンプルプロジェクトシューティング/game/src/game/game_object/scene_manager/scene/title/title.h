@@ -66,6 +66,8 @@ public:
 
 private:
     aqua::CSprite       m_BackgroundSprite;     //! 背景用スプライト
+    aqua::CSprite       m_TitleSprite;          //! タイトル用スプライト
+    aqua::CSprite       m_StartSprite;          //! タイトル用スプライト
     //aqua::CLabel        m_LicenseLabel;
 
     /*

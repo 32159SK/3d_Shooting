@@ -40,16 +40,6 @@ public:
     void    Update(void)override;
 
     /*
-     *  @brief      •`‰æ
-     */
-    void    Draw(void)override;
-
-    /*
-     *  @brief      ‰ğ•ú
-     */
-    void    Finalize(void)override;
-
-    /*
      *  @brief      À•Wİ’è
      */
     void    SetPosition(aqua::CVector3 pos);

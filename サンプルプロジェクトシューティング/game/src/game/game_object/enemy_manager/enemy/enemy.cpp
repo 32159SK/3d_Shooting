@@ -30,6 +30,9 @@ Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m,CB
 	// 発射のタイミングをずらすために乱数である程度のばらつきを与える
 	float shot_time_rand = (float)aqua::Rand((int)ceil(enemy_info.shot_ct));
 	m_ShotCT.SetTime(shot_time_rand);
+
+	m_Model.position = m_Position;
+
 }
 
 void CEnemy::Update(void)
@@ -50,13 +53,12 @@ void CEnemy::Update(void)
 
 void CEnemy::Draw(void)
 {
-	m_Cube.Draw();
-	IGameObject::Draw();
+	IUnit::Draw();
 }
 
 void CEnemy::Finalize(void)
 {
-	IGameObject::Finalize();
+	IUnit::Finalize();
 }
 
 
@@ -81,8 +83,11 @@ void CEnemy::Move(void)
 	m_Cube.m_HRotate = m_Rotate;
 
 	m_Position += m_Velocity;
-
 	m_Cube.position = m_Position;
+
+	m_Model.position = m_Cube.position;
+	m_Model.rotation.y = aqua::DegToRad(m_Rotate);
+
 }
 
 void CEnemy::Dead(void)

@@ -40,16 +40,6 @@ public:
     void    Update(void)override;
 
     /*
-     *  @brief      描画
-     */
-    void    Draw(void)override;
-
-    /*
-     *  @brief      解放
-     */
-    void    Finalize(void)override;
-
-    /*
      *  @brief      砲の座標セット
      */
     void    SetCannonPosition(void);
@@ -141,8 +131,6 @@ private:
     bool            m_AllRangeAttacking;        // オールレンジ攻撃中
 
     BOSS_PHASE      m_Phase;                    // 現在の形態
-
-    aqua::CModel    m_Model;                    // モデル
 
     aqua::CVector3  m_CannonPos[8];             // 砲門座標
 

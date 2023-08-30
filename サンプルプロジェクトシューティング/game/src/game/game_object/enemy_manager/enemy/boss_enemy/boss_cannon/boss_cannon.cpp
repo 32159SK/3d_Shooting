@@ -26,14 +26,15 @@ Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, C
 	// ロックオンマーカークラスを生成してターゲットをプレイヤーに設定
 	m_LockOnMarker = aqua::CreateGameObject<CLockOnMarker>(this);
 	m_LockOnMarker->SetTarget(m_Player);
+
+	// モデル
+	m_Model.Load("data\\model\\boss_cannon.mv1");
+
 	// 基底クラスで基本的な初期化を行う
 	CEnemy::Initialize(pop_pos, enemy_info, st_m, bm);
 
-	// モデルは仮
-	m_Model.Load("data\\model\\boss_cannon.mv1");
-	m_Model.position = m_Position;
-
 	m_Cube.visible = false;
+
 }
 
 void CBossCannon::Update(void)
@@ -48,21 +49,6 @@ void CBossCannon::Update(void)
 		return;
 	Move();
 
-	m_Cube.m_HRotate = m_Rotate;
-	m_Model.position = m_Position;
-	m_Model.rotation.y = aqua::DegToRad(m_Rotate);
-}
-
-void CBossCannon::Draw(void)
-{
-	m_Model.Draw();
-	CEnemy::Draw();
-}
-
-void CBossCannon::Finalize(void)
-{
-	CEnemy::Finalize();
-	m_Model.Unload();
 }
 
 void CBossCannon::SetPosition(aqua::CVector3 pos)

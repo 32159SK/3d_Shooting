@@ -36,17 +36,6 @@ public:
      */
     void    Update(void)override;
 
-    /*
-     *  @brief      •`‰æ
-     */
-    void    Draw(void)override;
-
-    /*
-     *  @brief      ‰ð•ú
-     */
-    void    Finalize(void)override;
-
-
 private:
 
     void            Shot(void)override;
@@ -56,6 +45,4 @@ private:
     static const float   m_capture_range;        // Š´’m”ÍˆÍ
 
     bool            m_Capture;      // •ß‘¨ƒtƒ‰ƒO
-
-    aqua::CModel    m_Model;
 };

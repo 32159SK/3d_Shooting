@@ -37,14 +37,19 @@ public:
     virtual void    Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, CStageManager* st_m, CBulletManager* bm);
 
     /*
+     *  @brief      更新
+     */
+    virtual void    Update(void)override;
+
+    /*
      *  @brief      描画
      */
     virtual void    Draw(void)override;
 
     /*
-     *  @brief      更新
+     *  @brief      解放
      */
-    virtual void    Update(void)override;
+    virtual void    Finalize(void)override;
 
     /*
      *  @brief      被弾判定
@@ -151,6 +156,9 @@ protected:
     aqua::CColor         m_Color;        // 色
 
     aqua::CCubePrimitive m_Cube;         // ユニットのコライダー
+
+    aqua::CModel         m_Model;        // モデル
+
 
     aqua::CTimer         m_ShotCT;
 

@@ -31,11 +31,6 @@ public:
      *  @brief      ‰Šú‰»
      */
     void    Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, CBulletManager* bm)override;
-    /*
-     *  @brief      XV
-     */
-    virtual void    Update(void)override;
-
 
 private:
 

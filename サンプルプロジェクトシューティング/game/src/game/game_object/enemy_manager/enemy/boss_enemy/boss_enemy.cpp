@@ -37,12 +37,10 @@ CBossEnemy::CBossEnemy(aqua::IGameObject* parent)
 void CBossEnemy::
 Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, CBulletManager* bm)
 {
-	CEnemy::Initialize(pop_pos, enemy_info, st_m, bm);
 	m_Model.Load("data\\model\\boss_enemy.mv1");
-	m_Model.position = m_Position;
 	m_ShotBullet = BULLET_TYPE::PENETRATE;
-	m_Cube.visible = false;
 
+	CEnemy::Initialize(pop_pos, enemy_info, st_m, bm);
 	// êe(ìGä«óù)ÉNÉâÉXÇéÊìæ
 	m_EnemyManager = (CEnemyManager*)IGameObject::GetParent();
 
@@ -75,22 +73,8 @@ void CBossEnemy::Update(void)
 	Move();
 
 	Shot();
-
-	m_Cube.position = m_Position;
-	m_Model.rotation.y = aqua::DegToRad(m_Rotate);
 }
 
-void CBossEnemy::Draw(void)
-{
-	m_Model.Draw();
-	CEnemy::Draw();
-}
-
-void CBossEnemy::Finalize(void)
-{
-	CEnemy::Finalize();
-	m_Model.Unload();
-}
 
 void CBossEnemy::SetCannonPosition(void)
 {

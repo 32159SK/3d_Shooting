@@ -45,13 +45,22 @@ void IUnit::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, 
 	// ビームによるダメージの間隔用タイマーのセットアップ
 	m_BeamInterval.Setup(m_beam_damage_interval);
 
+	m_Cube.visible = false;
+
 	IGameObject::Initialize();
 }
 
 void IUnit::Draw(void)
 {
 	m_Cube.Draw();
+	m_Model.Draw();
 	IGameObject::Draw();
+}
+
+void IUnit::Finalize(void)
+{
+	m_Model.Unload();
+	IGameObject::Finalize();
 }
 
 void IUnit::Update(void)

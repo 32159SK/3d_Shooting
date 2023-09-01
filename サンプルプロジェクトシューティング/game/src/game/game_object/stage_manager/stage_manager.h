@@ -79,7 +79,7 @@ public:
     aqua::CCubePrimitive::COLL_DIRE GetCollDire(void) { return m_LastCollObject->GetCollDire(); }
 
     /*
-     *  @brief      ‰ğ•ú
+     *  @brief      oŒ»“G”
      */
     int         GetEnemyCount(void) { return m_EnemyCount; }
 

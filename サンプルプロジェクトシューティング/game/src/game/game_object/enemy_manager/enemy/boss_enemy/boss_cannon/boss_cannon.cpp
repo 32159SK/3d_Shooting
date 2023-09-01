@@ -143,10 +143,8 @@ void CBossCannon::EasingMove(void)
 
 	// タイマー終了
 	if (m_MoveTimer.Finished())
-	{
 		// 座標を終点に合わせる
 		m_Position = m_EndPos;
-	}
 }
 
 void CBossCannon::AllRangeMove(void)
@@ -196,7 +194,7 @@ void CBossCannon::Irradiation(void)
 		// ポインタにnullを代入
 		m_Beam = nullptr;
 		// ボスエネミーの砲座標セットクラスを呼び出す
-		m_BossEnemy->SetCannonPosition();
+		m_BossEnemy->SetCannonPosition(m_BossEnemy->GetRotate());
 		// 状態をRETURNへ遷移
 		m_AllRangeState = ALLRANGE_STATE::RETURN;
 	}

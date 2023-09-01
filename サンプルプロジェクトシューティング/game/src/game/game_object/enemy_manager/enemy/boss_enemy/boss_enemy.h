@@ -42,7 +42,7 @@ public:
     /*
      *  @brief      砲の座標セット
      */
-    void    SetCannonPosition(void);
+    void    SetCannonPosition(float rotate);
 
     /*
      *  @brief      砲のリセット

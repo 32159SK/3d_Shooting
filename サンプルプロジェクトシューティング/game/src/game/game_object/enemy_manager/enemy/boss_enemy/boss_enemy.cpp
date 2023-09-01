@@ -90,11 +90,18 @@ void CBossEnemy::Update(void)
 }
 
 
-void CBossEnemy::SetCannonPosition(void)
+void CBossEnemy::SetCannonPosition(float rotate)
 {
 	// 自身がnull・形態が死のいずれかであれば処理しない
 	if (!this||m_Phase == BOSS_PHASE::DEAD)
 		return;
+
+	// 行列を使ってボスの座標を中心とした回転処理を行い砲の座標を決める
+	aqua::CMatrix mat;
+	mat.RotationY(aqua::DegToRad(rotate));
+	mat.Translate(m_Position);
+	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
+		m_CannonPos[i] = -m_base_cannon_pos[i] * mat;
 
 	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
 		if (m_Cannon[i] && !m_Cannon[i]->GetDead())
@@ -186,27 +193,14 @@ void CBossEnemy::FirstPhase(void)
 	// 2点から回転角度を求める
 	m_Cube.m_HRotate = aqua::RadToDeg(atan2(v.x, v.z));
 
-
-	// 行列を使って始点を中心とした回転処理を行い砲の座標を決める
-	aqua::CMatrix mat;
-	mat.RotationY(aqua::DegToRad(m_Cube.m_HRotate));
-	mat.Translate(m_Position);
-	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
-		m_CannonPos[i] = -m_base_cannon_pos[i] * mat;
-	SetCannonPosition();
+	// 砲エネミーの座標セット
+	SetCannonPosition(m_Cube.m_HRotate);
 }
 
 void CBossEnemy::SecondPhase(void)
 {
-
-	aqua::CMatrix mat;
-	mat.RotationY(aqua::DegToRad(m_Rotate));
-	mat.Translate(m_Position);
-
-	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
-		m_CannonPos[i] = -m_base_cannon_pos[i] * mat;
-
-	SetCannonPosition();
+	// 砲エネミーの座標セット
+	SetCannonPosition(m_Rotate);
 
 	m_Rotate += m_rotate_speed;
 
@@ -286,7 +280,7 @@ void CBossEnemy::AllRangeAttack(void)
 	// この時点でタイマーをリセット(この関数を再度呼ぶのを防ぐ目的、ARA中はタイマーの更新がかからないのでCTも問題はない)
 	m_AllRangeCT.Reset();
 
-	float shot_angle[8] = { 0.0f };
+	float shot_angle[4] = { 0.0f };
 
 	for (;;)
 	{
@@ -301,7 +295,7 @@ void CBossEnemy::AllRangeAttack(void)
 	}
 
 
-	// 生きている"半分"の砲にオールレンジ攻撃をさせる
+	// "半分"の砲にオールレンジ攻撃をさせる
 	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
 		if (m_Cannon[i] && !m_Cannon[i]->GetDead() && i<= 3)
 		{

@@ -119,6 +119,10 @@ private:
     
     static const float m_ago_pos_time;  // 座標を取る間隔
 
+    static const float m_invincible_time;// 無敵時間
+
+    static const float m_flash_time;// 点滅切り替え時間
+
     static const float m_lock_range;    // ロックオン範囲
 
     static const float m_width;         // 幅定数
@@ -127,7 +131,8 @@ private:
 
     static const float m_depth;         // 奥行定数
 
-    static const float m_invincible_time;// 無敵時間
+    static const float m_speed;         // 移動速度定数
+
 
     static const float m_font_size;     // フォントサイズ
 
@@ -146,6 +151,8 @@ private:
     aqua::CTimer    m_InvincibleTimer;  // 無敵時間タイマー
 
     aqua::CTimer    m_LockonTimer;      // 連続でm_LockONが切り替わるのを防止
+
+    aqua::CTimer    m_FlashTimer;       // フラッシュタイマー
 
     CFloor*         m_Floor;            // 床のポインタ
 

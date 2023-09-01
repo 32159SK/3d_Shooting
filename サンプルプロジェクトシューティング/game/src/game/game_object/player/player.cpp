@@ -4,11 +4,13 @@
 const float CPlayer::m_shot_ct = 0.5f;
 const float CPlayer::m_change_shotCT = 0.5f;
 const float CPlayer::m_ago_pos_time = 0.2f;
+const float CPlayer::m_invincible_time = 2.0f;
+const float CPlayer::m_flash_time = 0.1f;
 const float CPlayer::m_lock_range = 200.0f;
 const float CPlayer::m_width = 10.0f;
 const float CPlayer::m_height = 10.0f;
 const float CPlayer::m_depth = 10.0f;
-const float CPlayer::m_invincible_time = 2.0f;
+const float CPlayer::m_speed = 1.0f;
 const float CPlayer::m_font_size = 30.0f;
 const int   CPlayer::m_max_life = 20;
 
@@ -38,14 +40,17 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, CStageManager* st_m, CBulletMan
 	// 基本的なユニットの初期化を基底クラスの初期化を呼び出して行う
 	IUnit::Initialize(pop_pos, m_width, m_height, m_depth,st_m, bm);
 	
-
+	// その他基本設定
 	m_UnitType = UNIT_TYPE::PLAYER;
 	m_ShotBullet = BULLET_TYPE::NORMAL;
 	m_BulletManager->SetPlayer(this);
-	m_Speed = 1.0f;
+	m_Speed = m_speed;
 
 	// 無敵時間の設定
 	m_InvincibleTimer.Setup(m_invincible_time);
+
+	// フラッシュタイマーの設定
+	m_FlashTimer.Setup(m_flash_time);
 
 	// 切り替えタイマーのセットアップ
 	m_ChangeCT.Setup(m_change_shotCT);
@@ -93,16 +98,31 @@ void CPlayer::Update(void)
 	
 	// 無敵状態ならタイマーを更新
 	if (m_Invincible)
+	{
 		m_InvincibleTimer.Update();
+		// ここでフラッシュタイマーも更新
+		m_FlashTimer.Update();
+		// 自機が死んでいないかつ、フラッシュタイマーが終了したら自機の可視化フラグを入れ替えタイマーをリセット
+		if (!m_DeadFlag && m_FlashTimer.Finished())
+		{
+			m_Model.visible = !m_Model.visible;
+			m_FlashTimer.Reset();
+		}
+	}
 	// 終了時に無敵を解除しタイマーをリセット
 	if (m_InvincibleTimer.Finished())
 	{
+		// 可視化フラグを戻し、タイマーもリセットしておく
+		m_Model.visible = true;
+		m_FlashTimer.Reset();
 		m_Invincible = false;
 		m_InvincibleTimer.Reset();
 	}
 
+	// 移動
 	Move();
 
+	// 自身の子オブジェクト(この場合はライフバー)の更新
 	IGameObject::Update();
 
 	// ここで敵が追尾する用のポジションを取っておく
@@ -154,7 +174,10 @@ bool CPlayer::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere, int 
 
 bool CPlayer::CheckHitBeam(UNIT_TYPE type, aqua::CCapsulePrimitive capsule, int damage)
 {
-	// 基底ユニットクラスの被弾確認を呼び出し当たっていたら無敵フラグを真にする
+	// 無敵なら処理をやめる
+	if (m_Invincible)
+		return false;
+	// 基底ユニットクラスの被弾確認を呼び出す
 	if (IUnit::CheckHitBeam(type, capsule, damage))
 		return true;
 	else
@@ -277,6 +300,7 @@ void CPlayer::Operation(void)
 	// 壁と当たってたらそこで止まる
 	if (m_StageManager->StageObjectCollision(m_Position, m_Position + m_Velocity * m_Width, false))
 		return;
+
 
 	// 座標に移動速度を加算する
 	m_Position += m_Velocity;

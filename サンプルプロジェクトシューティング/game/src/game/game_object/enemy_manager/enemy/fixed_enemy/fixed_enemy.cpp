@@ -1,7 +1,7 @@
 #include "../../../game_object.h"
 #include "fixed_enemy.h"
 
-const float CFixedEnemy::m_capture_range = 150.0f;
+const float CFixedEnemy::m_capture_range = 200.0f;
 
 CFixedEnemy::CFixedEnemy(aqua::IGameObject* parent)
 	: CEnemy(parent, "FixedEnemy")

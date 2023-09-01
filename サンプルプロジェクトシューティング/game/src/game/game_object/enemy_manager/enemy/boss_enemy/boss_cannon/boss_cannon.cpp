@@ -27,14 +27,11 @@ Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, C
 	m_LockOnMarker = aqua::CreateGameObject<CLockOnMarker>(this);
 	m_LockOnMarker->SetTarget(m_Player);
 
-	// モデル
+	// モデルのロード
 	m_Model.Load("data\\model\\boss_cannon.mv1");
 
-	// 基底クラスで基本的な初期化を行う
+	// 基本的なユニットの初期化を基底クラスの初期化を呼び出して行う
 	CEnemy::Initialize(pop_pos, enemy_info, st_m, bm);
-
-	m_Cube.visible = false;
-
 }
 
 void CBossCannon::Update(void)
@@ -42,13 +39,18 @@ void CBossCannon::Update(void)
 	// 射撃はあくまでもボス依存なので継承元のCEnemyのアップデートは呼び出さない
 	IGameObject::Update();
 
+	// ボスが死んでなければ自身の行動可能フラグを代入して合わせる
 	if (!m_BossEnemy->GetDead())
 		m_BossEnemy->SetMoveFlag(m_MoveFlag);
 
+	// 動けないなら処理しない
 	if (!m_BossEnemy->GetMoveFlag())
 		return;
 	Move();
 
+	m_Cube.m_HRotate = m_Rotate;
+	m_Model.position = m_Position;
+	m_Model.rotation.y = aqua::DegToRad(m_Rotate);
 }
 
 void CBossCannon::SetPosition(aqua::CVector3 pos)
@@ -56,11 +58,13 @@ void CBossCannon::SetPosition(aqua::CVector3 pos)
 	// 戻る最中ではない
 	if (!m_ReturnFlag)
 	{
+		// 渡された座標をそのまま代入
 		m_Position = pos;
 		return;
 	}
 	else if (m_ReturnFlag && m_EndPos != pos)	// 戻る最中かつ終了地点とposが一致しない(戻ろうとしてから呼び出されていない)
 	{
+		// 移動先の終点として代入し現在座標を始点にする
 		m_EndPos = pos;
 		m_StartPos = m_Position;
 	}
@@ -211,6 +215,7 @@ void CBossCannon::ReturnPosition(void)
 		m_AllRangeAttacking = false;
 		m_ReturnFlag = false;
 
+		// 始点をリセット
 		m_StartPos = aqua::CVector3::ZERO;
 		m_EndPos = m_StartPos;
 

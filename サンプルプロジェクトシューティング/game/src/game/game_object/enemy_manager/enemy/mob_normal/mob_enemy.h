@@ -34,12 +34,16 @@ public:
      */
     void    Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, CBulletManager* bm)override;
 
-    void    SetPlayer(CPlayer* player) { m_Player = player; }
-
 private:
 
+    /*
+     *  @brief      射撃
+     */
     void    Shot(void)override;
 
+    /*
+     *  @brief      移動
+     */
     void    Move(void)override;
 
     /*
@@ -59,6 +63,8 @@ private:
     static const float   m_follow_range;        // 追跡感知範囲
 
     static const float   m_lose_sight_time;     // 見失うまでの時間
+
+    static const float   m_turning_speed;       // 旋回速度
 
     bool                 m_Follow;              // 追跡フラグ
 

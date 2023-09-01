@@ -45,7 +45,7 @@ public:
 
 
     /*!
-     *  @brief      リザルト時に扱うデータ取得
+     *  @brief      リザルト時に扱うデータセッター
      */
     void    SetClear(bool clear) { m_Clear = clear; }
 
@@ -56,5 +56,5 @@ public:
     bool    GetClearFlag(void) { return m_Clear; }
 private:
 
-    bool            m_Clear;        // 
+    bool            m_Clear;        // クリア成否
 };

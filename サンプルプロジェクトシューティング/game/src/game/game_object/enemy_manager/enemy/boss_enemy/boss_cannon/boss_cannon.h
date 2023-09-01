@@ -141,8 +141,6 @@ private:
 
     aqua::CVector3  m_EndPos;
 
-    aqua::CModel    m_Model;
-
     aqua::CTimer    m_MoveTimer;
 
     CBossEnemy*     m_BossEnemy;

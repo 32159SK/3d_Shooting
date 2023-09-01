@@ -29,6 +29,7 @@ CNormalEffect::Initialize(const aqua::CVector3& position, std::string effect_nam
 {
     // エフェクト名から再生
     m_Effect.Create("data\\texture\\effect\\" + effect_name + ".efkefc");
+    // 描画位置等を引数に合わせる
     m_Position = position;
     m_Rotate = rotate;
     m_Effect.position = m_Position;
@@ -41,7 +42,7 @@ void CNormalEffect::Update(void)
 {
     m_Effect.position = m_Position;
     m_Effect.rotation.y = aqua::DegToRad(m_Rotate);
-
+    // エフェクトの更新
     m_Effect.Update();
     // エフェクトが終了したら自身を削除
     if (m_Effect.Finished())

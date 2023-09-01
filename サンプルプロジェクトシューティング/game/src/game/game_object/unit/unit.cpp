@@ -4,8 +4,8 @@
 const float IUnit::m_beam_damage_interval =0.3f;
 
 IUnit::
-IUnit(aqua::IGameObject* parent, const std::string& object_name)
-	: aqua::IGameObject(parent,object_name)
+IUnit(aqua::IGameObject* parent, const std::string& object_name, const std::string& category_name)
+	: aqua::IGameObject(parent,object_name ,category_name)
 	, m_Height(0.0f)
 	, m_Width(0.0f)
 	, m_Depth(0.0f)
@@ -19,6 +19,7 @@ IUnit(aqua::IGameObject* parent, const std::string& object_name)
 	, m_Rotate(0.0f)
 	, m_Position(aqua::CVector3::ZERO)
 	, m_Velocity(aqua::CVector3::ZERO)
+	, m_LifeBar(nullptr)
 	, m_EffectManager(nullptr)
 	, m_SoundManager(nullptr)
 	, m_BulletManager(nullptr)
@@ -38,13 +39,14 @@ void IUnit::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, 
 	m_DeadFlag = false;
 	m_Color = aqua::CColor::BLACK;
 	m_Cube.Setup(m_Position, m_Width, m_Height, m_Depth, m_Color);
-	aqua::CreateGameObject<CLifeBar>(this);
+
 	// エフェクト管理クラスを探査してポインタを受け取る
 	m_EffectManager = (CEffectManager*)aqua::FindGameObject("EffectManager");
 	m_SoundManager = (CSoundManager*)aqua::FindGameObject("SoundManager");
 	// ビームによるダメージの間隔用タイマーのセットアップ
 	m_BeamInterval.Setup(m_beam_damage_interval);
 
+	// キューブを描画する必要はない(あくまでもコライダー代わり)のでvisibleをfalseにする
 	m_Cube.visible = false;
 
 	IGameObject::Initialize();
@@ -52,9 +54,9 @@ void IUnit::Initialize(aqua::CVector3 pop_pos, float wid, float hei, float dep, 
 
 void IUnit::Draw(void)
 {
+	IGameObject::Draw();
 	m_Cube.Draw();
 	m_Model.Draw();
-	IGameObject::Draw();
 }
 
 void IUnit::Finalize(void)
@@ -65,10 +67,6 @@ void IUnit::Finalize(void)
 
 void IUnit::Update(void)
 {
-	Move();
-	m_Cube.position = m_Position;
-
-	IGameObject::Update();
 }
 
 bool IUnit::CheckHitBullet(UNIT_TYPE type, aqua::CSpherePrimitive sphere,int damage)
@@ -102,6 +100,7 @@ bool IUnit::CheckHitBeam(UNIT_TYPE type, aqua::CCapsulePrimitive capsule, int da
 		// タイマーをリセット
 		m_BeamInterval.Reset();
 	}
+	// キューブクラスの判定を返す
 	return m_Cube.collision;
 }
 
@@ -125,20 +124,23 @@ void IUnit::Damage(int damage)
 	// ライフをダメージ数値分減算
 	m_Life -= damage;
 
+	// ライフバーの計算処理
+	m_LifeBar->CalcLifeBar();
 
 	// ライフが0以下になったら死亡処理を行う
 	if (m_Life <= 0)
 		Dead();
 	else
-		// 0以下でなければダメージSEを再生しない
+		// 0以下でなければダメージSEを再生
 		m_SoundManager->Play(SOUND_ID::s_DAMAGE);
-
 }
 
 void IUnit::Dead(void)
 {
+	// 死亡フラグを真に
 	m_DeadFlag = true;
-	m_Cube.visible = false;
+	// モデルの可視化フラグを偽にして見えなくする
+	m_Model.visible = false;
 
 	// 死亡エフェクトを再生
 	m_EffectManager->Create(EFFECT_ID::DEAD, m_Position);

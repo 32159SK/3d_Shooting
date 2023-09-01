@@ -37,9 +37,14 @@ public:
     void    Update(void)override;
 
 private:
-
+    /*
+     *  @brief      ŽËŒ‚
+     */
     void            Shot(void)override;
 
+    /*
+     *  @brief      ˆÚ“®
+     */
     void            Move(void)override;
 
     static const float   m_capture_range;        // Š´’m”ÍˆÍ

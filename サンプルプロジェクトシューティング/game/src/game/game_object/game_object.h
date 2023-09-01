@@ -14,5 +14,6 @@
 #include"scene_manager/scene_manager.h"
 #include"scene_manager/scene/game_main/game_main.h"
 #include"ui_component/life_bar/life_bar.h"
+#include"ui_component/life_bar/unique_life/unique_life.h"
 #include"ui_component/lockon_marker/lockon_marker.h"
 #include"floor/floor.h"

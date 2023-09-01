@@ -132,6 +132,7 @@
     <ClCompile Include="src\game\game_object\stage_manager\stage_object\normal_block\normal_block.cpp" />
     <ClCompile Include="src\game\game_object\stage_manager\stage_object\stage_object.cpp" />
     <ClCompile Include="src\game\game_object\ui_component\life_bar\life_bar.cpp" />
+    <ClCompile Include="src\game\game_object\ui_component\life_bar\unique_life\unique_life.cpp" />
     <ClCompile Include="src\game\game_object\ui_component\lockon_marker\lockon_marker.cpp" />
     <ClCompile Include="src\game\game_object\ui_component\rader\rader.cpp" />
     <ClCompile Include="src\game\game_object\ui_component\ui_component.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="src\game\game_object\stage_manager\stage_object\stage_object.h" />
     <ClInclude Include="src\game\game_object\stage_manager\stage_object\stage_object_id.h" />
     <ClInclude Include="src\game\game_object\ui_component\life_bar\life_bar.h" />
+    <ClInclude Include="src\game\game_object\ui_component\life_bar\unique_life\unique_life.h" />
     <ClInclude Include="src\game\game_object\ui_component\lockon_marker\lockon_marker.h" />
     <ClInclude Include="src\game\game_object\ui_component\rader\rader.h" />
     <ClInclude Include="src\game\game_object\ui_component\ui_component.h" />

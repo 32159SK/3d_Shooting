@@ -54,7 +54,15 @@ public:
      */
     bool    GetMoveFlag(void) { return m_MoveFlag; }
 
-    
+    /*
+     *  @brief      現在ライフの取得
+     */
+    int     GetLife(void)override { return m_PhaseLife[m_Phase]; }
+
+    /*
+     *  @brief      最大ライフの取得
+     */
+    int     GetMaxLife(void)override { return m_PhaseMaxLife[m_Phase]; }
 private:
     /*
      *  @brief      射撃
@@ -124,7 +132,9 @@ private:
 
     static const float   m_rotate_speed;        // 回転速度
 
-    int             m_PhaseLife[2];             // 状態ごとのライフ
+    int             m_PhaseLife[2];             // 形態ごとのライフ
+
+    int             m_PhaseMaxLife[2];          // 形態ごとの最大ライフ
 
     int             m_SummonCount;              // 召喚のカウンター
 
@@ -138,9 +148,9 @@ private:
 
     aqua::CTimer    m_DeadTimer;                // 死亡タイマー
 
-    CBossCannon*    m_Cannon[8];                // 
+    CBossCannon*    m_Cannon[8];                // 砲エネミーのポインタ
 
     CEnemyManager*  m_EnemyManager;             // 敵管理クラス(親クラス)
 
-    CGameMain*      m_GameMain;
+    CGameMain*      m_GameMain;                 // ゲームメインシーンのポインタ
 };

@@ -29,5 +29,4 @@ void CReflectionBullet::StageObjectHit(aqua::CCubePrimitive::COLL_DIRE c_dire)
 	else if (c_dire == aqua::CCubePrimitive::COLL_DIRE::RIGHT
 		|| c_dire == aqua::CCubePrimitive::COLL_DIRE::LEFT)
 		m_Dir.x *= -1.0f;
-
 }

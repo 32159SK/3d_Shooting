@@ -35,7 +35,7 @@ void CRader::Update(void)
 {
 	// 
 	for (int i = 0; i < m_EnemyCount; ++i)
-		if (!m_Enemy[i] && !m_Enemy[i]->GetDead())
+		if (!m_Enemy[i] || m_Enemy[i]->GetDead())
 			m_EnemySprite[i].visible = false;
 		else
 		{
@@ -52,8 +52,10 @@ void CRader::Update(void)
 void CRader::Draw(void)
 {
 	m_RaderSprite.Draw();
-	for (int e = 0; e < m_EnemyCount; ++e)
-		m_EnemySprite[e].Draw();
+	// 存在するエネミーで生きているもののみレーダー内で描画
+	for (int i = 0; i < m_EnemyCount; ++i)
+		if (m_Enemy[i] && !m_Enemy[i]->GetDead())
+			m_EnemySprite[i].Draw();
 	m_PlayerSprite.Draw();
 }
 
@@ -61,8 +63,8 @@ void CRader::Finalize(void)
 {
 	m_RaderSprite.Delete();
 	m_PlayerSprite.Delete();
-	for (int e = 0; e < m_EnemyCount; ++e)
-		m_EnemySprite[e].Delete();
+	for (int i = 0; i < m_EnemyCount; ++i)
+		m_EnemySprite[i].Delete();
 }
 
 void CRader::SetEnemy(CEnemy* enemy)

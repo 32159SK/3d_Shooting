@@ -13,7 +13,7 @@ const float CPlayer::m_font_size = 30.0f;
 const int   CPlayer::m_max_life = 20;
 
 CPlayer::CPlayer(aqua::IGameObject* parent)
-	: IUnit(parent,"Player")
+	: IUnit(parent, "Player", "Player")
 	, m_Invincible(false)
 	, m_AgoPosition(aqua::CVector3::ZERO)
 	, m_Floor(nullptr)
@@ -25,9 +25,11 @@ CPlayer::CPlayer(aqua::IGameObject* parent)
 
 void CPlayer::Initialize(aqua::CVector3 pop_pos, CStageManager* st_m, CBulletManager* bm)
 {
+	// ライフバーの生成
+	m_LifeBar = aqua::CreateGameObject<CUniqueLifeBar>(this);
+
 	// ロックオンマーカークラスを生成しポインタを入れる
 	m_LockOnMarker = aqua::CreateGameObject<CLockOnMarker>(this);
-
 
 	// ライフ最大値を代入
 	m_MaxLife = m_max_life;
@@ -56,22 +58,26 @@ void CPlayer::Initialize(aqua::CVector3 pop_pos, CStageManager* st_m, CBulletMan
 	// ロックオンタイマーのセットアップ
 	m_LockonTimer.Setup(0.1f);
 
-	m_Cube.visible = false;
 	// モデルのロード
 	m_Model.Load("data\\model\\player.mv1");
 
 	// 床のポインタを取る
 	m_Floor = (CFloor*)aqua::FindGameObject("Floor");
 
+	// 弾アイコンの描画位置変数を宣言
+	aqua::CVector2 icon_pos = aqua::CVector2::ZERO;
+
 	// 弾のアイコンの生成
 	for (int i = 0; i < (int)BULLET_TYPE::MAX; ++i)
 	{
 		// 弾種名を管理クラスから受け取り、それを用いてファイルパスにする
 		m_BulletIcon[i].Create("data\\texture\\ui\\icon\\" + m_BulletManager->GetBulletName((BULLET_TYPE)i) + ".png");
-		// 仮の座標
-		m_BulletIcon[i].position = aqua::CVector2(aqua::GetWindowWidth() - m_BulletIcon[i].GetTextureWidth(), 0.0f);
+		// X座標は一番端、Y座標はライフバーの上にする
+		icon_pos.x = (float)(aqua::GetWindowWidth() - m_BulletIcon[i].GetTextureWidth());
+		icon_pos.y = m_LifeBar->GetFramePosition().y - m_BulletIcon[i].GetTextureHeight();
+		// 最後に計算した座標を代入
+		m_BulletIcon[i].position = icon_pos;
 	}
-
 }
 
 void CPlayer::Update(void)
@@ -95,8 +101,9 @@ void CPlayer::Update(void)
 		m_InvincibleTimer.Reset();
 	}
 
-	// ユニットの更新
-	IUnit::Update();
+	Move();
+
+	IGameObject::Update();
 
 	// ここで敵が追尾する用のポジションを取っておく
 	if (m_AgoPosTimer.Finished())
@@ -104,6 +111,9 @@ void CPlayer::Update(void)
 		m_AgoPosition = m_Position;
 		m_AgoPosTimer.Reset();
 	}
+
+	// 当たり判定のキューブと座標を合わせる
+	m_Cube.position = m_Position;
 
 	// モデルの座標と回転角度を合わせる
 	m_Model.position = m_Cube.position;
@@ -158,6 +168,9 @@ void CPlayer::LifeHeal(int heal_value)
 		m_Life = m_max_life;
 	else
 		m_Life += heal_value;	// 越えなければそのまま回復値分加算する
+
+	// 回復後の値でライフバーを再計算
+	m_LifeBar->CalcLifeBar();
 }
 
 void CPlayer::Shot(void)
@@ -204,8 +217,8 @@ void CPlayer::Shot(void)
 	if (m_ShotCT.Finished() && (aqua::mouse::Button(aqua::mouse::BUTTON_ID::LEFT)))
 	{
 		// ビームでなければSEを再生(ビームはチャージ音等が特殊なのでビームクラス内で再生)
-		//if (m_ShotBullet != BULLET_TYPE::BEAM)
-			//m_SoundManager->Play(SOUND_ID::s_SHOT);
+		if (m_ShotBullet != BULLET_TYPE::BEAM)
+			m_SoundManager->Play(SOUND_ID::s_SHOT);
 		// 自機の正面から弾を撃つ
 			m_BulletManager->Create(m_Position + front * 10.0f, front * 10.5f, m_UnitType, m_ShotBullet, this);
 			m_ShotCT.Reset();

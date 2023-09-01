@@ -14,6 +14,7 @@
 
 class CBulletManager;
 class IBullet;
+class CLifeBar;
 
 class IUnit : public aqua::IGameObject
 {
@@ -24,7 +25,7 @@ public:
      *  @param[in]  parent          親オブジェクト
      *  @param[in]  object_name     オブジェクト名
      */
-    IUnit(aqua::IGameObject* parent, const std::string& object_name);
+    IUnit(aqua::IGameObject* parent, const std::string& object_name , const std::string& category_name);
 
     /*
      *  @brief      デストラクタ
@@ -61,8 +62,14 @@ public:
      */
     virtual bool    CheckHitBeam(UNIT_TYPE type, aqua::CCapsulePrimitive capsule, int damage);
 
+    /*
+     *  @brief      座標取得
+     */
     aqua::CVector3  GetPosition(void) { return m_Position; }
 
+    /*
+     *  @brief      死亡確認
+     */
     bool            GetDead(void);
 
     /*
@@ -74,14 +81,16 @@ public:
      *  @brief      回転値の取得
      */
     float           GetRotate(void) { return m_Rotate; }
+
     /*
      *  @brief      最大ライフの取得
      */
-    int             GetMaxLife(void) { return m_MaxLife; }
+    virtual int     GetMaxLife(void) { return m_MaxLife; }
+
     /*
      *  @brief      現在ライフの取得
      */
-    int             GetLife(void) { return m_Life; }
+    virtual int     GetLife(void) { return m_Life; }
 
     /*
      *  @brief      ロックオンフラグの取得
@@ -139,13 +148,13 @@ protected:
 
     float                m_Depth;        // 奥行
 
-    float                m_Angle;
+    float                m_Angle;        // 角度
 
-    float                m_Rotate;       //! 水平回転角度
+    float                m_Rotate;       // 水平回転値
 
     UNIT_TYPE            m_UnitType;     // ユニット属性
 
-    BULLET_TYPE          m_ShotBullet;
+    BULLET_TYPE          m_ShotBullet;   // 放つ弾種
 
     aqua::CVector3       m_Position;     // 座標
 
@@ -160,15 +169,17 @@ protected:
     aqua::CModel         m_Model;        // モデル
 
 
-    aqua::CTimer         m_ShotCT;
+    aqua::CTimer         m_ShotCT;       // 射撃クールタイム
 
-    aqua::CTimer         m_BeamInterval;
+    aqua::CTimer         m_BeamInterval; // ビームのダメージインターバル
 
-    CEffectManager*      m_EffectManager;
+    CLifeBar*            m_LifeBar;      // ライフバー
 
-    CSoundManager*       m_SoundManager;
+    CEffectManager*      m_EffectManager;// エフェクト管理クラス
 
-    CBulletManager*      m_BulletManager;
+    CSoundManager*       m_SoundManager; // サウンド管理クラス
 
-    CStageManager*       m_StageManager;
+    CBulletManager*      m_BulletManager;// 弾管理クラス
+
+    CStageManager*       m_StageManager; // ステージ管理クラス
 };

@@ -1,7 +1,6 @@
 /*!
  *  @file       life_bar.h
- *  @brief      
- *  @brief      
+ *  @brief      ライフバークラス
  *  @author     Kazuto Shimazaki
  *  @version    1.0
  *
@@ -40,26 +39,35 @@ public:
     /*!
      *  @brief      初期化
      */
-    void        Initialize(void);
+    void                Initialize(void);
 
     /*!
      *  @brief      更新
      */
-    void        Update(void)override;
+    void                Update(void)override;
 
     /*!
      *  @brief      描画
      */
-    void        Draw(void) override;
+    void                Draw(void) override;
 
     /*!
      *  @brief      解放
      */
-    void        Finalize(void) override;
+    void                Finalize(void) override;
 
-private:
+    /*!
+     *  @brief      ライフバー計算処理
+     */
+    virtual void        CalcLifeBar(void);
 
-    void        CalcLifeBar(void);
+    /*!
+     *  @brief      座標取得
+     */
+    aqua::CVector2      GetFramePosition(void) { return m_Sprite[0].position; }
+
+protected:
+
 
     aqua::CSprite                   m_Sprite[2];// 
 

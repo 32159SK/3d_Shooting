@@ -19,21 +19,20 @@
 enum SOUND_ID
 {
     // (b_) BGM
-    b_TITLE             // タイトルBGM
-    , b_GAME_MAIN        // ゲームメインBGM
-    , b_GAME_CLEAR
-    , b_GAME_OVER
+    b_TITLE             // タイトル
+    , b_GAME_MAIN       // ゲームメイン
+    , b_GAME_CLEAR      // クリア
+    , b_GAME_OVER       // ゲームオーバー
 
     // (s_) SE
-    , s_SELECT          // 選択音
-    //, s_SHOT
-    , s_REFLECT
-    , s_CHARGE
-    , s_BEAM
-    , s_BROKEN
-    , s_DAMAGE
-    , s_DEAD
-    , s_BOSS_DEAD
+    , s_SELECT          // 選択
+    , s_SHOT            // 射撃
+    , s_CHARGE          // ビームチャージ
+    , s_BEAM            // ビーム発射
+    , s_BROKEN          // ブロック破壊
+    , s_DAMAGE          // ダメージ
+    , s_DEAD            // 死亡
+    , s_BOSS_DEAD       // ボス死亡
     , MAX
 };
 

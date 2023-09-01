@@ -10,7 +10,7 @@ const aqua::CVector3 CEnemy::m_surroundings[] =
 };
 
 CEnemy::CEnemy(aqua::IGameObject* parent, const std::string& object_name)
-	: IUnit(parent,"Enemy")
+	: IUnit(parent, "Enemy", "Enemy")
 {
 }
 
@@ -18,6 +18,10 @@ void
 CEnemy::
 Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m,CBulletManager* bm)
 {
+	// idがボスでなければライフバーの生成(ボスは別で用意)
+	if (enemy_info.id != ENEMY_ID::BOSS)
+		m_LifeBar = aqua::CreateGameObject<CLifeBar>(this);
+
 	// 基本的なユニットの初期化を基底クラスの初期化を呼び出して行う
 	IUnit::Initialize(pop_pos, enemy_info.width, enemy_info.height, enemy_info.depth,st_m, bm);
 	// 渡された情報でステータスを決める
@@ -72,22 +76,23 @@ void CEnemy::Shot(void)
 
 	// 弾の生成
 	m_BulletManager->Create(m_Position, front, m_UnitType, m_ShotBullet, this);
-	// SEを再生
-	//m_SoundManager->Play(SOUND_ID::s_SHOT);
+	// ビームでなければSEを再生
+	if (m_ShotBullet != BULLET_TYPE::BEAM)
+		m_SoundManager->Play(SOUND_ID::s_SHOT);
 }
  
 void CEnemy::Move(void)
 {
 	// 移動速度に合わせて回転角度を算出
 	m_Rotate = aqua::RadToDeg(atan2(m_Velocity.x, m_Velocity.z));
-	m_Cube.m_HRotate = m_Rotate;
-
 	m_Position += m_Velocity;
+
+
+	m_Cube.m_HRotate = m_Rotate;
 	m_Cube.position = m_Position;
 
-	m_Model.position = m_Cube.position;
 	m_Model.rotation.y = aqua::DegToRad(m_Rotate);
-
+	m_Model.position = m_Cube.position;
 }
 
 void CEnemy::Dead(void)

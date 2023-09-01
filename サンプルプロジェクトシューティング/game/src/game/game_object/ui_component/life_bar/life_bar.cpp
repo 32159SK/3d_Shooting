@@ -11,7 +11,7 @@ CLifeBar::CLifeBar(aqua::IGameObject* parent)
 void CLifeBar::Initialize(void)
 {
 	m_Sprite[0].Create("data\\texture\\ui\\life_bar\\life_bar.png");
-	m_Sprite[1].Create("data\\texture\\ui\\life_bar\\life_gage.png");
+	m_Sprite[1].Create("data\\texture\\ui\\life_bar\\life_gauge.png");
 
 	// ゲームメインシーン取得
 	m_GameMain = (CGameMain*)aqua::FindGameObject("GameMainScene");
@@ -25,8 +25,6 @@ void CLifeBar::Update(void)
 	// ワールド座標をスクリーン座標に変換する夢のような関数
 	aqua::CVector3 pos = ConvWorldPosToScreenPos(m_Unit->GetPosition());
 	
-	CalcLifeBar();
-
 	// スプライトの中心座標をユニットのスクリーン座標に合わせる
 	m_Sprite[1].SetCenterPosition(aqua::CVector2(pos.x, pos.y - 30.0f));
 	m_Sprite[0].position = m_Sprite[1].position;
@@ -36,7 +34,6 @@ void CLifeBar::Draw(void)
 {
 	m_Sprite[0].Draw();
 	m_Sprite[1].Draw();
-
 }
 
 void CLifeBar::Finalize(void)
@@ -47,6 +44,7 @@ void CLifeBar::Finalize(void)
 
 void CLifeBar::CalcLifeBar(void)
 {
-	float rect = m_Sprite[0].GetTextureWidth() / m_Unit->GetMaxLife();
-	m_Sprite[0].rect.right = rect * m_Unit->GetLife();
+	// バーの幅をユニットの最大ライフで割り、1ライフの幅を求めてそれを現在ライフでかける
+	float rect = (float)m_Sprite[0].GetTextureWidth() / m_Unit->GetMaxLife();
+	m_Sprite[0].rect.right = int(rect * m_Unit->GetLife());
 }

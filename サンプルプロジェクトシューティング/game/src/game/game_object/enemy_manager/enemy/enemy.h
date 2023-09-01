@@ -70,8 +70,8 @@ protected:
      */
     void            Dead(void)override;
 
+    // üˆÍ‚ÌŒü‚«
     static const aqua::CVector3 m_surroundings[];
 
-    BULLET_TYPE     m_ShotBullet;
-    CPlayer*        m_Player;
+    CPlayer*        m_Player;       // ƒvƒŒƒCƒ„[
 };

@@ -37,11 +37,10 @@ public:
      *  @brief      ステージオブジェクトヒット処理
      */
     void    StageObjectHit(aqua::CCubePrimitive::COLL_DIRE c_dire)override;
+
 private:
 
     static const int m_max_reflect_count = 3;   // 最大反射回数
 
     int             m_ReflectCount;             // 反射回数のカウント
-
-    CSoundManager*  m_SoundManager;             // 
 };

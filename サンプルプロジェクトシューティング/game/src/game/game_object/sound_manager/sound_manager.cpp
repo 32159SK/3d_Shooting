@@ -15,20 +15,19 @@
 const std::string CSoundManager::m_sound_file_names[] =
 {
     // ( b_ ) BGM
-      "data\\sound\\b_title.mp3"     // タイトルBGM
-    , "data\\sound\\b_game_main.mp3"   // ゲームメインBGM
-    , "data\\sound\\b_game_clear.mp3"
-    , "data\\sound\\b_game_over.mp3"
+      "data\\sound\\b_title.mp3"        // タイトル
+    , "data\\sound\\b_game_main.mp3"    // ゲームメイン
+    , "data\\sound\\b_game_clear.mp3"   // クリア
+    , "data\\sound\\b_game_over.mp3"    // ゲームオーバー
     // ( s_ ) SE
-    , "data\\sound\\s_select.mp3"     // 選択音
-    //, "data\\sound\\s_shot.mp3"
-    , "data\\sound\\s_reflect.mp3"
-    , "data\\sound\\s_charge.mp3"
-    , "data\\sound\\s_beam.mp3"
-    , "data\\sound\\s_broken.mp3"
-    , "data\\sound\\s_damage.mp3"
-    , "data\\sound\\s_dead.mp3"
-    , "data\\sound\\s_boss_dead.mp3"
+    , "data\\sound\\s_select.mp3"       // 選択
+    , "data\\sound\\s_shot.mp3"         // 射撃
+    , "data\\sound\\s_charge.mp3"       // ビームチャージ
+    , "data\\sound\\s_beam.mp3"         // ビーム発射
+    , "data\\sound\\s_broken.mp3"       // ブロック破壊
+    , "data\\sound\\s_damage.mp3"       // ダメージ
+    , "data\\sound\\s_dead.mp3"         // 死亡
+    , "data\\sound\\s_boss_dead.mp3"    // ボス死亡
 };
 
 /*

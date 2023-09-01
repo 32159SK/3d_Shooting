@@ -65,10 +65,6 @@ public:
 
 
 private:
-    aqua::CSprite       m_BackgroundSprite;     //! 背景用スプライト
-    aqua::CSprite       m_TitleSprite;          //! タイトル用スプライト
-    aqua::CSprite       m_StartSprite;          //! タイトル用スプライト
-    //aqua::CLabel        m_LicenseLabel;
 
     /*
      *  @brief      操作時の文字の規定位置
@@ -76,8 +72,11 @@ private:
      *  @param[in]  [1] = 「スタート」のボタン
      */
     static const        aqua::CVector2 m_basis_position[2];
-
-    aqua::CSprite       m_Sprite;  // スプライト
+    
+    aqua::CSprite       m_BackgroundSprite;     //! 背景用スプライト
+    aqua::CSprite       m_TitleSprite;          //! タイトル用スプライト
+    aqua::CSprite       m_StartSprite;          //! スタート用スプライト
+    //aqua::CLabel        m_LicenseLabel;
 
     CSoundManager*      m_SoundManager;
 };

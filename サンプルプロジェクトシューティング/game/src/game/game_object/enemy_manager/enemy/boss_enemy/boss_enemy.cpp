@@ -25,6 +25,7 @@ const std::string CBossEnemy::m_model_file_path = "data\\model\\boss_enemy.mv1";
 CBossEnemy::CBossEnemy(aqua::IGameObject* parent)
 	: CEnemy(parent, "BossEnemy")
 	, m_PhaseLife{ 0 }
+	, m_PhaseMaxLife{ 0 }
 	, m_SummonCount(0)
 	, m_AllRangeAttacking(false)
 	, m_Phase(BOSS_PHASE::FIRST)
@@ -37,9 +38,18 @@ CBossEnemy::CBossEnemy(aqua::IGameObject* parent)
 void CBossEnemy::
 Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, CBulletManager* bm)
 {
+	IGameObject::m_GameObjectName = "BossEnemy";
+
+	// ライフバーの生成
+	m_LifeBar = aqua::CreateGameObject<CUniqueLifeBar>(this);
+
+	// モデルのロード
 	m_Model.Load("data\\model\\boss_enemy.mv1");
+
+	// 撃つ弾種の設定
 	m_ShotBullet = BULLET_TYPE::PENETRATE;
 
+	// 基本的なユニットの初期化を基底クラスの初期化を呼び出して行う
 	CEnemy::Initialize(pop_pos, enemy_info, st_m, bm);
 	// 親(敵管理)クラスを取得
 	m_EnemyManager = (CEnemyManager*)IGameObject::GetParent();
@@ -53,18 +63,22 @@ Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, C
 	// 死亡タイマーのセット
 	m_DeadTimer.Setup(m_dead_time);
 
-
+	// 形態ごとにライフを設定
 	for (int i = 0; i < BOSS_PHASE::DEAD; i++)
-		m_PhaseLife[i] = m_Life + m_Life * (i + 1);
+	{
+		m_PhaseMaxLife[i] = m_Life + m_Life * (i + 1);
+		m_PhaseLife[i] = m_PhaseMaxLife[i];
+	}
 
+	// 砲の配置
 	CannonSetUp();
+
+	// 更新
+	Update();
 }
 
 void CBossEnemy::Update(void)
 {
-	// 
-	m_Life = m_PhaseLife[m_Phase];
-
 	IGameObject::Update();
 
 	if (m_DeadFlag || !m_MoveFlag)
@@ -116,8 +130,6 @@ void CBossEnemy::Shot(void)
 
 void CBossEnemy::Move(void)
 {
-	if (m_DeadFlag && m_Phase != BOSS_PHASE::DEAD)
-		return;
 	// ボスの形態に合わせた処理
 	switch (m_Phase)
 	{
@@ -129,13 +141,18 @@ void CBossEnemy::Move(void)
 
 void CBossEnemy::Damage(int damage)
 {
+	// 形態ごとのライフを減らす
 	m_PhaseLife[m_Phase] -= damage;
 
 	// 形態ごとのライフが0以下なら形態移行
 	if (m_PhaseLife[m_Phase] <= 0)
 		PhaseChange();
 	else
+	{
 		m_SoundManager->Play(SOUND_ID::s_DAMAGE);
+		// ライフバーの計算処理
+		m_LifeBar->CalcLifeBar();
+	}
 }
 
 void CBossEnemy::Dead(void)
@@ -192,6 +209,9 @@ void CBossEnemy::SecondPhase(void)
 	SetCannonPosition();
 
 	m_Rotate += m_rotate_speed;
+
+	m_Model.rotation.y = aqua::DegToRad(m_Rotate*2.0f);
+
 	// オールレンジ攻撃をしていないなら以下の処理を
 	if (!m_AllRangeAttacking)
 	{
@@ -218,9 +238,6 @@ void CBossEnemy::SecondPhase(void)
 					m_AllRangeAttacking = false;
 	}
 
-
-
-
 }
 
 void CBossEnemy::PhaseChange(void)
@@ -231,8 +248,18 @@ void CBossEnemy::PhaseChange(void)
 	// 自身の形態を次の形態へ変更
 	m_Phase = (BOSS_PHASE)((int)m_Phase + 1);
 
+	// 死んでいないなら以下の処理を
 	if (m_Phase != BOSS_PHASE::DEAD)
+	{
+		// 射撃CTを倍に
+		m_ShotCT.SetLimit(m_ShotCT.GetLimit() * 2.0f);
+
+		// ライフバーの計算処理
+		m_LifeBar->CalcLifeBar();
+
+		// 砲の再設置
 		CannonSetUp();
+	}
 }
 
 void CBossEnemy::CannonSetUp(void)
@@ -240,9 +267,12 @@ void CBossEnemy::CannonSetUp(void)
 	// 砲の再生成・追加と弾種の変更
 	for (int i = 0; i < m_cannon_count[m_Phase]; ++i)
 	{
+		// もし健在なら殺す
 		if (m_Cannon[i])
 			m_Cannon[i]->Dead();
+		// 敵管理クラスで生成させ、ポインタを受け取る
 		m_Cannon[i] = (CBossCannon*)m_EnemyManager->CreateBossParts(m_base_cannon_pos[i], ENEMY_ID::BOSS_CANNON);
+		// 自身の射撃を代行させるために
 		m_Cannon[i]->SetBulletType(m_ShotBullet);
 		m_Cannon[i]->SetBossEnemy(this);
 		m_Cannon[i]->SetCannonNumber(i);

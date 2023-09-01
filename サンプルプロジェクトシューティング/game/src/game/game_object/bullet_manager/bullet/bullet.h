@@ -90,20 +90,19 @@ public:
      */
     virtual void    StageObjectHit(aqua::CCubePrimitive::COLL_DIRE c_dire);
 
-    
 protected:
 
     int                     m_Damage;       // ダメージ量
 
-    float                   m_Rotate;       //! 水平回転角度
+    float                   m_Rotate;       // 回転値
 
-    float                   m_Radius;       //! 水平回転角度
+    float                   m_Radius;       // 半径
 
-    aqua::CVector3          m_Dir;
+    aqua::CVector3          m_Dir;          // 弾の向き
 
     aqua::CVector3          m_Velocity;     // 弾の速度
 
-    aqua::CVector3          m_StartPos;
+    aqua::CVector3          m_StartPos;     // 弾の発生座標
 
     float                   m_Speed;        // 弾の速さ
 
@@ -111,10 +110,10 @@ protected:
 
     aqua::CVector3          m_Position;     // 座標
 
-    aqua::CSpherePrimitive  m_Sphere;       // 
+    aqua::CSpherePrimitive  m_Sphere;       // 判定用スフィアクラス
 
-    aqua::CModel            m_Model;
+    aqua::CModel            m_Model;        // モデル
 
-    CEffectManager*         m_EffectManager;
+    CEffectManager*         m_EffectManager;// エフェクト管理クラス
 
 };

@@ -21,6 +21,8 @@ void CBulletManager::Initialize(void)
 
 	m_EffectManager = (CEffectManager*)aqua::FindGameObject("EffectManager");
 
+	m_SoundManager = (CSoundManager*)aqua::FindGameObject("SoundManager");
+
 	m_EnemyList.clear();
 
 	BulletDataLoad();
@@ -96,32 +98,40 @@ void CBulletManager::EnemyReset(CEnemy* enemy)
 
 void CBulletManager::WaveChange(void)
 {
+	// 子オブジェクトが空なら何もしない
 	if (m_ChildObjectList.empty())
-		nullptr;
+		return;
+	// 子オブジェクト全体(フィールドに現存する弾)を削除
 	for (auto it : m_ChildObjectList)
 	{
+		// ビームは処理を分ける(単純に削除したら使用者が動けなくなる)
 		if (it->GetGameObjectName() == "Beam")
 		{
 			CBeam* beam = (CBeam*)it;
 			beam->Destroy();
 		}
+		// 他はそのまま削除
 		if (it)
 			it->DeleteObject();
-
 	}
+	// リストのクリア
 	m_ChildObjectList.clear();
 }
 
 void CBulletManager::BulletDataLoad(void)
 {
+	// aqua内のCSVクラスを呼び出してロード
 	aqua::CCSVLoader csv;
 	csv.Load(m_bullet_info_path);
 
 	int file_row = csv.GetRows();
 
+	// 弾情報の器を作る
 	BULLET_INFO info;
+
 	for (int i = 0; i < file_row; ++i)
 	{
+		// 読み込んだ情報を代入
 		info =
 		{
 			(BULLET_TYPE)i,
@@ -130,11 +140,12 @@ void CBulletManager::BulletDataLoad(void)
 			std::stof(csv.GetString(i,2)),	// speed
 			csv.GetString(i,3)				// bullet_name
 		};
+		// 末尾に追加
 		m_BulletInfo.push_back(info);
 	}
 
+	// CSVのアンロード
 	csv.Unload();
-
 }
 
 void CBulletManager::CheakHit(void)

@@ -15,12 +15,10 @@
      *  @brief      操作時の文字の規定位置
      *  @param[in]  [0] = タイトルスプライト
      *  @param[in]  [1] = 「スタート」のボタン
-     *  @param[in]  [2] = 「キーマウ操作」のボタン
-     *  @param[in]  [3] = 「マウス操作」のボタン
      */
 const aqua::CVector2 CTitleScene::m_basis_position[] = {
-    { aqua::CVector2(320.0f  , 520.0f) },  // 「キーマウ操作」のボタン
-    { aqua::CVector2(640.0f  , 520.0f) }   // 「マウス操作」のボタン
+    { aqua::CVector2(100.0f  , 400.0f) },  // タイトルスプライト
+    { aqua::CVector2(300.0f  , 600.0f) }   // 「スタート」のボタン
 };
 
 /*
@@ -51,6 +49,10 @@ Initialize(void)
     m_BackgroundSprite.Create("data\\texture\\title\\title_background.png");
     m_BackgroundSprite.position = aqua::CVector2::ZERO;
 
+    // スタートスプライトの生成
+    m_StartSprite.Create("data\\texture\\title\\start.png");
+    m_StartSprite.SetCenterPosition(m_basis_position[1]);
+
     // BGMを再生
     m_SoundManager->Play(SOUND_ID::b_TITLE);
 }
@@ -72,10 +74,9 @@ void
 CTitleScene::
 Draw(void)
 {
-    // 背景スプライトの描画
+    // スプライトの描画
     m_BackgroundSprite.Draw();
-
-
+    m_StartSprite.Draw();
 }
 
 /*
@@ -85,12 +86,9 @@ void
 CTitleScene::
 Finalize(void)
 {
-    // 背景スプライトの解放
+    // スプライトの解放
     m_BackgroundSprite.Delete();
-
-
-
-    //m_LicenseLabel.Delete();
+    m_StartSprite.Delete();
 }
 
 

@@ -102,25 +102,10 @@ void
 CGameMain::
 Update(void)
 {
+    // 子オブジェクトの更新
     IGameObject::Update();
-
-    //状態を分岐
-    switch (m_State)
-    {
-    case STATE_GAME_START:  GameStart();   break;
-    case STATE_GAME_PLAY:   GamePlay();    break;
-    }
-    m_State = STATE_GAME_PLAY;
-}
-
-/*
- *  ゲーム開始
- */
-void
-CGameMain::
-GameStart(void)
-{
-
+    // ゲーム中処理を行う
+    GamePlay();
 }
 
 /*
@@ -143,6 +128,7 @@ GamePlay(void)
 
 void CGameMain::GameFinish(void)
 {
+    // データリレークラスを呼び出し、クリア成否を送ってシーンを切り替える
     CDataRelay* data_relay = (CDataRelay*)aqua::FindGameObject("DataRelay");
     data_relay->SetClear(m_GameClear);
     Change(SCENE_ID::RESULT);

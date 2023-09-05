@@ -46,25 +46,4 @@ public:
      *  @param[in]  id ステージ上のマップチップID
      */
     void        Initialize(const STAGE_OBJECT_ID& id, int x, int z)override;
-
-    /*
-     *  @brief      更新
-     */
-    void        Update(void)override;
-
-    /*
-     *  @brief      描画
-     */
-    void        Draw(void)override;
-
-    /*
-     *  @brief      解放
-     */
-    void        Finalize(void)override;
-
-
-    bool        CollisionCheck(aqua::CVector3 position, aqua::CVector3 destination,bool this_bullet)override;
-
-
-
 };

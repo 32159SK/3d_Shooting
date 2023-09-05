@@ -102,24 +102,28 @@ public:
     CEnemy*     CreateBossParts(aqua::CVector3 pop_pos, ENEMY_ID enemy_id);
 
 private:
-
+    /*!
+     *  @brief      データ読み込み
+     */
     void        EnemyDataLoad(void);
-
+    /*!
+     *  @brief      ウェーブ切り替え
+     */
     void        WaveChange(void);
 
-    static const int m_max_wave;
-    static const int m_heal_value;      // waveクリア時の回復値
-    static const std::string m_enemy_info_path;
-    static const std::string m_pop_list_path;
+    static const int m_max_wave;                // 最大ウェーブ数
+    static const int m_heal_value;              // waveクリア時の回復値
+    static const std::string m_enemy_info_path; // エネミー情報のファイルパス
+    static const std::string m_pop_list_path;   // 出現リストのファイルパス
 
-    int             m_EnemyCount;       // 
-    int             m_WaveCount;        // 
-    bool            m_Finish;           // 
+    int             m_EnemyCount;               // 敵数カウント
+    int             m_WaveCount;                // ウェーブ数のカウント
+    bool            m_Finish;                   // 終了判定
 
-    CPlayer*        m_Player;
-    CBulletManager* m_BulletManagar;
-    CStageManager*  m_StageManager;
-    CRader*         m_Rader;
-    std::vector<ENEMY_POP_LIST> m_PopList;
-    std::vector<ENEMY_INFO> m_EnemyInfo;
+    CPlayer*        m_Player;                   // プレイヤーのポインタ
+    CBulletManager* m_BulletManagar;            // 弾管理クラスのポインタ
+    CStageManager*  m_StageManager;             // ステージ管理クラスのポインタ
+    CRader*         m_Rader;                    // レーダークラスのポインタ
+    std::vector<ENEMY_POP_LIST> m_PopList;      // 出現リスト
+    std::vector<ENEMY_INFO> m_EnemyInfo;        // エネミー情報リスト
 };

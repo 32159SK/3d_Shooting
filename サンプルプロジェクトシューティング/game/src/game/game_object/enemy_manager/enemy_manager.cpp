@@ -122,12 +122,13 @@ CEnemy* CEnemyManager::CreateBossParts(aqua::CVector3 pop_pos, ENEMY_ID enemy_id
 void CEnemyManager::EnemyDataLoad(void)
 {
 	aqua::CCSVLoader csv;
+	// CSVファイルを読み込む
 	csv.Load(m_enemy_info_path);
 
 	int file_row = csv.GetRows();
 
 	ENEMY_INFO info;
-
+	// 読み込んだファイルからデータを一行ずつ末尾に入れる
 	for (int i = 0; i < file_row; ++i)
 	{
 		info =
@@ -142,13 +143,16 @@ void CEnemyManager::EnemyDataLoad(void)
 		};
 		m_EnemyInfo.push_back(info);
 	}
+	// 一旦CSVをアンロード
+	csv.Unload();
 
+	// 次に出現リストを読み込む
 	csv.Load(m_pop_list_path);
 
 	file_row = csv.GetRows();
 
 	ENEMY_POP_LIST pop_list;
-
+	// 読み込んだファイルからデータを一行ずつ末尾に入れる
 	for (int i = 0; i < file_row; ++i)
 	{
 		pop_list =
@@ -159,13 +163,14 @@ void CEnemyManager::EnemyDataLoad(void)
 		m_PopList.push_back(pop_list);
 	}
 
+	// ファイルのアンロード
 	csv.Unload();
 }
 
 void CEnemyManager::WaveChange(void)
 {
-	if (m_WaveCount > m_max_wave)
-		return;
+	// 最大ウェーブ数を超えるなら処理しない
+	if (m_WaveCount > m_max_wave) return;
 
 	m_BulletManagar->EnemyReset();
 
@@ -181,5 +186,6 @@ void CEnemyManager::WaveChange(void)
 	//ボスの動作試験用なのでコメントアウト
 	//Create(m_StageManager->GetEnemyPopPos(3), m_PopList[18].pop_e_id);
 
+	// ウェーブ数のカウントを増やす
 	m_WaveCount++;
 }

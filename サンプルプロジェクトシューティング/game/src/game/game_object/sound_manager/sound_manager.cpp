@@ -129,7 +129,7 @@ BGMStop(void)
 {
     if (!m_SoundPlayer) return;
 
-    // 
+    // SEまでのサウンド全て止める
     for (int i = (int)SOUND_ID::b_TITLE; i < (int)SOUND_ID::s_SELECT; ++i)
     {
         m_SoundPlayer[i].Stop();

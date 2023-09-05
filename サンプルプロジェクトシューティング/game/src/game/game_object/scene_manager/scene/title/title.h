@@ -76,7 +76,6 @@ private:
     aqua::CSprite       m_BackgroundSprite;     //! 背景用スプライト
     aqua::CSprite       m_TitleSprite;          //! タイトル用スプライト
     aqua::CSprite       m_StartSprite;          //! スタート用スプライト
-    //aqua::CLabel        m_LicenseLabel;
 
     CSoundManager*      m_SoundManager;
 };

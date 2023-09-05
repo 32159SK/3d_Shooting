@@ -128,7 +128,6 @@
     <ClCompile Include="src\game\game_object\sound_manager\sound_manager.cpp" />
     <ClCompile Include="src\game\game_object\stage_manager\stage_manager.cpp" />
     <ClCompile Include="src\game\game_object\stage_manager\stage_object\brittle_block\brittle_block.cpp" />
-    <ClCompile Include="src\game\game_object\stage_manager\stage_object\move_block\move_block.cpp" />
     <ClCompile Include="src\game\game_object\stage_manager\stage_object\normal_block\normal_block.cpp" />
     <ClCompile Include="src\game\game_object\stage_manager\stage_object\stage_object.cpp" />
     <ClCompile Include="src\game\game_object\ui_component\life_bar\life_bar.cpp" />
@@ -173,7 +172,6 @@
     <ClInclude Include="src\game\game_object\sound_manager\sound_manager.h" />
     <ClInclude Include="src\game\game_object\stage_manager\stage_manager.h" />
     <ClInclude Include="src\game\game_object\stage_manager\stage_object\brittle_block\brittle_block.h" />
-    <ClInclude Include="src\game\game_object\stage_manager\stage_object\move_block\move_block.h" />
     <ClInclude Include="src\game\game_object\stage_manager\stage_object\normal_block\normal_block.h" />
     <ClInclude Include="src\game\game_object\stage_manager\stage_object\stage_object.h" />
     <ClInclude Include="src\game\game_object\stage_manager\stage_object\stage_object_id.h" />

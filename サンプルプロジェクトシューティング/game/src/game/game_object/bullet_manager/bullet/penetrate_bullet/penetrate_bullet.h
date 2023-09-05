@@ -44,5 +44,5 @@ public:
     /*
      *  @brief      ステージオブジェクトヒット処理
      */
-    void    StageObjectHit(aqua::CCubePrimitive::COLL_DIRE c_dire)override { return; }
+    void    StageObjectHit(aqua::CCubePrimitive::COLL_DIRE c_dire)override { return; }  // オブジェクトをすり抜けるようにするため何もしない
 };

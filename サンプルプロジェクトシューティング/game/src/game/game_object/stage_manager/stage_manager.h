@@ -89,9 +89,13 @@ public:
     aqua::CVector3 GetEnemyPopPos(int pos_number) { return m_EnemyPopPos[pos_number]; }
 
 private:
-
+    /*
+     *  @brief      ステージの読み込み
+     */
     void        StageLoad(void);
-
+    /*
+     *  @brief      ステージの生成
+     */
     void        Create(void);
 
     static const float              m_default_size;         //!< 標準サイズ
@@ -102,15 +106,15 @@ private:
         int x = 0;
     };
 
-    int                             m_Stage[21][21];
+    int                             m_Stage[21][21];      // ステージ構造配列
 
-    int                             m_WaveCount;
+    int                             m_WaveCount;          // ウェーブ数のカウント
 
-    int                             m_EnemyCount;
+    int                             m_EnemyCount;         // 敵のカウント
 
-    std::vector<aqua::CVector3>     m_EnemyPopPos;
+    std::vector<aqua::CVector3>     m_EnemyPopPos;        // 敵の出現座標
 
-    CPlayer*                        m_Player;
+    CPlayer*                        m_Player;             // プレイヤーのポインタ
 
     IStageObject*                   m_LastCollObject;   // 最後に接触したオブジェクト
 };

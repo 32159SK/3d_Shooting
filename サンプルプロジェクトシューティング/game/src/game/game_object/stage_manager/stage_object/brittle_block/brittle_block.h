@@ -48,30 +48,19 @@ public:
     void        Initialize(const STAGE_OBJECT_ID& id, int x, int z)override;
 
     /*
-     *  @brief      更新
+     *  @brief      判定確認
      */
-    void        Update(void)override;
-
-    /*
-     *  @brief      描画
-     */
-    void        Draw(void)override;
-
-    /*
-     *  @brief      解放
-     */
-    void        Finalize(void)override;
-
-
     bool        CollisionCheck(aqua::CVector3 position, aqua::CVector3 destination,bool this_bullet)override;
 
 
 private:
-
+    /*
+     *  @brief      破損
+     */
     void        Broken(void);
 
     int             m_Endurance;        // 耐久値
 
-    CEffectManager* m_EfectManager;
-    CSoundManager*  m_SoundManager;
+    CEffectManager* m_EfectManager;     // エフェクト管理クラス
+    CSoundManager*  m_SoundManager;     // サウンド管理クラス
 };

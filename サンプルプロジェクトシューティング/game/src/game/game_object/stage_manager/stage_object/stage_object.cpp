@@ -140,14 +140,17 @@ SetActive(bool active)
 
 bool IStageObject::CollisionCheck(aqua::CVector3 position, aqua::CVector3 destination, bool this_bullet)
 {
+    // 自身がnullなら偽を返す
     if (!this)
         return false;
 
+    // キューブの判定を返す
     return m_Cube.CheckCollision(position, destination);
 }
 
 void IStageObject::GoIn(void)
 {
+    // 端なら処理しない
     if (m_StageEdge)
     {
         m_ObjectState = PLAY;
@@ -155,7 +158,7 @@ void IStageObject::GoIn(void)
     }
     // positionの仮変数
     m_Model.position.y += 0.5f;
-
+    // 完全に出たら状態を遷移
     if (m_Model.position.y > m_Position.y)
         m_ObjectState = PLAY;
 
@@ -166,6 +169,7 @@ void IStageObject::GoOut(void)
     // positionの仮変数
     m_Model.position.y -= 0.5f;
 
+    // 完全に沈み切ったら終了
     if (m_Model.position.y < m_Cube.height)
         m_ObjectState = FINISH;
 }

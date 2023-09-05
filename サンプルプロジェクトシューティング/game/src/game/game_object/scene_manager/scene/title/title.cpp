@@ -97,11 +97,19 @@ Finalize(void)
  */
 void CTitleScene::Operation(void)
 {
+    // 多用するのでnamespaceで簡略
+    using namespace aqua::mouse;
 
-    // Zキー  ( 決定 )
-    if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::Z))
-    {
-        CDataRelay* data_relay = (CDataRelay*)aqua::FindGameObject("DataRelay");
+    // マウス座標をVector2型で取得
+    aqua::CVector2 mpos = aqua::CVector2(GetCursorPos().x, GetCursorPos().y);
+
+    // 画像の端の座標を求める
+    float top = m_StartSprite.position.y;
+    float left = m_StartSprite.position.x;
+    float bottom = m_StartSprite.position.y + m_StartSprite.GetTextureHeight();
+    float right = m_StartSprite.position.x + m_StartSprite.GetTextureWidth();
+
+    // 画像の上で左クリックでスタート
+    if ((mpos.x > left && mpos.y > top && mpos.x < right && mpos.y < bottom) && Released(BUTTON_ID::LEFT))
         Change(SCENE_ID::GAMEMAIN);
-    }
 }

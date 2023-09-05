@@ -113,8 +113,6 @@ void CStageManager::StageLoad(void)
         // —ñ
         for (int k = 0; k < 21; ++k)
             m_Stage[i][k] = std::stoi(csv.GetString(i, k));
-
-
     csv.Unload();
 
 }

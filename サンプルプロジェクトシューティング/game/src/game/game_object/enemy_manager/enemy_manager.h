@@ -92,6 +92,11 @@ public:
     void        Finalize(void) override;
 
     /*!
+     *  @brief      チュートリアルモード
+     */
+    void        SetTutorial(void) { m_TutorialMode = true; }
+
+    /*!
      *  @brief      敵選出
      */
     CEnemy*     GetNearest(aqua::CVector3 player_pos);
@@ -118,6 +123,7 @@ private:
 
     int             m_EnemyCount;               // 敵数カウント
     int             m_WaveCount;                // ウェーブ数のカウント
+    bool            m_TutorialMode;             // チュートリアルモードフラグ
     bool            m_Finish;                   // 終了判定
 
     CPlayer*        m_Player;                   // プレイヤーのポインタ

@@ -26,13 +26,6 @@ CGameMain::CGameMain(aqua::IGameObject* parent)
 {
 }
 
-/*
- *  デストラクタ
- */
-CGameMain::
-~CGameMain(void)
-{
-}
 
 /*
  *  初期化
@@ -86,13 +79,6 @@ Initialize(void)
     m_Camera.m_Distace = m_camera_distace;
     m_Camera.m_VRotate = aqua::DegToRad(m_camera_v_rotate);
 
-    // タイマーのセットアップ
-    m_WhiteOutTimer.Setup(m_white_out_time);
-
-    // ホワイトアウト用の画像を生成しておく
-    m_WhiteOutSprite.Create("data\\texture\\white.png");
-    // 画像のアルファ値を0にして最初は透明にする
-    m_WhiteOutSprite.color.alpha = (unsigned char)0.0f;
 }
 
 /*
@@ -115,6 +101,7 @@ void
 CGameMain::
 GamePlay(void)
 {
+    // カメラは常にプレイヤーを追う
     m_Camera.m_Target = m_Player->GetPosition();
     m_Camera.Update();
 
@@ -123,7 +110,17 @@ GamePlay(void)
         GameFinish();
     // ゲームクリアされたらホワイトアウト処理をする
     if (m_GameClear)
+    {
+        // タイマーのセットアップ
+        m_WhiteOutTimer.Setup(m_white_out_time);
+
+        // ホワイトアウト用の画像を生成
+        m_WhiteOutSprite.Create("data\\texture\\white.png");
+        // 画像のアルファ値を0にして最初は透明にする
+        m_WhiteOutSprite.color.alpha = (unsigned char)0.0f;
+
         WhiteOut();
+    }
 }
 
 void CGameMain::GameFinish(void)

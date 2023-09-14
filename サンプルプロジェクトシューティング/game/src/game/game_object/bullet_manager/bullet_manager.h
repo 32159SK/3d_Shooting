@@ -95,6 +95,9 @@ public:
      */
     void        EnemyReset(CEnemy* enemy);
 
+    /*
+     *  @brief      ウェーブ切り替え
+     */
     void        WaveChange(void);
 
     /*
@@ -104,7 +107,7 @@ public:
 private:
 
     /*
-     *  @brief      リセット
+     *  @brief      弾情報ロード
      */
     void        BulletDataLoad(void);
 

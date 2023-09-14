@@ -124,6 +124,7 @@
     <ClCompile Include="src\game\game_object\scene_manager\scene\result\result.cpp" />
     <ClCompile Include="src\game\game_object\scene_manager\scene\scene.cpp" />
     <ClCompile Include="src\game\game_object\scene_manager\scene\title\title.cpp" />
+    <ClCompile Include="src\game\game_object\scene_manager\scene\tutorial\tutorial.cpp" />
     <ClCompile Include="src\game\game_object\scene_manager\scene_manager.cpp" />
     <ClCompile Include="src\game\game_object\sound_manager\sound_manager.cpp" />
     <ClCompile Include="src\game\game_object\stage_manager\stage_manager.cpp" />
@@ -134,6 +135,7 @@
     <ClCompile Include="src\game\game_object\ui_component\life_bar\unique_life\unique_life.cpp" />
     <ClCompile Include="src\game\game_object\ui_component\lockon_marker\lockon_marker.cpp" />
     <ClCompile Include="src\game\game_object\ui_component\rader\rader.cpp" />
+    <ClCompile Include="src\game\game_object\ui_component\tutorial_message\tutorial_message.cpp" />
     <ClCompile Include="src\game\game_object\ui_component\ui_component.cpp" />
     <ClCompile Include="src\game\game_object\unit\unit.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -168,6 +170,7 @@
     <ClInclude Include="src\game\game_object\scene_manager\scene\scene.h" />
     <ClInclude Include="src\game\game_object\scene_manager\scene\scene_id.h" />
     <ClInclude Include="src\game\game_object\scene_manager\scene\title\title.h" />
+    <ClInclude Include="src\game\game_object\scene_manager\scene\tutorial\tutorial.h" />
     <ClInclude Include="src\game\game_object\scene_manager\scene_manager.h" />
     <ClInclude Include="src\game\game_object\sound_manager\sound_manager.h" />
     <ClInclude Include="src\game\game_object\stage_manager\stage_manager.h" />
@@ -179,6 +182,7 @@
     <ClInclude Include="src\game\game_object\ui_component\life_bar\unique_life\unique_life.h" />
     <ClInclude Include="src\game\game_object\ui_component\lockon_marker\lockon_marker.h" />
     <ClInclude Include="src\game\game_object\ui_component\rader\rader.h" />
+    <ClInclude Include="src\game\game_object\ui_component\tutorial_message\tutorial_message.h" />
     <ClInclude Include="src\game\game_object\ui_component\ui_component.h" />
     <ClInclude Include="src\game\game_object\unit\unit.h" />
     <ClInclude Include="src\game\game_object\unit\unit_type.h" />

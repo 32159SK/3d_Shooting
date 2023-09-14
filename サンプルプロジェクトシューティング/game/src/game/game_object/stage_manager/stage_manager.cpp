@@ -71,7 +71,6 @@ void CStageManager::WaveChange(int wave)
 {
     m_WaveCount = wave;
 
-    //m_EnemyCount = 0;
     // 最初のwaveでないなら一旦ステージをリセットする
     if (m_WaveCount > 1)
     {
@@ -88,7 +87,8 @@ void CStageManager::WaveChange(int wave)
 bool CStageManager::StageObjectCollision(aqua::CVector3 position, aqua::CVector3 destination,bool this_bullet)
 {
     bool collision = false;
-    // (処理重そう)
+
+    // 子オブジェクト全体を調べる
     for (auto it : m_ChildObjectList)
     {
         IStageObject* stage_obj = (IStageObject*)it;
@@ -121,7 +121,7 @@ void CStageManager::Create(void)
 {
     StageLoad();
 
-    // 生成するステージオブジェクトのUTSUWAを準備
+    // 生成するステージオブジェクトの容器を準備
     IStageObject* stage_object = nullptr;
     STAGE_OBJECT_ID object_id = STAGE_OBJECT_ID::NULL_OBJECT;
 

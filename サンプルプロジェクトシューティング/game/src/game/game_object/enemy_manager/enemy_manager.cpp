@@ -33,9 +33,10 @@ void CEnemyManager::Initialize(CBulletManager* bm, CPlayer* player, CStageManage
 
 void CEnemyManager::Update(void)
 {
+	// 子オブジェクトの更新
 	IGameObject::Update();
 
-
+	// 子オブジェクトがいない=敵が全滅or最初からいないのでウェーブ切り替えを呼ぶ
 	if (m_ChildObjectList.empty())
 		WaveChange();
 }
@@ -180,11 +181,10 @@ void CEnemyManager::WaveChange(void)
 	// waveに合わせてフィールドを切り替える
    	m_StageManager->WaveChange(m_WaveCount);
 
+	// ポップリストに合わせた生成処理
 	for (int i = 0; i < m_PopList.size(); ++i)
 		if (m_PopList[i].wave == m_WaveCount && m_EnemyCount < m_StageManager->GetEnemyCount())
 			Create(m_StageManager->GetEnemyPopPos(i), m_PopList[m_EnemyCount].pop_e_id);
-	//ボスの動作試験用なのでコメントアウト
-	//Create(m_StageManager->GetEnemyPopPos(3), m_PopList[18].pop_e_id);
 
 	// ウェーブ数のカウントを増やす
 	m_WaveCount++;

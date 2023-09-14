@@ -275,6 +275,16 @@ void CPlayer::Move(void)
 	MouseTrack();
 }
 
+void CPlayer::Damage(int damage)
+{
+	// チュートリアル中はダメージを受けない
+	if (m_TutorialMode)
+		return;
+
+	// それ以外は基底クラスと同じ
+	IUnit::Damage(damage);
+}
+
 void CPlayer::Dead(void)
 {
 	IUnit::Dead();

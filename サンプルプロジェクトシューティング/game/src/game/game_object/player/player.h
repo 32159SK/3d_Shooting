@@ -51,6 +51,11 @@ public:
      */
     void            Finalize(void)override;
 
+    /*!
+     *  @brief      チュートリアルモード
+     */
+    void            SetTutorial(void) { m_TutorialMode = true; }
+
     /*
      *  @brief      被弾確認
      */
@@ -66,7 +71,6 @@ public:
      */
     aqua::CVector3  GetAgoPos(void) { return m_AgoPosition; }
 
-
     /*
      *  @brief      敵管理クラスセッター
      */
@@ -78,9 +82,15 @@ public:
     void            SetPosition(aqua::CVector3 pos) { m_Position = pos; }
 
     /*
+     *  @brief      弾種設定
+     */
+    void            SetBulletType(BULLET_TYPE bullet_type) { m_ShotBullet = bullet_type; }
+
+    /*
      *  @brief      回復
      */
     void            LifeHeal(int heal_value);
+
 private:
 
     /*
@@ -92,6 +102,11 @@ private:
      *  @brief      移動処理
      */
     void            Move(void)override;
+
+    /*
+     *  @brief      死亡
+     */
+    void            Damage(int damage)override;
 
     /*
      *  @brief      死亡
@@ -121,7 +136,7 @@ private:
 
     static const float m_invincible_time;// 無敵時間
 
-    static const float m_flash_time;// 点滅切り替え時間
+    static const float m_flash_time;    // 点滅切り替え時間
 
     static const float m_lock_range;    // ロックオン範囲
 
@@ -133,12 +148,13 @@ private:
 
     static const float m_speed;         // 移動速度定数
 
-
     static const float m_font_size;     // フォントサイズ
 
     static const int   m_max_life;      // ライフの最大値
 
     bool            m_Invincible;       // 無敵
+
+    bool            m_TutorialMode;     // チュートリアルフラグ
 
     aqua::CVector3  m_AgoPosition;      // 追尾座標
 

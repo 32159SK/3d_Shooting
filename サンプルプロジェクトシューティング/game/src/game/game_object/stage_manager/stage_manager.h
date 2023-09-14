@@ -63,6 +63,11 @@ public:
      */
     void        Finalize(void)override;
 
+    /*!
+     *  @brief      チュートリアルモード
+     */
+    void        SetTutorial(void) { m_TutorialMode = true; }
+
     /*
      *  @brief      ウェーブ切り替え
      */
@@ -111,6 +116,8 @@ private:
     int                             m_WaveCount;          // ウェーブ数のカウント
 
     int                             m_EnemyCount;         // 敵のカウント
+
+    bool                            m_TutorialMode;       // チュートリアルフラグ
 
     std::vector<aqua::CVector3>     m_EnemyPopPos;        // 敵の出現座標
 

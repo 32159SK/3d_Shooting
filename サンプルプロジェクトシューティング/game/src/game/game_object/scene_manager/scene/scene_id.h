@@ -18,6 +18,6 @@ enum class SCENE_ID
     DUMMY        // ダミーID
     , TITLE      // タイトルシーン
     , GAMEMAIN   // ゲームメインシーン
-    , RESULT
-    , CREDIT     // クレジット
+    , RESULT     // リザルト
+    , TUTORIAL   // クレジット
 };

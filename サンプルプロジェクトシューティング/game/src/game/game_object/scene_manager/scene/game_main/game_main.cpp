@@ -79,6 +79,14 @@ Initialize(void)
     m_Camera.m_Distace = m_camera_distace;
     m_Camera.m_VRotate = aqua::DegToRad(m_camera_v_rotate);
 
+    // ホワイトアウトタイマーのセットアップ
+    m_WhiteOutTimer.Setup(m_white_out_time);
+
+    // ホワイトアウト用の画像を生成
+    m_WhiteOutSprite.Create("data\\texture\\white.png");
+    // 画像のアルファ値を0にして最初は透明にする
+    m_WhiteOutSprite.color.alpha = (unsigned char)0.0f;
+
 }
 
 /*
@@ -110,17 +118,7 @@ GamePlay(void)
         GameFinish();
     // ゲームクリアされたらホワイトアウト処理をする
     if (m_GameClear)
-    {
-        // タイマーのセットアップ
-        m_WhiteOutTimer.Setup(m_white_out_time);
-
-        // ホワイトアウト用の画像を生成
-        m_WhiteOutSprite.Create("data\\texture\\white.png");
-        // 画像のアルファ値を0にして最初は透明にする
-        m_WhiteOutSprite.color.alpha = (unsigned char)0.0f;
-
         WhiteOut();
-    }
 }
 
 void CGameMain::GameFinish(void)

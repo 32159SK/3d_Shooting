@@ -18,6 +18,7 @@ CEnemyManager::CEnemyManager(aqua::IGameObject* parent)
 	, m_BulletManagar(nullptr)
 	, m_EnemyCount(0)
 	, m_WaveCount(1)
+	, m_TutorialMode(false)
 	, m_Finish(false)
 {
 }
@@ -35,6 +36,10 @@ void CEnemyManager::Update(void)
 {
 	// 子オブジェクトの更新
 	IGameObject::Update();
+
+	// チュートリアル中であれば以下の処理はしない
+	if (m_TutorialMode)
+		return;
 
 	// 子オブジェクトがいない=敵が全滅or最初からいないのでウェーブ切り替えを呼ぶ
 	if (m_ChildObjectList.empty())

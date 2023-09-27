@@ -1,29 +1,24 @@
 #include "../../../game_object.h"
 #include "tutorial.h"
 
-const float CTutorial::m_tutorial_move_length = 150.0f;
-const float CTutorial::m_key_icon_size = 100.0f;
-const float CTutorial::m_mouse_icon_width = 150.0f;
+const int	CTutorial::m_max_text_count = 12;
+const int	CTutorial::m_lock_on_text_num = 7;
+const float CTutorial::m_tutorial_move_length = 250.0f;
+const float CTutorial::m_mouse_move_time = 1.0f;
+const float CTutorial::m_shot_time = 4.0f;
 const std::string CTutorial::m_tutorial_path = "data\\csv\\tutorial_text.csv";
-const std::string CTutorial::m_key_icon_path = "data\\csv\\key_icon_";
-const std::string CTutorial::m_mouse_path = "data\\csv\\mouse_icon_";
-const aqua::CVector2 CTutorial::m_icon_pos = aqua::CVector2(aqua::GetWindowWidth() / 2.0f, aqua::GetWindowHeight() / 2.0f);
-const aqua::CVector2 CTutorial::m_key_icon_formation[] =
-{
-	aqua::CVector2(1.0f,0.0f),	// W
-	aqua::CVector2(0.0f,1.0f),	// A
-	aqua::CVector2(1.0f,1.0f),	// S
-	aqua::CVector2(2.0f,1.0f)	// D
-};
 
 CTutorial::CTutorial(aqua::IGameObject* parent)
 	:CGameMain(parent)
 	,m_TextDrawCount(0)
 	,m_MoveLength(0.0f)
+	,m_EnemyPop(false)
+	,m_ShotFlag(false)
 	,m_NotBeamFiring(true)
 	,m_PlayerPos(aqua::CVector3::ZERO)
 	,m_State(STATE::START)
 	,m_Phase(TUTORIAL_PHASE::MOVE)
+	,m_TutorialEnemy(nullptr)
 	,m_TutorialMessage(nullptr)
 {
 }
@@ -33,30 +28,12 @@ void CTutorial::Initialize(void)
 	// 基底クラスとなっているgゲームメインシーンの初期化を呼ぶ
 	CGameMain::Initialize();
 
-	// スプライトの生成
-	for (int i = 0; i < 4; ++i)
-	{
-		// iを加えてそれぞれのファイルパスにする
-		m_KeyIcon[i].Create(m_key_icon_path + std::to_string(i) + ".png");
-		// 描画座標の計算
-		m_KeyIcon[i].position = m_key_icon_formation[i] * m_key_icon_size + m_icon_pos;
-		
-		// ついでにマウスアイコンも生成する
-		if (i < 3)
-		{
-			// キーアイコン同様にiを加えてそれぞれのファイルパスにする
-			m_MouseIcon[i].Create(m_mouse_path + std::to_string(i) + ".png");
-			// マウスアイコンは全部同じ座標でOK(わざわざずらすメリットがない)
-			m_MouseIcon[i].position = m_icon_pos;
-		}
-	}
+	// チュートリアルテキストのロード
+	TextDataLoad();
 }
 
 void CTutorial::Update(void)
 {
-	// 子オブジェクトの更新
-	IGameObject::Update();
-
 	// 状態に応じて処理を分ける
 	switch (m_State)
 	{
@@ -64,36 +41,23 @@ void CTutorial::Update(void)
 	case CTutorial::STATE::PLAY:	TutorialPlay();		break;
 	case CTutorial::STATE::END:		TutorialFinish();	break;
 	}
+
+	// 子オブジェクトの更新
+	IGameObject::Update();
+
+	// Zキーでいつでもタイトルシーンに戻れる
+	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::Z))
+		Change(SCENE_ID::TITLE);
 }
 
 void CTutorial::Draw(void)
 {
 	IGameObject::Draw();
-
-
-	// キーアイコンの描画
-	if(m_Phase== TUTORIAL_PHASE::MOVE)
-		for (int i = 0; i < 4; ++i)
-			m_KeyIcon[i].Draw();
-
-	// マウスアイコン描画
-	else if(m_Phase== TUTORIAL_PHASE::MOUSE
-		|| m_Phase == TUTORIAL_PHASE::SHOT
-		|| m_Phase == TUTORIAL_PHASE::LOCKON)
-		MouseIconDraw();
 }
 
 void CTutorial::Finalize(void)
 {
 	IGameObject::Finalize();
-
-	// アイコンの削除
-	for (int i = 0; i < 4; ++i)
-	{
-		m_KeyIcon[i].Delete();
-		if (i < 3)
-			m_MouseIcon[i].Delete();
-	}
 }
 
 void CTutorial::TutorialStart(void)
@@ -104,6 +68,11 @@ void CTutorial::TutorialStart(void)
 	m_Player->SetTutorial();
 	m_EnemyManager->SetTutorial();
 	sm->SetTutorial();
+	// ウェーブ切り替え処理を呼び出し、ステージを生成
+	sm->WaveChange(0);
+
+	// 最初のメッセージを描画
+	MessageSetUp();
 
 	// 状態を遷移
 	m_State = STATE::PLAY;
@@ -114,16 +83,15 @@ void CTutorial::TutorialPlay(void)
 	// カメラの更新
 	m_Camera.m_Target = m_Player->GetPosition();
 	m_Camera.Update();
-	// 子オブジェクトの更新
-	IGameObject::Update();
+
 
 	// 段階に応じて処理を分ける
 	switch (m_Phase)
 	{
 	case CTutorial::TUTORIAL_PHASE::MOVE:	TutorialMove();		break;
 	case CTutorial::TUTORIAL_PHASE::MOUSE:	TutorialMouse();	break;
-	case CTutorial::TUTORIAL_PHASE::LOCKON:	TutorialLockOn();	break;
 	case CTutorial::TUTORIAL_PHASE::SHOT:	TutorialShot();		break;
+	case CTutorial::TUTORIAL_PHASE::LOCKON:	TutorialLockOn();	break;
 	case CTutorial::TUTORIAL_PHASE::BEAM:	TutorialBeam();		break;
 	}
 
@@ -131,53 +99,132 @@ void CTutorial::TutorialPlay(void)
 
 void CTutorial::TutorialFinish(void)
 {
-	// タイトルシーンに切り替える
-	Change(SCENE_ID::TITLE);
 }
 
 void CTutorial::TutorialMove(void)
 {
 	// プレイヤーの現在座標がこのクラスで記録している座標と異なる→移動している
 	if (m_Player->GetPosition() != m_PlayerPos)
+	{
 		// 差分を移動距離として加算
 		m_MoveLength += abs(aqua::CVector3::Length(m_Player->GetPosition() - m_PlayerPos));
-
+		// 座標を再保存
+		m_PlayerPos = m_Player->GetPosition();
+	}
+	
+	// 移動距離が一定値を超えたらメッセージを表示し次の段階へ
 	if (m_MoveLength > m_tutorial_move_length)
 	{
-		// 
-		MessageSetUp();
+		// メッセージのセットアップ成否
+		if (MessageSetUp())
+		{
+			// 次の段階へ
+			m_Phase = TUTORIAL_PHASE::MOUSE;
+
+			// マウス座標をこの段階で保存しておく
+			m_MousePos = aqua::mouse::GetCursorPos();
+			// タイマーのセットアップ
+			m_TutorialTimer.Setup(m_mouse_move_time);
+		}
 	}
 }
 
 void CTutorial::TutorialMouse(void)
 {
-}
+	// マウス座標がこのクラスで記録している座標と異なる→移動している
+	if (aqua::mouse::GetCursorPos() != m_MousePos)
+	{
+		// タイマーを更新
+		m_TutorialTimer.Update();
 
-void CTutorial::TutorialLockOn(void)
-{
-	m_EnemyManager->Create(aqua::CVector3::ZERO, ENEMY_ID::MOB);
+		// タイマーが終了
+		if (m_TutorialTimer.Finished())
+			// メッセージのセットアップ
+			MessageSetUp();
+
+		// マウス座標を再保存
+		m_MousePos = aqua::mouse::GetCursorPos();
+	}
+
+	// タイマーが終了
+	else if (m_TutorialTimer.Finished() && MessageSetUp())
+	{
+		// 次の段階へ
+		m_Phase = TUTORIAL_PHASE::SHOT;
+
+		// タイマーの再設定
+		m_TutorialTimer.Setup(m_shot_time);
+	}
 }
 
 void CTutorial::TutorialShot(void)
 {
+	// マウス左クリック
+	if (aqua::mouse::Trigger(aqua::mouse::BUTTON_ID::LEFT))
+		m_ShotFlag = true;
 
+	// 射撃がされたらタイマーの更新
+	if (m_ShotFlag)
+		m_TutorialTimer.Update();
+
+		// タイマーが終了
+	if (m_TutorialTimer.Finished() && MessageSetUp())
+	{
+		// 次の段階へ
+		m_Phase = TUTORIAL_PHASE::LOCKON;
+
+		// タイマーのリセット
+		m_TutorialTimer.Reset();
+	}
+}
+
+void CTutorial::TutorialLockOn(void)
+{
+	m_TutorialTimer.Update();
+
+	// タイマーが終了しているかつ一定の回数以上メッセージを描画しない
+	if (m_TutorialTimer.Finished() && m_TextDrawCount < m_lock_on_text_num)
+	{
+		// 敵を出現させていない
+		if (!m_EnemyPop && MessageSetUp())
+		{
+			// ロックオン確認用の敵を出現させる(ボス部位生成を流用してポインタを受け取れるようにする)
+			m_TutorialEnemy = m_EnemyManager->CreateBossParts(aqua::CVector3::ZERO, ENEMY_ID::FIXED);
+			// 出現させたのでフラグを真に
+			m_EnemyPop = true;
+
+			// タイマーのリセット
+			m_TutorialTimer.Reset();
+		}
+		// タイマーが終了したら新しいメッセージを流す
+		else if(m_EnemyPop)
+		{
+			MessageSetUp();			// タイマーのリセット
+			m_TutorialTimer.Reset();
+		}
+	}
+
+	// 敵が死んでかつ描画回数が合っておりメッセージの描画が行えたら次の段階へ
+	if (m_TutorialEnemy->GetDead() && m_TextDrawCount == m_lock_on_text_num &&MessageSetUp())
+		m_Phase = TUTORIAL_PHASE::BEAM;
 }
 
 void CTutorial::TutorialBeam(void)
 {
-	// 説明中は弾種を常にビームに
+	// 弾種を常にビームに
 	m_Player->SetBulletType(BULLET_TYPE::BEAM);
 
 	// 行動フラグと一致しない
-	if (m_Player->GetMoveFlag() != m_NotBeamFiring)
+	if (m_Player->GetMoveFlag() != m_NotBeamFiring && MessageSetUp())
 	{
 		// ビーム確認フラグに行動フラグを代入
 		// これで一致しないのはビームを撃つor終了した最初のフレームのみになる(この部分の処理はビーム前後でしか行いたくない)
 		m_NotBeamFiring = m_Player->GetMoveFlag();
-		
-		// メッセージ描画処理を行い、次の段階へ
-		MessageSetUp();
 	}
+	
+	// メッセージの描画回数がテキスト総数を超えるなら状態を遷移
+	if (m_TextDrawCount > m_max_text_count)
+		m_State = STATE::END;
 }
 
 void CTutorial::TextDataLoad(void)
@@ -196,35 +243,20 @@ void CTutorial::TextDataLoad(void)
 	csv.Unload();
 }
 
-void CTutorial::MouseIconDraw(void)
+bool CTutorial::MessageSetUp(void)
 {
-	// マウスアイコンの描画
-	m_MouseIcon[0].Draw();
-	// 他は"押されている時だけ"描画する
-	if (aqua::mouse::Trigger(aqua::mouse::BUTTON_ID::LEFT))
-		m_MouseIcon[1].Draw();
-	// クリック画像
-	else if (aqua::mouse::Trigger(aqua::mouse::BUTTON_ID::RIGHT))
-	{
-		// 右クリックは反転
-		m_MouseIcon[1].scale.x *= -1.0f;
-		m_MouseIcon[1].Draw();
-	}
-	// ホイール画像
-	else if (aqua::mouse::Trigger(aqua::mouse::BUTTON_ID::MIDDLE)
-		|| aqua::mouse::GetWheel() != 0.0f)
-		m_MouseIcon[2].Draw();
-}
+	// 他のメッセージが存在し、それが終了していないなら処理をせず偽を返す
+	if (m_TutorialMessage && !m_TutorialMessage->GetEnd())
+		return false;
+	else if(m_TutorialMessage)
+		// 中身を削除する(null時は通らない)
+		m_TutorialMessage->DeleteObject();
 
-void CTutorial::MessageSetUp(void)
-{
-	// 念のためnullでないなら処理しない
-	if (m_TutorialMessage)
-		return;
-
-	// カウントを増やしメッセージ描画用クラスを生成する
-	m_TextDrawCount++;
-
+	// メッセージ描画用クラスを生成する
 	m_TutorialMessage = aqua::CreateGameObject<CTutorialMessage>(this);
 	m_TutorialMessage->Initialize(m_TutorialText[m_TextDrawCount]);
+
+	// カウントを増やす
+	m_TextDrawCount++;
+	return true;
 }

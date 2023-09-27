@@ -68,14 +68,14 @@ private:
 
     /*
      *  @brief      操作時の文字の規定位置
-     *  @param[in]  [0] = タイトルスプライト
-     *  @param[in]  [1] = 「スタート」のボタン
+     *  @param[in]  [0] = 「スタート」のボタン
+     *  @param[in]  [1] = 「チュートリアル」のボタン
      */
     static const        aqua::CVector2 m_basis_position[2];
     
     aqua::CSprite       m_BackgroundSprite;     //! 背景用スプライト
-    aqua::CSprite       m_TitleSprite;          //! タイトル用スプライト
     aqua::CSprite       m_StartSprite;          //! スタート用スプライト
+    aqua::CSprite       m_TutorialSprite;       //! チュートリアル用スプライト
 
     CSoundManager*      m_SoundManager;
 };

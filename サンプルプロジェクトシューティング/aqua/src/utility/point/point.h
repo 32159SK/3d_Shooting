@@ -65,6 +65,18 @@ namespace aqua
          */
         void    DebugLog( void );
 
+        /*!
+         *  @brief      不等演算子のオーバーロード
+         *
+         *  @param[in]  p   ポイントクラス
+         *
+         *  @return     二つの点が等しくない
+         *  @retval     true    等しくない
+         *  @retval     false   等しい
+         */
+        bool                operator!=(const CPoint& p) const { return (x != p.x || y != p.y); }
+
+
         //! 要素がすべて0
         static const CPoint  ZERO;
     };

@@ -17,6 +17,7 @@ const int   CPlayer::m_max_life = 20;
 CPlayer::CPlayer(aqua::IGameObject* parent)
 	: IUnit(parent, "Player", "Player")
 	, m_Invincible(false)
+	, m_TutorialMode(false)
 	, m_AgoPosition(aqua::CVector3::ZERO)
 	, m_Floor(nullptr)
 	, m_EnemyManager(nullptr)
@@ -370,6 +371,12 @@ void CPlayer::LockOn(void)
 	if (!m_LockOnEnemy || m_LockOnEnemy->GetDead())
 	{
 		m_LockOnEnemy = m_EnemyManager->GetNearest(m_Position);
+		// ロックオン対象がいなかった場合ロックオン状態を解除し以下を処理しない
+		if(!m_LockOnEnemy)
+		{ 
+			m_LockON = false;
+			return;
+		}
 		m_LockOnMarker->SetTarget(m_LockOnEnemy);
 		return;
 	}

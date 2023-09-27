@@ -50,6 +50,11 @@ public:
      */
     void        Finalize(void) override;
 
+    /*!
+     *  @brief      解放
+     */
+    bool        GetEnd(void) { return m_End; }
+
 private:
     /*!
      *  @brief      出る
@@ -78,7 +83,8 @@ private:
     static const float      m_pop_time;                 // 出るのにかける時間
     static const float      m_wait_time;                // 待機時間
     static const float      m_background_panel_height;  // パネルの高さ
-
+    
+    bool                    m_End;                      // 終了確認
     aqua::CTimer            m_Timer;                    // タイマー
     aqua::CBoxPrimitive     m_WindowPanel;              // パネル
     aqua::CLabel            m_FunctionName;             // 機能名

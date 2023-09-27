@@ -6,6 +6,7 @@ const float CTutorialMessage::m_background_panel_height = 50.0f;
 
 CTutorialMessage::CTutorialMessage(aqua::IGameObject* parent)
 	:IUIComponent(parent,"TutorialMassage")
+    ,m_End(false)
 {
 }
 
@@ -21,7 +22,7 @@ void CTutorialMessage::Initialize(std::string text)
     m_Message.text = text;
 
     // 座標計算
-    m_Message.position.x = ((float)aqua::GetWindowWidth() + (float)m_Message.GetTextWidth()) / 2.0f;
+    m_Message.position.x = ((float)aqua::GetWindowWidth() - (float)m_Message.GetTextWidth()) / 2.0f;
     m_Message.position.y = (float)aqua::GetWindowHeight() - m_background_panel_height;
 
     // 背景ウインドウパネルのセットアップ
@@ -43,7 +44,7 @@ void CTutorialMessage::Update(void)
     case STATE::POP_IN:        PopIn();        break;
     case STATE::WAIT:          Wait();         break;
     case STATE::POP_OUT:       PopOut();       break;
-    case STATE::END:           DeleteObject(); break;
+    case STATE::END:           m_End = true;   break;
     default:
         break;
     }

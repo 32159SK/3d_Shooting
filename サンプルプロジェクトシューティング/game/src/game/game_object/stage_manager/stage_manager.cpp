@@ -25,6 +25,7 @@ CStageManager(aqua::IGameObject* parent)
     : aqua::IGameObject(parent, "StageManager")
     , m_WaveCount(0)
     , m_EnemyCount(0)
+    , m_TutorialMode(false)
     , m_LastCollObject(nullptr)
 {
 }
@@ -106,7 +107,13 @@ bool CStageManager::StageObjectCollision(aqua::CVector3 position, aqua::CVector3
 void CStageManager::StageLoad(void)
 {
     aqua::CCSVLoader csv;
-    csv.Load(m_file_path + std::to_string(m_WaveCount) + ".csv");
+
+    // チュートリアル中は専用のステージをロード
+    if (m_TutorialMode)
+        csv.Load(m_file_path + "tutorial.csv");
+    // それ以外はウェーブ数に合わせる
+    else
+        csv.Load(m_file_path + std::to_string(m_WaveCount) + ".csv");
 
     // 行
     for (int i = 0; i < 21; ++i)

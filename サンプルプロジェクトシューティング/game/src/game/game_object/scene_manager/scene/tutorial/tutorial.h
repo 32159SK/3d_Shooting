@@ -110,14 +110,9 @@ private:
     void            TextDataLoad(void);
 
     /*!
-     *  @brief      マウスアイコン描画処理読み込み
-     */
-    void            MouseIconDraw(void);
-
-    /*!
      *  @brief      チュートリアルメッセージセットアップ
      */
-    void            MessageSetUp(void);
+    bool            MessageSetUp(void);
 
     // 状態
     enum class STATE
@@ -132,30 +127,31 @@ private:
     {
         MOVE,       // 移動
         MOUSE,      // マウス操作
-        LOCKON,     // チュートリアル
         SHOT,       // 射撃
+        LOCKON,     // ロックオン
         BEAM        // ビーム
     };
 
+    static const int            m_max_text_count;       // チュートリアルテキストの総数
+    static const int            m_lock_on_text_num;     // ロックオンテキストの番号
     static const float          m_tutorial_move_length; // チュートリアル中移動距離
-    static const float          m_key_icon_size;        // キーアイコンのサイズ
-    static const float          m_mouse_icon_width;     // マウスアイコンの幅
+    static const float          m_mouse_move_time;      // マウスの操作時間
+    static const float          m_shot_time;            // 射撃操作時間
     static const std::string    m_tutorial_path;        // チュートリアルテキストデータのパス
-    static const std::string    m_key_icon_path;        // キーアイコンのパス
-    static const std::string    m_mouse_path;           // マウスアイコンのパス
-    static const aqua::CVector2 m_icon_pos;         // キーアイコンの描画座標
-    static const aqua::CVector2 m_key_icon_formation[]; // キーアイコンの並び
 
     int                         m_TextDrawCount;        // テキストの描画回数カウント
     float                       m_MoveLength;           // 移動距離
+    bool                        m_EnemyPop;             // 敵出現確認フラグ
+    bool                        m_ShotFlag;             // 射撃操作確認
     bool                        m_NotBeamFiring;        // ビーム照射中確認フラグ
 
     STATE                       m_State;                // 状態
     TUTORIAL_PHASE              m_Phase;                // 段階
     aqua::CVector3              m_PlayerPos;            // プレイヤー座標
-    aqua::CSprite               m_KeyIcon[4];           // キーアイコンスプライト(WASDで四つ)
-    aqua::CSprite               m_MouseIcon[3];         // マウスアイコンスプライト(非操作クリックホイールで三つ)
+    aqua::CPoint                m_MousePos;             // マウス座標
+    aqua::CTimer                m_TutorialTimer;        // チュートリアル確認用タイマー
     std::vector<std::string>    m_TutorialText;         // チュートリアルテキストのリスト
 
+    CEnemy* m_TutorialEnemy;                            // チュートリアル用敵
     CTutorialMessage*           m_TutorialMessage;      // チュートリアルテキスト描画クラス
 };

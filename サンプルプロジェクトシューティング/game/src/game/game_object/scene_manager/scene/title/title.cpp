@@ -17,8 +17,8 @@
      *  @param[in]  [1] = 「スタート」のボタン
      */
 const aqua::CVector2 CTitleScene::m_basis_position[] = {
-    { aqua::CVector2(100.0f  , 400.0f) },  // タイトルスプライト
-    { aqua::CVector2(300.0f  , 600.0f) }   // 「スタート」のボタン
+    { aqua::CVector2(300.0f  , 600.0f) },  // 「スタート」のボタン
+    { aqua::CVector2(700.0f  , 600.0f) }   // 「チュートリアル」のボタン
 };
 
 /*
@@ -51,7 +51,11 @@ Initialize(void)
 
     // スタートスプライトの生成
     m_StartSprite.Create("data\\texture\\title\\start.png");
-    m_StartSprite.SetCenterPosition(m_basis_position[1]);
+    m_StartSprite.SetCenterPosition(m_basis_position[0]);
+
+    // チュートリアルスプライトの生成
+    m_TutorialSprite.Create("data\\texture\\title\\tutorial.png");
+    m_TutorialSprite.SetCenterPosition(m_basis_position[1]);
 
     // BGMを再生
     m_SoundManager->Play(SOUND_ID::b_TITLE);
@@ -77,6 +81,7 @@ Draw(void)
     // スプライトの描画
     m_BackgroundSprite.Draw();
     m_StartSprite.Draw();
+    m_TutorialSprite.Draw();
 }
 
 /*
@@ -89,6 +94,7 @@ Finalize(void)
     // スプライトの解放
     m_BackgroundSprite.Delete();
     m_StartSprite.Delete();
+    m_TutorialSprite.Delete();
 }
 
 
@@ -103,13 +109,28 @@ void CTitleScene::Operation(void)
     // マウス座標をVector2型で取得
     aqua::CVector2 mpos = aqua::CVector2(GetCursorPos().x, GetCursorPos().y);
 
-    // 画像の端の座標を求める
-    float top = m_StartSprite.position.y;
-    float left = m_StartSprite.position.x;
-    float bottom = m_StartSprite.position.y + m_StartSprite.GetTextureHeight();
-    float right = m_StartSprite.position.x + m_StartSprite.GetTextureWidth();
+    // 画像の端を格納する変数を宣言
+    float top[2];
+    float left[2];
+    float bottom[2];
+    float right[2];
 
-    // 画像の上で左クリックでスタート
-    if ((mpos.x > left && mpos.y > top && mpos.x < right && mpos.y < bottom) && Released(BUTTON_ID::LEFT))
+    // スタート画像の端の座標を求める
+    top[0] = m_StartSprite.position.y;
+    left[0] = m_StartSprite.position.x;
+    bottom[0] = m_StartSprite.position.y + m_StartSprite.GetTextureHeight();
+    right[0] = m_StartSprite.position.x + m_StartSprite.GetTextureWidth();
+
+    // チュートリアル画像の端の座標を求める
+    top[1] = m_TutorialSprite.position.y;
+    left[1] = m_TutorialSprite.position.x;
+    bottom[1] = m_TutorialSprite.position.y + m_StartSprite.GetTextureHeight();
+    right[1] = m_TutorialSprite.position.x + m_StartSprite.GetTextureWidth();
+
+    // スタート画像の上で左クリックでゲームメインシーンに
+    if ((mpos.x > left[0] && mpos.y > top[0] && mpos.x < right[0] && mpos.y < bottom[0]) && Released(BUTTON_ID::LEFT))
         Change(SCENE_ID::GAMEMAIN);
+    // チュートリアル画像の上で左クリックでチュートリアルシーンに
+    else if ((mpos.x > left[1] && mpos.y > top[1] && mpos.x < right[1] && mpos.y < bottom[1]) && Released(BUTTON_ID::LEFT))
+        Change(SCENE_ID::TUTORIAL);
 }

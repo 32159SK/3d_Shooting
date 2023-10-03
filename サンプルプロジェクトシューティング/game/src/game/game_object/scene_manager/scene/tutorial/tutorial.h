@@ -1,7 +1,7 @@
 
 /*
- *  @file       game_main.h
- *  @brief      ゲームメインシーン
+ *  @file       tutorial.h
+ *  @brief      チュートリアルシーン
  *  @author
  *  @date
  *  @since      1.0
@@ -21,7 +21,7 @@ class CEnemyManager;
 /*
  *  @class      CTutorial
  *
- *  @brief      tutorialシーン
+ *  @brief      チュートリアルシーン
  */
 class CTutorial
     : public CGameMain

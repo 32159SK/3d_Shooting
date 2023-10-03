@@ -25,7 +25,7 @@ CTutorial::CTutorial(aqua::IGameObject* parent)
 
 void CTutorial::Initialize(void)
 {
-	// 基底クラスとなっているgゲームメインシーンの初期化を呼ぶ
+	// 基底クラスとなっているゲームメインシーンの初期化を呼ぶ
 	CGameMain::Initialize();
 
 	// チュートリアルテキストのロード

@@ -1,6 +1,6 @@
 /*
- *  @file       unit.h
- *  @brief      ƒ†ƒjƒbƒgˆ—
+ *  @file       boss_cannon.h
+ *  @brief      ãƒœã‚¹ã‚­ãƒ£ãƒãƒ³ã‚¨ãƒãƒŸãƒ¼
  *  @author     Kazuto Shimazaki
  *  @date       2023/06/20
  *  @since      1.0
@@ -18,124 +18,124 @@ class CBossCannon : public CEnemy
 {
 public:
     /*
-     *  @brief      ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+     *  @brief      ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
      *
-     *  @param[in]  parent          eƒIƒuƒWƒFƒNƒg
-     *  @param[in]  object_name     ƒIƒuƒWƒFƒNƒg–¼
+     *  @param[in]  parent          è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+     *  @param[in]  object_name     ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå
      */
     CBossCannon(aqua::IGameObject* parent);
 
     /*
-     *  @brief      ƒfƒXƒgƒ‰ƒNƒ^
+     *  @brief      ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
      */
     virtual ~CBossCannon(void) = default;
 
     /*
-     *  @brief      ‰Šú‰»
+     *  @brief      åˆæœŸåŒ–
      */
     void    Initialize(aqua::CVector3 pop_pos, ENEMY_INFO enemy_info, CStageManager* st_m, CBulletManager* bm)override;
     /*
-     *  @brief      XV
+     *  @brief      æ›´æ–°
      */
     void    Update(void)override;
 
     /*
-     *  @brief      À•Wİ’è
+     *  @brief      åº§æ¨™è¨­å®š
      */
     void    SetPosition(aqua::CVector3 pos);
 
     /*
-     *  @brief      ’eíİ’è
+     *  @brief      å¼¾ç¨®è¨­å®š
      */
     void    SetBulletType(BULLET_TYPE bullet_type) { m_ShotBullet = bullet_type; }
 
     /*
-     *  @brief      ƒI[ƒ‹ƒŒƒ“ƒWUŒ‚‚Ìİ’è
+     *  @brief      ã‚ªãƒ¼ãƒ«ãƒ¬ãƒ³ã‚¸æ”»æ’ƒã®è¨­å®š
      */
     void    SetAllRange(float angle);
 
     /*
-     *  @brief      ËŒ‚
+     *  @brief      å°„æ’ƒ
      */
     void    Shot(void)override;
 
     /*
-     *  @brief      ”Ô†‚ÌƒZƒbƒ^[
+     *  @brief      ç•ªå·ã®ã‚»ãƒƒã‚¿ãƒ¼
      */
     void    SetCannonNumber(int number) { m_CannonNumber = number; }
 
     /*
-     *  @brief      ƒ{ƒX‚Ìƒ|ƒCƒ“ƒ^‚ÌƒZƒbƒ^[
+     *  @brief      ãƒœã‚¹ã®ãƒã‚¤ãƒ³ã‚¿ã®ã‚»ãƒƒã‚¿ãƒ¼
      */
     void    SetBossEnemy(CBossEnemy* boss) { m_BossEnemy = boss; }
 
     /*
-     *  @brief      I—¹ƒtƒ‰ƒOæ“¾
+     *  @brief      çµ‚äº†ãƒ•ãƒ©ã‚°å–å¾—
      */
     bool    GetFinish(void) { return m_AllRangeFinish; }
 
     /*
-     *  @brief      €–S
+     *  @brief      æ­»äº¡
      */
     void    Dead(void)override;
 private:
     /*
-     *  @brief      s“®ˆ—
+     *  @brief      è¡Œå‹•å‡¦ç†
      */
     void    Move(void)override;
 
     /*
-     *  @brief      Šî–{‚Ì“®‚«
+     *  @brief      åŸºæœ¬ã®å‹•ã
      */
     void    Default(void);
 
     /*
-     *  @brief      ƒC[ƒWƒ“ƒO‚Å‚ÌˆÚ“®
+     *  @brief      ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã§ã®ç§»å‹•
      */
     void    EasingMove(void);
 
     /*
-     *  @brief      UŒ‚À•W‚Ö‚ÌˆÚ“®
+     *  @brief      æ”»æ’ƒåº§æ¨™ã¸ã®ç§»å‹•
      */
     void    AllRangeMove(void);
 
     /*
-     *  @brief      ƒr[ƒ€‚ÌÆË
+     *  @brief      ãƒ“ãƒ¼ãƒ ã®ç…§å°„
      */
     void    Irradiation(void);
 
     /*
-     *  @brief      Šî–{À•W‚Ö–ß‚é
+     *  @brief      åŸºæœ¬åº§æ¨™ã¸æˆ»ã‚‹
      */
     void    ReturnPosition(void);
 
 
-    static const float m_move_time;             // ˆÚ“®‚É‚©‚¯‚éŠÔ
+    static const float m_move_time;             // ç§»å‹•ã«ã‹ã‘ã‚‹æ™‚é–“
 
-    static const float m_player_distance;       // ƒvƒŒƒCƒ„[‚Æ‚Ì‹——£
+    static const float m_player_distance;       // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨ã®è·é›¢
 
-    static const int   m_position_pattern;      // À•W‚ÌŠp“xƒpƒ^[ƒ“
+    static const int   m_position_pattern;      // åº§æ¨™ã®è§’åº¦ãƒ‘ã‚¿ãƒ¼ãƒ³
 
-    // ƒI[ƒ‹ƒŒƒ“ƒWUŒ‚‚Ìó‘Ô
+    // ã‚ªãƒ¼ãƒ«ãƒ¬ãƒ³ã‚¸æ”»æ’ƒã®çŠ¶æ…‹
     enum ALLRANGE_STATE
     {
-        DEFAULT,    // Šî–{
-        MOVE,       // ˆÚ“®(UŒ‚À•W‚ÖŒü‚©‚¤)
-        IRRADIATION,// ÆË
-        RETURN      // –ß‚é
+        DEFAULT,    // åŸºæœ¬
+        MOVE,       // ç§»å‹•(æ”»æ’ƒåº§æ¨™ã¸å‘ã‹ã†)
+        IRRADIATION,// ç…§å°„
+        RETURN      // æˆ»ã‚‹
     };
 
-    int             m_CannonNumber;             // –C‚ÌŠÇ—”Ô†
+    int             m_CannonNumber;             // ç ²ã®ç®¡ç†ç•ªå·
 
-    float           m_ShotAngle;                // ËŒ‚(ƒI[ƒ‹ƒŒƒ“ƒW)‚ÌŠp“x
+    float           m_ShotAngle;                // å°„æ’ƒ(ã‚ªãƒ¼ãƒ«ãƒ¬ãƒ³ã‚¸)æ™‚ã®è§’åº¦
 
-    bool            m_AllRangeAttacking;        // ƒI[ƒ‹ƒŒƒ“ƒWUŒ‚’†
+    bool            m_AllRangeAttacking;        // ã‚ªãƒ¼ãƒ«ãƒ¬ãƒ³ã‚¸æ”»æ’ƒä¸­
 
-    bool            m_ReturnFlag;               // Œ³‚ÌêŠ‚É–ß‚é‚©‚Ìƒtƒ‰ƒO
+    bool            m_ReturnFlag;               // å…ƒã®å ´æ‰€ã«æˆ»ã‚‹ã‹ã®ãƒ•ãƒ©ã‚°
 
-    bool            m_AllRangeFinish;           // ƒI[ƒ‹ƒŒƒ“ƒWUŒ‚‚ÌI—¹
+    bool            m_AllRangeFinish;           // ã‚ªãƒ¼ãƒ«ãƒ¬ãƒ³ã‚¸æ”»æ’ƒã®çµ‚äº†
 
-    ALLRANGE_STATE  m_AllRangeState;            // ƒI[ƒ‹ƒŒƒ“ƒWUŒ‚‚Ìó‘Ô
+    ALLRANGE_STATE  m_AllRangeState;            // ã‚ªãƒ¼ãƒ«ãƒ¬ãƒ³ã‚¸æ”»æ’ƒã®çŠ¶æ…‹
 
     aqua::CVector3  m_StartPos;
 

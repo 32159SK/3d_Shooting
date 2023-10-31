@@ -1,7 +1,7 @@
 
 /*!
- *  @file       stage.h
- *  @brief      °
+ *  @file       floor.h
+ *  @brief      åºŠ
  *  @author     Kazuto Shimazaki
  *  @date       2023/05/11
  *  @version    1.0
@@ -16,7 +16,7 @@
  /*!
   *  @class      CFloor
   *
-  *  @brief      ƒXƒe[ƒWƒNƒ‰ƒX
+  *  @brief      ã‚¹ãƒ†ãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹
   *
   *  @author     Kazuto Shimazaki
   *
@@ -29,43 +29,43 @@ class CFloor final
 {
 public:
     /*!
-     *  @brief      ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+     *  @brief      ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
      *
-     *  @param[in]  parent  e‚ÌƒIƒuƒWƒFƒNƒg
+     *  @param[in]  parent  è¦ªã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      */
     CFloor(aqua::IGameObject* parent);
 
     /*!
-     *  @brief      ƒfƒXƒgƒ‰ƒNƒ^
+     *  @brief      ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
      */
     ~CFloor(void) = default;
 
     /*!
-     *  @brief      ‰Šú‰»
+     *  @brief      åˆæœŸåŒ–
      */
     void        Initialize(void) override;
 
     /*!
-     *  @brief      •`‰æ
+     *  @brief      æç”»
      */
     void        Draw(void) override;
 
     /*!
-     *  @brief      ‰ğ•ú
+     *  @brief      è§£æ”¾
      */
     void        Finalize(void) override;
 
     /*!
-     *  @brief  ƒŒƒCƒLƒƒƒXƒg
+     *  @brief  ãƒ¬ã‚¤ã‚­ãƒ£ã‚¹ãƒˆ
      */
     void        Raycast(aqua::CVector3 pointA, aqua::CVector3 pointB);
 
     /*!
-     *  @brief  ƒŒƒCƒLƒƒƒXƒgÀ•Wæ“¾
+     *  @brief  ãƒ¬ã‚¤ã‚­ãƒ£ã‚¹ãƒˆåº§æ¨™å–å¾—
      */
     aqua::CVector3 GetRaycastPos(void) { return m_RaycastPos; }
 
 private:
     aqua::CModel            m_Floor;
-    aqua::CVector3          m_RaycastPos;   // ƒŒƒCƒLƒƒƒXƒgÀ•W
+    aqua::CVector3          m_RaycastPos;   // ãƒ¬ã‚¤ã‚­ãƒ£ã‚¹ãƒˆåº§æ¨™
 };

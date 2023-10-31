@@ -35,7 +35,7 @@
 
 ## 学校配布ライブラリに処理追加
 * 学校配布のライブラリの「aqua」内に三次元空間の処理を行えるクラスがなかった為以下を追加
-  * [三次元ベクトルクラス](サンプルプロジェクトシューティング/aqua/src/mathematics/vector/vector3/vector3.cpp)
-  * 行列計算クラス
-  * カメラクラス
+  * [三次元ベクトルクラス](サンプルプロジェクトシューティング/aqua/src/mathematics/vector/vector3)
+  * [行列計算クラス](サンプルプロジェクトシューティング/aqua/src/mathematics/matrix)
+  * [カメラクラス](サンプルプロジェクトシューティング/aqua/src/graphics/camera)
   * 

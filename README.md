@@ -43,5 +43,38 @@
     * 三次元空間のオブジェクトを描画するために必須のカメラクラス 
   * [三次元図形描画クラス](サンプルプロジェクトシューティング/aqua/src/graphics/primitive)
     * 主に当たり判定のコリジョンとして活用
+      
 ## レイキャスト処理
-* a
+* マウス操作で向きを変える際に使用。
+  
+https://github.com/32159SK/3d_Shooting/assets/101731704/8b983a5b-02a1-44b3-b659-04e893239b75
+* 画面上のマウス座標からレイを飛ばし、床モデルと接触した座標を追う事でズレなくマウスの追従
+* 処理記載場所
+  *  [床クラス(floor.cpp)内：RayCast関数](サンプルプロジェクトシューティング/game/src/game/game_object/floor/floor.cpp)
+    
+## 行列の活用
+* ビームの当たり判定用のカプセルの終点を行列で計算し、決められた長さと向き通り照射させる処理
+  *  [ビームクラス(beam.cpp)内：Initialize関数](サンプルプロジェクトシューティング/game/src/game/game_object/bullet_manager/beam/beam.cpp)
+* ボスの周囲を回る砲エネミーの座標計算も同様の処理で求めている
+  
+![boss_move](https://github.com/32159SK/3d_Shooting/assets/101731704/13267a97-163b-472c-92fa-bde9ae9b106a)
+* 処理記載場所
+  *  [ボスエネミークラス(boss_enemy.cpp)内：SetCannonPosition関数](サンプルプロジェクトシューティング/game/src/game/game_object/enemy_manager/enemy/boss_enemy/boss_enemy.cpp)
+
+## オールレンジ攻撃
+* シューティングゲームといえばボスはいるべきと思い、ボス作ると決めた時点で特にやりたかったボスの特殊行動
+* ボスの周囲を回転している砲エネミーが自機を囲うように展開してビームを放つ
+
+
+* 処理記載場所
+  *  [ボスエネミークラス(boss_enemy.cpp)内：SetCannonPosition関数](サンプルプロジェクトシューティング/game/src/game/game_object/enemy_manager/enemy/boss_enemy/boss_enemy.cpp)
+  *  [ボスキャノンエネミークラス(boss_cannon.cpp)内：SetAllRange関数・AllRangeMove関数・EasingMove関数・Irradiation関数・ReturnPosition関数](サンプルプロジェクトシューティング/g
+
+
+ame/src/game/game_object/enemy_manager/enemy/boss_enemy/boss_cannon/boss_cannon.cpp)
+
+## チュートリアル
+* 操作方法を確認するためのチュートリアルシーン
+* ゲーム内で説明があった方がプレイする人に親切と考え実装しました
+
+https://github.com/32159SK/3d_Shooting/assets/101731704/4007c82d-55b5-4530-9b81-89600d6923e6
